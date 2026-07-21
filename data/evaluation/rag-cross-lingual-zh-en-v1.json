@@ -1,0 +1,38 @@
+{
+  "name": "zh-query-en-law-retrieval-v1",
+  "created_at": "2026-07-21",
+  "label_status": "ai_assisted_pending_human_review",
+  "source_scope": [
+    "U.S. FTC Advertising and Marketing Basics",
+    "EU Unfair Commercial Practices Directive selected Articles 6 and 7"
+  ],
+  "limitations": [
+    "These questions and labels were prepared with AI assistance and are not human-verified ground truth.",
+    "Metrics from this dataset are provisional until every sample is reviewed by a human against the cited official section.",
+    "No-answer labels are relative to the active four-section US/EU source subset, not all applicable law."
+  ],
+  "samples": [
+    {"id": "us-pos-01", "query": "美国广告中的产品功效声明是否必须真实并有证据支持？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
+    {"id": "us-pos-02", "query": "在美国投放广告时可以使用可能误导消费者的说法吗？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
+    {"id": "us-pos-03", "query": "美国一般广告主张需要遵守哪些真实性和公平性要求？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
+    {"id": "us-pos-04", "query": "商品广告写了效果保证，但企业没有准备支持材料，这符合FTC原则吗？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
+    {"id": "us-pos-05", "query": "广告虽然没有直接说假话，但整体呈现不公平，美国规则怎么看？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
+    {"id": "us-pos-06", "query": "美国的特殊产品或服务除了通用广告规则外是否还有额外要求？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
+    {"id": "us-pos-07", "query": "做专业服务广告时，企业是否需要继续检查该行业的专门规定？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
+    {"id": "us-pos-08", "query": "美国特殊品类能不能只遵守一般的真实广告标准？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
+    {"id": "eu-pos-01", "query": "欧盟广告虚构产品的功效和风险并影响购买决定，属于哪类误导？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},
+    {"id": "eu-pos-02", "query": "产品数量、成分或产地信息不真实，导致消费者下单，欧盟如何认定？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},
+    {"id": "eu-pos-03", "query": "广告中的价格计算方式会误导普通消费者，适用欧盟哪一条？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},
+    {"id": "eu-pos-04", "query": "宣传的测试结果和商品实际情况不一致并改变交易决定，是否属于误导行为？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},
+    {"id": "eu-pos-05", "query": "即使个别信息属实，广告整体展示仍欺骗消费者，欧盟是否禁止？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},
+    {"id": "eu-pos-06", "query": "欧盟广告隐瞒消费者作决定需要的重要信息，属于什么问题？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-7", "review_status": "pending_human_review"},
+    {"id": "eu-pos-07", "query": "商家把重要商品信息写得含糊难懂，导致消费者购买，适用哪项规定？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-7", "review_status": "pending_human_review"},
+    {"id": "eu-pos-08", "query": "交易前太晚才告诉消费者关键条件，在欧盟可能构成误导遗漏吗？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-7", "review_status": "pending_human_review"},
+    {"id": "eu-pos-09", "query": "商业目的并不明显时，商家没有说明营销意图，欧盟规则怎么处理？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-7", "review_status": "pending_human_review"},
+    {"id": "eu-pos-10", "query": "广告把消费者需要的重要信息藏起来并影响交易决定，应该查欧盟哪一条？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-7", "review_status": "pending_human_review"},
+    {"id": "us-neg-01", "query": "美国虚假广告会被判处几年监禁？", "jurisdiction": "US", "answerable": false, "expected_section_id": null, "review_status": "pending_human_review"},
+    {"id": "us-neg-02", "query": "美国广告税应当按照哪个税率缴纳？", "jurisdiction": "US", "answerable": false, "expected_section_id": null, "review_status": "pending_human_review"},
+    {"id": "eu-neg-01", "query": "欧盟广告违法的固定罚款金额是多少欧元？", "jurisdiction": "EU", "answerable": false, "expected_section_id": null, "review_status": "pending_human_review"},
+    {"id": "eu-neg-02", "query": "欧盟商标注册需要提交哪些表格？", "jurisdiction": "EU", "answerable": false, "expected_section_id": null, "review_status": "pending_human_review"}
+  ]
+}
