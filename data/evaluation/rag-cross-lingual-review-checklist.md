@@ -2,7 +2,8 @@
 
 Dataset: `rag-cross-lingual-zh-en-v1.json`
 
-The dataset remains `ai_assisted_pending_human_review` until a reviewer completes every item.
+The dataset has an AI source-fidelity audit but remains
+`ai_reviewed_pending_human_verification` until a person completes every item.
 
 For each positive sample:
 

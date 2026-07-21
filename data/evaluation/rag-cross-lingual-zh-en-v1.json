@@ -1,7 +1,15 @@
 {
   "name": "zh-query-en-law-retrieval-v1",
   "created_at": "2026-07-21",
-  "label_status": "ai_assisted_pending_human_review",
+  "label_status": "ai_reviewed_pending_human_verification",
+  "ai_source_audit": {
+    "reviewed_at": "2026-07-21",
+    "reviewed_samples": 22,
+    "accepted_without_change": 20,
+    "revised_for_source_fidelity": 2,
+    "human_verified_samples": 0,
+    "audit_report": "../../docs/evaluation/cross-language-source-audit-v1.md"
+  },
   "source_scope": [
     "U.S. FTC Advertising and Marketing Basics",
     "EU Unfair Commercial Practices Directive selected Articles 6 and 7"
@@ -15,10 +23,10 @@
     {"id": "us-pos-01", "query": "美国广告中的产品功效声明是否必须真实并有证据支持？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
     {"id": "us-pos-02", "query": "在美国投放广告时可以使用可能误导消费者的说法吗？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
     {"id": "us-pos-03", "query": "美国一般广告主张需要遵守哪些真实性和公平性要求？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
-    {"id": "us-pos-04", "query": "商品广告写了效果保证，但企业没有准备支持材料，这符合FTC原则吗？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
+    {"id": "us-pos-04", "query": "商品广告写了功效主张，但企业没有准备证据材料，这符合FTC原则吗？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
     {"id": "us-pos-05", "query": "广告虽然没有直接说假话，但整体呈现不公平，美国规则怎么看？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-truth-evidence", "review_status": "pending_human_review"},
     {"id": "us-pos-06", "query": "美国的特殊产品或服务除了通用广告规则外是否还有额外要求？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
-    {"id": "us-pos-07", "query": "做专业服务广告时，企业是否需要继续检查该行业的专门规定？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
+    {"id": "us-pos-07", "query": "为特殊服务制作广告时，企业是否需要继续检查额外的专门规定？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
     {"id": "us-pos-08", "query": "美国特殊品类能不能只遵守一般的真实广告标准？", "jurisdiction": "US", "answerable": true, "expected_section_id": "ftc-specialized-products", "review_status": "pending_human_review"},
     {"id": "eu-pos-01", "query": "欧盟广告虚构产品的功效和风险并影响购买决定，属于哪类误导？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},
     {"id": "eu-pos-02", "query": "产品数量、成分或产地信息不真实，导致消费者下单，欧盟如何认定？", "jurisdiction": "EU", "answerable": true, "expected_section_id": "eu-ucpd-article-6", "review_status": "pending_human_review"},

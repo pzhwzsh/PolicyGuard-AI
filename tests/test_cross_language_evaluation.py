@@ -21,11 +21,14 @@ class ExpectedRetriever:
         ), score=1.0, rank=1)]
 
 
-def test_cross_language_dataset_is_explicitly_pending_human_review() -> None:
+def test_cross_language_dataset_is_ai_audited_but_pending_human_review() -> None:
     dataset = load_cross_language_dataset(
         ROOT / "data/evaluation/rag-cross-lingual-zh-en-v1.json"
     )
-    assert dataset["label_status"] == "ai_assisted_pending_human_review"
+    assert dataset["label_status"] == "ai_reviewed_pending_human_verification"
+    assert dataset["ai_source_audit"]["reviewed_samples"] == 22
+    assert dataset["ai_source_audit"]["revised_for_source_fidelity"] == 2
+    assert dataset["ai_source_audit"]["human_verified_samples"] == 0
     assert len(dataset["samples"]) == 22
     assert all(item["review_status"] == "pending_human_review" for item in dataset["samples"])
 
