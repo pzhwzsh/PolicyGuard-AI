@@ -30,7 +30,11 @@ class RemediationService:
         if run.status != WorkflowStatus.REVIEW_ACCEPTED:
             raise RuntimeError("workflow_not_ready_for_remediation")
         tool_result = self.tools.execute(
-            "suggest_conservative_rewrite", {"product": run.input_payload["product"]}
+            "suggest_conservative_rewrite",
+            {
+                "product": run.input_payload["product"],
+                "evidence": run.result_payload.get("markets", []),
+            },
         )
         run.result_payload["remediation_plan"] = {
             "plan_id": plan_id,
@@ -101,12 +105,22 @@ class RemediationService:
         for operation in plan["operations"]:
             if operation["operation"] == "replace_field":
                 product[operation["field"]] = operation["after"]
+        post_check = self.tools.execute(
+            "suggest_conservative_rewrite",
+            {"product": product, "evidence": run.result_payload.get("markets", [])},
+        )
         run.result_payload["draft"] = {
             "execution_id": execution_id,
             "approved_by": approved_by,
             "product": product,
             "external_side_effect": False,
             "created_at": datetime.now(UTC).isoformat(),
+            "post_check": {
+                "status": "passed" if not post_check.output["operations"] else "review_required",
+                "remaining_risky_operation_count": len(post_check.output["operations"]),
+                "checker": "deterministic_risky_phrase_baseline",
+                "legal_conclusion": False,
+            },
         }
         run.status = WorkflowStatus.DRAFT_READY
         self._event(
