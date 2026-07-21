@@ -1,22 +1,22 @@
 # PolicyGuard AI
 
-面向跨境营销内容的证据优先合规审查系统。项目覆盖官方法规持续采集、多法域 RAG、
-跨语言检索、PDF 解析、风险定位、保守修改、人工审核、Agent 工作流与 MCP 查询。
+面向跨境营销内容的证据优先合规审查系统。
 
-系统不会让模型直接下法律结论或发布修改。所有法规更新先进入待审区，只有经过明确的
-结构审核和法律审核后才能加入活动知识库。
+系统持续采集不同法域的公开法规与监管指南，通过 RAG 为商品文案定位风险、引用原文
+证据，并在人工审核后生成保守修改方案。它不会让模型直接下法律结论，也不会自动发布
+或覆盖用户内容。
 
 ## 核心能力
 
-- 持续监控中国、美国和欧盟的 11 个官方来源，保存快照、哈希、版本和差异。
-- 支持 BM25、Dense、Hybrid RRF、Rerank 和中英文 Query Rewrite。
-- 对商品标题、描述和营销声明定位风险，返回对应条款、官方链接和原文证据。
-- 生成最小化修改方案、前后 Diff、保留事实检查与修改后复检结果。
-- 解析原生 PDF、扫描 PDF、图片和表格；复杂页面可路由至 OCR 或人工审核。
-- 使用持久化工作流记录步骤、工具调用、失败降级、人工决策和恢复状态。
-- Agent 具有工具白名单、步数和 Token 预算、Prompt Injection 防护及人工兜底。
-- 只召回经过人工确认且适用范围一致的案例记忆；法规换版后自动使旧记忆失效。
-- 提供 32 个 HTTP API、4 个 MCP 工具和本地管理界面。
+- 多法域法规采集、版本管理、变更检测与人工激活
+- BM25、Dense、Hybrid RRF、Rerank 与跨语言 Query Rewrite
+- 商品标题、描述和营销声明的风险定位与证据引用
+- 最小化修改、前后 Diff、事实保留检查与修改后复检
+- 原生 PDF、扫描件、图片、表格和复杂布局解析
+- 可暂停、恢复和审计的 Agent 工作流
+- 工具白名单、Token 预算、失败降级与人工兜底
+- 具备适用范围和法规版本失效机制的 Agent 记忆
+- HTTP API、MCP Server 与本地管理界面
 
 ## 系统流程
 
@@ -27,109 +27,56 @@
 声明提取与文档解析
        │
        ▼
-法域、品类、渠道和生效时间过滤
+法域、品类、渠道与生效时间过滤
        │
        ▼
-BM25 + Dense + Query Rewrite + RRF + Rerank
+混合检索、查询改写与证据校验
        │
        ▼
-风险声明 ── 对应条款 ── 官方证据
+风险声明、对应条款与官方原文
        │
        ▼
-人工审核 ── 修改方案 ── 内部草稿 ── 二次复检
+人工审核、修改方案、内部草稿与二次复检
 ```
 
 确定性规则负责高确定性检查，RAG 负责查找可追溯证据，Agent 只处理需要动态选择工具
-或存在歧义的步骤。Agent 不具备外部发布权限。
+或存在歧义的步骤。
 
-## 真实数据
+## 设计重点
 
-| 数据项 | 当前数量 |
-|---|---:|
-| 注册官方来源 | 11 |
-| 已抓取版本 | 16 |
-| 全部抓取版本解析段落 | 3,995 |
-| 各来源最新版本 | 11 |
-| 最新版本解析段落 | 3,439 |
-| 结构审核通过的法规或指南 | 9 |
-| 被阻止激活的目录页 | 2 |
-| 已获法律审核确认的待审版本 | 0 |
-| 当前活动知识库 | 3 文档 / 13 Chunks |
-| 独立人工法律金标 | 0 |
+### 证据优先
 
-工程规模评测另外包含 120 个唯一隔离查询、100 条营销文案工作流、100 条修改样本和
-20 份/200 页复杂 PDF。这些是程序化生成的压力与回归样本，全部标记为待真人审核，
-不能与真实客户流量或人工金标混为一谈。
+输出结论必须能回到具体声明、对应条款和来源版本。检索到候选内容不等于问题可回答，
+证据不足时系统会拒答或转人工审核。
 
-可审计的数据发布包位于 [`data/evidence/v1`](data/evidence/v1)，包括完整来源文本、官方
-URL、内容哈希、文件 SHA256、抓取时间、审核状态、评测集清单、模型结果和运行快照。
+### 法规版本隔离
 
-这些数据证明系统使用了真实官方来源，但不代表已经覆盖完整的全球广告法，也不代表
-待审法规已经获得法律认可。详细限制见 [`docs/DATA_CARD.md`](docs/DATA_CARD.md)。
+新抓取内容只进入待审区。结构检查和法律审核相互独立，未经确认的版本不会进入活动
+知识库。法规换版后，依赖旧版本的缓存和 Agent 记忆会失效。
 
-## 实验结果
+### 受控 Agent
 
-### 检索模型
+Agent 不能任意调用工具或写入外部系统。工作流限制步骤、工具、Token 和副作用，并记录
+每次执行事件。确定性任务默认使用 Pipeline，不为使用 Agent 而使用 Agent。
 
-30 条困难开发集：
+### 人工闭环
 
-| 模型 | Hit@5 | MRR | 平均延迟 |
-|---|---:|---:|---:|
-| BGE-small-zh-v1.5 | 0.8667 | 0.6733 | 8.92 ms |
-| Multilingual MiniLM | 0.9333 | 0.7972 | 35.25 ms |
-| Jina Embeddings v2 Base ZH | 1.0000 | 0.9111 | 30.48 ms |
-
-Jina 加选择性 Query Rewrite 后 MRR 提升至 `0.9444`。改写使用缓存，缓存命中时不再
-调用模型。该结果来自开发集，不是生产流量指标。
-
-### 拒答能力
-
-18 条可回答问题与 20 条近域无答案问题的同集校准结果为 F1 `0.9444`、误答率 `0.05`；
-但在独立近域集合上的 specificity 只有 `0.25`，因此当前阈值不能直接用于生产。
-
-### Agent 与确定性 Pipeline
-
-| 模式 | 样本 | 成功率 | 平均延迟 | Token |
-|---|---:|---:|---:|---:|
-| 确定性 Pipeline | 8 | 100% | 约 0.01 ms | 0 |
-| Sol Medium Agent | 8 | 37.5% | 13.67 s | 73,100 |
-
-实测表明 Agent 在这组确定性修改任务上成本更高且效果更差，因此默认使用 Pipeline，
-Agent 只作为有边界的歧义处理与工具规划能力。
-
-### PDF
-
-当前 PDF 真值只覆盖一份 FTC 官方文档的两页：文本准确率 `0.9714`、标题 F1 `1.0`、
-阅读顺序准确率 `1.0`。样本量不足以宣称对所有扫描件或复杂表格均有相同效果。
-
-另有 20 份/200 页合成复杂布局压力集，覆盖双栏、多行表格、内嵌图片和页标记。标记
-召回率为 `1.0`，平均解析速度约 `27 ms/页`（随机器负载波动）。它只证明工程解析与负载链路，不代表
-真实法规 PDF 的识别准确率。
-
-### 端到端与并发
-
-100 条合成营销文案产生 550 个持久化工作流事件；51 条获得候选证据并进入人工审核，
-49 条因证据不足停止。串行基线 P95 约 `7.53 ms`、约 `211.89 cases/s`。
-
-8 Worker + SQLite 下全部 100 条完成，但吞吐下降到约 `44.36 cases/s`，P95 上升到约
-`1,142.92 ms`，说明 SQLite 写锁是并发瓶颈，生产并发应使用 PostgreSQL。该测量不含
-网络和模型延迟；确定性基线 Token 与模型成本均为 0。
+评测标签、法规激活和修改草稿均支持接受、纠正和拒绝。AI 生成内容不会被自动写成
+真人审核结果。
 
 ## 技术栈
 
-- Python 3.12、FastAPI、Pydantic
-- SQLAlchemy 2、Alembic、SQLite、PostgreSQL 16
-- BM25、FastEmbed/ONNX、Jina Embeddings、RRF、Reranker
+- Python、FastAPI、Pydantic
+- SQLAlchemy、Alembic、SQLite、PostgreSQL
+- BM25、FastEmbed/ONNX、RRF、Reranker
 - OpenAI-compatible LLM 与 Embedding 接口
-- PDFPlumber、PyPDF、RapidOCR，以及可选 MinerU/PaddleOCR/PP-Structure Sidecar
-- 官方 Python MCP SDK
+- PDFPlumber、PyPDF、RapidOCR 与可选解析 Sidecar
+- MCP Python SDK
 - Pytest、Ruff、GitHub Actions
 
 ## 快速开始
 
 ```powershell
-git clone https://github.com/pzhwzsh/PolicyGuard-AI.git
-cd PolicyGuard-AI
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev,pdf,mcp]"
@@ -137,62 +84,24 @@ Copy-Item .env.example .env
 python -m uvicorn policyguard.api.main:app --reload
 ```
 
-打开：
+模型密钥只填写在本地 `.env`，不要提交到 Git。未配置外部模型时，相关能力会明确跳过
+或降级，不会生成伪造结果。
 
-- 管理界面：<http://127.0.0.1:8000/>
-- API 文档：<http://127.0.0.1:8000/docs>
-- 健康检查：<http://127.0.0.1:8000/health>
-
-模型密钥只填写在本地 `.env`，不要提交到 Git。未配置模型服务时，相关能力会明确跳过
-或降级，不会生成伪造指标。
-
-## 常用命令
+常用验证命令：
 
 ```powershell
-# 全量测试
 python -m pytest
-
-# 数据证据完整性
 python -m policyguard.scripts.publish_data_evidence --validate
-
-# 重新生成本地数据证据
-python -m policyguard.scripts.publish_data_evidence
-
-# 检查官方来源更新
-python -m policyguard.scripts.check_source_updates
-
-# 启动后台任务 Worker
-python -m policyguard.scripts.job_worker
-
-# 启动 MCP Server
-python -m policyguard.mcp_server
 ```
 
-## MCP 工具
+## 项目边界
 
-- `search_policy`：按法域、品类和渠道查询官方证据。
-- `get_workflow`：读取工作流、Checkpoint 和执行事件。
-- `create_remediation_plan`：审核接受后生成内部修改计划。
-- `create_internal_draft`：二次确认后生成内部草稿。
+- 不自动激活新抓取的法规
+- 不自动发布或修改外部商品
+- 不把 AI 审核冒充真人法律审核
+- 不把检索命中等同于合法结论
+- 不保存无边界聊天历史或允许 Agent 自主学习
+- 不构成法律意见，也不保证内容通过平台或监管审核
 
-MCP 不提供任意数据库写入或外部发布工具。
-
-## 质量与边界
-
-- 自动化测试：102 个；本地 101 通过，PostgreSQL 集成测试在 CI 中执行。
-- 全包语句覆盖率：69%。
-- GitHub CI 验证 Linux、PostgreSQL 16、数据证据哈希、Lint 和完整测试。
-- 不自动激活抓取到的法规。
-- 不自动发布或覆盖用户原始内容。
-- 不把 AI 审核冒充真人法律金标。
-- 不将检索命中等同于可回答或合法结论。
-- 不构成法律意见，也不保证内容通过平台或监管审核。
-
-## 文档
-
-- [`docs/DATA_CARD.md`](docs/DATA_CARD.md)：数据来源、指标及限制
-- [`docs/HUMAN_REVIEW_GUIDE.md`](docs/HUMAN_REVIEW_GUIDE.md)：真人审核流程与完成标准
-- [`docs/adr/0001-architecture.md`](docs/adr/0001-architecture.md)：架构与技术选型
-- [`POLICY.md`](POLICY.md)：系统约束和禁止行为
-- [`DEVELOPMENT.md`](DEVELOPMENT.md)：开发和运行说明
-- [`HANDOFF.md`](HANDOFF.md)：详细实现历史与后续工作
+详细的实验数据、数据来源、评测方法和开发记录分别保存在 `docs`、`data/evidence` 和
+`HANDOFF.md` 中，避免把项目首页写成实验日志。
