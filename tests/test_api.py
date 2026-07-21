@@ -159,6 +159,11 @@ def test_health_and_check_round_trip(tmp_path: Path) -> None:
         assert plan["external_side_effect"] is False
         assert plan["operations"][0]["field"] == "title"
         assert "国家级" not in plan["operations"][0]["after"]
+        assert plan["operations"][0]["claim_spans"][0]["text"] == "国家级"
+        assert plan["operations"][0]["legal_basis"]
+        assert plan["operations"][0]["legal_basis"][0]["source_url"].startswith("http")
+        assert plan["operations"][0]["meaning_preservation"]["requires_human_review"] is True
+        assert "title:before" in plan["operations"][0]["diff"]
 
         planned_repeat = client.post(
             f"/api/v1/workflows/compliance/{workflow_result['id']}/remediation-plan",
@@ -176,6 +181,8 @@ def test_health_and_check_round_trip(tmp_path: Path) -> None:
         draft_result = draft.json()
         assert draft_result["status"] == "draft_ready"
         assert draft_result["result_payload"]["draft"]["external_side_effect"] is False
+        assert draft_result["result_payload"]["draft"]["post_check"]["status"] == "passed"
+        assert draft_result["result_payload"]["draft"]["post_check"]["legal_conclusion"] is False
         assert "国家级" not in draft_result["result_payload"]["draft"]["product"]["title"]
         assert draft_result["input_payload"]["product"]["title"] == "国家级护肤品"
 

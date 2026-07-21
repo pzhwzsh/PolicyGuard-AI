@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from difflib import unified_diff
 from typing import Any, Protocol
 
 
@@ -44,6 +45,7 @@ class SuggestConservativeRewriteTool:
 
     def execute(self, arguments: dict[str, Any]) -> ToolResult:
         product = arguments["product"]
+        legal_basis = self._legal_basis(arguments.get("evidence", []))
         operations = []
         for field in ("title", "description"):
             before = str(product.get(field, ""))
@@ -63,6 +65,24 @@ class SuggestConservativeRewriteTool:
                         "after": after,
                         "removed_phrases": removed,
                         "reason": "Conservative baseline removes risky claims; human review required.",
+                        "claim_spans": [
+                            {
+                                "text": phrase,
+                                "start": before.find(phrase),
+                                "end": before.find(phrase) + len(phrase),
+                            }
+                            for phrase in removed
+                        ],
+                        "legal_basis": legal_basis,
+                        "diff": "\n".join(unified_diff(
+                            [before], [after], fromfile=f"{field}:before",
+                            tofile=f"{field}:after", lineterm="",
+                        )),
+                        "meaning_preservation": {
+                            "strategy": "minimal_lexical_deletion",
+                            "unchanged_ratio": round(len(after) / max(1, len(before)), 4),
+                            "requires_human_review": True,
+                        },
                     }
                 )
         return ToolResult(
@@ -70,3 +90,18 @@ class SuggestConservativeRewriteTool:
             success=True,
             output={"operations": operations, "external_side_effect": False},
         )
+
+    @staticmethod
+    def _legal_basis(markets: list[dict]) -> list[dict]:
+        basis = []
+        for market in markets:
+            for hit in market.get("candidate_evidence", [])[:2]:
+                basis.append({
+                    "jurisdiction": market.get("market"),
+                    "section_id": hit.get("section_id"),
+                    "heading": hit.get("heading"),
+                    "quote": str(hit.get("text", ""))[:1200],
+                    "source_url": hit.get("source_url"),
+                    "evidence_status": "human_reviewed_candidate",
+                })
+        return basis
