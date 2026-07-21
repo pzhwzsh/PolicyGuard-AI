@@ -13,6 +13,8 @@ and versions follow Semantic Versioning.
 - Bidirectional Chinese/English legal query routing with original-plus-rewrite RRF retrieval.
 - Cited minimal remediation diffs, protected-fact checks, and deterministic draft rechecks.
 - Versioned, machine-enforced jurisdiction, tool, evidence, review, and side-effect guardrails.
+- Reproducible Chinese-query/English-law evaluation across BM25, local Jina Dense, Hybrid RRF,
+  and Sol query rewriting, with atomic rewrite caching and explicit BGE-M3 availability failures.
 
 ## [0.1.0] - 2026-07-21
 

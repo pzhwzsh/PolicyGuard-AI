@@ -4,6 +4,12 @@ Repository standards: [contributing guide](CONTRIBUTING.md),
 [Git workflow](docs/GIT_WORKFLOW.md), [enforced product boundaries](POLICY.md),
 and [changelog](CHANGELOG.md).
 
+Cross-language retrieval has a reproducible provisional evaluation covering Chinese questions
+against English US/EU sources. See
+[cross-language retrieval evaluation](docs/evaluation/cross-language-retrieval-v1.md) and the
+[human review checklist](data/evaluation/rag-cross-lingual-review-checklist.md). Its metrics are not
+human-verified and must not be represented as production quality.
+
 ## Current End-to-End Capabilities (2026-07-21)
 
 ### July 21 completion pass
