@@ -1,0 +1,33 @@
+{
+  "name": "zh-query-en-law-near-domain-no-answer-v1",
+  "created_at": "2026-07-21",
+  "label_status": "ai_reviewed_pending_human_verification",
+  "label_meaning": "not_answerable_from_active_four_section_us_eu_subset",
+  "limitations": [
+    "Labels are relative to the active FTC two-section and UCPD Articles 6/7 subset.",
+    "The questions may be answerable from other US or EU authorities that are not active here.",
+    "Thresholds tuned on this development set require validation on a separate human-verified set."
+  ],
+  "samples": [
+    {"id": "us-near-01", "query": "美国虚假广告的最高刑事监禁期限是多少？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-02", "query": "FTC对每次虚假广告违法规定的固定罚款是多少美元？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-03", "query": "美国网红代言必须使用什么固定披露文字？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-04", "query": "美国营销邮件退订链接必须保留多少天？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-05", "query": "美国儿童广告每天允许播放多少分钟？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-06", "query": "美国药品广告必须使用多大的风险提示字体？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-07", "query": "美国广告收集消费者数据需要保存几年？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-08", "query": "美国各州对广告税适用的具体税率是多少？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-09", "query": "在美国申请广告商标需要提交哪些专利局表格？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "us-near-10", "query": "美国虚假广告案件应向哪个州法院起诉？", "jurisdiction": "US", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-01", "query": "GDPR要求广告画像同意记录保存多少年？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-02", "query": "欧盟DSA要求推荐系统提供哪几个固定选项？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-03", "query": "欧盟健康声称申请需要提交哪张审批表？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-04", "query": "欧盟化妆品广告的人体试验最少需要多少人？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-05", "query": "欧盟电视广告每小时最多可以播多少分钟？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-06", "query": "欧盟Cookie广告追踪的同意按钮必须是什么颜色？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-07", "query": "欧盟商标广告申请应缴纳多少欧元费用？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-08", "query": "欧盟成员国广告增值税的统一税率是多少？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-09", "query": "UCPD违法行为规定的统一固定罚款是多少？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"},
+    {"id": "eu-near-10", "query": "欧盟广告纠纷必须向哪个成员国法院提交？", "jurisdiction": "EU", "answerable": false, "review_status": "pending_human_review"}
+  ]
+}
