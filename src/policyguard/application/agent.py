@@ -7,6 +7,7 @@ from typing import Protocol
 import httpx
 
 from policyguard.application.security import detect_prompt_injection, redact_sensitive
+from policyguard.application.guardrails import default_guardrail_policy
 from policyguard.application.tools import ToolRegistry
 
 
@@ -39,6 +40,12 @@ class ControlledAgent:
 
     def run(self, context: dict) -> AgentOutcome:
         context_metadata = dict(context.get("context_metadata", {}))
+        try:
+            default_guardrail_policy().validate_tools(self.tools.definitions())
+        except ValueError as exc:
+            return AgentOutcome(
+                "manual_review", {"reason": str(exc)}, [], 0, 0, 0, context_metadata
+            )
         trace = []
         tool_calls = 0
         planner_calls = 0

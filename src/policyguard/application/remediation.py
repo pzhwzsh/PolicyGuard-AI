@@ -5,6 +5,7 @@ from hashlib import sha256
 
 from policyguard.application.agent import ControlledAgent
 from policyguard.application.agent_context import AgentContextBuilder
+from policyguard.application.guardrails import default_guardrail_policy
 from policyguard.application.ports import AgentMemoryRepository, WorkflowRepository
 from policyguard.application.tools import ToolRegistry
 from policyguard.domain.workflow import WorkflowEvent, WorkflowRun, WorkflowStatus
@@ -36,6 +37,12 @@ class RemediationService:
                 "evidence": run.result_payload.get("markets", []),
             },
         )
+        try:
+            default_guardrail_policy().validate_remediation_plan(
+                tool_result.output, run.input_payload["product"]
+            )
+        except ValueError as exc:
+            raise RuntimeError(str(exc)) from exc
         run.result_payload["remediation_plan"] = {
             "plan_id": plan_id,
             "tool": tool_result.tool_name,
@@ -71,6 +78,14 @@ class RemediationService:
                 "total_tokens": outcome.total_tokens,
             })
             return self.repository.save(run)
+        try:
+            default_guardrail_policy().validate_remediation_plan(
+                {**outcome.result, "external_side_effect": False},
+                run.input_payload["product"],
+            )
+        except ValueError as exc:
+            self._event(run, "agent_guardrail", "manual_review", {"reason": str(exc)})
+            return self.repository.save(run)
         run.result_payload["remediation_plan"] = {
             "plan_id": plan_id,
             "mode": "agent",
@@ -102,6 +117,13 @@ class RemediationService:
             raise RuntimeError("workflow_not_ready_for_draft")
         product = deepcopy(run.input_payload["product"])
         plan = run.result_payload["remediation_plan"]
+        try:
+            default_guardrail_policy().validate_remediation_plan(
+                {"operations": plan["operations"], "external_side_effect": False},
+                run.input_payload["product"],
+            )
+        except ValueError as exc:
+            raise RuntimeError(str(exc)) from exc
         for operation in plan["operations"]:
             if operation["operation"] == "replace_field":
                 product[operation["field"]] = operation["after"]

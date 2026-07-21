@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "supported_jurisdictions": ["CN", "US", "EU"],
+  "allowed_agent_tools": ["suggest_conservative_rewrite"],
+  "allowed_remediation_fields": ["title", "description"],
+  "require_legal_basis_for_rewrite": true,
+  "require_human_review_for_rewrite": true,
+  "allow_external_side_effects": false,
+  "allow_automatic_legal_conclusion": false,
+  "max_recalled_memories": 3,
+  "max_agent_steps": 3,
+  "max_agent_tool_calls": 1
+}
