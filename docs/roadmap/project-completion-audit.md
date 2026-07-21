@@ -21,10 +21,9 @@ These percentages are engineering judgment, not measured product KPIs.
 
 ## Verified engineering state
 
-- 97 automated tests are collected: 96 pass locally and the PostgreSQL-only case is skipped when
+- 99 automated tests are collected: 98 pass locally and the PostgreSQL-only case is skipped when
   `POSTGRES_TEST_URL` is absent. CI provisions PostgreSQL 16 for the complete run.
-- Core API/application/domain/infrastructure/MCP statement coverage is 84%.
-- Whole-package coverage is 68% because many CLI, benchmark, backup, and worker entry points are not
+- Whole-package statement coverage is 69% because many CLI, benchmark, backup, and worker entry points are not
   invoked by unit tests.
 - Latest GitHub Actions passes in a clean Python 3.12 environment.
 - Active retrieval remains 3 reviewed documents and 13 chunks; staged documents do not count as
@@ -68,6 +67,15 @@ operationally pending because code cannot substitute for a real reviewer or lega
 | Management UI | Implemented | Evaluation review, legal queue, memory provenance, before/after diff, citations and draft recheck are exposed. |
 | Database lifecycle | Implemented, CI verification pending | Explicit initial Alembic revision, SQLite round trip, and PostgreSQL 16 CI service/test. |
 | External smoke | Implemented and locally exercised | LLM and OCR returned 200; Embedding failed; six EU sources returned 200; SAMR and four FTC pages returned 403 and are reported as access-blocked. |
+
+## Published data evidence
+
+The repository includes a credential-free `data/evidence/v1` release with 11 latest official source
+copies and 3,439 parsed sections. Across all 16 captured versions there are 3,995 sections. Every
+release file has a SHA256, official URL, capture hash, structural status, and legal-review status.
+Dataset hashes, sanitized benchmarks, and zero-valued operational counts are published so missing
+production traffic cannot be hidden. This improves reproducibility but does not replace legal review
+or independent human labels.
 
 ## P1: high-value product capabilities
 

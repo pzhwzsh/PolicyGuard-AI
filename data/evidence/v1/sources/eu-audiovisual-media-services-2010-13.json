@@ -1,0 +1,1480 @@
+{
+  "schema_version": "policyguard-source-evidence-v1",
+  "evidence_status": "official_source_structurally_parsed_pending_legal_review",
+  "source": {
+    "id": "eu-audiovisual-media-services-2010-13",
+    "title": "Audiovisual Media Services Directive 2010/13/EU",
+    "jurisdiction": "EU",
+    "publisher": "European Union / EUR-Lex",
+    "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02010L0013-20181218",
+    "format": "html",
+    "source_language": "en",
+    "ingestion_mode": "legal_document",
+    "activation_policy": "manual_review",
+    "reuse_review_status": "official_publication_terms_not_reviewed"
+  },
+  "capture": {
+    "content_hash": "ecbdbd34c47feab067d62a871798afd7677f3d59aea14be90afbcadbc5f5d136",
+    "created_at": "2026-07-21T12:57:50.048502+00:00",
+    "retrieved_at": "2026-07-21",
+    "section_count": 286,
+    "structural_review_status": "passed",
+    "legal_review_status": "pending",
+    "eligible_for_activation": true,
+    "short_section_rate": 0.2028,
+    "replacement_character_count": 0,
+    "validation_errors": []
+  },
+  "document": {
+    "title": "Audiovisual Media Services Directive 2010/13/EU",
+    "publisher": "European Union / EUR-Lex",
+    "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02010L0013-20181218",
+    "version": "snapshot-ecbdbd34c47f",
+    "published_at": "undated",
+    "retrieved_at": "2026-07-21",
+    "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
+    "scopes": [
+      {
+        "jurisdiction": "EU",
+        "category": "all",
+        "channel": "video",
+        "legal_level": "directive",
+        "source_language": "en",
+        "translation_status": "original",
+        "effective_from": "1900-01-01"
+      }
+    ],
+    "sections": [
+      {
+        "section_id": "html-1-official-source-update",
+        "heading": "Official source update",
+        "text": "02010L0013 — EN — 18.12.2018 — 001.001"
+      },
+      {
+        "section_id": "html-2-official-source-update",
+        "heading": "Official source update",
+        "text": "This text is meant purely as a documentation tool and has no legal effect. The Union's institutions do not assume any liability for its contents. The authentic versions of the relevant acts, including their preambles, are those published in the Official Journal of the European Union and available in EUR-Lex. Those official texts are directly accessible through the links embedded in this document"
+      },
+      {
+        "section_id": "html-4-official-source-update",
+        "heading": "Official source update",
+        "text": "DIRECTIVE 2010/13/EU OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL"
+      },
+      {
+        "section_id": "html-5-official-source-update",
+        "heading": "Official source update",
+        "text": "of 10 March 2010"
+      },
+      {
+        "section_id": "html-6-official-source-update",
+        "heading": "Official source update",
+        "text": "on the coordination of certain provisions laid down by law, regulation or administrative action in Member States concerning the provision of audiovisual media services (Audiovisual Media Services Directive)"
+      },
+      {
+        "section_id": "html-7-official-source-update",
+        "heading": "Official source update",
+        "text": "(codified version)"
+      },
+      {
+        "section_id": "html-8-official-source-update",
+        "heading": "Official source update",
+        "text": "(Text with EEA relevance)"
+      },
+      {
+        "section_id": "html-9-official-source-update",
+        "heading": "Official source update",
+        "text": "(OJ L 095 15.4.2010, p. 1)"
+      },
+      {
+        "section_id": "html-11-official-source-update",
+        "heading": "Official source update",
+        "text": "Official Journal"
+      },
+      {
+        "section_id": "html-16-official-source-update",
+        "heading": "Official source update",
+        "text": "DIRECTIVE (EU) 2018/1808 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 November 2018"
+      },
+      {
+        "section_id": "html-20-official-source-update",
+        "heading": "Official source update",
+        "text": "Corrected by:"
+      },
+      {
+        "section_id": "html-22-official-source-update",
+        "heading": "Official source update",
+        "text": "Corrigendum, OJ L 263, 6.10.2010, p. 15 (2010/13/EU)"
+      },
+      {
+        "section_id": "html-32-official-source-update",
+        "heading": "Official source update",
+        "text": "For the purposes of this Directive, the following definitions shall apply:"
+      },
+      {
+        "section_id": "html-34-official-source-update",
+        "heading": "Official source update",
+        "text": "‘audiovisual media service’ means:"
+      },
+      {
+        "section_id": "html-35-official-source-update",
+        "heading": "Official source update",
+        "text": "a service as defined by Articles 56 and 57 of the Treaty on the Functioning of the European Union, where the principal purpose of the service or a dissociable section thereof is devoted to providing programmes, under the editorial responsibility of a media service provider, to the general public, in order to inform, entertain or educate, by means of electronic communications networks within the meaning of point (a) of Article 2 of Directive 2002/21/EC; such an audiovisual media service is either a television broadcast as defined in point (e) of this paragraph or an on-demand audiovisual media service as defined in point (g) of this paragraph;"
+      },
+      {
+        "section_id": "html-36-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communication;"
+      },
+      {
+        "section_id": "html-38-official-source-update",
+        "heading": "Official source update",
+        "text": "‘video-sharing platform service’ means a service as defined by Articles 56 and 57 of the Treaty on the Functioning of the European Union, where the principal purpose of the service or of a dissociable section thereof or an essential functionality of the service is devoted to providing programmes, user-generated videos, or both, to the general public, for which the video-sharing platform provider does not have editorial responsibility, in order to inform, entertain or educate, by means of electronic communications networks within the meaning of point (a) of Article 2 of Directive 2002/21/EC and the organisation of which is determined by the video-sharing platform provider, including by automatic means or algorithms in particular by displaying, tagging and sequencing;"
+      },
+      {
+        "section_id": "html-39-official-source-update",
+        "heading": "Official source update",
+        "text": "‘programme’ means a set of moving images with or without sound constituting an individual item, irrespective of its length, within a schedule or a catalogue established by a media service provider, including feature-length films, video clips, sports events, situation comedies, documentaries, children's programmes and original drama;"
+      },
+      {
+        "section_id": "html-40-official-source-update",
+        "heading": "Official source update",
+        "text": "‘user-generated video’ means a set of moving images with or without sound constituting an individual item, irrespective of its length, that is created by a user and uploaded to a video-sharing platform by that user or any other user;"
+      },
+      {
+        "section_id": "html-41-official-source-update",
+        "heading": "Official source update",
+        "text": "‘editorial decision’ means a decision which is taken on a regular basis for the purpose of exercising editorial responsibility and linked to the day-to-day operation of the audiovisual media service;"
+      },
+      {
+        "section_id": "html-43-official-source-update",
+        "heading": "Official source update",
+        "text": "‘editorial responsibility’ means the exercise of effective control both over the selection of the programmes and over their organisation either in a chronological schedule, in the case of television broadcasts, or in a catalogue, in the case of on-demand audiovisual media services. Editorial responsibility does not necessarily imply any legal liability under national law for the content or the services provided;"
+      },
+      {
+        "section_id": "html-44-official-source-update",
+        "heading": "Official source update",
+        "text": "‘media service provider’ means the natural or legal person who has editorial responsibility for the choice of the audiovisual content of the audiovisual media service and determines the manner in which it is organised;"
+      },
+      {
+        "section_id": "html-46-official-source-update",
+        "heading": "Official source update",
+        "text": "‘video-sharing platform provider’ means the natural or legal person who provides a video-sharing platform service;"
+      },
+      {
+        "section_id": "html-48-official-source-update",
+        "heading": "Official source update",
+        "text": "‘television broadcasting’ or ‘television broadcast’ (i.e. a linear audiovisual media service) means an audiovisual media service provided by a media service provider for simultaneous viewing of programmes on the basis of a programme schedule;"
+      },
+      {
+        "section_id": "html-49-official-source-update",
+        "heading": "Official source update",
+        "text": "‘broadcaster’ means a media service provider of television broadcasts;"
+      },
+      {
+        "section_id": "html-50-official-source-update",
+        "heading": "Official source update",
+        "text": "‘on-demand audiovisual media service’ (i.e. a non-linear audiovisual media service) means an audiovisual media service provided by a media service provider for the viewing of programmes at the moment chosen by the user and at his individual request on the basis of a catalogue of programmes selected by the media service provider;"
+      },
+      {
+        "section_id": "html-52-official-source-update",
+        "heading": "Official source update",
+        "text": "‘audiovisual commercial communication’ means images with or without sound which are designed to promote, directly or indirectly, the goods, services or image of a natural or legal person pursuing an economic activity; such images accompany, or are included in, a programme or user-generated video in return for payment or for similar consideration or for self-promotional purposes. Forms of audiovisual commercial communication include, inter alia, television advertising, sponsorship, teleshopping and product placement;"
+      },
+      {
+        "section_id": "html-54-official-source-update",
+        "heading": "Official source update",
+        "text": "‘television advertising’ means any form of announcement broadcast whether in return for payment or for similar consideration or broadcast for self-promotional purposes by a public or private undertaking or natural person in connection with a trade, business, craft or profession in order to promote the supply of goods or services, including immovable property, rights and obligations, in return for payment;"
+      },
+      {
+        "section_id": "html-55-official-source-update",
+        "heading": "Official source update",
+        "text": "‘surreptitious audiovisual commercial communication’ means the representation in words or pictures of goods, services, the name, the trade mark or the activities of a producer of goods or a provider of services in programmes when such representation is intended by the media service provider to serve as advertising and might mislead the public as to its nature. Such representation shall, in particular, be considered as intentional if it is done in return for payment or for similar consideration;"
+      },
+      {
+        "section_id": "html-57-official-source-update",
+        "heading": "Official source update",
+        "text": "‘sponsorship’ means any contribution made by public or private undertakings or natural persons not engaged in providing audiovisual media services or video-sharing platform services or in producing audiovisual works to the financing of audiovisual media services, video-sharing platform services, user-generated videos or programmes with a view to promoting their name, trade mark, image, activities or products;"
+      },
+      {
+        "section_id": "html-59-official-source-update",
+        "heading": "Official source update",
+        "text": "‘teleshopping’ means direct offers broadcast to the public with a view to the supply of goods or services, including immovable property, rights and obligations, in return for payment;"
+      },
+      {
+        "section_id": "html-61-official-source-update",
+        "heading": "Official source update",
+        "text": "‘product placement’ means any form of audiovisual commercial communication consisting of the inclusion of, or reference to, a product, a service or the trade mark thereof so that it is featured within a programme or a user-generated video in return for payment or for similar consideration;"
+      },
+      {
+        "section_id": "html-63-official-source-update",
+        "heading": "Official source update",
+        "text": "‘European works’ means the following:"
+      },
+      {
+        "section_id": "html-64-official-source-update",
+        "heading": "Official source update",
+        "text": "works originating in Member States;"
+      },
+      {
+        "section_id": "html-65-official-source-update",
+        "heading": "Official source update",
+        "text": "works originating in European third States party to the European Convention on Transfrontier Television of the Council of Europe and fulfilling the conditions of paragraph 3;"
+      },
+      {
+        "section_id": "html-66-official-source-update",
+        "heading": "Official source update",
+        "text": "works co-produced within the framework of agreements related to the audiovisual sector concluded between the Union and third countries and fulfilling the conditions defined in each of those agreements."
+      },
+      {
+        "section_id": "html-67-official-source-update",
+        "heading": "Official source update",
+        "text": "The works referred to in points (n)(i) and (ii) of paragraph 1 are works mainly made with authors and workers residing in one or more of the States referred to in those provisions provided that they comply with one of the following three conditions:"
+      },
+      {
+        "section_id": "html-68-official-source-update",
+        "heading": "Official source update",
+        "text": "they are made by one or more producers established in one or more of those States;"
+      },
+      {
+        "section_id": "html-69-official-source-update",
+        "heading": "Official source update",
+        "text": "the production of the works is supervised and actually controlled by one or more producers established in one or more of those States;"
+      },
+      {
+        "section_id": "html-70-official-source-update",
+        "heading": "Official source update",
+        "text": "the contribution of co-producers of those States to the total co-production costs is preponderant and the co-production is not controlled by one or more producers established outside those States."
+      },
+      {
+        "section_id": "html-73-official-source-update",
+        "heading": "Official source update",
+        "text": "GENERAL PROVISIONS FOR AUDIOVISUAL MEDIA SERVICES"
+      },
+      {
+        "section_id": "html-76-official-source-update",
+        "heading": "Official source update",
+        "text": "For the purposes of this Directive, the media service providers under the jurisdiction of a Member State are any of the following:"
+      },
+      {
+        "section_id": "html-77-official-source-update",
+        "heading": "Official source update",
+        "text": "those established in that Member State in accordance with paragraph 3;"
+      },
+      {
+        "section_id": "html-78-official-source-update",
+        "heading": "Official source update",
+        "text": "those to whom paragraph 4 applies."
+      },
+      {
+        "section_id": "html-79-official-source-update",
+        "heading": "Official source update",
+        "text": "For the purposes of this Directive, a media service provider shall be deemed to be established in a Member State in the following cases:"
+      },
+      {
+        "section_id": "html-80-official-source-update",
+        "heading": "Official source update",
+        "text": "the media service provider has its head office in that Member State and the editorial decisions about the audiovisual media service are taken in that Member State;"
+      },
+      {
+        "section_id": "html-82-official-source-update",
+        "heading": "Official source update",
+        "text": "if a media service provider has its head office in one Member State but editorial decisions on the audiovisual media service are taken in another Member State, the media service provider shall be deemed to be established in the Member State where a significant part of the workforce involved in the pursuit of the programme-related audiovisual media service activity operates. If a significant part of the workforce involved in the pursuit of the programme-related audiovisual media service activity operates in each of those Member States, the media service provider shall be deemed to be established in the Member State where it has its head office. If a significant part of the workforce involved in the pursuit of the programme-related audiovisual media service activity operates in neither of those Member States, the media service provider shall be deemed to be established in the Member State where it first began its activity in accordance with the law of that Member State, provided that it maintains a stable and effective link with the economy of that Member State;"
+      },
+      {
+        "section_id": "html-84-official-source-update",
+        "heading": "Official source update",
+        "text": "if a media service provider has its head office in a Member State but decisions on the audiovisual media service are taken in a third country, or vice versa, it shall be deemed to be established in the Member State concerned, provided that a significant part of the workforce involved in the pursuit of the audiovisual media service activity operates in that Member State."
+      },
+      {
+        "section_id": "html-85-official-source-update",
+        "heading": "Official source update",
+        "text": "Media service providers to whom the provisions of paragraph 3 are not applicable shall be deemed to be under the jurisdiction of a Member State in the following cases:"
+      },
+      {
+        "section_id": "html-86-official-source-update",
+        "heading": "Official source update",
+        "text": "they use a satellite up-link situated in that Member State;"
+      },
+      {
+        "section_id": "html-87-official-source-update",
+        "heading": "Official source update",
+        "text": "although they do not use a satellite up-link situated in that Member State, they use satellite capacity appertaining to that Member State."
+      },
+      {
+        "section_id": "html-89-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall ensure that such lists are made available in a centralised database. In the event of inconsistencies between the lists, the Commission shall contact the Member States concerned in order to find a solution. The Commission shall ensure that the national regulatory authorities or bodies have access to that database. The Commission shall make information in the database publicly available."
+      },
+      {
+        "section_id": "html-90-official-source-update",
+        "heading": "Official source update",
+        "text": "When the Commission adopts a decision pursuant to Article 3(2) or (3), or Article 4(5), it shall also decide which Member State has jurisdiction."
+      },
+      {
+        "section_id": "html-94-official-source-update",
+        "heading": "Official source update",
+        "text": "The derogation referred to in the first subparagraph shall be subject to the following conditions:"
+      },
+      {
+        "section_id": "html-95-official-source-update",
+        "heading": "Official source update",
+        "text": "during the previous 12 months, the media service provider has on at least two prior occasions already performed one or more instances of conduct described in the first subparagraph;"
+      },
+      {
+        "section_id": "html-96-official-source-update",
+        "heading": "Official source update",
+        "text": "the Member State concerned has notified the media service provider, the Member State having jurisdiction over that provider and the Commission in writing of the alleged infringements and of the proportionate measures it intends to take should any such infringement occur again;"
+      },
+      {
+        "section_id": "html-97-official-source-update",
+        "heading": "Official source update",
+        "text": "the Member State concerned has respected the right of defence of the media service provider and, in particular, has given that provider the opportunity to express its views on the alleged infringements; and"
+      },
+      {
+        "section_id": "html-98-official-source-update",
+        "heading": "Official source update",
+        "text": "consultations with the Member State having jurisdiction over the media service provider and the Commission have not resulted in an amicable settlement within one month of the Commission's receipt of the notification referred to in point (b)."
+      },
+      {
+        "section_id": "html-99-official-source-update",
+        "heading": "Official source update",
+        "text": "Within three months of the receipt of the notification of the measures taken by the Member State concerned and after having requested ERGA to provide an opinion in accordance with point (d) of Article 30b(3), the Commission shall take a decision on whether those measures are compatible with Union law. The Commission shall keep the Contact Committee duly informed. Where the Commission decides that those measures are not compatible with Union law, it shall require the Member State concerned to put an end to the measures in question as a matter of urgency."
+      },
+      {
+        "section_id": "html-101-official-source-update",
+        "heading": "Official source update",
+        "text": "during the previous 12 months the conduct referred to in the first subparagraph occurred at least on one prior occasion;"
+      },
+      {
+        "section_id": "html-103-official-source-update",
+        "heading": "Official source update",
+        "text": "the Member State concerned has notified the media service provider, the Member State having jurisdiction over that provider and the Commission in writing of the alleged infringement and of the proportionate measures it intends to take should any such infringement occur again."
+      },
+      {
+        "section_id": "html-104-official-source-update",
+        "heading": "Official source update",
+        "text": "The Member State concerned shall respect the rights of defence of the media service provider concerned and, in particular, give that provider the opportunity to express its views on the alleged infringements."
+      },
+      {
+        "section_id": "html-107-official-source-update",
+        "heading": "Official source update",
+        "text": "Where a Member State:"
+      },
+      {
+        "section_id": "html-108-official-source-update",
+        "heading": "Official source update",
+        "text": "has exercised its freedom under paragraph 1 to adopt more detailed or stricter rules of general public interest; and"
+      },
+      {
+        "section_id": "html-109-official-source-update",
+        "heading": "Official source update",
+        "text": "assesses that a media service provider under the jurisdiction of another Member State provides an audiovisual media service which is wholly or mostly directed towards its territory,"
+      },
+      {
+        "section_id": "html-110-official-source-update",
+        "heading": "Official source update",
+        "text": "it may request the Member State having jurisdiction to address any problems identified in relation to this paragraph. Both Member States shall cooperate sincerely and swiftly with a view to achieving a mutually satisfactory solution."
+      },
+      {
+        "section_id": "html-111-official-source-update",
+        "heading": "Official source update",
+        "text": "Upon receiving a substantiated request under the first subparagraph, the Member State having jurisdiction shall request the media service provider to comply with the rules of general public interest in question. The Member State having jurisdiction shall regularly inform the requesting Member State of the steps taken to address the problems identified. Within two months of the receipt of the request, the Member State having jurisdiction shall inform the requesting Member State and the Commission of the results obtained and explain the reasons where a solution could not be found."
+      },
+      {
+        "section_id": "html-112-official-source-update",
+        "heading": "Official source update",
+        "text": "Either Member State may invite the Contact Committee to examine the case at any time."
+      },
+      {
+        "section_id": "html-113-official-source-update",
+        "heading": "Official source update",
+        "text": "The Member State concerned may adopt appropriate measures against the media service provider concerned where:"
+      },
+      {
+        "section_id": "html-114-official-source-update",
+        "heading": "Official source update",
+        "text": "it assesses that the results achieved through the application of paragraph 2 are not satisfactory; and"
+      },
+      {
+        "section_id": "html-115-official-source-update",
+        "heading": "Official source update",
+        "text": "it has adduced evidence showing that the media service provider in question has established itself in the Member State having jurisdiction in order to circumvent the stricter rules, in the fields coordinated by this Directive, which would be applicable to it if it were established in the Member State concerned; such evidence shall allow for such circumvention to be reasonably established, without the need to prove the media service provider's intention to circumvent those stricter rules."
+      },
+      {
+        "section_id": "html-116-official-source-update",
+        "heading": "Official source update",
+        "text": "Such measures shall be objectively necessary, applied in a non-discriminatory manner and proportionate to the objectives which they pursue."
+      },
+      {
+        "section_id": "html-117-official-source-update",
+        "heading": "Official source update",
+        "text": "A Member State may take measures pursuant to paragraph 3 only where the following conditions are met:"
+      },
+      {
+        "section_id": "html-118-official-source-update",
+        "heading": "Official source update",
+        "text": "it has notified the Commission and the Member State in which the media service provider is established of its intention to take such measures while substantiating the grounds on which it bases its assessment;"
+      },
+      {
+        "section_id": "html-119-official-source-update",
+        "heading": "Official source update",
+        "text": "it has respected the rights of defence of the media service provider concerned and, in particular, has given that media service provider the opportunity to express its views on the alleged circumvention and the measures the notifying Member State intends to take; and"
+      },
+      {
+        "section_id": "html-120-official-source-update",
+        "heading": "Official source update",
+        "text": "the Commission has decided, after having requested ERGA to provide an opinion in accordance with point (d) of Article 30b(3), that the measures are compatible with Union law, in particular that assessments made by the Member State taking the measures under paragraphs 2 and 3 of this Article are correctly founded; the Commission shall keep the Contact Committee duly informed."
+      },
+      {
+        "section_id": "html-121-official-source-update",
+        "heading": "Official source update",
+        "text": "If the Commission lacks information necessary to take the decision pursuant to the first subparagraph, it shall, within one month of the receipt of the notification, request from the Member State concerned all information necessary to reach that decision. The time limit within which the Commission is to take the decision shall be suspended until that Member State has provided such necessary information. In any case, the suspension of the time limit shall not last longer than one month."
+      },
+      {
+        "section_id": "html-124-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall encourage the use of co-regulation and the fostering of self-regulation through codes of conduct adopted at national level in the fields coordinated by this Directive to the extent permitted by their legal systems. Those codes shall:"
+      },
+      {
+        "section_id": "html-125-official-source-update",
+        "heading": "Official source update",
+        "text": "be such that they are broadly accepted by the main stakeholders in the Member States concerned;"
+      },
+      {
+        "section_id": "html-126-official-source-update",
+        "heading": "Official source update",
+        "text": "clearly and unambiguously set out their objectives;"
+      },
+      {
+        "section_id": "html-127-official-source-update",
+        "heading": "Official source update",
+        "text": "provide for regular, transparent and independent monitoring and evaluation of the achievement of the objectives aimed at; and"
+      },
+      {
+        "section_id": "html-128-official-source-update",
+        "heading": "Official source update",
+        "text": "provide for effective enforcement including effective and proportionate sanctions."
+      },
+      {
+        "section_id": "html-129-official-source-update",
+        "heading": "Official source update",
+        "text": "In cooperation with the Member States, the Commission shall facilitate the development of Union codes of conduct, where appropriate, in accordance with the principles of subsidiarity and proportionality."
+      },
+      {
+        "section_id": "html-130-official-source-update",
+        "heading": "Official source update",
+        "text": "The signatories of Union codes of conduct shall submit the drafts of those codes and amendments thereto to the Commission. The Commission shall consult the Contact Committee on those draft codes or amendments thereto."
+      },
+      {
+        "section_id": "html-131-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall make the Union codes of conduct publicly available and may give them appropriate publicity."
+      },
+      {
+        "section_id": "html-135-official-source-update",
+        "heading": "Official source update",
+        "text": "PROVISIONS APPLICABLE TO AUDIOVISUAL MEDIA SERVICES"
+      },
+      {
+        "section_id": "html-137-official-source-update",
+        "heading": "Official source update",
+        "text": "Each Member State shall ensure that a media service provider under its jurisdiction shall make easily, directly and permanently accessible to the recipients of a service at least the following information:"
+      },
+      {
+        "section_id": "html-139-official-source-update",
+        "heading": "Official source update",
+        "text": "the geographical address at which it is established;"
+      },
+      {
+        "section_id": "html-140-official-source-update",
+        "heading": "Official source update",
+        "text": "the details, including its email address or website, which allow it to be contacted rapidly in a direct and effective manner;"
+      },
+      {
+        "section_id": "html-141-official-source-update",
+        "heading": "Official source update",
+        "text": "the Member State having jurisdiction over it and the competent regulatory authorities or bodies or supervisory bodies."
+      },
+      {
+        "section_id": "html-143-official-source-update",
+        "heading": "Official source update",
+        "text": "Without prejudice to the obligation of Member States to respect and protect human dignity, Member States shall ensure by appropriate means that audiovisual media services provided by media service providers under their jurisdiction do not contain any:"
+      },
+      {
+        "section_id": "html-144-official-source-update",
+        "heading": "Official source update",
+        "text": "incitement to violence or hatred directed against a group of persons or a member of a group based on any of the grounds referred to in Article 21 of the Charter;"
+      },
+      {
+        "section_id": "html-145-official-source-update",
+        "heading": "Official source update",
+        "text": "public provocation to commit a terrorist offence as set out in Article 5 of Directive (EU) 2017/541."
+      },
+      {
+        "section_id": "html-148-official-source-update",
+        "heading": "Official source update",
+        "text": "The most harmful content, such as gratuitous violence and pornography, shall be subject to the strictest measures."
+      },
+      {
+        "section_id": "html-149-official-source-update",
+        "heading": "Official source update",
+        "text": "For the implementation of this paragraph, Member States shall encourage the use of co-regulation as provided for in Article 4a(1)."
+      },
+      {
+        "section_id": "html-153-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States may take measures to ensure the appropriate prominence of audiovisual media services of general interest."
+      },
+      {
+        "section_id": "html-155-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall take appropriate and proportionate measures to ensure that audiovisual media services provided by media service providers are not, without the explicit consent of those providers, overlaid for commercial purposes or modified."
+      },
+      {
+        "section_id": "html-156-official-source-update",
+        "heading": "Official source update",
+        "text": "For the purposes of this Article, Member States shall specify the regulatory details, including exceptions, notably in relation to safeguarding the legitimate interests of users while taking into account the legitimate interests of the media service providers that originally provided the audiovisual media services."
+      },
+      {
+        "section_id": "html-159-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall ensure that media service providers under their jurisdiction do not transmit cinematographic works outside periods agreed with the rights holders."
+      },
+      {
+        "section_id": "html-162-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall ensure that audiovisual commercial communications provided by media service providers under their jurisdiction comply with the following requirements:"
+      },
+      {
+        "section_id": "html-163-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communications shall be readily recognisable as such; surreptitious audiovisual commercial communication shall be prohibited;"
+      },
+      {
+        "section_id": "html-164-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communications shall not use subliminal techniques;"
+      },
+      {
+        "section_id": "html-165-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communications shall not:"
+      },
+      {
+        "section_id": "html-166-official-source-update",
+        "heading": "Official source update",
+        "text": "prejudice respect for human dignity;"
+      },
+      {
+        "section_id": "html-167-official-source-update",
+        "heading": "Official source update",
+        "text": "include or promote any discrimination based on sex, racial or ethnic origin, nationality, religion or belief, disability, age or sexual orientation;"
+      },
+      {
+        "section_id": "html-168-official-source-update",
+        "heading": "Official source update",
+        "text": "encourage behaviour prejudicial to health or safety;"
+      },
+      {
+        "section_id": "html-169-official-source-update",
+        "heading": "Official source update",
+        "text": "encourage behaviour grossly prejudicial to the protection of the environment;"
+      },
+      {
+        "section_id": "html-170-official-source-update",
+        "heading": "Official source update",
+        "text": "all forms of audiovisual commercial communications for cigarettes and other tobacco products, as well as for electronic cigarettes and refill containers shall be prohibited;"
+      },
+      {
+        "section_id": "html-171-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communications for alcoholic beverages shall not be aimed specifically at minors and shall not encourage immoderate consumption of such beverages;"
+      },
+      {
+        "section_id": "html-172-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communications for medicinal products and medical treatment available only on prescription in the Member State within whose jurisdiction the media service provider falls shall be prohibited;"
+      },
+      {
+        "section_id": "html-173-official-source-update",
+        "heading": "Official source update",
+        "text": "audiovisual commercial communications shall not cause physical, mental or moral detriment to minors; therefore, they shall not directly exhort minors to buy or hire a product or service by exploiting their inexperience or credulity, directly encourage them to persuade their parents or others to purchase the goods or services being advertised, exploit the special trust minors place in parents, teachers or other persons, or unreasonably show minors in dangerous situations."
+      },
+      {
+        "section_id": "html-174-official-source-update",
+        "heading": "Official source update",
+        "text": "Those codes shall aim to effectively reduce the exposure of children to audiovisual commercial communications for such foods and beverages. They shall aim to provide that such audiovisual commercial communications do not emphasise the positive quality of the nutritional aspects of such foods and beverages."
+      },
+      {
+        "section_id": "html-177-official-source-update",
+        "heading": "Official source update",
+        "text": "Audiovisual media services or programmes that are sponsored shall meet the following requirements:"
+      },
+      {
+        "section_id": "html-178-official-source-update",
+        "heading": "Official source update",
+        "text": "their content and, in the case of television broadcasting, their scheduling shall in no circumstances be influenced in such a way as to affect the responsibility and editorial independence of the media service provider;"
+      },
+      {
+        "section_id": "html-179-official-source-update",
+        "heading": "Official source update",
+        "text": "they shall not directly encourage the purchase or rental of goods or services, in particular by making special promotional references to those goods or services;"
+      },
+      {
+        "section_id": "html-180-official-source-update",
+        "heading": "Official source update",
+        "text": "viewers shall be clearly informed of the existence of a sponsorship agreement. Sponsored programmes shall be clearly identified as such by the name, logo and/or any other symbol of the sponsor such as a reference to its product(s) or service(s) or a distinctive sign thereof in an appropriate way for programmes at the beginning, during and/or at the end of the programmes."
+      },
+      {
+        "section_id": "html-184-official-source-update",
+        "heading": "Official source update",
+        "text": "Programmes that contain product placement shall meet the following requirements:"
+      },
+      {
+        "section_id": "html-185-official-source-update",
+        "heading": "Official source update",
+        "text": "their content and organisation within a schedule, in the case of television broadcasting, or within a catalogue in the case of on-demand audiovisual media services, shall under no circumstances be influenced in such a way as to affect the responsibility and editorial independence of the media service provider;"
+      },
+      {
+        "section_id": "html-187-official-source-update",
+        "heading": "Official source update",
+        "text": "they shall not give undue prominence to the product in question;"
+      },
+      {
+        "section_id": "html-188-official-source-update",
+        "heading": "Official source update",
+        "text": "viewers shall be clearly informed of the existence of product placement by an appropriate identification at the start and at the end of the programme, and when a programme resumes after an advertising break, in order to avoid any confusion on the part of the viewer."
+      },
+      {
+        "section_id": "html-189-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States may waive the requirements set out in point (d) except for programmes produced or commissioned by a media service provider or by a company affiliated with that media service provider."
+      },
+      {
+        "section_id": "html-190-official-source-update",
+        "heading": "Official source update",
+        "text": "In any event programmes shall not contain product placement of:"
+      },
+      {
+        "section_id": "html-191-official-source-update",
+        "heading": "Official source update",
+        "text": "cigarettes and other tobacco products, as well as electronic cigarettes and refill containers, or product placement from undertakings whose principal activity is the manufacture or sale of those products;"
+      },
+      {
+        "section_id": "html-192-official-source-update",
+        "heading": "Official source update",
+        "text": "specific medicinal products or medical treatments available only on prescription in the Member State under whose jurisdiction the media service provider falls."
+      },
+      {
+        "section_id": "html-200-official-source-update",
+        "heading": "Official source update",
+        "text": "PROVISIONS CONCERNING EXCLUSIVE RIGHTS AND SHORT NEWS REPORTS IN TELEVISION BROADCASTING"
+      },
+      {
+        "section_id": "html-204-official-source-update",
+        "heading": "Official source update",
+        "text": "PROMOTION OF DISTRIBUTION AND PRODUCTION OF TELEVISION PROGRAMMES"
+      },
+      {
+        "section_id": "html-206-official-source-update",
+        "heading": "Official source update",
+        "text": "However, in respect of Greece and Portugal, the year 1988 shall be replaced by the year 1990."
+      },
+      {
+        "section_id": "html-207-official-source-update",
+        "heading": "Official source update",
+        "text": "That report shall in particular include a statistical statement on the achievement of the proportion referred to in this Article and Article 17 for each of the television programmes falling within the jurisdiction of the Member State concerned, the reasons, in each case, for the failure to attain that proportion and the measures adopted or envisaged in order to achieve it."
+      },
+      {
+        "section_id": "html-208-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall inform the other Member States and the European Parliament of the reports, which shall be accompanied, where appropriate, by an opinion. The Commission shall ensure the application of this Article and Article 17 in accordance with the provisions of the Treaty on the Functioning of the European Union. The Commission may take account in its opinion, in particular, of progress achieved in relation to previous years, the share of first broadcast works in the programming, the particular circumstances of new television broadcasters and the specific situation of countries with a low audiovisual production capacity or restricted language area."
+      },
+      {
+        "section_id": "html-210-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall ensure, where practicable and by appropriate means, that broadcasters reserve at least 10 % of their transmission time, excluding the time allotted to news, sports events, games, advertising, teletext services and teleshopping, or alternately, at the discretion of the Member State, at least 10 % of their programming budget, for European works created by producers who are independent of broadcasters. This proportion, having regard to the broadcaster’s informational, educational, cultural and entertainment responsibilities to its viewing public, should be achieved progressively, on the basis of suitable criteria. It must be achieved by earmarking an adequate proportion for recent works, that is to say works transmitted within 5 years of their production."
+      },
+      {
+        "section_id": "html-212-official-source-update",
+        "heading": "Official source update",
+        "text": "This Chapter shall not apply to television broadcasts that are intended for local audiences and do not form part of a national network."
+      },
+      {
+        "section_id": "html-214-official-source-update",
+        "heading": "Official source update",
+        "text": "TELEVISION ADVERTISING AND TELESHOPPING"
+      },
+      {
+        "section_id": "html-220-official-source-update",
+        "heading": "Official source update",
+        "text": "Teleshopping for medicinal products which are subject to a marketing authorisation within the meaning of Directive 2001/83/EC, as well as teleshopping for medical treatment, shall be prohibited."
+      },
+      {
+        "section_id": "html-222-official-source-update",
+        "heading": "Official source update",
+        "text": "Television advertising and teleshopping for alcoholic beverages shall comply with the following criteria:"
+      },
+      {
+        "section_id": "html-223-official-source-update",
+        "heading": "Official source update",
+        "text": "it may not be aimed specifically at minors or, in particular, depict minors consuming these beverages;"
+      },
+      {
+        "section_id": "html-224-official-source-update",
+        "heading": "Official source update",
+        "text": "it shall not link the consumption of alcohol to enhanced physical performance or to driving;"
+      },
+      {
+        "section_id": "html-225-official-source-update",
+        "heading": "Official source update",
+        "text": "it shall not create the impression that the consumption of alcohol contributes towards social or sexual success;"
+      },
+      {
+        "section_id": "html-226-official-source-update",
+        "heading": "Official source update",
+        "text": "it shall not claim that alcohol has therapeutic qualities or that it is a stimulant, a sedative or a means of resolving personal conflicts;"
+      },
+      {
+        "section_id": "html-227-official-source-update",
+        "heading": "Official source update",
+        "text": "it shall not encourage immoderate consumption of alcohol or present abstinence or moderation in a negative light;"
+      },
+      {
+        "section_id": "html-228-official-source-update",
+        "heading": "Official source update",
+        "text": "it shall not place emphasis on high alcoholic content as being a positive quality of the beverages."
+      },
+      {
+        "section_id": "html-231-official-source-update",
+        "heading": "Official source update",
+        "text": "Paragraph 1 shall not apply to:"
+      },
+      {
+        "section_id": "html-232-official-source-update",
+        "heading": "Official source update",
+        "text": "announcements made by the broadcaster in connection with its own programmes and ancillary products directly derived from those programmes or with programmes and audiovisual media services from other entities belonging to the same broadcasting group;"
+      },
+      {
+        "section_id": "html-233-official-source-update",
+        "heading": "Official source update",
+        "text": "sponsorship announcements;"
+      },
+      {
+        "section_id": "html-234-official-source-update",
+        "heading": "Official source update",
+        "text": "product placements;"
+      },
+      {
+        "section_id": "html-235-official-source-update",
+        "heading": "Official source update",
+        "text": "neutral frames between editorial content and television advertising or teleshopping spots, and between individual spots."
+      },
+      {
+        "section_id": "html-238-official-source-update",
+        "heading": "Official source update",
+        "text": "Teleshopping windows shall be clearly identified as such by optical and acoustic means and shall be of a minimum uninterrupted duration of 15 minutes."
+      },
+      {
+        "section_id": "html-240-official-source-update",
+        "heading": "Official source update",
+        "text": "This Directive shall apply mutatis mutandis to television channels exclusively devoted to advertising and teleshopping as well as to television channels exclusively devoted to self-promotion."
+      },
+      {
+        "section_id": "html-241-official-source-update",
+        "heading": "Official source update",
+        "text": "However, Chapter VI as well as Articles 20 and 23 shall not apply to these channels."
+      },
+      {
+        "section_id": "html-243-official-source-update",
+        "heading": "Official source update",
+        "text": "Without prejudice to Article 4, Member States may, with due regard for Union law, lay down conditions other than those laid down in Article 20(2) and Article 23 in respect of television broadcasts intended solely for the national territory which cannot be received directly or indirectly by the public in one or more other Member States."
+      },
+      {
+        "section_id": "html-247-official-source-update",
+        "heading": "Official source update",
+        "text": "RIGHT OF REPLY IN TELEVISION BROADCASTING"
+      },
+      {
+        "section_id": "html-251-official-source-update",
+        "heading": "Official source update",
+        "text": "PROVISIONS APPLICABLE TO VIDEO-SHARING PLATFORM SERVICES"
+      },
+      {
+        "section_id": "html-253-official-source-update",
+        "heading": "Official source update",
+        "text": "A video-sharing platform provider which is not established on the territory of a Member State pursuant to paragraph 1 shall be deemed to be established on the territory of a Member State for the purposes of this Directive if that video-sharing platform provider:"
+      },
+      {
+        "section_id": "html-254-official-source-update",
+        "heading": "Official source update",
+        "text": "has a parent undertaking or a subsidiary undertaking that is established on the territory of that Member State; or"
+      },
+      {
+        "section_id": "html-255-official-source-update",
+        "heading": "Official source update",
+        "text": "is part of a group and another undertaking of that group is established on the territory of that Member State."
+      },
+      {
+        "section_id": "html-256-official-source-update",
+        "heading": "Official source update",
+        "text": "For the purposes of this Article:"
+      },
+      {
+        "section_id": "html-257-official-source-update",
+        "heading": "Official source update",
+        "text": "‘parent undertaking’ means an undertaking which controls one or more subsidiary undertakings;"
+      },
+      {
+        "section_id": "html-258-official-source-update",
+        "heading": "Official source update",
+        "text": "‘subsidiary undertaking’ means an undertaking controlled by a parent undertaking, including any subsidiary undertaking of an ultimate parent undertaking;"
+      },
+      {
+        "section_id": "html-259-official-source-update",
+        "heading": "Official source update",
+        "text": "‘group’ means a parent undertaking, all its subsidiary undertakings and all other undertakings having economic and legal organisational links to them."
+      },
+      {
+        "section_id": "html-260-official-source-update",
+        "heading": "Official source update",
+        "text": "Where there are several other undertakings which are part of the group and each of them is established in a different Member State, the video-sharing platform provider shall be deemed to be established in the Member State where one of these undertakings first began its activity, provided that it maintains a stable and effective link with the economy of that Member State."
+      },
+      {
+        "section_id": "html-263-official-source-update",
+        "heading": "Official source update",
+        "text": "Without prejudice to Articles 12 to 15 of Directive 2000/31/EC, Member States shall ensure that video-sharing platform providers under their jurisdiction take appropriate measures to protect:"
+      },
+      {
+        "section_id": "html-264-official-source-update",
+        "heading": "Official source update",
+        "text": "minors from programmes, user-generated videos and audiovisual commercial communications which may impair their physical, mental or moral development in accordance with Article 6a(1);"
+      },
+      {
+        "section_id": "html-265-official-source-update",
+        "heading": "Official source update",
+        "text": "the general public from programmes, user-generated videos and audiovisual commercial communications containing incitement to violence or hatred directed against a group of persons or a member of a group based on any of the grounds referred to in Article 21 of the Charter;"
+      },
+      {
+        "section_id": "html-266-official-source-update",
+        "heading": "Official source update",
+        "text": "the general public from programmes, user-generated videos and audiovisual commercial communications containing content the dissemination of which constitutes an activity which is a criminal offence under Union law, namely public provocation to commit a terrorist offence as set out in Article 5 of Directive (EU) 2017/541, offences concerning child pornography as set out in Article 5(4) of Directive 2011/93/EU of the European Parliament and of the Council ( 1 ) and offences concerning racism and xenophobia as set out in Article 1 of Framework Decision 2008/913/JHA."
+      },
+      {
+        "section_id": "html-267-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall ensure that the video-sharing platform providers under their jurisdiction take appropriate measures to comply with the requirements set out in Article 9(1) with respect to audiovisual commercial communications that are not marketed, sold or arranged by those video-sharing platform providers, taking into account the limited control exercised by those video-sharing platforms over those audiovisual commercial communications."
+      },
+      {
+        "section_id": "html-268-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall ensure that video-sharing platform providers clearly inform users where programmes and user-generated videos contain audiovisual commercial communications, provided that such communications are declared under point (c) of the third subparagraph of paragraph 3 or the provider has knowledge of that fact."
+      },
+      {
+        "section_id": "html-269-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall encourage the use of co-regulation and the fostering of self-regulation through codes of conduct as provided for in Article 4a(1) aiming at effectively reducing the exposure of children to audiovisual commercial communications for foods and beverages containing nutrients and substances with a nutritional or physiological effect, in particular fat, trans-fatty acids, salt or sodium and sugars, of which excessive intakes in the overall diet are not recommended. Those codes shall aim to provide that such audiovisual commercial communications do not emphasise the positive quality of the nutritional aspects of such foods and beverages."
+      },
+      {
+        "section_id": "html-270-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall ensure that all video-sharing platform providers under their jurisdiction apply such measures. Those measures shall be practicable and proportionate, taking into account the size of the video-sharing platform service and the nature of the service that is provided. Those measures shall not lead to any ex-ante control measures or upload-filtering of content which do not comply with Article 15 of Directive 2000/31/EC. For the purposes of the protection of minors, provided for in point (a) of paragraph 1 of this Article, the most harmful content shall be subject to the strictest access control measures."
+      },
+      {
+        "section_id": "html-271-official-source-update",
+        "heading": "Official source update",
+        "text": "Those measures shall consist of, as appropriate:"
+      },
+      {
+        "section_id": "html-272-official-source-update",
+        "heading": "Official source update",
+        "text": "including and applying in the terms and conditions of the video-sharing platform services the requirements referred to in paragraph 1;"
+      },
+      {
+        "section_id": "html-273-official-source-update",
+        "heading": "Official source update",
+        "text": "including and applying in the terms and conditions of the video-sharing platform services the requirements set out in Article 9(1) for audiovisual commercial communications that are not marketed, sold or arranged by the video-sharing platform providers;"
+      },
+      {
+        "section_id": "html-274-official-source-update",
+        "heading": "Official source update",
+        "text": "having a functionality for users who upload user-generated videos to declare whether such videos contain audiovisual commercial communications as far as they know or can be reasonably expected to know;"
+      },
+      {
+        "section_id": "html-275-official-source-update",
+        "heading": "Official source update",
+        "text": "establishing and operating transparent and user-friendly mechanisms for users of a video-sharing platform to report or flag to the video-sharing platform provider concerned the content referred to in paragraph 1 provided on its platform;"
+      },
+      {
+        "section_id": "html-276-official-source-update",
+        "heading": "Official source update",
+        "text": "establishing and operating systems through which video-sharing platform providers explain to users of video-sharing platforms what effect has been given to the reporting and flagging referred to in point (d);"
+      },
+      {
+        "section_id": "html-277-official-source-update",
+        "heading": "Official source update",
+        "text": "establishing and operating age verification systems for users of video-sharing platforms with respect to content which may impair the physical, mental or moral development of minors;"
+      },
+      {
+        "section_id": "html-278-official-source-update",
+        "heading": "Official source update",
+        "text": "establishing and operating easy-to-use systems allowing users of video-sharing platforms to rate the content referred to in paragraph 1;"
+      },
+      {
+        "section_id": "html-279-official-source-update",
+        "heading": "Official source update",
+        "text": "providing for parental control systems that are under the control of the end-user with respect to content which may impair the physical, mental or moral development of minors;"
+      },
+      {
+        "section_id": "html-280-official-source-update",
+        "heading": "Official source update",
+        "text": "establishing and operating transparent, easy-to-use and effective procedures for the handling and resolution of users' complaints to the video-sharing platform provider in relation to the implementation of the measures referred to in points (d) to (h);"
+      },
+      {
+        "section_id": "html-281-official-source-update",
+        "heading": "Official source update",
+        "text": "providing for effective media literacy measures and tools and raising users' awareness of those measures and tools."
+      },
+      {
+        "section_id": "html-282-official-source-update",
+        "heading": "Official source update",
+        "text": "Personal data of minors collected or otherwise generated by video-sharing platform providers pursuant to points (f) and (h) of the third subparagraph shall not be processed for commercial purposes, such as direct marketing, profiling and behaviourally targeted advertising."
+      },
+      {
+        "section_id": "html-285-official-source-update",
+        "heading": "Official source update",
+        "text": "CONTACT COMMITTEE"
+      },
+      {
+        "section_id": "html-287-official-source-update",
+        "heading": "Official source update",
+        "text": "The tasks of the contact committee shall be:"
+      },
+      {
+        "section_id": "html-288-official-source-update",
+        "heading": "Official source update",
+        "text": "to facilitate effective implementation of this Directive through regular consultation on any practical problems arising from its application, and particularly from the application of Article 2, as well as on any other matters on which exchanges of views are deemed useful;"
+      },
+      {
+        "section_id": "html-289-official-source-update",
+        "heading": "Official source update",
+        "text": "to deliver own-initiative opinions or opinions requested by the Commission on the application by the Member States of this Directive;"
+      },
+      {
+        "section_id": "html-290-official-source-update",
+        "heading": "Official source update",
+        "text": "to be the forum for an exchange of views on what matters should be dealt with in the reports which Member States must submit pursuant to Article 16(3) and on their methodology;"
+      },
+      {
+        "section_id": "html-291-official-source-update",
+        "heading": "Official source update",
+        "text": "to discuss the outcome of regular consultations which the Commission holds with representatives of broadcasting organisations, producers, consumers, manufacturers, service providers and trade unions and the creative community;"
+      },
+      {
+        "section_id": "html-292-official-source-update",
+        "heading": "Official source update",
+        "text": "to facilitate the exchange of information between the Member States and the Commission on the situation and the development of regulatory activities regarding audiovisual media services, taking account of the Union’s audiovisual policy, as well as relevant developments in the technical field;"
+      },
+      {
+        "section_id": "html-293-official-source-update",
+        "heading": "Official source update",
+        "text": "to examine any development arising in the sector on which an exchange of views appears useful."
+      },
+      {
+        "section_id": "html-296-official-source-update",
+        "heading": "Official source update",
+        "text": "REGULATORY AUTHORITIES AND BODIES OF THE MEMBER STATES"
+      },
+      {
+        "section_id": "html-298-official-source-update",
+        "heading": "Official source update",
+        "text": "National regulatory authorities or bodies shall not seek or take instructions from any other body in relation to the exercise of the tasks assigned to them under national law implementing Union law. This shall not prevent supervision in accordance with national constitutional law."
+      },
+      {
+        "section_id": "html-299-official-source-update",
+        "heading": "Official source update",
+        "text": "Pending the outcome of the appeal, the decision of the national regulatory authority or body shall stand, unless interim measures are granted in accordance with national law."
+      },
+      {
+        "section_id": "html-303-official-source-update",
+        "heading": "Official source update",
+        "text": "ERGA shall have the following tasks:"
+      },
+      {
+        "section_id": "html-304-official-source-update",
+        "heading": "Official source update",
+        "text": "to provide technical expertise to the Commission:"
+      },
+      {
+        "section_id": "html-305-official-source-update",
+        "heading": "Official source update",
+        "text": "to exchange experience and best practices on the application of the regulatory framework for audiovisual media services, including on accessibility and media literacy;"
+      },
+      {
+        "section_id": "html-306-official-source-update",
+        "heading": "Official source update",
+        "text": "to cooperate and provide its members with the information necessary for the application of this Directive, in particular as regards Articles 3, 4 and 7;"
+      },
+      {
+        "section_id": "html-307-official-source-update",
+        "heading": "Official source update",
+        "text": "to give opinions, when requested by the Commission, on the technical and factual aspects of the issues pursuant to Article 2(5c), Article 3(2) and (3), point (c) of Article 4(4) and Article 28a(7)."
+      },
+      {
+        "section_id": "html-310-official-source-update",
+        "heading": "Official source update",
+        "text": "FINAL PROVISIONS"
+      },
+      {
+        "section_id": "html-312-official-source-update",
+        "heading": "Official source update",
+        "text": "In fields which this Directive does not coordinate, it shall not affect the rights and obligations of Member States resulting from existing conventions dealing with telecommunications or broadcasting."
+      },
+      {
+        "section_id": "html-314-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall communicate to the Commission the text of the main provisions of national law which they adopt in the field covered by this Directive."
+      },
+      {
+        "section_id": "html-317-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall monitor Member States' application of this Directive."
+      },
+      {
+        "section_id": "html-318-official-source-update",
+        "heading": "Official source update",
+        "text": "By 19 December 2022 at the latest, and every three years thereafter, the Commission shall submit to the European Parliament, to the Council and to the European Economic and Social Committee a report on the application of this Directive."
+      },
+      {
+        "section_id": "html-319-official-source-update",
+        "heading": "Official source update",
+        "text": "By 19 December 2026 at the latest, the Commission shall submit to the European Parliament and the Council an ex post evaluation, accompanied where appropriate by proposals for its review, of the impact of this Directive and its added value."
+      },
+      {
+        "section_id": "html-320-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall keep the Contact Committee and ERGA duly informed of the others' work and activities."
+      },
+      {
+        "section_id": "html-321-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall ensure that information received from Member States on any measure that they have taken in the fields coordinated by this Directive is communicated to the Contact Committee and ERGA."
+      },
+      {
+        "section_id": "html-326-official-source-update",
+        "heading": "Official source update",
+        "text": "Directive 89/552/EEC, as amended by the Directives listed in Annex I, Part A, is repealed, without prejudice to the obligations of the Member States relating to the time limits for transposition into national law of the Directives set out in Annex I, Part B."
+      },
+      {
+        "section_id": "html-327-official-source-update",
+        "heading": "Official source update",
+        "text": "References to the repealed Directive shall be construed as references to this Directive and shall be read in accordance with the correlation table in Annex II."
+      },
+      {
+        "section_id": "html-329-official-source-update",
+        "heading": "Official source update",
+        "text": "This Directive shall enter into force on the 20th day following its publication in the Official Journal of the European Union ."
+      },
+      {
+        "section_id": "html-331-official-source-update",
+        "heading": "Official source update",
+        "text": "This Directive is addressed to the Member States."
+      },
+      {
+        "section_id": "html-334-official-source-update",
+        "heading": "Official source update",
+        "text": "Repealed Directive with list of its successive amendments"
+      },
+      {
+        "section_id": "html-335-official-source-update",
+        "heading": "Official source update",
+        "text": "(referred to in Article 34)"
+      },
+      {
+        "section_id": "html-336-official-source-update",
+        "heading": "Official source update",
+        "text": "Council Directive 89/552/EEC"
+      },
+      {
+        "section_id": "html-337-official-source-update",
+        "heading": "Official source update",
+        "text": "(OJ L 298, 17.10.1989, p. 23)"
+      },
+      {
+        "section_id": "html-338-official-source-update",
+        "heading": "Official source update",
+        "text": "Directive 97/36/EC of the European Parliament and of the Council"
+      },
+      {
+        "section_id": "html-339-official-source-update",
+        "heading": "Official source update",
+        "text": "(OJ L 202, 30.7.1997, p. 60)"
+      },
+      {
+        "section_id": "html-340-official-source-update",
+        "heading": "Official source update",
+        "text": "Directive 2007/65/EC of the European Parliament and of the Council"
+      },
+      {
+        "section_id": "html-341-official-source-update",
+        "heading": "Official source update",
+        "text": "(OJ L 332, 18.12.2007, p. 27)"
+      },
+      {
+        "section_id": "html-342-official-source-update",
+        "heading": "Official source update",
+        "text": "only Article 1"
+      },
+      {
+        "section_id": "html-344-official-source-update",
+        "heading": "Official source update",
+        "text": "List of time limits for transposition into national law"
+      },
+      {
+        "section_id": "html-347-official-source-update",
+        "heading": "Official source update",
+        "text": "Time limit for transposition"
+      },
+      {
+        "section_id": "html-349-official-source-update",
+        "heading": "Official source update",
+        "text": "3 October 1991"
+      },
+      {
+        "section_id": "html-351-official-source-update",
+        "heading": "Official source update",
+        "text": "31 December 1998"
+      },
+      {
+        "section_id": "html-353-official-source-update",
+        "heading": "Official source update",
+        "text": "19 December 2009"
+      },
+      {
+        "section_id": "html-355-official-source-update",
+        "heading": "Official source update",
+        "text": "CORRELATION TABLE"
+      },
+      {
+        "section_id": "html-356-official-source-update",
+        "heading": "Official source update",
+        "text": "Directive 89/552/EEC"
+      },
+      {
+        "section_id": "html-357-official-source-update",
+        "heading": "Official source update",
+        "text": "This Directive"
+      },
+      {
+        "section_id": "html-358-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1, introductory wording"
+      },
+      {
+        "section_id": "html-359-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1), introductory wording"
+      },
+      {
+        "section_id": "html-360-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(a), introductory wording"
+      },
+      {
+        "section_id": "html-361-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(a), introductory wording"
+      },
+      {
+        "section_id": "html-362-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(a), first indent"
+      },
+      {
+        "section_id": "html-363-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(a)(i)"
+      },
+      {
+        "section_id": "html-364-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(a), second indent"
+      },
+      {
+        "section_id": "html-365-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(a)(ii)"
+      },
+      {
+        "section_id": "html-366-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(b) to (m)"
+      },
+      {
+        "section_id": "html-367-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(b) to (m)"
+      },
+      {
+        "section_id": "html-368-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(i), introductory wording"
+      },
+      {
+        "section_id": "html-369-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(n), introductory wording"
+      },
+      {
+        "section_id": "html-370-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(i), first indent"
+      },
+      {
+        "section_id": "html-371-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(n)(i)"
+      },
+      {
+        "section_id": "html-372-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(i), second indent"
+      },
+      {
+        "section_id": "html-373-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(n)(ii)"
+      },
+      {
+        "section_id": "html-374-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(i), third indent"
+      },
+      {
+        "section_id": "html-375-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(1)(n)(iii)"
+      },
+      {
+        "section_id": "html-376-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(i), fourth indent"
+      },
+      {
+        "section_id": "html-377-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(2)"
+      },
+      {
+        "section_id": "html-378-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(ii), introductory wording"
+      },
+      {
+        "section_id": "html-379-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(3), introductory wording"
+      },
+      {
+        "section_id": "html-380-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(ii), first indent"
+      },
+      {
+        "section_id": "html-381-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(3)(i)"
+      },
+      {
+        "section_id": "html-382-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(ii), second indent"
+      },
+      {
+        "section_id": "html-383-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(3)(ii)"
+      },
+      {
+        "section_id": "html-384-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(ii), third indent"
+      },
+      {
+        "section_id": "html-385-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(3)(iii)"
+      },
+      {
+        "section_id": "html-386-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(n)(iii)"
+      },
+      {
+        "section_id": "html-387-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1(4)"
+      },
+      {
+        "section_id": "html-389-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(1), (2) and (3)"
+      },
+      {
+        "section_id": "html-390-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(1), (2) and (3)"
+      },
+      {
+        "section_id": "html-391-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(4), introductory wording"
+      },
+      {
+        "section_id": "html-392-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(4), introductory wording"
+      },
+      {
+        "section_id": "html-393-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(4)(a)"
+      },
+      {
+        "section_id": "html-394-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(4)(a)"
+      },
+      {
+        "section_id": "html-395-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(4)(b), introductory wording"
+      },
+      {
+        "section_id": "html-396-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(4)(b), introductory wording"
+      },
+      {
+        "section_id": "html-397-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(4)(b), first indent"
+      },
+      {
+        "section_id": "html-398-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(4)(b)(i)"
+      },
+      {
+        "section_id": "html-399-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(4)(b), second indent"
+      },
+      {
+        "section_id": "html-400-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(4)(b)(ii)"
+      },
+      {
+        "section_id": "html-401-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2a(5) and (6)"
+      },
+      {
+        "section_id": "html-402-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3(5) and (6)"
+      },
+      {
+        "section_id": "html-417-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(1)"
+      },
+      {
+        "section_id": "html-418-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(2)"
+      },
+      {
+        "section_id": "html-419-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(2), first subparagraph, introductory wording"
+      },
+      {
+        "section_id": "html-420-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(3), first subparagraph, introductory wording"
+      },
+      {
+        "section_id": "html-421-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(2), first subparagraph, first indent"
+      },
+      {
+        "section_id": "html-422-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(3), first subparagraph, point (a)"
+      },
+      {
+        "section_id": "html-423-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(2), first subparagraph, second indent"
+      },
+      {
+        "section_id": "html-424-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(3), first subparagraph, point (b)"
+      },
+      {
+        "section_id": "html-425-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(2), second, third and fourth subparagraphs"
+      },
+      {
+        "section_id": "html-426-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(3), second, third and fourth subparagraphs"
+      },
+      {
+        "section_id": "html-427-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(3)"
+      },
+      {
+        "section_id": "html-428-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(4)"
+      },
+      {
+        "section_id": "html-429-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3g(4)"
+      },
+      {
+        "section_id": "html-430-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11(1)"
+      },
+      {
+        "section_id": "html-439-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 4(1), (2) and (3)"
+      },
+      {
+        "section_id": "html-440-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 16(1), (2) and (3)"
+      },
+      {
+        "section_id": "html-441-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 4(4)"
+      },
+      {
+        "section_id": "html-481-official-source-update",
+        "heading": "Official source update",
+        "text": "( 1 ) Directive 2011/93/EU of the European Parliament and of the Council of 13 December 2011 on combating the sexual abuse and sexual exploitation of children and child pornography, and replacing Council Framework Decision 2004/68/JHA (OJ L 335, 17.12.2011, p. 1)."
+      }
+    ]
+  }
+}

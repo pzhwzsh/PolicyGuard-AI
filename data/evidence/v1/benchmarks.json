@@ -1,0 +1,374 @@
+{
+  "schema_version": "policyguard-benchmark-evidence-v1",
+  "as_of": "2026-07-21",
+  "truthfulness": {
+    "human_verified_samples": 0,
+    "cost_usd": null,
+    "cost_reason": "Provider pricing was not configured.",
+    "development_only": true
+  },
+  "input_artifacts": {
+    "local-embedding-results.json": "f210c258d74225e651ed17c4bcbba49189347e4385c98511d04d327af4c170e7",
+    "local-embedding-hard-v1.json": "7d9f9cc45f43f4ca27d61fe24c91453926a3a360a7e4a411990371f8206f0e4f",
+    "local-rerank-results.json": "ee38efb0257dcf368f871f876d15ab0b134139912f39f54cd6c1d4d2a7b4e19b",
+    "agent-vs-pipeline.json": "55ab6d51b192ad6c0b9a85b1f1871e73b874677250c97a632b92a9e21bc64d8a",
+    "query-rewrite-hard-v1.json": "55fb88217cb2bedd42b99dbf1b04e35195bc2671f9a1d0aae739e8b5f7ee24f3",
+    "cross-language-abstention-v1.json": "5a27331f0a3d3a69c7eb63889ca573e84e22523e0fe3a337bfb3fd4f648e68cc",
+    "abstention-jina-hard-v1.json": "55f7a60dfd596a8b69226cca71c73a9422fdd209bdc2cf667fbfd7b76b114871",
+    "remediation-quality-v1.json": "fe02e844d3b0c4a004f2e85468d383799d28761d7d7564d4a93c90c33d0207c7",
+    "pdf-quality.json": "afc76473aff3d5eb5bb692dd83c2d60850f51f0f0257269cf6279539fd6de182",
+    "external-smoke.json": "d139dab337c00d925b7cdfc7643ceac6a378065faa193639aedda4ffec25ecd6"
+  },
+  "embedding": {
+    "easy_15": [
+      {
+        "model": "BAAI/bge-small-zh-v1.5",
+        "status": "ok",
+        "sample_count": 15,
+        "hit_rate_at_k": 1.0,
+        "mean_reciprocal_rank": 0.9666666666666667,
+        "mean_latency_ms": 27.376746661805857,
+        "p95_latency_ms": 51.02169999736361,
+        "failures": 0
+      },
+      {
+        "model": "jinaai/jina-embeddings-v2-base-zh",
+        "status": "ok",
+        "sample_count": 15,
+        "hit_rate_at_k": 1.0,
+        "mean_reciprocal_rank": 0.9333333333333333,
+        "mean_latency_ms": 116.93303333013318,
+        "p95_latency_ms": 202.65299998573028,
+        "failures": 0
+      },
+      {
+        "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        "status": "ok",
+        "sample_count": 15,
+        "hit_rate_at_k": 0.9333333333333333,
+        "mean_reciprocal_rank": 0.8666666666666667,
+        "mean_latency_ms": 49.95231333499154,
+        "p95_latency_ms": 82.28000000235625,
+        "failures": 0
+      },
+      {
+        "model": "intfloat/multilingual-e5-large",
+        "status": "failed",
+        "sample_count": 0,
+        "hit_rate_at_k": 0.0,
+        "mean_reciprocal_rank": 0.0,
+        "mean_latency_ms": 0.0,
+        "p95_latency_ms": 0.0,
+        "failures": 1
+      }
+    ],
+    "hard_30": [
+      {
+        "model": "BAAI/bge-small-zh-v1.5",
+        "status": "ok",
+        "sample_count": 30,
+        "hit_rate_at_k": 0.8666666666666667,
+        "mean_reciprocal_rank": 0.6733333333333333,
+        "mean_latency_ms": 8.924129999165112,
+        "p95_latency_ms": 13.299899990670383,
+        "failures": 0
+      },
+      {
+        "model": "jinaai/jina-embeddings-v2-base-zh",
+        "status": "ok",
+        "sample_count": 30,
+        "hit_rate_at_k": 1.0,
+        "mean_reciprocal_rank": 0.9111111111111111,
+        "mean_latency_ms": 30.479846666761052,
+        "p95_latency_ms": 41.2320000177715,
+        "failures": 0
+      },
+      {
+        "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        "status": "ok",
+        "sample_count": 30,
+        "hit_rate_at_k": 0.9333333333333333,
+        "mean_reciprocal_rank": 0.7972222222222223,
+        "mean_latency_ms": 35.24528333218768,
+        "p95_latency_ms": 44.404499989468604,
+        "failures": 0
+      }
+    ]
+  },
+  "rerank_hard_30": [
+    {
+      "model": "BAAI/bge-reranker-base",
+      "status": "ok",
+      "mean_latency_ms": 2833.174720001019,
+      "p95_latency_ms": 4435.323699988658
+    },
+    {
+      "model": "jinaai/jina-reranker-v2-base-multilingual",
+      "status": "ok",
+      "mean_latency_ms": 965.6535400019493,
+      "p95_latency_ms": 1487.565799994627
+    }
+  ],
+  "query_rewrite_hard_30": {
+    "model": "gpt-5.6-sol",
+    "embedding": "jinaai/jina-embeddings-v2-base-zh",
+    "rewrite_request_count": 0,
+    "rewrite_total_tokens": 0,
+    "original": {
+      "sample_count": 30,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.9111111111111111
+    },
+    "canonical_only": {
+      "sample_count": 30,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.94
+    },
+    "multi_query_rrf": {
+      "sample_count": 30,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.9444444444444444
+    },
+    "selective_multi_query_rrf": {
+      "sample_count": 30,
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.9444444444444444,
+      "rewritten_count": 26
+    }
+  },
+  "abstention": {
+    "same_set_calibration": {
+      "threshold": 0.397214,
+      "precision": 0.944444,
+      "recall": 0.944444,
+      "f1": 0.944444,
+      "false_answer_rate": 0.05
+    },
+    "same_set_positive_count": 18,
+    "same_set_negative_count": 20,
+    "heldout_threshold": 0.311966,
+    "heldout_near_domain_count": 20,
+    "heldout_near_domain_specificity": 0.25
+  },
+  "agent_vs_pipeline": {
+    "pipeline": {
+      "case_count": 8,
+      "success_rate": 1.0,
+      "manual_review_rate": 0.0,
+      "mean_latency_ms": 0.01,
+      "mean_tool_calls": 1.0,
+      "mean_planner_calls": 0.0,
+      "total_tokens": 0
+    },
+    "agent": {
+      "case_count": 8,
+      "success_rate": 0.375,
+      "manual_review_rate": 0.125,
+      "mean_latency_ms": 13672.44,
+      "mean_tool_calls": 0.88,
+      "mean_planner_calls": 1.88,
+      "total_tokens": 73100
+    },
+    "agent_cases": [
+      {
+        "case_id": "cn-absolute-safety",
+        "success": false,
+        "manual_review": false,
+        "latency_ms": 15484.612600001128,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9906
+      },
+      {
+        "case_id": "cn-national-level",
+        "success": true,
+        "manual_review": false,
+        "latency_ms": 14111.902000000555,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9715
+      },
+      {
+        "case_id": "cn-best",
+        "success": false,
+        "manual_review": false,
+        "latency_ms": 14622.159499998816,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9673
+      },
+      {
+        "case_id": "cn-highest",
+        "success": true,
+        "manual_review": false,
+        "latency_ms": 12876.444500001526,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9797
+      },
+      {
+        "case_id": "description-risk",
+        "success": false,
+        "manual_review": true,
+        "latency_ms": 7494.334099999833,
+        "tool_calls": 0,
+        "planner_calls": 1,
+        "total_tokens": 4760
+      },
+      {
+        "case_id": "multiple-fields",
+        "success": false,
+        "manual_review": false,
+        "latency_ms": 16555.862600002,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9894
+      },
+      {
+        "case_id": "safe-baseline",
+        "success": true,
+        "manual_review": false,
+        "latency_ms": 13894.147399998474,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9713
+      },
+      {
+        "case_id": "empty-description",
+        "success": false,
+        "manual_review": false,
+        "latency_ms": 14340.070999998716,
+        "tool_calls": 1,
+        "planner_calls": 2,
+        "total_tokens": 9642
+      }
+    ]
+  },
+  "remediation": {
+    "dataset": "deterministic-remediation-quality-v1",
+    "label_status": "ai_reviewed_pending_human_verification",
+    "sample_count": 6,
+    "positive_count": 5,
+    "exact_after_rate": 1.0,
+    "claim_span_accuracy": 1.0,
+    "citation_section_accuracy": 1.0,
+    "protected_fact_retention": 1.0,
+    "residual_baseline_pass_rate": 1.0,
+    "external_side_effect": false,
+    "limitations": "Narrow deterministic phrase-removal baseline; not general legal rewrite quality."
+  },
+  "pdf": {
+    "sample_count": 1,
+    "aggregate": {
+      "text_accuracy": 0.9714,
+      "heading_f1": 1.0,
+      "reading_order_accuracy": 1.0,
+      "page_latency_ms": 143.69,
+      "manual_correction_rate": 0.0
+    },
+    "samples": [
+      {
+        "sample_id": "ftc-health-guidance-pages-2-3",
+        "text_accuracy": 0.9714,
+        "heading_f1": 1.0,
+        "table_cell_accuracy": null,
+        "reading_order_accuracy": 1.0,
+        "page_latency_ms": 143.69,
+        "manual_correction_rate": 0.0
+      }
+    ]
+  },
+  "external_smoke": {
+    "checks": [
+      {
+        "name": "llm",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 7801.109
+      },
+      {
+        "name": "embedding",
+        "status": "failed",
+        "latency_ms": 1897.006
+      },
+      {
+        "name": "rapidocr",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 39.298
+      },
+      {
+        "name": "source:cn-samr-advertising-law",
+        "status": "blocked",
+        "status_code": 403,
+        "latency_ms": 236.087
+      },
+      {
+        "name": "source:us-ftc-advertising-basics",
+        "status": "blocked",
+        "status_code": 403,
+        "latency_ms": 5180.644
+      },
+      {
+        "name": "source:eu-ucpd-consolidated",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 2245.047
+      },
+      {
+        "name": "source:us-ftc-endorsements-reviews",
+        "status": "blocked",
+        "status_code": 403,
+        "latency_ms": 202.319
+      },
+      {
+        "name": "source:us-ftc-health-products-guidance",
+        "status": "blocked",
+        "status_code": 403,
+        "latency_ms": 299.644
+      },
+      {
+        "name": "source:us-ftc-can-spam",
+        "status": "blocked",
+        "status_code": 403,
+        "latency_ms": 264.671
+      },
+      {
+        "name": "source:eu-cosmetics-claims-655-2013",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 511.962
+      },
+      {
+        "name": "source:eu-health-claims-1924-2006",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 930.506
+      },
+      {
+        "name": "source:eu-digital-services-act-2022-2065",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 3563.83
+      },
+      {
+        "name": "source:eu-gdpr-2016-679",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 2657.825
+      },
+      {
+        "name": "source:eu-audiovisual-media-services-2010-13",
+        "status": "ok",
+        "status_code": 200,
+        "latency_ms": 2827.175
+      }
+    ],
+    "contains_credentials": false
+  },
+  "limitations": [
+    "Metrics are development evidence, not production or legal-accuracy claims.",
+    "The abstention threshold generalizes poorly to the held-out near-domain set.",
+    "PDF quality covers one official document and two labeled pages."
+  ]
+}

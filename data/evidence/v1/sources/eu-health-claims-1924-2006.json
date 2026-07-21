@@ -1,0 +1,1690 @@
+{
+  "schema_version": "policyguard-source-evidence-v1",
+  "evidence_status": "official_source_structurally_parsed_pending_legal_review",
+  "source": {
+    "id": "eu-health-claims-1924-2006",
+    "title": "Regulation (EC) No 1924/2006 - Nutrition and Health Claims",
+    "jurisdiction": "EU",
+    "publisher": "European Union / EUR-Lex",
+    "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32006R1924",
+    "format": "html",
+    "source_language": "en",
+    "ingestion_mode": "legal_document",
+    "activation_policy": "manual_review",
+    "reuse_review_status": "official_publication_terms_not_reviewed"
+  },
+  "capture": {
+    "content_hash": "2dc446c9a16c68ee17808bf1e8915ebd1ac75b616acfbf135443b5a453f2425e",
+    "created_at": "2026-07-21T12:54:10.422789+00:00",
+    "retrieved_at": "2026-07-21",
+    "section_count": 328,
+    "structural_review_status": "passed",
+    "legal_review_status": "pending",
+    "eligible_for_activation": true,
+    "short_section_rate": 0.1341,
+    "replacement_character_count": 0,
+    "validation_errors": []
+  },
+  "document": {
+    "title": "Regulation (EC) No 1924/2006 - Nutrition and Health Claims",
+    "publisher": "European Union / EUR-Lex",
+    "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32006R1924",
+    "version": "snapshot-2dc446c9a16c",
+    "published_at": "undated",
+    "retrieved_at": "2026-07-21",
+    "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
+    "scopes": [
+      {
+        "jurisdiction": "EU",
+        "category": "food",
+        "channel": "all",
+        "legal_level": "regulation",
+        "source_language": "en",
+        "translation_status": "original",
+        "effective_from": "1900-01-01"
+      }
+    ],
+    "sections": [
+      {
+        "section_id": "html-3-official-source-update",
+        "heading": "Official source update",
+        "text": "Official Journal of the European Union"
+      },
+      {
+        "section_id": "html-5-official-source-update",
+        "heading": "Official source update",
+        "text": "REGULATION (EC) No 1924/2006 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL"
+      },
+      {
+        "section_id": "html-6-official-source-update",
+        "heading": "Official source update",
+        "text": "of 20 December 2006"
+      },
+      {
+        "section_id": "html-7-official-source-update",
+        "heading": "Official source update",
+        "text": "on nutrition and health claims made on foods"
+      },
+      {
+        "section_id": "html-8-official-source-update",
+        "heading": "Official source update",
+        "text": "THE EUROPEAN PARLIAMENT AND THE COUNCIL OF THE EUROPEAN UNION,"
+      },
+      {
+        "section_id": "html-9-official-source-update",
+        "heading": "Official source update",
+        "text": "Having regard to the Treaty establishing the European Community, and in particular Article 95 thereof,"
+      },
+      {
+        "section_id": "html-10-official-source-update",
+        "heading": "Official source update",
+        "text": "Having regard to the proposal from the Commission,"
+      },
+      {
+        "section_id": "html-11-official-source-update",
+        "heading": "Official source update",
+        "text": "Having regard to the opinion of the European Economic and Social Committee ( 1 ) ,"
+      },
+      {
+        "section_id": "html-12-official-source-update",
+        "heading": "Official source update",
+        "text": "Acting in accordance with the procedure laid down in Article 251 of the Treaty ( 2 ) ,"
+      },
+      {
+        "section_id": "html-15-official-source-update",
+        "heading": "Official source update",
+        "text": "An increasing number of foods labelled and advertised in the Community bear nutrition and health claims. In order to ensure a high level of protection for consumers and to facilitate their choice, products put on the market must be safe and adequately labelled."
+      },
+      {
+        "section_id": "html-17-official-source-update",
+        "heading": "Official source update",
+        "text": "Differences between national provisions relating to such claims may impede the free movement of foods and create unequal conditions of competition. They thus have a direct impact on the functioning of the internal market. It is therefore necessary to adopt Community rules on the use of nutrition and health claims on foods."
+      },
+      {
+        "section_id": "html-19-official-source-update",
+        "heading": "Official source update",
+        "text": "General labelling provisions are contained in Directive 2000/13/EC of the European Parliament and of the Council of 20 March 2000 on the approximation of the laws of the Member States relating to the labelling, presentation and advertising of foodstuffs ( 3 ) . Directive 2000/13/EC generally prohibits the use of information that would mislead the purchaser or attribute medicinal properties to food. This Regulation should complement the general principles in Directive 2000/13/EC and lay down specific provisions concerning the use of nutrition and health claims concerning foods to be delivered as such to the consumer."
+      },
+      {
+        "section_id": "html-21-official-source-update",
+        "heading": "Official source update",
+        "text": "This Regulation should apply to all nutrition and health claims made in commercial communications, including, inter alia , generic advertising of food and promotional campaigns, such as those supported in whole or in part by public authorities. It should not apply to claims which are made in non-commercial communications, such as dietary guidelines or advice issued by public health authorities and bodies, or non-commercial communications and information in the press and in scientific publications. This Regulation should also apply to trade marks and other brand names which may be construed as nutrition or health claims."
+      },
+      {
+        "section_id": "html-23-official-source-update",
+        "heading": "Official source update",
+        "text": "Non-beneficial nutrition claims are not covered by the scope of this Regulation; Member States intending to introduce national schemes relating to non-beneficial nutrition claims should notify such schemes to the Commission and to other Member States in accordance with Directive 98/34/EC of the European Parliament and of the Council of 22 June 1998 laying down a procedure for the provision of information in the field of technical standards and regulations and of rules on Information Society services ( 4 ) ."
+      },
+      {
+        "section_id": "html-25-official-source-update",
+        "heading": "Official source update",
+        "text": "At international level the Codex Alimentarius has adopted General Guidelines on claims in 1991 and Guidelines for the use of nutrition claims in 1997. An amendment to the latter has been adopted by the Codex Alimentarius Commission in 2004. That amendment concerns the inclusion of health claims in the 1997 Guidelines. Due consideration is given to the definitions and conditions set in the Codex Guidelines."
+      },
+      {
+        "section_id": "html-27-official-source-update",
+        "heading": "Official source update",
+        "text": "The possibility of using the claim ‘low fat’ for spreadable fats provided for in Council Regulation (EC) No 2991/94 of 5 December 1994 laying down standards for spreadable fats ( 5 ) should be adapted to the provisions of this Regulation as soon as possible. In the meantime, Regulation (EC) No 2991/94 applies for the products it covers."
+      },
+      {
+        "section_id": "html-29-official-source-update",
+        "heading": "Official source update",
+        "text": "There is a wide range of nutrients and other substances including, but not limited to, vitamins, minerals including trace elements, amino acids, essential fatty acids, fibre, various plants and herbal extracts with a nutritional or physiological effect that might be present in a food and be the subject of a claim. Therefore, general principles applicable to all claims made on foods should be established in order to ensure a high level of consumer protection, give the consumer the necessary information to make choices in full knowledge of the facts, as well as creating equal conditions of competition for the food industry."
+      },
+      {
+        "section_id": "html-31-official-source-update",
+        "heading": "Official source update",
+        "text": "Foods promoted with claims may be perceived by consumers as having a nutritional, physiological or other health advantage over similar or other products to which such nutrients and other substances are not added. This may encourage consumers to make choices which directly influence their total intake of individual nutrients or other substances in a way which would run counter to scientific advice. To address this potential undesirable effect, it is appropriate to impose certain restrictions as regards the products bearing claims. In this context, factors such as the presence of certain substances, for example the alcohol content of the product or the nutrient profile of the product, are appropriate criteria for determining whether the product can bear claims. The use of such criteria at national level, whilst justified for the purpose of allowing consumers to make informed nutritional choices, is likely to result in barriers to intra-Community trade and should therefore be harmonised at Community level."
+      },
+      {
+        "section_id": "html-33-official-source-update",
+        "heading": "Official source update",
+        "text": "The application of nutrient profiles as a criterion would aim to avoid a situation where nutrition or health claims mask the overall nutritional status of a food product, which could mislead consumers when trying to make healthy choices in the context of a balanced diet. Nutrient profiles as provided for in this Regulation would be intended for the sole purpose of governing the circumstances in which claims may be made. They should be based on generally accepted scientific data relative to the relationship between diet and health. However, profiles should also allow for product innovation and should take into account the variability of dietary habits and traditions, and the fact that individual products may have an important role in the context of an overall diet."
+      },
+      {
+        "section_id": "html-35-official-source-update",
+        "heading": "Official source update",
+        "text": "The establishment of nutrient profiles should take into account the content of different nutrients and substances with a nutritional or physiological effect, in particular those such as fat, saturated fat, trans-fatty acids, salt/sodium and sugars, excessive intakes of which in the overall diet are not recommended, as well as poly- and mono-unsaturated fats, available carbohydrates other than sugars, vitamins, minerals, protein and fibre. When setting the nutrient profiles, the different categories of foods and the place and role of these foods in the overall diet should be taken into account. Exemptions from the requirement to respect established nutrient profiles may be necessary for certain foods or categories of foods depending on their role and importance in the diet of the population. These would be complex technical tasks and the adoption of the relevant measures should be entrusted to the Commission, taking into account the advice of the European Food Safety Authority."
+      },
+      {
+        "section_id": "html-37-official-source-update",
+        "heading": "Official source update",
+        "text": "Food supplements as defined in Directive 2002/46/EC of the European Parliament and of the Council of 10 June 2002 on the approximation of the laws of the Member States relating to food supplements ( 6 ) presented in a liquid form and containing more than 1,2 % by volume of alcohol are not considered as beverages under this Regulation."
+      },
+      {
+        "section_id": "html-39-official-source-update",
+        "heading": "Official source update",
+        "text": "There is a wide variety of claims currently used in the labelling and advertising of foods in some Member States relating to substances that have not been shown to be beneficial or for which at present there is not sufficient scientific agreement. It is necessary to ensure that the substances for which a claim is made have been shown to have a beneficial nutritional or physiological effect."
+      },
+      {
+        "section_id": "html-41-official-source-update",
+        "heading": "Official source update",
+        "text": "In order to ensure that the claims made are truthful, it is necessary that the substance that is the subject of the claim is present in the final product in quantities that are sufficient, or that the substance is absent or present in suitably reduced quantities, to produce the nutritional or physiological effect claimed. The substance should also be available to be used by the body. In addition, and where appropriate, a significant amount of the substance producing the claimed nutritional or physiological effect should be provided by a quantity of the food that can reasonably be expected to be consumed."
+      },
+      {
+        "section_id": "html-43-official-source-update",
+        "heading": "Official source update",
+        "text": "It is important that claims on foods can be understood by the consumer and it is appropriate to protect all consumers from misleading claims. However, since the enactment of Council Directive 84/450/EEC of 10 September 1984 concerning misleading and comparative advertising ( 7 ) , the Court of Justice of the European Communities has found it necessary in adjudicating on advertising cases to examine the effect on a notional, typical consumer. In line with the principle of proportionality, and to enable the effective application of the protective measures contained in it, this Regulation takes as a benchmark the average consumer, who is reasonably well-informed and reasonably observant and circumspect, taking into account social, cultural and linguistic factors, as interpreted by the Court of Justice, but makes provision to prevent the exploitation of consumers whose characteristics make them particularly vulnerable to misleading claims. Where a claim is specifically aimed at a particular group of consumers, such as children, it is desirable that the impact of the claim be assessed from the perspective of the average member of that group. The average consumer test is not a statistical test. National courts and authorities will have to exercise their own faculty of judgment, having regard to the case-law of the Court of Justice, to determine the typical reaction of the average consumer in a given case."
+      },
+      {
+        "section_id": "html-45-official-source-update",
+        "heading": "Official source update",
+        "text": "Scientific substantiation should be the main aspect to be taken into account for the use of nutrition and health claims and the food business operators using claims should justify them."
+      },
+      {
+        "section_id": "html-47-official-source-update",
+        "heading": "Official source update",
+        "text": "A nutrition or health claim should not be made if it is inconsistent with generally accepted nutrition and health principles or if it encourages or condones excessive consumption of any food or disparages good dietary practice."
+      },
+      {
+        "section_id": "html-49-official-source-update",
+        "heading": "Official source update",
+        "text": "Given the positive image conferred on foods bearing nutrition and health claims and the potential impact these foods may have on dietary habits and overall nutrient intakes, the consumer should be able to evaluate their global nutritional quality. Therefore, nutrition labelling should be compulsory and should be extensive on all foods bearing health claims."
+      },
+      {
+        "section_id": "html-51-official-source-update",
+        "heading": "Official source update",
+        "text": "General nutritional labelling provisions are contained in Council Directive 90/496/EEC of 24 September 1990 on nutrition labelling for foodstuffs ( 8 ) . According to that Directive, where a nutrition claim appears on labelling, in presentation or in advertising, with the exclusion of generic advertising, nutrition labelling should be compulsory. Where a nutrition claim is made for sugars, saturates, fibre or sodium, the information to be given should be that of Group 2 as defined in Article 4(1) of Directive 90/496/EEC. In order to achieve a high level of consumer protection, this obligation to provide the information of Group 2 should apply, mutatis mutandis , where any health claim is made, with the exception of generic advertising."
+      },
+      {
+        "section_id": "html-53-official-source-update",
+        "heading": "Official source update",
+        "text": "A list of permitted nutrition claims and their specific conditions of use should also be created based on the conditions for the use of such claims that have been agreed at national or international level and laid down in Community legislation. Any claim considered to have the same meaning for consumers as a nutrition claim included in the aforementioned list should be subject to the same conditions of use indicated therein. For example, claims related to the addition of vitamins and minerals such as ‘with …’, ‘restored …’, ‘added …’, or ‘enriched …’ should be subject to the conditions set for the claim ‘source of …’. The list should be regularly updated in order to take into account scientific and technological developments. Furthermore, for comparative claims it is necessary that the products being compared be clearly identified to the final consumer."
+      },
+      {
+        "section_id": "html-55-official-source-update",
+        "heading": "Official source update",
+        "text": "Conditions for claims such as ‘lactose-free’ or ‘gluten-free’, addressed to a group of consumers with specific disorders, should be dealt with in Council Directive 89/398/EEC of 3 May 1989 on the approximation of the laws of the Member States relating to foodstuffs intended for particular nutritional uses ( 9 ) . In addition, that Directive provides the possibility that foodstuffs for normal consumption can indicate their suitability for use by these groups of consumers if they fulfil the conditions for such statement. Until the conditions for such statements are set at Community level, Member States may maintain or adopt relevant national measures."
+      },
+      {
+        "section_id": "html-57-official-source-update",
+        "heading": "Official source update",
+        "text": "Health claims should only be authorised for use in the Community after a scientific assessment of the highest possible standard. In order to ensure harmonised scientific assessment of these claims, the European Food Safety Authority should carry out such assessments."
+      },
+      {
+        "section_id": "html-59-official-source-update",
+        "heading": "Official source update",
+        "text": "There are many factors, other than dietary ones, that can influence psychological and behavioural functions. Communication on these functions is thus very complex and it is difficult to convey a comprehensive, truthful and meaningful message in a short claim to be used in the labelling and advertising of foods. Therefore, it is appropriate, when using psychological and behavioural claims, to require scientific substantiation."
+      },
+      {
+        "section_id": "html-61-official-source-update",
+        "heading": "Official source update",
+        "text": "In the light of Commission Directive 96/8/EC of 26 February 1996 on foods intended for use in energy-restricted diets for weight reduction ( 10 ) which prohibits, in the labelling, presentation and advertising of products covered by that Directive, any reference to the rate or amount of weight loss which may result from their use, it is considered appropriate to extend this restriction to all foods."
+      },
+      {
+        "section_id": "html-63-official-source-update",
+        "heading": "Official source update",
+        "text": "Health claims other than those referring to the reduction of disease risk, based on generally accepted scientific data, should undergo a different type of assessment and authorisation. It is therefore necessary to adopt a Community list of such permitted claims after consulting the European Food Safety Authority."
+      },
+      {
+        "section_id": "html-65-official-source-update",
+        "heading": "Official source update",
+        "text": "In order to keep up with scientific and technological developments, the list referred to above should be revised promptly whenever necessary. Such revisions are implementing measures of a technical nature and their adoption should be entrusted to the Commission in order to simplify and expedite the procedure."
+      },
+      {
+        "section_id": "html-67-official-source-update",
+        "heading": "Official source update",
+        "text": "A varied and balanced diet is a prerequisite for good health and single products have a relative importance in the context of the total diet. Furthermore, diet is one of the many factors influencing the onset of certain human diseases. Other factors such as age, genetic predisposition, the level of physical activity, the consumption of tobacco and other drugs, environmental exposure and stress may all influence the onset of human diseases. Specific labelling requirements should therefore apply in respect of claims relating to the reduction of a disease risk."
+      },
+      {
+        "section_id": "html-69-official-source-update",
+        "heading": "Official source update",
+        "text": "In order to ensure that health claims are truthful, clear, reliable and useful to the consumer in choosing a healthy diet, the wording and the presentation of health claims should be taken into account in the opinion of the European Food Safety Authority and in the subsequent authorisation procedure."
+      },
+      {
+        "section_id": "html-71-official-source-update",
+        "heading": "Official source update",
+        "text": "In some cases, scientific risk assessment alone cannot provide all the information on which a risk management decision should be based. Other legitimate factors relevant to the matter under consideration should therefore be taken into account."
+      },
+      {
+        "section_id": "html-73-official-source-update",
+        "heading": "Official source update",
+        "text": "For the sake of transparency and in order to avoid multiple applications in respect of claims which have already been assessed, a public register containing the lists of such claims should be established and updated by the Commission."
+      },
+      {
+        "section_id": "html-75-official-source-update",
+        "heading": "Official source update",
+        "text": "In order to stimulate research and development within the agri-food industry, it is appropriate to protect the investment made by innovators in gathering the information and data supporting an application pursuant to this Regulation. This protection should however be limited in time in order to avoid the unnecessary repetition of studies and trials."
+      },
+      {
+        "section_id": "html-77-official-source-update",
+        "heading": "Official source update",
+        "text": "Given the particular nature of foods bearing claims, additional means to those usually available to monitoring bodies should be available in order to facilitate efficient monitoring of those products."
+      },
+      {
+        "section_id": "html-79-official-source-update",
+        "heading": "Official source update",
+        "text": "Adequate transitional measures are necessary to enable food business operators to adapt to the requirements of this Regulation."
+      },
+      {
+        "section_id": "html-81-official-source-update",
+        "heading": "Official source update",
+        "text": "Since the objective of this Regulation, namely to ensure the effective functioning of the internal market as regards nutrition and health claims whilst providing a high level of consumer protection, cannot be sufficiently achieved by the Member States and can therefore be better achieved at Community level, the Community may adopt measures, in accordance with the principle of subsidiarity as set out in Article 5 of the Treaty. In accordance with the principle of proportionality as set out in that Article, this Regulation does not go beyond what is necessary in order to achieve that objective."
+      },
+      {
+        "section_id": "html-83-official-source-update",
+        "heading": "Official source update",
+        "text": "The measures necessary for the implementation of this Regulation should be adopted in accordance with Council Decision 1999/468/EC of 28 June 1999 laying down the procedures for the exercise of implementing powers conferred on the Commission ( 11 ) ,"
+      },
+      {
+        "section_id": "html-84-official-source-update",
+        "heading": "Official source update",
+        "text": "HAVE ADOPTED THIS REGULATION:"
+      },
+      {
+        "section_id": "html-86-official-source-update",
+        "heading": "Official source update",
+        "text": "SUBJECT MATTER, SCOPE AND DEFINITIONS"
+      },
+      {
+        "section_id": "html-88-official-source-update",
+        "heading": "Official source update",
+        "text": "Subject matter and scope"
+      },
+      {
+        "section_id": "html-89-official-source-update",
+        "heading": "Official source update",
+        "text": "1. This Regulation harmonises the provisions laid down by law, regulation or administrative action in Member States which relate to nutrition and health claims in order to ensure the effective functioning of the internal market whilst providing a high level of consumer protection."
+      },
+      {
+        "section_id": "html-90-official-source-update",
+        "heading": "Official source update",
+        "text": "2. This Regulation shall apply to nutrition and health claims made in commercial communications, whether in the labelling, presentation or advertising of foods to be delivered as such to the final consumer, including foods which are placed on the market unpacked or supplied in bulk."
+      },
+      {
+        "section_id": "html-91-official-source-update",
+        "heading": "Official source update",
+        "text": "It shall also apply in respect of foods intended for supply to restaurants, hospitals, schools, canteens and similar mass caterers."
+      },
+      {
+        "section_id": "html-92-official-source-update",
+        "heading": "Official source update",
+        "text": "3. A trade mark, brand name or fancy name appearing in the labelling, presentation or advertising of a food which may be construed as a nutrition or health claim may be used without undergoing the authorisation procedures provided for in this Regulation, provided that it is accompanied by a related nutrition or health claim in that labelling, presentation or advertising which complies with the provisions of this Regulation."
+      },
+      {
+        "section_id": "html-93-official-source-update",
+        "heading": "Official source update",
+        "text": "4. This Regulation shall apply without prejudice to the following Community provisions:"
+      },
+      {
+        "section_id": "html-95-official-source-update",
+        "heading": "Official source update",
+        "text": "Directive 89/398/EEC and Directives adopted on the basis thereof;"
+      },
+      {
+        "section_id": "html-97-official-source-update",
+        "heading": "Official source update",
+        "text": "Council Directive 80/777/EEC of 15 July 1980 on the approximation of the laws of the Member States relating to the exploitation and marketing of natural mineral waters ( 12 ) ;"
+      },
+      {
+        "section_id": "html-99-official-source-update",
+        "heading": "Official source update",
+        "text": "Council Directive 98/83/EC of 3 November 1998 on the quality of water intended for human consumption ( 13 ) ."
+      },
+      {
+        "section_id": "html-102-official-source-update",
+        "heading": "Official source update",
+        "text": "1. For the purposes of this Regulation:"
+      },
+      {
+        "section_id": "html-104-official-source-update",
+        "heading": "Official source update",
+        "text": "the definitions of ‘food’, ‘food business operator’, ‘placing on the market’ and ‘final consumer’, set out in Articles 2, 3(3), 3(8) and 3(18) of Regulation (EC) No 178/2002 of the European Parliament and of the Council of 28 January 2002 laying down the general principles and requirements of food law, establishing the European Food Safety Authority and laying down procedures in matters of food safety ( 14 ) , shall apply;"
+      },
+      {
+        "section_id": "html-106-official-source-update",
+        "heading": "Official source update",
+        "text": "the definition of ‘food supplement’ set out in Directive 2002/46/EC shall apply;"
+      },
+      {
+        "section_id": "html-108-official-source-update",
+        "heading": "Official source update",
+        "text": "the definitions of ‘nutrition labelling’, ‘protein’, ‘carbohydrate’, ‘sugars’, ‘fat’, ‘saturates’, ‘mono-unsaturates’, ‘poly-unsaturates’ and ‘fibre’ set out in Directive 90/496/EEC shall apply;"
+      },
+      {
+        "section_id": "html-110-official-source-update",
+        "heading": "Official source update",
+        "text": "the definition of ‘labelling’ set out in Article 1(3)(a) of Directive 2000/13/EC shall apply."
+      },
+      {
+        "section_id": "html-111-official-source-update",
+        "heading": "Official source update",
+        "text": "2. The following definitions shall also apply:"
+      },
+      {
+        "section_id": "html-113-official-source-update",
+        "heading": "Official source update",
+        "text": "‘claim’ means any message or representation, which is not mandatory under Community or national legislation, including pictorial, graphic or symbolic representation, in any form, which states, suggests or implies that a food has particular characteristics;"
+      },
+      {
+        "section_id": "html-115-official-source-update",
+        "heading": "Official source update",
+        "text": "‘nutrient’ means protein, carbohydrate, fat, fibre, sodium, vitamins and minerals listed in the Annex to Directive 90/496/EEC, and substances which belong to or are components of one of those categories;"
+      },
+      {
+        "section_id": "html-117-official-source-update",
+        "heading": "Official source update",
+        "text": "‘other substance’ means a substance other than a nutrient that has a nutritional or physiological effect;"
+      },
+      {
+        "section_id": "html-119-official-source-update",
+        "heading": "Official source update",
+        "text": "‘nutrition claim’ means any claim which states, suggests or implies that a food has particular beneficial nutritional properties due to:"
+      },
+      {
+        "section_id": "html-121-official-source-update",
+        "heading": "Official source update",
+        "text": "the energy (calorific value) it"
+      },
+      {
+        "section_id": "html-125-official-source-update",
+        "heading": "Official source update",
+        "text": "provides at a reduced or increased rate, or"
+      },
+      {
+        "section_id": "html-127-official-source-update",
+        "heading": "Official source update",
+        "text": "does not provide; and/or"
+      },
+      {
+        "section_id": "html-129-official-source-update",
+        "heading": "Official source update",
+        "text": "the nutrients or other substances it"
+      },
+      {
+        "section_id": "html-133-official-source-update",
+        "heading": "Official source update",
+        "text": "contains in reduced or increased proportions, or"
+      },
+      {
+        "section_id": "html-135-official-source-update",
+        "heading": "Official source update",
+        "text": "does not contain;"
+      },
+      {
+        "section_id": "html-137-official-source-update",
+        "heading": "Official source update",
+        "text": "‘health claim’ means any claim that states, suggests or implies that a relationship exists between a food category, a food or one of its constituents and health;"
+      },
+      {
+        "section_id": "html-139-official-source-update",
+        "heading": "Official source update",
+        "text": "‘reduction of disease risk claim’ means any health claim that states, suggests or implies that the consumption of a food category, a food or one of its constituents significantly reduces a risk factor in the development of a human disease;"
+      },
+      {
+        "section_id": "html-141-official-source-update",
+        "heading": "Official source update",
+        "text": "‘Authority’ means the European Food Safety Authority established by Regulation (EC) No 178/2002."
+      },
+      {
+        "section_id": "html-143-official-source-update",
+        "heading": "Official source update",
+        "text": "GENERAL PRINCIPLES"
+      },
+      {
+        "section_id": "html-145-official-source-update",
+        "heading": "Official source update",
+        "text": "General principles for all claims"
+      },
+      {
+        "section_id": "html-146-official-source-update",
+        "heading": "Official source update",
+        "text": "Nutrition and health claims may be used in the labelling, presentation and advertising of foods placed on the market in the Community only if they comply with the provisions of this Regulation."
+      },
+      {
+        "section_id": "html-147-official-source-update",
+        "heading": "Official source update",
+        "text": "Without prejudice to Directives 2000/13/EC and 84/450/EEC, the use of nutrition and health claims shall not:"
+      },
+      {
+        "section_id": "html-149-official-source-update",
+        "heading": "Official source update",
+        "text": "be false, ambiguous or misleading;"
+      },
+      {
+        "section_id": "html-151-official-source-update",
+        "heading": "Official source update",
+        "text": "give rise to doubt about the safety and/or the nutritional adequacy of other foods;"
+      },
+      {
+        "section_id": "html-153-official-source-update",
+        "heading": "Official source update",
+        "text": "encourage or condone excess consumption of a food;"
+      },
+      {
+        "section_id": "html-155-official-source-update",
+        "heading": "Official source update",
+        "text": "state, suggest or imply that a balanced and varied diet cannot provide appropriate quantities of nutrients in general. Derogations in the case of nutrients for which sufficient quantities cannot be provided by a balanced and varied diet, including the conditions for their application, may be adopted in accordance with the procedure referred to in Article 24(2), taking into account the special conditions present in Member States;"
+      },
+      {
+        "section_id": "html-157-official-source-update",
+        "heading": "Official source update",
+        "text": "refer to changes in bodily functions which could give rise to or exploit fear in the consumer, either textually or through pictorial, graphic or symbolic representations."
+      },
+      {
+        "section_id": "html-159-official-source-update",
+        "heading": "Official source update",
+        "text": "Conditions for the use of nutrition and health claims"
+      },
+      {
+        "section_id": "html-160-official-source-update",
+        "heading": "Official source update",
+        "text": "1. By 19 January 2009, the Commission shall, in accordance with the procedure referred to in Article 24(2), establish specific nutrient profiles and the conditions, including exemptions, which shall be respected for the use of nutrition and health claims on foods and/or categories of foods."
+      },
+      {
+        "section_id": "html-161-official-source-update",
+        "heading": "Official source update",
+        "text": "These nutrient profiles established for food and/or certain categories of food, and the conditions for the use of nutrition or health claims with respect to the nutrient profiles, shall be laid down taking into account in particular:"
+      },
+      {
+        "section_id": "html-163-official-source-update",
+        "heading": "Official source update",
+        "text": "the quantities of certain nutrients and other substances contained in the food, such as fat, saturated fatty acids, trans-fatty acids, sugars and salt/sodium;"
+      },
+      {
+        "section_id": "html-165-official-source-update",
+        "heading": "Official source update",
+        "text": "the role and importance of the food (or of categories of foods) in the diet of the population in general or, as appropriate, of certain risk groups including children;"
+      },
+      {
+        "section_id": "html-167-official-source-update",
+        "heading": "Official source update",
+        "text": "the overall nutritional composition of the food and the presence of nutrients that have been scientifically recognised as having an effect on health."
+      },
+      {
+        "section_id": "html-168-official-source-update",
+        "heading": "Official source update",
+        "text": "The nutrient profiles shall be based on scientific knowledge about diet and nutrition, and their relation to health."
+      },
+      {
+        "section_id": "html-169-official-source-update",
+        "heading": "Official source update",
+        "text": "In setting the nutrient profiles, the Commission shall request the Authority to provide, within 12 months, relevant scientific advice, focusing in particular on:"
+      },
+      {
+        "section_id": "html-171-official-source-update",
+        "heading": "Official source update",
+        "text": "whether profiles should be set for food in general and/or categories of food;"
+      },
+      {
+        "section_id": "html-173-official-source-update",
+        "heading": "Official source update",
+        "text": "the choice and balance of nutrients to be taken into account;"
+      },
+      {
+        "section_id": "html-175-official-source-update",
+        "heading": "Official source update",
+        "text": "the choice of reference quantity/basis for profiles;"
+      },
+      {
+        "section_id": "html-177-official-source-update",
+        "heading": "Official source update",
+        "text": "the approach to the calculation of the profiles, and"
+      },
+      {
+        "section_id": "html-179-official-source-update",
+        "heading": "Official source update",
+        "text": "testing of a proposed system."
+      },
+      {
+        "section_id": "html-180-official-source-update",
+        "heading": "Official source update",
+        "text": "In setting the nutrient profiles, the Commission shall carry out consultations with interested parties, in particular food business operators and consumer groups."
+      },
+      {
+        "section_id": "html-181-official-source-update",
+        "heading": "Official source update",
+        "text": "Nutrient profiles and their conditions of use shall be updated to take into account relevant scientific developments in accordance with the procedure referred to in Article 24(2)."
+      },
+      {
+        "section_id": "html-182-official-source-update",
+        "heading": "Official source update",
+        "text": "2. By way of derogation from paragraph 1, nutrition claims referring to the reduction of fat, saturated fatty acids, trans-fatty acids, sugars and salt/sodium shall be allowed without reference to a profile for the specific nutrient/s for which the claim is made, provided they comply with the conditions laid down in this Regulation."
+      },
+      {
+        "section_id": "html-183-official-source-update",
+        "heading": "Official source update",
+        "text": "3. Beverages containing more than 1,2 % by volume of alcohol shall not bear:"
+      },
+      {
+        "section_id": "html-185-official-source-update",
+        "heading": "Official source update",
+        "text": "health claims;"
+      },
+      {
+        "section_id": "html-187-official-source-update",
+        "heading": "Official source update",
+        "text": "nutrition claims, other than those which refer to a reduction in the alcohol or energy content."
+      },
+      {
+        "section_id": "html-188-official-source-update",
+        "heading": "Official source update",
+        "text": "4. In the absence of specific Community rules regarding nutrition claims referring to the reduction or absence of alcohol or energy in beverages which normally contain alcohol, relevant national rules may apply in compliance with the provisions of the Treaty."
+      },
+      {
+        "section_id": "html-189-official-source-update",
+        "heading": "Official source update",
+        "text": "5. Foods or categories of foods other than those referred to in paragraph 3, for which nutrition or health claims are to be restricted or prohibited, may be determined in accordance with the procedure referred to in Article 24(2) and in the light of scientific evidence."
+      },
+      {
+        "section_id": "html-191-official-source-update",
+        "heading": "Official source update",
+        "text": "General conditions"
+      },
+      {
+        "section_id": "html-192-official-source-update",
+        "heading": "Official source update",
+        "text": "1. The use of nutrition and health claims shall only be permitted if the following conditions are fulfilled:"
+      },
+      {
+        "section_id": "html-194-official-source-update",
+        "heading": "Official source update",
+        "text": "the presence, absence or reduced content in a food or category of food of a nutrient or other substance in respect of which the claim is made has been shown to have a beneficial nutritional or physiological effect, as established by generally accepted scientific data;"
+      },
+      {
+        "section_id": "html-196-official-source-update",
+        "heading": "Official source update",
+        "text": "the nutrient or other substance for which the claim is made:"
+      },
+      {
+        "section_id": "html-198-official-source-update",
+        "heading": "Official source update",
+        "text": "is contained in the final product in a significant quantity as defined in Community legislation or, where such rules do not exist, in a quantity that will produce the nutritional or physiological effect claimed as established by generally accepted scientific data; or"
+      },
+      {
+        "section_id": "html-200-official-source-update",
+        "heading": "Official source update",
+        "text": "is not present or is present in a reduced quantity that will produce the nutritional or physiological effect claimed as established by generally accepted scientific data;"
+      },
+      {
+        "section_id": "html-202-official-source-update",
+        "heading": "Official source update",
+        "text": "where applicable, the nutrient or other substance for which the claim is made is in a form that is available to be used by the body;"
+      },
+      {
+        "section_id": "html-204-official-source-update",
+        "heading": "Official source update",
+        "text": "the quantity of the product that can reasonably be expected to be consumed provides a significant quantity of the nutrient or other substance to which the claim relates, as defined in Community legislation or, where such rules do not exist, a significant quantity that will produce the nutritional or physiological effect claimed as established by generally accepted scientific data;"
+      },
+      {
+        "section_id": "html-206-official-source-update",
+        "heading": "Official source update",
+        "text": "compliance with the specific conditions set out in Chapter III or Chapter IV as the case may be."
+      },
+      {
+        "section_id": "html-207-official-source-update",
+        "heading": "Official source update",
+        "text": "2. The use of nutrition and health claims shall only be permitted if the average consumer can be expected to understand the beneficial effects as expressed in the claim."
+      },
+      {
+        "section_id": "html-208-official-source-update",
+        "heading": "Official source update",
+        "text": "3. Nutrition and health claims shall refer to the food ready for consumption in accordance with the manufacturer's instructions."
+      },
+      {
+        "section_id": "html-210-official-source-update",
+        "heading": "Official source update",
+        "text": "Scientific substantiation for claims"
+      },
+      {
+        "section_id": "html-211-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Nutrition and health claims shall be based on and substantiated by generally accepted scientific data."
+      },
+      {
+        "section_id": "html-212-official-source-update",
+        "heading": "Official source update",
+        "text": "2. A food business operator making a nutrition or health claim shall justify the use of the claim."
+      },
+      {
+        "section_id": "html-213-official-source-update",
+        "heading": "Official source update",
+        "text": "3. The competent authorities of the Member States may request a food business operator or a person placing a product on the market to produce all relevant elements and data establishing compliance with this Regulation."
+      },
+      {
+        "section_id": "html-215-official-source-update",
+        "heading": "Official source update",
+        "text": "Nutrition information"
+      },
+      {
+        "section_id": "html-216-official-source-update",
+        "heading": "Official source update",
+        "text": "The obligation and the modalities for providing information pursuant to Directive 90/496/EEC where a nutrition claim is made shall apply, mutatis mutandis , where a health claim is made, with the exception of generic advertising. However, the information to be provided shall consist of information in Group 2 as defined in Article 4(1) of Directive 90/496/EEC."
+      },
+      {
+        "section_id": "html-217-official-source-update",
+        "heading": "Official source update",
+        "text": "In addition and as the case may be, the amount(s) of the substance(s) to which a nutrition or health claim relates that does not appear in the nutrition labelling shall also be stated in the same field of vision of the nutrition information and be expressed in accordance with Article 6 of Directive 90/496/EEC."
+      },
+      {
+        "section_id": "html-218-official-source-update",
+        "heading": "Official source update",
+        "text": "In the case of food supplements, the nutrition information shall be provided in accordance with Article 8 of Directive 2002/46/EC."
+      },
+      {
+        "section_id": "html-220-official-source-update",
+        "heading": "Official source update",
+        "text": "NUTRITION CLAIMS"
+      },
+      {
+        "section_id": "html-222-official-source-update",
+        "heading": "Official source update",
+        "text": "Specific conditions"
+      },
+      {
+        "section_id": "html-223-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Nutrition claims shall only be permitted if they are listed in the Annex and are in conformity with the conditions set out in this Regulation."
+      },
+      {
+        "section_id": "html-224-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Amendments to the Annex shall be adopted in accordance with the procedure referred to in Article 24(2) and, where appropriate, after consulting the Authority."
+      },
+      {
+        "section_id": "html-226-official-source-update",
+        "heading": "Official source update",
+        "text": "Comparative claims"
+      },
+      {
+        "section_id": "html-227-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Without prejudice to Directive 84/450/EEC, a comparison may only be made between foods of the same category, taking into consideration a range of foods of that category. The difference in the quantity of a nutrient and/or the energy value shall be stated and the comparison shall relate to the same quantity of food."
+      },
+      {
+        "section_id": "html-228-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Comparative nutrition claims shall compare the composition of the food in question with a range of foods of the same category, which do not have a composition which allows them to bear a claim, including foods of other brands."
+      },
+      {
+        "section_id": "html-230-official-source-update",
+        "heading": "Official source update",
+        "text": "HEALTH CLAIMS"
+      },
+      {
+        "section_id": "html-233-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Health claims shall be prohibited unless they comply with the general requirements in Chapter II and the specific requirements in this Chapter and are authorised in accordance with this Regulation and included in the lists of authorised claims provided for in Articles 13 and 14."
+      },
+      {
+        "section_id": "html-234-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Health claims shall only be permitted if the following information is included in the labelling, or if no such labelling exists, in the presentation and advertising:"
+      },
+      {
+        "section_id": "html-236-official-source-update",
+        "heading": "Official source update",
+        "text": "a statement indicating the importance of a varied and balanced diet and a healthy lifestyle;"
+      },
+      {
+        "section_id": "html-238-official-source-update",
+        "heading": "Official source update",
+        "text": "the quantity of the food and pattern of consumption required to obtain the claimed beneficial effect;"
+      },
+      {
+        "section_id": "html-240-official-source-update",
+        "heading": "Official source update",
+        "text": "where appropriate, a statement addressed to persons who should avoid using the food; and"
+      },
+      {
+        "section_id": "html-242-official-source-update",
+        "heading": "Official source update",
+        "text": "an appropriate warning for products that are likely to present a health risk if consumed to excess."
+      },
+      {
+        "section_id": "html-243-official-source-update",
+        "heading": "Official source update",
+        "text": "3. Reference to general, non-specific benefits of the nutrient or food for overall good health or health-related well-being may only be made if accompanied by a specific health claim included in the lists provided for in Article 13 or 14."
+      },
+      {
+        "section_id": "html-244-official-source-update",
+        "heading": "Official source update",
+        "text": "4. Where appropriate, guidelines on the implementation of this Article shall be adopted in accordance with the procedure referred to in Article 24(2) and, if necessary, in consultation with interested parties, in particular food business operators and consumer groups."
+      },
+      {
+        "section_id": "html-246-official-source-update",
+        "heading": "Official source update",
+        "text": "National medical associations and health-related charities"
+      },
+      {
+        "section_id": "html-247-official-source-update",
+        "heading": "Official source update",
+        "text": "In the absence of specific Community rules concerning recommendations of or endorsements by national medical associations and health-related charities, relevant national rules may apply in compliance with the provisions of the Treaty."
+      },
+      {
+        "section_id": "html-249-official-source-update",
+        "heading": "Official source update",
+        "text": "Restrictions on the use of certain health claims"
+      },
+      {
+        "section_id": "html-250-official-source-update",
+        "heading": "Official source update",
+        "text": "The following health claims shall not be allowed:"
+      },
+      {
+        "section_id": "html-252-official-source-update",
+        "heading": "Official source update",
+        "text": "claims which suggest that health could be affected by not consuming the food;"
+      },
+      {
+        "section_id": "html-254-official-source-update",
+        "heading": "Official source update",
+        "text": "claims which make reference to the rate or amount of weight loss;"
+      },
+      {
+        "section_id": "html-256-official-source-update",
+        "heading": "Official source update",
+        "text": "claims which make reference to recommendations of individual doctors or health professionals and other associations not referred to in Article 11."
+      },
+      {
+        "section_id": "html-258-official-source-update",
+        "heading": "Official source update",
+        "text": "Health claims other than those referring to the reduction of disease risk"
+      },
+      {
+        "section_id": "html-259-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Health claims describing or referring to:"
+      },
+      {
+        "section_id": "html-261-official-source-update",
+        "heading": "Official source update",
+        "text": "the role of a nutrient or other substance in growth, development and the functions of the body, or"
+      },
+      {
+        "section_id": "html-263-official-source-update",
+        "heading": "Official source update",
+        "text": "psychological and behavioural functions; or"
+      },
+      {
+        "section_id": "html-265-official-source-update",
+        "heading": "Official source update",
+        "text": "without prejudice to Directive 96/8/EC, slimming or weight-control or a reduction in the sense of hunger or an increase in the sense of satiety or to the reduction of the available energy from the diet,"
+      },
+      {
+        "section_id": "html-266-official-source-update",
+        "heading": "Official source update",
+        "text": "which are included in the list provided for in paragraph 3 may be made without undergoing the authorisation procedure laid down in Articles 15 to 18, if they are:"
+      },
+      {
+        "section_id": "html-268-official-source-update",
+        "heading": "Official source update",
+        "text": "based on generally accepted scientific data; and"
+      },
+      {
+        "section_id": "html-270-official-source-update",
+        "heading": "Official source update",
+        "text": "well understood by the average consumer."
+      },
+      {
+        "section_id": "html-271-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Member States shall provide the Commission with lists of claims as referred to in paragraph 1 by 31 January 2008 at the latest accompanied by the conditions applying to them and by references to the relevant scientific justification."
+      },
+      {
+        "section_id": "html-272-official-source-update",
+        "heading": "Official source update",
+        "text": "3. After consulting the Authority, the Commission shall adopt, in accordance with the procedure referred to in Article 24(2), a Community list of permitted claims as referred to in paragraph 1, and all necessary conditions for the use of these claims by 31 January 2010 at the latest."
+      },
+      {
+        "section_id": "html-273-official-source-update",
+        "heading": "Official source update",
+        "text": "4. Any changes to the list referred to in paragraph 3, based on generally accepted scientific data, shall be adopted in accordance with the procedure referred to in Article 24(2), after consulting the Authority, on the Commission's own initiative or following a request by a Member State."
+      },
+      {
+        "section_id": "html-274-official-source-update",
+        "heading": "Official source update",
+        "text": "5. Any additions of claims to the list referred to in paragraph 3 based on newly developed scientific data and/or which include a request for the protection of proprietary data shall be adopted following the procedure laid down in Articles 15 to 18."
+      },
+      {
+        "section_id": "html-276-official-source-update",
+        "heading": "Official source update",
+        "text": "Reduction of disease risk claims"
+      },
+      {
+        "section_id": "html-277-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Notwithstanding Article 2(1)(b) of Directive 2000/13/EC, reduction of disease risk claims may be made where they have been authorised in accordance with the procedure laid down in Articles 15 to 18 of this Regulation for inclusion in a Community list of such permitted claims together with all the necessary conditions for the use of these claims."
+      },
+      {
+        "section_id": "html-278-official-source-update",
+        "heading": "Official source update",
+        "text": "2. In addition to the general requirements laid down in this Regulation and the specific requirements of paragraph 1, for reduction of disease risk claims the labelling or, if no such labelling exists, the presentation or advertising shall also bear a statement indicating that the disease to which the claim is referring has multiple risk factors and that altering one of these risk factors may or may not have a beneficial effect."
+      },
+      {
+        "section_id": "html-280-official-source-update",
+        "heading": "Official source update",
+        "text": "Application for authorisation"
+      },
+      {
+        "section_id": "html-281-official-source-update",
+        "heading": "Official source update",
+        "text": "1. When reference is made to this Article, an application for authorisation shall be submitted in accordance with the following paragraphs."
+      },
+      {
+        "section_id": "html-282-official-source-update",
+        "heading": "Official source update",
+        "text": "2. The application shall be sent to the national competent authority of a Member State."
+      },
+      {
+        "section_id": "html-284-official-source-update",
+        "heading": "Official source update",
+        "text": "The national competent authority shall:"
+      },
+      {
+        "section_id": "html-286-official-source-update",
+        "heading": "Official source update",
+        "text": "acknowledge receipt of an application in writing within 14 days of its receipt. The acknowledgement shall state the date of receipt of the application;"
+      },
+      {
+        "section_id": "html-288-official-source-update",
+        "heading": "Official source update",
+        "text": "inform without delay the Authority; and"
+      },
+      {
+        "section_id": "html-290-official-source-update",
+        "heading": "Official source update",
+        "text": "make the application and any supplementary information supplied by the applicant available to the Authority;"
+      },
+      {
+        "section_id": "html-292-official-source-update",
+        "heading": "Official source update",
+        "text": "the Authority shall:"
+      },
+      {
+        "section_id": "html-294-official-source-update",
+        "heading": "Official source update",
+        "text": "inform without delay the other Member States and the Commission of the application and shall make the application and any supplementary information supplied by the applicant available to them;"
+      },
+      {
+        "section_id": "html-296-official-source-update",
+        "heading": "Official source update",
+        "text": "make the summary of the application referred to in paragraph 3(g) available to the public."
+      },
+      {
+        "section_id": "html-297-official-source-update",
+        "heading": "Official source update",
+        "text": "3. The application shall include the following:"
+      },
+      {
+        "section_id": "html-299-official-source-update",
+        "heading": "Official source update",
+        "text": "the name and address of the applicant;"
+      },
+      {
+        "section_id": "html-301-official-source-update",
+        "heading": "Official source update",
+        "text": "the nutrient or other substance, or the food or the category of food, in respect of which the health claim is to be made and its particular characteristics;"
+      },
+      {
+        "section_id": "html-303-official-source-update",
+        "heading": "Official source update",
+        "text": "a copy of the studies, including, where available, independent, peer-reviewed studies, which have been carried out with regard to the health claim and any other material which is available to demonstrate that the health claim complies with the criteria provided for in this Regulation;"
+      },
+      {
+        "section_id": "html-305-official-source-update",
+        "heading": "Official source update",
+        "text": "where appropriate, an indication of the information which should be regarded as proprietary accompanied by verifiable justification;"
+      },
+      {
+        "section_id": "html-307-official-source-update",
+        "heading": "Official source update",
+        "text": "a copy of other scientific studies which are relevant to that health claim;"
+      },
+      {
+        "section_id": "html-309-official-source-update",
+        "heading": "Official source update",
+        "text": "a proposal for the wording of the health claim for which authorisation is sought including, as the case may be, specific conditions for use;"
+      },
+      {
+        "section_id": "html-311-official-source-update",
+        "heading": "Official source update",
+        "text": "a summary of the application."
+      },
+      {
+        "section_id": "html-312-official-source-update",
+        "heading": "Official source update",
+        "text": "4. The Commission, having first consulted the Authority, shall establish in accordance with the procedure referred to in Article 24(2) implementing rules for the application of this Article, including rules concerning the preparation and presentation of the application."
+      },
+      {
+        "section_id": "html-313-official-source-update",
+        "heading": "Official source update",
+        "text": "5. The Commission, in close cooperation with the Authority, shall make available appropriate technical guidance and tools to assist food business operators, in particular SMEs, in the preparation and presentation of the application for scientific assessment."
+      },
+      {
+        "section_id": "html-315-official-source-update",
+        "heading": "Official source update",
+        "text": "Opinion of the Authority"
+      },
+      {
+        "section_id": "html-316-official-source-update",
+        "heading": "Official source update",
+        "text": "1. In giving its opinion, the Authority shall endeavour to respect a time limit of six months from the date of receipt of a valid application. Such time limit shall be extended whenever the Authority seeks supplementary information from the applicant as provided for in paragraph 2."
+      },
+      {
+        "section_id": "html-317-official-source-update",
+        "heading": "Official source update",
+        "text": "2. The Authority or a national competent authority through the Authority may, where appropriate, request the applicant to supplement the particulars accompanying the application within a specified time limit."
+      },
+      {
+        "section_id": "html-318-official-source-update",
+        "heading": "Official source update",
+        "text": "3. In order to prepare its opinion, the Authority shall:"
+      },
+      {
+        "section_id": "html-320-official-source-update",
+        "heading": "Official source update",
+        "text": "verify that the proposed wording of the health claim is substantiated by scientific data;"
+      },
+      {
+        "section_id": "html-322-official-source-update",
+        "heading": "Official source update",
+        "text": "consider whether the wording of the health claim complies with the criteria laid down in this Regulation;"
+      },
+      {
+        "section_id": "html-324-official-source-update",
+        "heading": "Official source update",
+        "text": "give advice on whether the proposed wording of the health claim is understandable and meaningful to the average consumer."
+      },
+      {
+        "section_id": "html-325-official-source-update",
+        "heading": "Official source update",
+        "text": "4. In the event of an opinion in favour of authorising the health claim, the opinion shall include the following particulars:"
+      },
+      {
+        "section_id": "html-329-official-source-update",
+        "heading": "Official source update",
+        "text": "the nutrient or other substance, or the food or the category of food, in respect of which a claim is to be made and its particular characteristics;"
+      },
+      {
+        "section_id": "html-331-official-source-update",
+        "heading": "Official source update",
+        "text": "the recommended wording of the proposed health claim, including, as the case may be, the specific conditions of use;"
+      },
+      {
+        "section_id": "html-333-official-source-update",
+        "heading": "Official source update",
+        "text": "where applicable, conditions or restrictions of use of the food and/or an additional statement or warning that should accompany the health claim on the label and in advertising."
+      },
+      {
+        "section_id": "html-334-official-source-update",
+        "heading": "Official source update",
+        "text": "5. The Authority shall forward its opinion to the Commission, the Member States and the applicant, including a report describing its assessment of the health claim and stating the reasons for its opinion and the information on which its opinion was based."
+      },
+      {
+        "section_id": "html-335-official-source-update",
+        "heading": "Official source update",
+        "text": "6. The Authority, in accordance with Article 38(1) of Regulation (EC) No 178/2002, shall make its opinion public."
+      },
+      {
+        "section_id": "html-336-official-source-update",
+        "heading": "Official source update",
+        "text": "The applicant or members of the public may make comments to the Commission within 30 days from such publication."
+      },
+      {
+        "section_id": "html-338-official-source-update",
+        "heading": "Official source update",
+        "text": "Community authorisation"
+      },
+      {
+        "section_id": "html-339-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Within three months after receiving the opinion of the Authority, the Commission shall submit to the Committee referred to in Article 22(2) a draft decision on the lists of permitted health claims, taking into account the opinion of the Authority, any relevant provisions of Community law and other legitimate factors relevant to the matter under consideration. Where the draft Decision is not in accordance with the opinion of the Authority, the Commission shall provide an explanation for the differences."
+      },
+      {
+        "section_id": "html-340-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Any draft decision to amend the lists of permitted health claims shall include the particulars referred to in Article 16(4)."
+      },
+      {
+        "section_id": "html-341-official-source-update",
+        "heading": "Official source update",
+        "text": "3. A final decision on the application shall be adopted in accordance with the procedure referred to in Article 24(2)."
+      },
+      {
+        "section_id": "html-342-official-source-update",
+        "heading": "Official source update",
+        "text": "4. The Commission shall, without delay, inform the applicant of the decision taken and publish details of the decision in the Official Journal of the European Union ."
+      },
+      {
+        "section_id": "html-343-official-source-update",
+        "heading": "Official source update",
+        "text": "5. Health claims included in the lists provided for in Articles 13 and 14 may be used, in conformity with the conditions applying to them, by any food business operator, if they are not restricted for use in accordance with the provisions of Article 20."
+      },
+      {
+        "section_id": "html-344-official-source-update",
+        "heading": "Official source update",
+        "text": "6. The granting of authorisation shall not lessen the general civil and criminal liability of any food business operator in respect of the food concerned."
+      },
+      {
+        "section_id": "html-346-official-source-update",
+        "heading": "Official source update",
+        "text": "Modification, suspension and revocation of authorisations"
+      },
+      {
+        "section_id": "html-347-official-source-update",
+        "heading": "Official source update",
+        "text": "1. The applicant/user of a claim included in one of the lists provided for in Articles 13 and 14 may apply for a modification of the relevant list. The procedure laid down in Articles 15 to 17 shall apply, mutatis mutandis ."
+      },
+      {
+        "section_id": "html-348-official-source-update",
+        "heading": "Official source update",
+        "text": "2. On its own initiative or following a request from a Member State or from the Commission, the Authority shall issue an opinion on whether a health claim included in the lists provided for in Articles 13 and 14 still meets the conditions laid down in this Regulation."
+      },
+      {
+        "section_id": "html-349-official-source-update",
+        "heading": "Official source update",
+        "text": "It shall forthwith transmit its opinion to the Commission, the Member States and, where relevant, to the original applicant of the claim in question. The Authority, in accordance with Article 38(1) of Regulation (EC) No 178/2002, shall make its opinion public."
+      },
+      {
+        "section_id": "html-350-official-source-update",
+        "heading": "Official source update",
+        "text": "The applicant/user or a member of the public may make comments to the Commission within 30 days of such publication."
+      },
+      {
+        "section_id": "html-351-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall examine the opinion of the Authority and any comments received as soon as possible. If appropriate, the authorisation shall be modified, suspended or revoked in accordance with the procedure laid down in Article 17."
+      },
+      {
+        "section_id": "html-353-official-source-update",
+        "heading": "Official source update",
+        "text": "GENERAL AND FINAL PROVISIONS"
+      },
+      {
+        "section_id": "html-355-official-source-update",
+        "heading": "Official source update",
+        "text": "Community Register"
+      },
+      {
+        "section_id": "html-356-official-source-update",
+        "heading": "Official source update",
+        "text": "1. The Commission shall establish and maintain a Community Register of nutrition and health claims made on food, hereinafter referred to as ‘the Register’."
+      },
+      {
+        "section_id": "html-357-official-source-update",
+        "heading": "Official source update",
+        "text": "2. The Register shall include the following:"
+      },
+      {
+        "section_id": "html-359-official-source-update",
+        "heading": "Official source update",
+        "text": "the nutrition claims and the conditions applying to them as set out in the Annex;"
+      },
+      {
+        "section_id": "html-361-official-source-update",
+        "heading": "Official source update",
+        "text": "restrictions adopted in accordance with Article 4(5);"
+      },
+      {
+        "section_id": "html-363-official-source-update",
+        "heading": "Official source update",
+        "text": "the authorised health claims and the conditions applying to them provided for in Articles 13(3), 14(1), 18(2), 20, 23(2) and 27(6) and the national measures referred to in Article 22(3);"
+      },
+      {
+        "section_id": "html-365-official-source-update",
+        "heading": "Official source update",
+        "text": "a list of rejected health claims and the reasons for their rejection."
+      },
+      {
+        "section_id": "html-366-official-source-update",
+        "heading": "Official source update",
+        "text": "Health claims authorised on the basis of proprietary data shall be recorded in a separate Annex to the Register together with the following information:"
+      },
+      {
+        "section_id": "html-368-official-source-update",
+        "heading": "Official source update",
+        "text": "the date the Commission authorised the health claim and the name of the original applicant that was granted authorisation;"
+      },
+      {
+        "section_id": "html-370-official-source-update",
+        "heading": "Official source update",
+        "text": "the fact that the Commission authorised the health claim on the basis of proprietary data;"
+      },
+      {
+        "section_id": "html-372-official-source-update",
+        "heading": "Official source update",
+        "text": "the fact that the health claim is restricted for use unless a subsequent applicant obtains authorisation for the claim without reference to the proprietary data of the original applicant."
+      },
+      {
+        "section_id": "html-373-official-source-update",
+        "heading": "Official source update",
+        "text": "3. The Register shall be made available to the public."
+      },
+      {
+        "section_id": "html-375-official-source-update",
+        "heading": "Official source update",
+        "text": "Data protection"
+      },
+      {
+        "section_id": "html-376-official-source-update",
+        "heading": "Official source update",
+        "text": "1. The scientific data and other information in the application required under Article 15(2) may not be used for the benefit of a subsequent applicant for a period of seven years from the date of authorisation, unless the subsequent applicant has agreed with the prior applicant that such data and information may be used, where:"
+      },
+      {
+        "section_id": "html-378-official-source-update",
+        "heading": "Official source update",
+        "text": "the scientific data and other information has been designated as proprietary by the prior applicant at the time the prior application was made; and"
+      },
+      {
+        "section_id": "html-380-official-source-update",
+        "heading": "Official source update",
+        "text": "the prior applicant had exclusive right of reference to the proprietary data at the time the prior application was made; and"
+      },
+      {
+        "section_id": "html-382-official-source-update",
+        "heading": "Official source update",
+        "text": "the health claim could not have been authorised without the submission of the proprietary data by the prior applicant."
+      },
+      {
+        "section_id": "html-383-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Until the end of the seven-year period specified in paragraph 1, no subsequent applicant shall have the right to refer to data designated as proprietary by a prior applicant unless and until the Commission takes a decision on whether a claim could be or could have been included in the list provided for in Article 14 or, where appropriate, Article 13 without the submission of data designated as proprietary by the prior applicant."
+      },
+      {
+        "section_id": "html-385-official-source-update",
+        "heading": "Official source update",
+        "text": "National provisions"
+      },
+      {
+        "section_id": "html-386-official-source-update",
+        "heading": "Official source update",
+        "text": "Without prejudice to the Treaty, in particular Articles 28 and 30 thereof, Member States may not restrict or forbid trade in or advertising of foods which comply with this Regulation by the application of non-harmonised national provisions governing claims made on certain foods or on foods in general."
+      },
+      {
+        "section_id": "html-388-official-source-update",
+        "heading": "Official source update",
+        "text": "Notification procedure"
+      },
+      {
+        "section_id": "html-389-official-source-update",
+        "heading": "Official source update",
+        "text": "1. If a Member State considers it necessary to adopt new legislation, it shall notify the Commission and the other Member States of the envisaged measures and give the reasons justifying them."
+      },
+      {
+        "section_id": "html-390-official-source-update",
+        "heading": "Official source update",
+        "text": "2. The Commission shall consult the Standing Committee on the Food Chain and Animal Health instituted by Article 58(1) of Regulation (EC) No 178/2002 (hereinafter referred to as the Committee) if it considers such consultation to be useful or if a Member State so requests, and shall give an opinion on the envisaged measures."
+      },
+      {
+        "section_id": "html-391-official-source-update",
+        "heading": "Official source update",
+        "text": "3. The Member State concerned may take the envisaged measures six months after the notification referred to in paragraph 1, provided that the Commission's opinion is not negative."
+      },
+      {
+        "section_id": "html-392-official-source-update",
+        "heading": "Official source update",
+        "text": "If the Commission's opinion is negative, it shall determine, in accordance with the procedure referred to in Article 24(2) and before the expiry of the period referred to in the first subparagraph of this paragraph, whether the envisaged measures may be implemented. The Commission may require certain amendments to be made to the envisaged measure."
+      },
+      {
+        "section_id": "html-394-official-source-update",
+        "heading": "Official source update",
+        "text": "Safeguard measures"
+      },
+      {
+        "section_id": "html-395-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Where a Member State has serious grounds for considering that a claim does not comply with this Regulation, or that the scientific substantiation provided for in Article 6 is insufficient, that Member State may temporarily suspend the use of that claim within its territory."
+      },
+      {
+        "section_id": "html-396-official-source-update",
+        "heading": "Official source update",
+        "text": "It shall inform the other Member States and the Commission and give reasons for the suspension."
+      },
+      {
+        "section_id": "html-397-official-source-update",
+        "heading": "Official source update",
+        "text": "2. In accordance with the procedure referred to in Article 24(2), a decision shall be taken, where appropriate after obtaining an opinion from the Authority."
+      },
+      {
+        "section_id": "html-398-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission may initiate this procedure on its own initiative."
+      },
+      {
+        "section_id": "html-399-official-source-update",
+        "heading": "Official source update",
+        "text": "3. The Member State referred to in paragraph 1 may maintain the suspension until the decision referred to in paragraph 2 has been notified to it."
+      },
+      {
+        "section_id": "html-401-official-source-update",
+        "heading": "Official source update",
+        "text": "Committee procedure"
+      },
+      {
+        "section_id": "html-402-official-source-update",
+        "heading": "Official source update",
+        "text": "1. The Commission shall be assisted by the Committee."
+      },
+      {
+        "section_id": "html-403-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Where reference is made to this paragraph, Articles 5 and 7 of Decision 1999/468/EC shall apply, having regard to the provisions of Article 8 thereof."
+      },
+      {
+        "section_id": "html-404-official-source-update",
+        "heading": "Official source update",
+        "text": "The period laid down in Article 5(6) of Decision 1999/468/EC shall be three months."
+      },
+      {
+        "section_id": "html-405-official-source-update",
+        "heading": "Official source update",
+        "text": "3. The Committee shall adopt its rules of procedure."
+      },
+      {
+        "section_id": "html-408-official-source-update",
+        "heading": "Official source update",
+        "text": "To facilitate efficient monitoring of foods bearing nutrition or health claims, Member States may require the manufacturer or the person placing such foods on the market in their territory to notify the competent authority of that placing on the market by forwarding to it a model of the label used for the product."
+      },
+      {
+        "section_id": "html-411-official-source-update",
+        "heading": "Official source update",
+        "text": "By 19 January 2013 at the latest, the Commission shall submit to the European Parliament and to the Council a report on the application of this Regulation, in particular on the evolution of the market in foods in respect of which nutrition or health claims are made and on the consumers' understanding of claims, together with a proposal for amendments if necessary."
+      },
+      {
+        "section_id": "html-413-official-source-update",
+        "heading": "Official source update",
+        "text": "Transitional measures"
+      },
+      {
+        "section_id": "html-414-official-source-update",
+        "heading": "Official source update",
+        "text": "1. Foods placed on the market or labelled prior to the date of application of this Regulation which do not comply with this Regulation may be marketed until their expiry date, but not later than 31 July 2009. With regard to the provisions in Article 4(1), foods may be marketed until12 months following adoption of the relevant nutrient profiles and their conditions of use."
+      },
+      {
+        "section_id": "html-415-official-source-update",
+        "heading": "Official source update",
+        "text": "2. Products bearing trade marks or brand names existing before 1 January 2005 which do not comply with this Regulation may continue to be marketed until 19 January 2022 after which time the provisions of this Regulation shall apply."
+      },
+      {
+        "section_id": "html-416-official-source-update",
+        "heading": "Official source update",
+        "text": "3. Nutrition claims which have been used in a Member State before 1 January 2005 in compliance with national provisions applicable to them and which are not included in the Annex, may continue to be used until 19 January 2010 under the responsibility of food business operators and without prejudice to the adoption of safeguard measures as referred to in Article 23."
+      },
+      {
+        "section_id": "html-417-official-source-update",
+        "heading": "Official source update",
+        "text": "4. Nutrition claims in the form of pictorial, graphic or symbolic representation, complying with the general principles of this Regulation, which are not included in the Annex and are used according to specific conditions and criteria elaborated by national provisions or rules, shall be subject to the following:"
+      },
+      {
+        "section_id": "html-419-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall communicate to the Commission, by 31 January 2008 at the latest, such nutrition claims and the national provisions or rules applicable, accompanied by scientific data in support of such provisions or rules;"
+      },
+      {
+        "section_id": "html-421-official-source-update",
+        "heading": "Official source update",
+        "text": "the Commission shall, in accordance with the procedure referred to in Article 24(2), adopt a Decision concerning the use of such claims."
+      },
+      {
+        "section_id": "html-422-official-source-update",
+        "heading": "Official source update",
+        "text": "Nutrition claims not authorised under this procedure may continue to be used for twelve months following the adoption of the Decision."
+      },
+      {
+        "section_id": "html-423-official-source-update",
+        "heading": "Official source update",
+        "text": "5. Health claims as referred to in Article 13(1)(a) may be made from the date of entry into force of this Regulation until the adoption of the list referred to in Article 13(3), under the responsibility of food business operators provided that they comply with this Regulation and with existing national provisions applicable to them, and without prejudice to the adoption of safeguard measures as referred to in Article 23."
+      },
+      {
+        "section_id": "html-424-official-source-update",
+        "heading": "Official source update",
+        "text": "6. Health claims other than those referred to in Article 13(1)(a) and 14, which have been used in compliance with national provisions before the date of entry into force of this Regulation, shall be subject to the following:"
+      },
+      {
+        "section_id": "html-426-official-source-update",
+        "heading": "Official source update",
+        "text": "health claims which have been the subject of evaluation and authorisation in a Member State shall be authorised as follows:"
+      },
+      {
+        "section_id": "html-428-official-source-update",
+        "heading": "Official source update",
+        "text": "Member States shall communicate to the Commission, by 31 January 2008 at the latest, such claims accompanied by a report evaluating the scientific data in support of the claim;"
+      },
+      {
+        "section_id": "html-430-official-source-update",
+        "heading": "Official source update",
+        "text": "after consulting the Authority, the Commission shall, in accordance with the procedure referred to in Article 24(2), adopt a Decision concerning the health claims authorised in this way."
+      },
+      {
+        "section_id": "html-431-official-source-update",
+        "heading": "Official source update",
+        "text": "Health claims not authorised under this procedure may continue to be used for six months following the adoption of the Decision;"
+      },
+      {
+        "section_id": "html-433-official-source-update",
+        "heading": "Official source update",
+        "text": "health claims which have not been the subject of evaluation and authorisation in a Member State: such claims may continue to be used provided an application is made pursuant to this Regulation before 19 January 2008, health claims not authorised under this procedure may continue to be used for six months after a decision is taken pursuant to Article 17(3)."
+      },
+      {
+        "section_id": "html-435-official-source-update",
+        "heading": "Official source update",
+        "text": "Entry into force"
+      },
+      {
+        "section_id": "html-436-official-source-update",
+        "heading": "Official source update",
+        "text": "This Regulation shall enter into force on the 20th day following its publication in the Official Journal of the European Union ."
+      },
+      {
+        "section_id": "html-437-official-source-update",
+        "heading": "Official source update",
+        "text": "It shall apply from 1 July 2007."
+      },
+      {
+        "section_id": "html-438-official-source-update",
+        "heading": "Official source update",
+        "text": "This Regulation shall be binding in its entirety and directly applicable in all Member States."
+      },
+      {
+        "section_id": "html-439-official-source-update",
+        "heading": "Official source update",
+        "text": "Done at Brussels, 20 December 2006."
+      },
+      {
+        "section_id": "html-440-official-source-update",
+        "heading": "Official source update",
+        "text": "For the European Parliament"
+      },
+      {
+        "section_id": "html-441-official-source-update",
+        "heading": "Official source update",
+        "text": "The President"
+      },
+      {
+        "section_id": "html-442-official-source-update",
+        "heading": "Official source update",
+        "text": "J. BORRELL FONTELLES"
+      },
+      {
+        "section_id": "html-443-official-source-update",
+        "heading": "Official source update",
+        "text": "For the Council"
+      },
+      {
+        "section_id": "html-444-official-source-update",
+        "heading": "Official source update",
+        "text": "J. KORKEAOJA"
+      },
+      {
+        "section_id": "html-445-official-source-update",
+        "heading": "Official source update",
+        "text": "( 1 ) OJ C 110, 30.4.2004, p. 18 ."
+      },
+      {
+        "section_id": "html-446-official-source-update",
+        "heading": "Official source update",
+        "text": "( 2 ) Opinion of the European Parliament of 26 May 2005 ( OJ C 117 E, 18.5.2006, p. 187 ), Council common position of 8 December 2005 ( OJ C 80 E, 4.4.2006, p. 43 ) and Position of the European Parliament of 16 May 2006 (not yet published in the Official Journal). Council Decision of 12 October 2006."
+      },
+      {
+        "section_id": "html-447-official-source-update",
+        "heading": "Official source update",
+        "text": "( 3 ) OJ L 109, 6.5.2000, p. 29 . Directive as last amended by Directive 2003/89/EC ( OJ L 308, 25.11.2003, p. 15 )."
+      },
+      {
+        "section_id": "html-448-official-source-update",
+        "heading": "Official source update",
+        "text": "( 4 ) OJ L 204, 21.7.1998, p. 37 . Directive as last amended by the 2003 Act of Accession."
+      },
+      {
+        "section_id": "html-449-official-source-update",
+        "heading": "Official source update",
+        "text": "( 5 ) OJ L 316, 9.12.1994, p. 2 ."
+      },
+      {
+        "section_id": "html-450-official-source-update",
+        "heading": "Official source update",
+        "text": "( 6 ) OJ L 183, 12.7.2002, p. 51 ."
+      },
+      {
+        "section_id": "html-451-official-source-update",
+        "heading": "Official source update",
+        "text": "( 7 ) OJ L 250, 19.9.1984, p. 17 . Directive as last amended by Directive 2005/29/EC of the European Parliament and of the Council ( OJ L 149, 11.6.2005, p. 22 )."
+      },
+      {
+        "section_id": "html-452-official-source-update",
+        "heading": "Official source update",
+        "text": "( 8 ) OJ L 276, 6.10.1990, p. 40 . Directive as last amended by Commission Directive 2003/120/EC ( OJ L 333, 20.12.2003, p. 51 )."
+      },
+      {
+        "section_id": "html-453-official-source-update",
+        "heading": "Official source update",
+        "text": "( 9 ) OJ L 186, 30.6.1989, p. 27 . Directive as last amended by Regulation (EC) No 1882/2003 of the European Parliament and of the Council ( OJ L 284, 31.10.2003, p. 1 )."
+      },
+      {
+        "section_id": "html-454-official-source-update",
+        "heading": "Official source update",
+        "text": "( 10 ) OJ L 55, 6.3.1996, p. 22 ."
+      },
+      {
+        "section_id": "html-455-official-source-update",
+        "heading": "Official source update",
+        "text": "( 11 ) OJ L 184, 17.7.1999, p. 23 ."
+      },
+      {
+        "section_id": "html-456-official-source-update",
+        "heading": "Official source update",
+        "text": "( 12 ) OJ L 229, 30.8.1980, p. 1 . Directive as last amended by Regulation (EC) No 1882/2003."
+      },
+      {
+        "section_id": "html-457-official-source-update",
+        "heading": "Official source update",
+        "text": "( 13 ) OJ L 330, 5.12.1998, p. 32 . Directive as amended by Regulation (EC) No 1882/2003."
+      },
+      {
+        "section_id": "html-458-official-source-update",
+        "heading": "Official source update",
+        "text": "( 14 ) OJ L 31, 1.2.2002, p. 1 . Regulation as amended by Regulation (EC) No 1642/2003 ( OJ L 245, 29.9.2003, p. 4 )."
+      },
+      {
+        "section_id": "html-460-official-source-update",
+        "heading": "Official source update",
+        "text": "Nutrition claims and conditions applying to them"
+      },
+      {
+        "section_id": "html-462-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is low in energy, and any claim likely to have the same meaning for the consumer, may only be made where the product does not contain more than 40 kcal (170 kJ)/100 g for solids or more than 20 kcal (80 kJ)/100 ml for liquids. For table-top sweeteners the limit of 4 kcal (17 kJ)/portion, with equivalent sweetening properties to 6 g of sucrose (approximately one teaspoon of sucrose), applies."
+      },
+      {
+        "section_id": "html-463-official-source-update",
+        "heading": "Official source update",
+        "text": "ENERGY-REDUCED"
+      },
+      {
+        "section_id": "html-464-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is energy-reduced, and any claim likely to have the same meaning for the consumer, may only be made where the energy value is reduced by at least 30 %, with an indication of the characteristic(s) which make(s) the food reduced in its total energy value."
+      },
+      {
+        "section_id": "html-466-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is energy-free, and any claim likely to have the same meaning for the consumer, may only be made where the product does not contain more than 4 kcal (17 kJ)/100 ml. For table-top sweeteners the limit of 0,4 kcal (1,7 kJ)/portion, with equivalent sweetening properties to 6 g of sucrose (approximately one teaspoon of sucrose), applies."
+      },
+      {
+        "section_id": "html-468-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is low in fat, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 3 g of fat per 100 g for solids or 1,5 g of fat per 100ml for liquids (1,8 g of fat per 100 ml for semi-skimmed milk)."
+      },
+      {
+        "section_id": "html-470-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is fat-free, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 0,5 g of fat per 100 g or 100 ml. However, claims expressed as ‘X % fat-free’ shall be prohibited."
+      },
+      {
+        "section_id": "html-471-official-source-update",
+        "heading": "Official source update",
+        "text": "LOW-SATURATED FAT"
+      },
+      {
+        "section_id": "html-472-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is low in saturated fat, and any claim likely to have the same meaning for the consumer, may only be made if the sum of saturated fatty acids and trans-fatty acids in the product does not exceed 1,5 g per100 g for solids or 0,75 g/100 ml for liquids and in either case the sum of saturated fatty acids and trans-fatty acids must not provide more than 10 % of energy."
+      },
+      {
+        "section_id": "html-473-official-source-update",
+        "heading": "Official source update",
+        "text": "SATURATED FAT-FREE"
+      },
+      {
+        "section_id": "html-474-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food does not contain saturated fat, and any claim likely to have the same meaning for the consumer, may only be made where the sum of saturated fat and trans-fatty acids does not exceed 0,1 g of saturated fat per 100 g or 100 ml."
+      },
+      {
+        "section_id": "html-476-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is low in sugar, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 5g of sugar per 100 g for solids or 2,5 g of sugar per 100 ml for liquids."
+      },
+      {
+        "section_id": "html-478-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is sugar-free, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 0,5 g of sugar per 100 g or 100 ml."
+      },
+      {
+        "section_id": "html-479-official-source-update",
+        "heading": "Official source update",
+        "text": "WITH NO ADDED SUGAR"
+      },
+      {
+        "section_id": "html-480-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim stating that sugars have not been added to a food, and any claim likely to have the same meaning for the consumer, may only be made where the product does not contain any added mono- or disaccharides or any other food used for its sweetening properties. If sugars are naturally present in the food, the following indication should also appear on the label: ‘CONTAINS NATURALLY OCCURRING SUGARS’."
+      },
+      {
+        "section_id": "html-481-official-source-update",
+        "heading": "Official source update",
+        "text": "LOW SODIUM/SALT"
+      },
+      {
+        "section_id": "html-482-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is low in sodium/salt, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 0,12 g of sodium, or the equivalent value for salt, per 100 g or per 100 ml. For waters, other than natural mineral waters falling within the scope of Directive 80/777/EEC, this value should not exceed 2 mg of sodium per 100 ml."
+      },
+      {
+        "section_id": "html-483-official-source-update",
+        "heading": "Official source update",
+        "text": "VERY LOW SODIUM/SALT"
+      },
+      {
+        "section_id": "html-484-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is very low in sodium/salt, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 0,04 g of sodium, or the equivalent value for salt, per 100 g or per 100 ml. This claim shall not be used for natural mineral waters and other waters."
+      },
+      {
+        "section_id": "html-485-official-source-update",
+        "heading": "Official source update",
+        "text": "SODIUM-FREE or SALT-FREE"
+      },
+      {
+        "section_id": "html-486-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is sodium-free or salt-free, and any claim likely to have the same meaning for the consumer, may only be made where the product contains no more than 0,005 g of sodium, or the equivalent value for salt, per 100 g."
+      },
+      {
+        "section_id": "html-487-official-source-update",
+        "heading": "Official source update",
+        "text": "SOURCE OF FIBRE"
+      },
+      {
+        "section_id": "html-488-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is a source of fibre, and any claim likely to have the same meaning for the consumer, may only be made where the product contains at least 3 g of fibre per 100 g or at least 1,5 g of fibre per 100 kcal."
+      },
+      {
+        "section_id": "html-490-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is high in fibre, and any claim likely to have the same meaning for the consumer, may only be made where the product contains at least 6 g of fibre per 100 g or at least 3 g of fibre per 100 kcal."
+      },
+      {
+        "section_id": "html-491-official-source-update",
+        "heading": "Official source update",
+        "text": "SOURCE OF PROTEIN"
+      },
+      {
+        "section_id": "html-492-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is a source of protein, and any claim likely to have the same meaning for the consumer, may only be made where at least 12 % of the energy value of the food is provided by protein."
+      },
+      {
+        "section_id": "html-493-official-source-update",
+        "heading": "Official source update",
+        "text": "HIGH PROTEIN"
+      },
+      {
+        "section_id": "html-494-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is high in protein, and any claim likely to have the same meaning for the consumer, may only be made where at least 20 % of the energy value of the food is provided by protein."
+      },
+      {
+        "section_id": "html-495-official-source-update",
+        "heading": "Official source update",
+        "text": "SOURCE OF (NAME OF VITAMIN/S) AND/OR (NAME OF MINERAL/S)"
+      },
+      {
+        "section_id": "html-496-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is a source of vitamins and/or minerals, and any claim likely to have the same meaning for the consumer, may only be made where the product contains at least a significant amount as defined in the Annex to Directive 90/496/EEC or an amount provided for by derogations granted according to Article 7 of Regulation (EC) No 1925/2006 of the European Parliament and of the Council of 20 December 2006 on the addition of vitamins and minerals and of certain other substances to foods ( 1 ) ."
+      },
+      {
+        "section_id": "html-497-official-source-update",
+        "heading": "Official source update",
+        "text": "HIGH (NAME OF VITAMIN/S) AND/OR (NAME OF MINERAL/S)"
+      },
+      {
+        "section_id": "html-498-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food is high in vitamins and/or minerals, and any claim likely to have the same meaning for the consumer, may only be made where the product contains at least twice the value of ‘source of (NAME OF VITAMIN/S) and/or (NAME OF MINERAL/S)’."
+      },
+      {
+        "section_id": "html-499-official-source-update",
+        "heading": "Official source update",
+        "text": "CONTAINS (NAME OF THE NUTRIENT OR OTHER SUBSTANCE)"
+      },
+      {
+        "section_id": "html-500-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim that a food contains a nutrient or another substance, for which specific conditions are not laid down in this Regulation, or any claim likely to have the same meaning for the consumer, may only be made where the product complies with all the applicable provisions of this Regulation, and in particular Article 5. For vitamins and minerals the conditions of the claim ‘source of’ shall apply."
+      },
+      {
+        "section_id": "html-501-official-source-update",
+        "heading": "Official source update",
+        "text": "INCREASED (NAME OF THE NUTRIENT)"
+      },
+      {
+        "section_id": "html-502-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim stating that the content in one or more nutrients, other than vitamins and minerals, has been increased, and any claim likely to have the same meaning for the consumer, may only be made where the product meets the conditions for the claim ‘source of’ and the increase in content is at least 30 % compared to a similar product."
+      },
+      {
+        "section_id": "html-503-official-source-update",
+        "heading": "Official source update",
+        "text": "REDUCED (NAME OF THE NUTRIENT)"
+      },
+      {
+        "section_id": "html-504-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim stating that the content in one or more nutrients has been reduced, and any claim likely to have the same meaning for the consumer, may only be made where the reduction in content is at least 30 % compared to a similar product, except for micronutrients where a 10 % difference in the reference values as set in Council Directive 90/496/EEC shall be acceptable and for sodium, or the equivalent value for salt, where a 25 % difference shall be acceptable."
+      },
+      {
+        "section_id": "html-506-official-source-update",
+        "heading": "Official source update",
+        "text": "A claim stating that a product is ‘light’ or ‘lite’, and any claim likely to have the same meaning for the consumer, shall follow the same conditions as those set for the term ‘reduced’; the claim shall also be accompanied by an indication of the characteristic(s) which make(s) the food ‘light’ or ‘lite’."
+      },
+      {
+        "section_id": "html-507-official-source-update",
+        "heading": "Official source update",
+        "text": "NATURALLY/NATURAL"
+      },
+      {
+        "section_id": "html-508-official-source-update",
+        "heading": "Official source update",
+        "text": "Where a food naturally meets the condition(s) laid down in this Annex for the use of a nutritional claim, the term ‘naturally/ natural’ may be used as a prefix to the claim."
+      },
+      {
+        "section_id": "html-509-official-source-update",
+        "heading": "Official source update",
+        "text": "( 1 ) See page 26 of this Official Journal."
+      }
+    ]
+  }
+}

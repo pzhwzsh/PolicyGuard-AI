@@ -1,0 +1,51 @@
+{
+  "schema_version": "policyguard-runtime-snapshot-v1",
+  "as_of": "2026-07-22",
+  "environment": "local_development",
+  "database_file_published": false,
+  "counts": {
+    "policy_documents": 3,
+    "policy_chunks": 13,
+    "policy_scopes": 3,
+    "compliance_checks": 0,
+    "findings": 0,
+    "workflow_runs": 0,
+    "workflow_events": 0,
+    "agent_memories": 0,
+    "evaluation_reviews": 0,
+    "background_jobs": 2,
+    "audit_logs": 0
+  },
+  "active_document_count": 3,
+  "active_chunk_count": 13,
+  "active_documents": [
+    {
+      "id": "a37419fb0e5ba17160459c186e2a066c2e1495ed321205965d4bc382eb6b1ae5",
+      "title": "Directive 2005/29/EC - Unfair Commercial Practices Directive (selected articles)",
+      "publisher": "European Union / EUR-Lex",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02005L0029-20220528",
+      "version": "consolidated-2022-05-28",
+      "chunk_count": 2
+    },
+    {
+      "id": "e8ffbd850ac345d061e81ef5e952dc6da774aaff61b983ed46da37a6351b8f6e",
+      "title": "中华人民共和国广告法（商品合规相关条款节选）",
+      "publisher": "国家市场监督管理总局",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_5474cf75173c45d6a0379730fb4e8d97.html",
+      "version": "2021-04-29-second-amendment",
+      "chunk_count": 9
+    },
+    {
+      "id": "ec57ab864e775325468b41915c70e6736f9acfb28efd79bfb9e6af13947cf1c1",
+      "title": "Advertising and Marketing Basics",
+      "publisher": "U.S. Federal Trade Commission",
+      "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics",
+      "version": "retrieved-2026-07-19",
+      "chunk_count": 2
+    }
+  ],
+  "limitations": [
+    "Zero operational rows mean the repository has no production traffic evidence yet.",
+    "The mutable local database is excluded because it may contain uploaded content."
+  ]
+}

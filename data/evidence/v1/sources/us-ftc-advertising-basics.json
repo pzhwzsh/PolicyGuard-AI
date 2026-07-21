@@ -1,0 +1,180 @@
+{
+  "schema_version": "policyguard-source-evidence-v1",
+  "evidence_status": "official_source_structurally_parsed_pending_legal_review",
+  "source": {
+    "id": "us-ftc-advertising-basics",
+    "title": "Advertising and Marketing Basics",
+    "jurisdiction": "US",
+    "publisher": "U.S. Federal Trade Commission",
+    "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics",
+    "format": "html",
+    "source_language": "en-US",
+    "ingestion_mode": "source_catalog",
+    "activation_policy": "manual_review",
+    "reuse_review_status": "official_publication_terms_not_reviewed"
+  },
+  "capture": {
+    "content_hash": "bafb3800be69258a479d226556edbc244335af7cbfe237b9e436294a269ad438",
+    "created_at": "2026-07-21T11:35:10.081551+00:00",
+    "retrieved_at": "2026-07-21",
+    "section_count": 26,
+    "structural_review_status": "blocked",
+    "legal_review_status": "pending",
+    "eligible_for_activation": false,
+    "short_section_rate": 0.1923,
+    "replacement_character_count": 0,
+    "validation_errors": []
+  },
+  "document": {
+    "title": "Advertising and Marketing Basics",
+    "publisher": "U.S. Federal Trade Commission",
+    "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics",
+    "version": "snapshot-bafb3800be69",
+    "published_at": "undated",
+    "retrieved_at": "2026-07-21",
+    "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
+    "scopes": [
+      {
+        "jurisdiction": "US",
+        "category": "all",
+        "channel": "all",
+        "legal_level": "regulatory_guidance",
+        "source_language": "en-US",
+        "translation_status": "original",
+        "effective_from": "1900-01-01"
+      }
+    ],
+    "sections": [
+      {
+        "section_id": "html-1-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Advertising and Marketing Basics"
+      },
+      {
+        "section_id": "html-2-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Children"
+      },
+      {
+        "section_id": "html-3-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Endorsements, Influencers, and Reviews"
+      },
+      {
+        "section_id": "html-4-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Environmental Marketing"
+      },
+      {
+        "section_id": "html-5-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Health Claims"
+      },
+      {
+        "section_id": "html-6-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Made in USA"
+      },
+      {
+        "section_id": "html-7-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Online Advertising and Marketing"
+      },
+      {
+        "section_id": "html-8-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Telemarketing"
+      },
+      {
+        "section_id": "html-9-business-guide-to-the-ftc-s-mail-internet-or-telep",
+        "heading": "Business Guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule",
+        "text": "Under the law, claims in advertisements must be truthful, cannot be deceptive or unfair, and must be evidence-based. For some specialized products or services, additional rules may apply."
+      },
+      {
+        "section_id": "html-10-advertising-faq-s-a-guide-for-small-business",
+        "heading": "Advertising FAQ's: A Guide for Small Business",
+        "text": "Focusing on federal truth-in-advertising standards, this A-to-Z primer is an essential resource for businesses of any size."
+      },
+      {
+        "section_id": "html-11-applying-ftc-consumer-protection-standards-in-the-",
+        "heading": "Applying FTC Consumer Protection Standards in the Sale of Outdoor Plants",
+        "text": "Even though the FTC has rescinded its Nursery Guides, established truth-in-advertising standards still apply to the sale of trees, shrubs, and other products used for outdoor planting. Industry members also should consider long-standing FTC guidance regarding products collected from the wild state."
+      },
+      {
+        "section_id": "html-12-avoid-fake-degree-burns-by-researching-academic-cr",
+        "heading": "Avoid Fake-Degree Burns By Researching Academic Credentials",
+        "text": "Some resumes list credentials — like a college degree or professional certification — that sound credible, but were bought from “diploma mills.” Human resources professionals need to educate themselves on the steps to take to suss out suspect degrees."
+      },
+      {
+        "section_id": "html-13-business-guidance-concerning-multi-level-marketing",
+        "heading": "Business Guidance Concerning Multi-Level Marketing",
+        "text": "Do you have questions about multi-level marketing? The FTC staff has guidance to help members of the MLM industry apply core consumer protection principles to their business practices."
+      },
+      {
+        "section_id": "html-14-business-guide-to-the-ftc-s-mail-internet-or-telep",
+        "heading": "Business Guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule",
+        "text": "Do you sell products by mail, by phone, or online? This publication discusses what the FTC's Mail Order Rule covers, offers how-to compliance advice, answers common questions, explains where to go for more information – and includes a copy of the Rule."
+      },
+      {
+        "section_id": "html-15-businessperson-s-guide-to-federal-warranty-law",
+        "heading": "Businessperson's Guide to Federal Warranty Law",
+        "text": "Do your product warranties comply with law? This guide explains the Magnuson-Moss Warranty Act, the federal law governing warranties on consumer products."
+      },
+      {
+        "section_id": "html-16-can-spam-act-a-compliance-guide-for-business",
+        "heading": "CAN-SPAM Act: A Compliance Guide for Business",
+        "text": "If you use email in your business, you need to know about the CAN-SPAM Act. The law establishes requirements for commercial messages and gives recipients the right to have you stop emailing them. The FTC enforces the CAN-SPAM Act and the accompanying CAN-SPAM Rule."
+      },
+      {
+        "section_id": "html-17-consumer-review-fairness-act-what-businesses-need-",
+        "heading": "Consumer Review Fairness Act: What Businesses Need to Know",
+        "text": "The Consumer Review Fairness Act protects consumers’ ability to share their honest opinions about a business’s products, services, or conduct in any forum – and that includes social media. The FTC has tips to help your company comply with the law."
+      },
+      {
+        "section_id": "html-18-featuring-online-customer-reviews-a-guide-for-plat",
+        "heading": "Featuring Online Customer Reviews: A Guide for Platforms",
+        "text": "People who rely on online reviews of companies, products, and services should be getting an accurate picture of what other consumers think. If you operate a website or platform that features reviews, have processes in place to ensure those reviews truly reflect the feedback received from genuine customers."
+      },
+      {
+        "section_id": "html-19-informing-businesses-about-the-inform-consumers-ac",
+        "heading": "Informing Businesses about the INFORM Consumers Act",
+        "text": "If your business is an online marketplace or a \"high-volume third party seller\" on one of those platforms, the INFORM Consumers Act requires certain information collection, verification, and disclosure requirements."
+      },
+      {
+        "section_id": "html-20-native-advertising-a-guide-for-businesses",
+        "heading": "Native Advertising: A Guide for Businesses",
+        "text": "Marketers and publishers are using innovative methods to create, format, and deliver digital advertising. One form is “native advertising,” content that bears a similarity to the news, feature articles, product reviews, entertainment, and other material that surrounds it online. But as native advertising evolves, are consumers able to differentiate advertising from other content?"
+      },
+      {
+        "section_id": "html-21-scams-and-your-small-business-a-guide-for-business",
+        "heading": "Scams and Your Small Business: A Guide for Business",
+        "text": "This article is part of the FTC’s efforts to help small business owners avoid scams. It explains common scams that target small businesses and non-profit organizations, describes scammers’ tactics, and provides steps people can take to protect their company from scams. Copies can be ordered for free at ftc.gov/bulkorder ."
+      },
+      {
+        "section_id": "html-22-selling-a-work-at-home-or-other-business-opportuni",
+        "heading": "Selling a Work-at-Home or Other Business Opportunity? Revised Rule May Apply to You",
+        "text": "If you sell business opportunities, including work-at-home bizopps, find out how the FTC’s revised Business Opportunity Rule may apply to you. Avoid a compliance miscue by making required disclosures and steering clear of prohibited practices."
+      },
+      {
+        "section_id": "html-23-soliciting-and-paying-for-online-reviews-a-guide-f",
+        "heading": "Soliciting and Paying for Online Reviews: A Guide for Marketers",
+        "text": "Consumers rely on online reviews in deciding what to buy. But some businesses abuse that trust by writing or procuring fake reviews or by paying supposedly independent websites for good rankings. Is your company taking steps to avoid that kind of deception and manipulation?"
+      },
+      {
+        "section_id": "html-24-the-rule-on-unfair-or-deceptive-fees-frequently-as",
+        "heading": "The Rule on Unfair or Deceptive Fees: Frequently Asked Questions",
+        "text": "Effective May 12, 2025, the FTC’s Rule on Unfair or Deceptive Fees, 16 C.F.R. Part 464, prohibits bait-and-switch pricing and other tactics used to obscure and misrepresent total prices and fees for live-event tickets and short-term lodging. This publication, which includes answers to common questions, serves as the small entity compliance guide under the Small Business Regulatory Enforcement Fairness Act. This is FTC staff’s view of the Rule’s requirements. It is not binding on the Commission."
+      },
+      {
+        "section_id": "html-25-what-third-party-sellers-need-to-know-about-the-in",
+        "heading": "What Third Party Sellers Need to Know About the INFORM Consumers Act",
+        "text": "Do you sell products on online platforms? If you meet the definition of a \"high-volume third party seller,\" the INFORM Consumers Act may impact your business. The FTC has more information about the law."
+      },
+      {
+        "section_id": "html-26-health-products-compliance-guidance",
+        "heading": "Health Products Compliance Guidance",
+        "text": "Companies must have appropriate substantiation to back up claims for health-related products. Through more than 50 examples, this guidance explains the how-tos of making sure you have scientific support."
+      }
+    ]
+  }
+}

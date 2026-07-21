@@ -1,0 +1,135 @@
+{
+  "schema_version": "policyguard-source-evidence-v1",
+  "evidence_status": "official_source_structurally_parsed_pending_legal_review",
+  "source": {
+    "id": "us-ftc-endorsements-reviews",
+    "title": "Endorsements, Influencers, and Reviews",
+    "jurisdiction": "US",
+    "publisher": "U.S. Federal Trade Commission",
+    "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/endorsements-influencers-reviews",
+    "format": "html",
+    "source_language": "en-US",
+    "ingestion_mode": "source_catalog",
+    "activation_policy": "manual_review",
+    "reuse_review_status": "official_publication_terms_not_reviewed"
+  },
+  "capture": {
+    "content_hash": "12ccec092cc54477b7cb978d7b1217e1127d80c056153836bedb4719c4922887",
+    "created_at": "2026-07-21T11:35:10.112295+00:00",
+    "retrieved_at": "2026-07-21",
+    "section_count": 17,
+    "structural_review_status": "blocked",
+    "legal_review_status": "pending",
+    "eligible_for_activation": false,
+    "short_section_rate": 0.2941,
+    "replacement_character_count": 0,
+    "validation_errors": []
+  },
+  "document": {
+    "title": "Endorsements, Influencers, and Reviews",
+    "publisher": "U.S. Federal Trade Commission",
+    "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/endorsements-influencers-reviews",
+    "version": "snapshot-12ccec092cc5",
+    "published_at": "undated",
+    "retrieved_at": "2026-07-21",
+    "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
+    "scopes": [
+      {
+        "jurisdiction": "US",
+        "category": "all",
+        "channel": "all",
+        "legal_level": "regulatory_guidance",
+        "source_language": "en-US",
+        "translation_status": "original",
+        "effective_from": "1900-01-01"
+      }
+    ],
+    "sections": [
+      {
+        "section_id": "html-1-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Advertising and Marketing Basics"
+      },
+      {
+        "section_id": "html-2-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Children"
+      },
+      {
+        "section_id": "html-3-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Endorsements, Influencers, and Reviews"
+      },
+      {
+        "section_id": "html-4-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Environmental Marketing"
+      },
+      {
+        "section_id": "html-5-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Health Claims"
+      },
+      {
+        "section_id": "html-6-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Made in USA"
+      },
+      {
+        "section_id": "html-7-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Online Advertising and Marketing"
+      },
+      {
+        "section_id": "html-8-advertising-and-marketing",
+        "heading": "Advertising and Marketing",
+        "text": "Telemarketing"
+      },
+      {
+        "section_id": "html-9-ftc-s-endorsement-guides-what-people-are-asking",
+        "heading": "FTC's Endorsement Guides: What People Are Asking",
+        "text": "If you use consumer reviews or endorsements in your marketing, are you both meeting the standards of the FTC Act and complying with the specific prohibitions of the Rule on the Use of Consumer Reviews and Testimonials ? What about the FTC's Guides Concerning Use of Endorsements and Testimonials in Advertising (Endorsement Guides), revised in 2023? Get plain language guidance from the FTC related to reviews, social media influencers, and for complying with the Consumer Review Fairness Act ."
+      },
+      {
+        "section_id": "html-10-consumer-review-fairness-act-what-businesses-need-",
+        "heading": "Consumer Review Fairness Act: What Businesses Need to Know",
+        "text": "The Consumer Review Fairness Act protects consumers’ ability to share their honest opinions about a business’s products, services, or conduct in any forum – and that includes social media. The FTC has tips to help your company comply with the law."
+      },
+      {
+        "section_id": "html-11-disclosures-101-for-social-media-influencers",
+        "heading": "Disclosures 101 for Social Media Influencers",
+        "text": "Do you work with brands to recommend or endorse products? If so, you need to comply with the law when making these recommendations. One key is to make a good disclosure of your relationship to the brand. This brochure from FTC staff gives tips on when and how to make good disclosures."
+      },
+      {
+        "section_id": "html-12-featuring-online-customer-reviews-a-guide-for-plat",
+        "heading": "Featuring Online Customer Reviews: A Guide for Platforms",
+        "text": "People who rely on online reviews of companies, products, and services should be getting an accurate picture of what other consumers think. If you operate a website or platform that features reviews, have processes in place to ensure those reviews truly reflect the feedback received from genuine customers."
+      },
+      {
+        "section_id": "html-13-ftc-s-endorsement-guides-what-people-are-asking",
+        "heading": "FTC's Endorsement Guides: What People Are Asking",
+        "text": "Answers to questions people are asking about the FTC’s Endorsement Guides, including information about disclosing material connections between advertisers and endorsers. The brochure also addresses how those established consumer protection principles apply in social media and influencer marketing."
+      },
+      {
+        "section_id": "html-14-native-advertising-a-guide-for-businesses",
+        "heading": "Native Advertising: A Guide for Businesses",
+        "text": "Marketers and publishers are using innovative methods to create, format, and deliver digital advertising. One form is “native advertising,” content that bears a similarity to the news, feature articles, product reviews, entertainment, and other material that surrounds it online. But as native advertising evolves, are consumers able to differentiate advertising from other content?"
+      },
+      {
+        "section_id": "html-15-soliciting-and-paying-for-online-reviews-a-guide-f",
+        "heading": "Soliciting and Paying for Online Reviews: A Guide for Marketers",
+        "text": "Consumers rely on online reviews in deciding what to buy. But some businesses abuse that trust by writing or procuring fake reviews or by paying supposedly independent websites for good rankings. Is your company taking steps to avoid that kind of deception and manipulation?"
+      },
+      {
+        "section_id": "html-16-the-consumer-reviews-and-testimonials-rule-questio",
+        "heading": "The Consumer Reviews and Testimonials Rule: Questions and Answers",
+        "text": "The FTC’s Rule on the Use of Consumer Reviews and Testimonials addresses the persistent problem of fake and false consumer reviews and testimonials. Here are answers to the top questions businesses are asking about what’s covered and how to comply."
+      },
+      {
+        "section_id": "html-17-featuring-online-customer-reviews-a-guide-for-plat",
+        "heading": "Featuring Online Customer Reviews: A Guide for Platforms",
+        "text": "People who rely on online reviews of companies, products, and services should be getting an accurate picture of what other consumers think. If you operate a website or platform that features reviews, have processes in place to ensure those reviews truly reflect the feedback received from genuine customers."
+      }
+    ]
+  }
+}
