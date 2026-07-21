@@ -29,6 +29,8 @@ from policyguard import __version__
 from policyguard.api.schemas import (
     AgentMemoryResponse,
     AgentMemoryReviewRequest,
+    EvaluationReviewRequest,
+    EvaluationReviewResponse,
     BackgroundJobResponse,
     CheckResponse,
     ComplianceWorkflowRequest,
@@ -72,6 +74,7 @@ from policyguard.application.document_workspace import (
 )
 from policyguard.application.embeddings import DenseRetriever, configured_embedding_provider
 from policyguard.application.evidence_support import configured_evidence_verifier
+from policyguard.application.evaluation_review import EvaluationReviewService
 from policyguard.application.hybrid import HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
@@ -619,6 +622,68 @@ def create_app(database_url: str | None = None) -> FastAPI:
             evaluations=evaluations,
             report_history=reports,
         )
+
+    def evaluation_review_service(session: Session) -> EvaluationReviewService:
+        return EvaluationReviewService(
+            session,
+            SqlAlchemyKnowledgeRepository(session),
+            Path(__file__).parents[3]
+            / "data/evaluation/rag-cross-lingual-zh-en-v1.json",
+        )
+
+    @application.get(
+        "/api/v1/evaluations/cross-language/reviews",
+        response_model=list[EvaluationReviewResponse],
+        tags=["evaluation-review"],
+    )
+    def list_cross_language_reviews(
+        session: Session = Depends(get_session),
+    ) -> list[EvaluationReviewResponse]:
+        return [EvaluationReviewResponse(**item) for item in evaluation_review_service(session).list_items()]
+
+    @application.post(
+        "/api/v1/evaluations/cross-language/reviews/{sample_id}",
+        response_model=EvaluationReviewResponse,
+        tags=["evaluation-review"],
+    )
+    def review_cross_language_sample(
+        sample_id: str,
+        payload: EvaluationReviewRequest,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> EvaluationReviewResponse:
+        try:
+            item = evaluation_review_service(session).review(
+                sample_id, payload.decision, payload.reviewer,
+                payload.expected_section_id, payload.comment,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return EvaluationReviewResponse(**item)
+
+    @application.get("/api/v1/review-queue", tags=["operations"])
+    def review_queue(session: Session = Depends(get_session)) -> dict:
+        evaluation_items = evaluation_review_service(session).list_items()
+        staged_updates = list_staged_source_updates(Path("data/update-state/staged"))
+        memories = SqlAlchemyAgentMemoryRepository(session).list_recent(200)
+        return {
+            "evaluation": {
+                "pending": sum(item["review_status"] == "pending_human_review"
+                               for item in evaluation_items),
+                "items": evaluation_items,
+            },
+            "legal_sources": {
+                "pending": sum(item.get("legal_review_status") == "pending"
+                               for item in staged_updates),
+                "items": [source_update_response(item) for item in staged_updates],
+            },
+            "agent_memories": {
+                "invalidated": sum(item.review_status == "invalidated" for item in memories),
+            },
+            "automatic_approval": False,
+        }
 
     @application.post(
         "/api/v1/checks",

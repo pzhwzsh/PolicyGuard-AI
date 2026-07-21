@@ -185,6 +185,22 @@ class AgentMemoryRecord(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class EvaluationReviewRecord(Base):
+    __tablename__ = "evaluation_reviews"
+    __table_args__ = (
+        UniqueConstraint("dataset", "sample_id", name="uq_evaluation_review_sample"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    dataset: Mapped[str] = mapped_column(String(200), index=True)
+    sample_id: Mapped[str] = mapped_column(String(100), index=True)
+    decision: Mapped[str] = mapped_column(String(30), index=True)
+    expected_section_id: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    reviewer: Mapped[str] = mapped_column(String(100))
+    comment: Mapped[str] = mapped_column(Text, default="")
+    reviewed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
 class BackgroundJobRecord(Base):
     __tablename__ = "background_jobs"
 
