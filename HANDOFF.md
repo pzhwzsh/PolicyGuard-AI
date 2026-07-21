@@ -158,7 +158,7 @@ python -m uvicorn policyguard.api.main:app
 后续每个里程碑都要在本文件补充：样本数量、实验日期、代码版本、指标、失败案例以及仍未解决的问题。
 # Latest completion audit
 
-The current branch collects 99 tests: 98 pass locally and one PostgreSQL migration integration test
+The current branch collects 102 tests: 101 pass locally and one PostgreSQL migration integration test
 is skipped without `POSTGRES_TEST_URL`. GitHub CI provisions PostgreSQL 16 for that test. Whole-package
 statement coverage is 69%. Cross-language retrieval, reviewed memory lifecycle,
 evidence-grounded remediation, and machine guardrails are integrated. The Chinese-to-English-law
@@ -203,3 +203,18 @@ auditable without committing mutable databases, secrets, provider errors, or mac
 The release is not active legal truth: nine legal/guidance sources passed structural checks, two
 catalog pages are blocked, and all 11 remain without legal-review confirmation. See
 `docs/DATA_CARD.md` for exact metrics and limitations.
+
+# Portfolio-scale evidence
+
+- 120 unique isolated RAG queries (60 answerable/60 no-answer), explicitly synthetic and pending
+  human review. BM25 Hit@5 is 1.0 for templated positives; negative candidate presence is 0.8, so
+  retrieval alone still cannot decide answerability.
+- 100 unique deterministic remediation inputs and 100 synthetic campaign workflows. The workflows
+  produced 550 events, 0.51 evidence coverage, and 49 evidence-insufficient outcomes.
+- Eight-worker SQLite load completed 100/100 cases but reduced throughput to 44.36 cases/s and raised
+  P95 to 1,142.924 ms, making the database write-contention limitation measurable.
+- 20 generated complex-layout PDFs/200 pages cover two columns, tables, images, and page markers;
+  marker recall is 1.0 at approximately 27 ms/page on repeated local runs. This is a synthetic
+  parser/load result, not real-PDF truth; exact timing is machine-load dependent.
+- `human-review-packet-v1.json` contains nine source reviews and 320 dataset decisions, all still
+  empty. No reviewer identity or approval was fabricated.

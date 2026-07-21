@@ -1,0 +1,968 @@
+{
+  "name": "portfolio-rag-isolated-120-v1",
+  "label_status": "synthetic_pending_human_review",
+  "split": "locked_test_not_used_for_threshold_selection",
+  "generation": "deterministic templates grounded in active section identifiers",
+  "samples": [
+    {
+      "id": "holdout-pos-001",
+      "query": "Campaign scenario 1: 中国广告能否使用best等绝对化用语？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-002",
+      "query": "Campaign scenario 2: 引用price调查数据时需要说明来源和有效期吗？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-11",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-003",
+      "query": "Campaign scenario 3: 医疗广告是否可以承诺health治疗效果？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-16",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-004",
+      "query": "Campaign scenario 4: 保健食品能否宣称origin疾病？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-18",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-005",
+      "query": "Campaign scenario 5: 教育培训广告能否保证results考试？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-24",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-006",
+      "query": "Campaign scenario 6: 投资广告能否保证risk收益？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-25",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-007",
+      "query": "Campaign scenario 7: What evidence is needed for an ad claiming best?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-truth-evidence",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-008",
+      "query": "Campaign scenario 8: Should price advertising check specialized rules?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-specialized-products",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-009",
+      "query": "Campaign scenario 9: Can false information about health mislead a buyer?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-6",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-010",
+      "query": "Campaign scenario 10: May material origin information be hidden or delayed?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-7",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-011",
+      "query": "Campaign scenario 11: 中国广告能否使用results等绝对化用语？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-012",
+      "query": "Campaign scenario 12: 引用risk调查数据时需要说明来源和有效期吗？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-11",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-013",
+      "query": "Campaign scenario 13: 医疗广告是否可以承诺best治疗效果？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-16",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-014",
+      "query": "Campaign scenario 14: 保健食品能否宣称price疾病？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-18",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-015",
+      "query": "Campaign scenario 15: 教育培训广告能否保证health考试？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-24",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-016",
+      "query": "Campaign scenario 16: 投资广告能否保证origin收益？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-25",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-017",
+      "query": "Campaign scenario 17: What evidence is needed for an ad claiming results?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-truth-evidence",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-018",
+      "query": "Campaign scenario 18: Should risk advertising check specialized rules?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-specialized-products",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-019",
+      "query": "Campaign scenario 19: Can false information about best mislead a buyer?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-6",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-020",
+      "query": "Campaign scenario 20: May material price information be hidden or delayed?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-7",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-021",
+      "query": "Campaign scenario 21: 中国广告能否使用health等绝对化用语？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-022",
+      "query": "Campaign scenario 22: 引用origin调查数据时需要说明来源和有效期吗？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-11",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-023",
+      "query": "Campaign scenario 23: 医疗广告是否可以承诺results治疗效果？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-16",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-024",
+      "query": "Campaign scenario 24: 保健食品能否宣称risk疾病？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-18",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-025",
+      "query": "Campaign scenario 25: 教育培训广告能否保证best考试？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-24",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-026",
+      "query": "Campaign scenario 26: 投资广告能否保证price收益？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-25",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-027",
+      "query": "Campaign scenario 27: What evidence is needed for an ad claiming health?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-truth-evidence",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-028",
+      "query": "Campaign scenario 28: Should origin advertising check specialized rules?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-specialized-products",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-029",
+      "query": "Campaign scenario 29: Can false information about results mislead a buyer?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-6",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-030",
+      "query": "Campaign scenario 30: May material risk information be hidden or delayed?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-7",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-031",
+      "query": "Campaign scenario 31: 中国广告能否使用best等绝对化用语？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-032",
+      "query": "Campaign scenario 32: 引用price调查数据时需要说明来源和有效期吗？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-11",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-033",
+      "query": "Campaign scenario 33: 医疗广告是否可以承诺health治疗效果？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-16",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-034",
+      "query": "Campaign scenario 34: 保健食品能否宣称origin疾病？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-18",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-035",
+      "query": "Campaign scenario 35: 教育培训广告能否保证results考试？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-24",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-036",
+      "query": "Campaign scenario 36: 投资广告能否保证risk收益？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-25",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-037",
+      "query": "Campaign scenario 37: What evidence is needed for an ad claiming best?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-truth-evidence",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-038",
+      "query": "Campaign scenario 38: Should price advertising check specialized rules?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-specialized-products",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-039",
+      "query": "Campaign scenario 39: Can false information about health mislead a buyer?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-6",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-040",
+      "query": "Campaign scenario 40: May material origin information be hidden or delayed?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-7",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-041",
+      "query": "Campaign scenario 41: 中国广告能否使用results等绝对化用语？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-042",
+      "query": "Campaign scenario 42: 引用risk调查数据时需要说明来源和有效期吗？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-11",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-043",
+      "query": "Campaign scenario 43: 医疗广告是否可以承诺best治疗效果？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-16",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-044",
+      "query": "Campaign scenario 44: 保健食品能否宣称price疾病？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-18",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-045",
+      "query": "Campaign scenario 45: 教育培训广告能否保证health考试？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-24",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-046",
+      "query": "Campaign scenario 46: 投资广告能否保证origin收益？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-25",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-047",
+      "query": "Campaign scenario 47: What evidence is needed for an ad claiming results?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-truth-evidence",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-048",
+      "query": "Campaign scenario 48: Should risk advertising check specialized rules?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-specialized-products",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-049",
+      "query": "Campaign scenario 49: Can false information about best mislead a buyer?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-6",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-050",
+      "query": "Campaign scenario 50: May material price information be hidden or delayed?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-7",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-051",
+      "query": "Campaign scenario 51: 中国广告能否使用health等绝对化用语？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-052",
+      "query": "Campaign scenario 52: 引用origin调查数据时需要说明来源和有效期吗？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-11",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-053",
+      "query": "Campaign scenario 53: 医疗广告是否可以承诺results治疗效果？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-16",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-054",
+      "query": "Campaign scenario 54: 保健食品能否宣称risk疾病？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-18",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-055",
+      "query": "Campaign scenario 55: 教育培训广告能否保证best考试？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-24",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-056",
+      "query": "Campaign scenario 56: 投资广告能否保证price收益？",
+      "jurisdiction": "CN",
+      "answerable": true,
+      "expected_section_id": "article-25",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-057",
+      "query": "Campaign scenario 57: What evidence is needed for an ad claiming health?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-truth-evidence",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-058",
+      "query": "Campaign scenario 58: Should origin advertising check specialized rules?",
+      "jurisdiction": "US",
+      "answerable": true,
+      "expected_section_id": "ftc-specialized-products",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-059",
+      "query": "Campaign scenario 59: Can false information about results mislead a buyer?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-6",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-pos-060",
+      "query": "Campaign scenario 60: May material risk information be hidden or delayed?",
+      "jurisdiction": "EU",
+      "answerable": true,
+      "expected_section_id": "eu-ucpd-article-7",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-001",
+      "query": "Out-of-scope scenario 1: What is the prison sentence for 护肤品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-002",
+      "query": "Out-of-scope scenario 2: Which tax form applies to 面霜?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-003",
+      "query": "Out-of-scope scenario 3: What trademark filing fee covers 食品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-004",
+      "query": "Out-of-scope scenario 4: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-005",
+      "query": "Out-of-scope scenario 5: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-006",
+      "query": "Out-of-scope scenario 6: What is the prison sentence for 护肤品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-007",
+      "query": "Out-of-scope scenario 7: Which tax form applies to 面霜?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-008",
+      "query": "Out-of-scope scenario 8: What trademark filing fee covers 食品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-009",
+      "query": "Out-of-scope scenario 9: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-010",
+      "query": "Out-of-scope scenario 10: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-011",
+      "query": "Out-of-scope scenario 11: What is the prison sentence for 护肤品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-012",
+      "query": "Out-of-scope scenario 12: Which tax form applies to 面霜?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-013",
+      "query": "Out-of-scope scenario 13: What trademark filing fee covers 食品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-014",
+      "query": "Out-of-scope scenario 14: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-015",
+      "query": "Out-of-scope scenario 15: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-016",
+      "query": "Out-of-scope scenario 16: What is the prison sentence for 护肤品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-017",
+      "query": "Out-of-scope scenario 17: Which tax form applies to 面霜?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-018",
+      "query": "Out-of-scope scenario 18: What trademark filing fee covers 食品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-019",
+      "query": "Out-of-scope scenario 19: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-020",
+      "query": "Out-of-scope scenario 20: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-021",
+      "query": "Out-of-scope scenario 21: What is the prison sentence for 护肤品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-022",
+      "query": "Out-of-scope scenario 22: Which tax form applies to 面霜?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-023",
+      "query": "Out-of-scope scenario 23: What trademark filing fee covers 食品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-024",
+      "query": "Out-of-scope scenario 24: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-025",
+      "query": "Out-of-scope scenario 25: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-026",
+      "query": "Out-of-scope scenario 26: What is the prison sentence for 护肤品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-027",
+      "query": "Out-of-scope scenario 27: Which tax form applies to 面霜?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-028",
+      "query": "Out-of-scope scenario 28: What trademark filing fee covers 食品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-029",
+      "query": "Out-of-scope scenario 29: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-030",
+      "query": "Out-of-scope scenario 30: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-031",
+      "query": "Out-of-scope scenario 31: What is the prison sentence for 护肤品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-032",
+      "query": "Out-of-scope scenario 32: Which tax form applies to 面霜?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-033",
+      "query": "Out-of-scope scenario 33: What trademark filing fee covers 食品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-034",
+      "query": "Out-of-scope scenario 34: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-035",
+      "query": "Out-of-scope scenario 35: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-036",
+      "query": "Out-of-scope scenario 36: What is the prison sentence for 护肤品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-037",
+      "query": "Out-of-scope scenario 37: Which tax form applies to 面霜?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-038",
+      "query": "Out-of-scope scenario 38: What trademark filing fee covers 食品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-039",
+      "query": "Out-of-scope scenario 39: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-040",
+      "query": "Out-of-scope scenario 40: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-041",
+      "query": "Out-of-scope scenario 41: What is the prison sentence for 护肤品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-042",
+      "query": "Out-of-scope scenario 42: Which tax form applies to 面霜?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-043",
+      "query": "Out-of-scope scenario 43: What trademark filing fee covers 食品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-044",
+      "query": "Out-of-scope scenario 44: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-045",
+      "query": "Out-of-scope scenario 45: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-046",
+      "query": "Out-of-scope scenario 46: What is the prison sentence for 护肤品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-047",
+      "query": "Out-of-scope scenario 47: Which tax form applies to 面霜?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-048",
+      "query": "Out-of-scope scenario 48: What trademark filing fee covers 食品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-049",
+      "query": "Out-of-scope scenario 49: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-050",
+      "query": "Out-of-scope scenario 50: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-051",
+      "query": "Out-of-scope scenario 51: What is the prison sentence for 护肤品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-052",
+      "query": "Out-of-scope scenario 52: Which tax form applies to 面霜?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-053",
+      "query": "Out-of-scope scenario 53: What trademark filing fee covers 食品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-054",
+      "query": "Out-of-scope scenario 54: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-055",
+      "query": "Out-of-scope scenario 55: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-056",
+      "query": "Out-of-scope scenario 56: What is the prison sentence for 护肤品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-057",
+      "query": "Out-of-scope scenario 57: Which tax form applies to 面霜?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-058",
+      "query": "Out-of-scope scenario 58: What trademark filing fee covers 食品?",
+      "jurisdiction": "CN",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-059",
+      "query": "Out-of-scope scenario 59: Which customs tariff code applies to 儿童用品?",
+      "jurisdiction": "US",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "holdout-neg-060",
+      "query": "Out-of-scope scenario 60: What employment contract rule governs 清洁剂?",
+      "jurisdiction": "EU",
+      "answerable": false,
+      "expected_section_id": null,
+      "review_status": "pending_human_review"
+    }
+  ]
+}

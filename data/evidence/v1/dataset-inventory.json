@@ -21,11 +21,43 @@
       "human_verified_samples": 0
     },
     {
+      "name": "human-review-packet-v1",
+      "path": "data/evaluation/human-review-packet-v1.json",
+      "sha256": "55dff75ad79c81b58a2c9e722a0236eabcd8e4cf90995389538d169829f7125e",
+      "sample_count": 0,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
       "name": "llm-claims",
       "path": "data/evaluation/llm-claims.json",
       "sha256": "40a9ab799ef44ddedb3ab1cf0b9316ddab08da713a286b65ea00b5ee641bb3c3",
       "sample_count": 5,
       "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "portfolio-campaign-100-v1",
+      "path": "data/evaluation/portfolio-campaign-100-v1.json",
+      "sha256": "1f89cbea2e9229287216eb2ba765690f564d026cf3160cfc882c9fd7487cc8f8",
+      "sample_count": 100,
+      "label_status": "synthetic_pending_human_review",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "portfolio-rag-isolated-120-v1",
+      "path": "data/evaluation/portfolio-rag-isolated-120-v1.json",
+      "sha256": "8283b9b68ed495e1f0d30f217494eda529b2c850e367ba52a7c157afe1286701",
+      "sample_count": 120,
+      "label_status": "synthetic_pending_human_review",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "portfolio-remediation-100-v1",
+      "path": "data/evaluation/portfolio-remediation-100-v1.json",
+      "sha256": "da0680932ad6b607ec42cb6fb719308ef4302425046d3c3e8eb872c0feccdc93",
+      "sample_count": 100,
+      "label_status": "synthetic_pending_human_review",
       "human_verified_samples": 0
     },
     {

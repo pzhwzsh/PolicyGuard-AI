@@ -21,7 +21,7 @@ These percentages are engineering judgment, not measured product KPIs.
 
 ## Verified engineering state
 
-- 99 automated tests are collected: 98 pass locally and the PostgreSQL-only case is skipped when
+- 102 automated tests are collected: 101 pass locally and the PostgreSQL-only case is skipped when
   `POSTGRES_TEST_URL` is absent. CI provisions PostgreSQL 16 for the complete run.
 - Whole-package statement coverage is 69% because many CLI, benchmark, backup, and worker entry points are not
   invoked by unit tests.
@@ -76,6 +76,11 @@ release file has a SHA256, official URL, capture hash, structural status, and le
 Dataset hashes, sanitized benchmarks, and zero-valued operational counts are published so missing
 production traffic cannot be hidden. This improves reproducibility but does not replace legal review
 or independent human labels.
+
+The engineering-scale suite now contains 120 isolated RAG queries, 100 campaign workflows, 100
+remediation inputs, and 20 generated PDFs/200 pages. These close the repeatability, load, and review
+workflow gaps only. They are synthetic and do not close the independent human-label, authorized legal
+review, real customer traffic, or real complex-PDF accuracy gaps.
 
 ## P1: high-value product capabilities
 

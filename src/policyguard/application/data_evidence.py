@@ -190,6 +190,7 @@ def build_benchmark_release(root: Path) -> dict:
         "query-rewrite-hard-v1.json", "cross-language-abstention-v1.json",
         "abstention-jina-hard-v1.json", "remediation-quality-v1.json",
         "pdf-quality.json", "external-smoke.json",
+        "portfolio-scale-v1.json", "synthetic-pdf-scale-v1.json",
     )
     embedding_easy = _artifact(root, "local-embedding-results.json") or []
     embedding_hard = _artifact(root, "local-embedding-hard-v1.json") or []
@@ -201,6 +202,8 @@ def build_benchmark_release(root: Path) -> dict:
     remediation = _artifact(root, "remediation-quality-v1.json") or {}
     pdf = _artifact(root, "pdf-quality.json") or {}
     external = _artifact(root, "external-smoke.json") or {}
+    portfolio = _artifact(root, "portfolio-scale-v1.json") or {}
+    synthetic_pdf = _artifact(root, "synthetic-pdf-scale-v1.json") or {}
 
     def model_rows(rows: list) -> list[dict]:
         keys = (
@@ -262,6 +265,8 @@ def build_benchmark_release(root: Path) -> dict:
         },
         "remediation": remediation,
         "pdf": pdf,
+        "portfolio_scale": portfolio,
+        "synthetic_pdf_scale": synthetic_pdf,
         "external_smoke": {
             "checks": external_checks,
             "contains_credentials": False,
@@ -356,4 +361,15 @@ def validate_published_bundle(target: Path) -> list[str]:
     runtime = _read_json(target / "runtime-snapshot.json")
     if runtime.get("database_file_published") is not False:
         errors.append("mutable_database_must_not_be_published")
+    benchmarks = _read_json(target / "benchmarks.json")
+    portfolio = benchmarks.get("portfolio_scale", {})
+    if portfolio.get("rag", {}).get("sample_count") != 120:
+        errors.append("portfolio_rag_scale_mismatch")
+    if portfolio.get("workflow", {}).get("case_count") != 100:
+        errors.append("portfolio_workflow_scale_mismatch")
+    synthetic_pdf = benchmarks.get("synthetic_pdf_scale", {})
+    if synthetic_pdf.get("document_count") != 20 or synthetic_pdf.get("page_count") != 200:
+        errors.append("synthetic_pdf_scale_mismatch")
+    if synthetic_pdf.get("data_type") != "programmatically_generated_not_real_regulation":
+        errors.append("synthetic_pdf_origin_missing")
     return errors

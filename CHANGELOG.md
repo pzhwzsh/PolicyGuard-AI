@@ -22,6 +22,8 @@ and versions follow Semantic Versioning.
 - Credential-redacted weekly/manual smoke checks for model, OCR, and official-source dependencies.
 - Versioned data evidence release with 11 source copies/3,439 sections, dataset hashes, sanitized
   benchmark results, runtime counts, and CI-enforced truthfulness checks.
+- Scale evidence with 120 isolated RAG queries, 100 campaign workflows, 100 remediation inputs,
+  20 generated complex PDFs/200 pages, concurrency metrics, and a 320-item human-review packet.
 
 ## [0.1.0] - 2026-07-21
 

@@ -1,0 +1,908 @@
+{
+  "name": "portfolio-remediation-100-v1",
+  "label_status": "synthetic_pending_human_review",
+  "generation": "deterministic template expansion; not production traffic",
+  "limitations": "Measures the bounded phrase-removal baseline only.",
+  "samples": [
+    {
+      "id": "remediation-001",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列001",
+      "expected_after": "护肤品 50ml 系列001",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-002",
+      "field": "description",
+      "before": "最高级面霜 30g 系列002",
+      "expected_after": "面霜 30g 系列002",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-003",
+      "field": "title",
+      "before": "最好的食品 100ml 系列003",
+      "expected_after": "食品 100ml 系列003",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-004",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列004",
+      "expected_after": "儿童用品 2件 系列004",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-005",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列005",
+      "expected_after": "清洁剂 5mg 系列005",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-006",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列006",
+      "expected_after": "护肤品 50ml 系列006",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-007",
+      "field": "title",
+      "before": "最高级面霜 30g 系列007",
+      "expected_after": "面霜 30g 系列007",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-008",
+      "field": "description",
+      "before": "最好的食品 100ml 系列008",
+      "expected_after": "食品 100ml 系列008",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-009",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列009",
+      "expected_after": "儿童用品 2件 系列009",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-010",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列010",
+      "expected_after": "清洁剂 5mg 系列010",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-011",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列011",
+      "expected_after": "护肤品 50ml 系列011",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-012",
+      "field": "description",
+      "before": "最高级面霜 30g 系列012",
+      "expected_after": "面霜 30g 系列012",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-013",
+      "field": "title",
+      "before": "最好的食品 100ml 系列013",
+      "expected_after": "食品 100ml 系列013",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-014",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列014",
+      "expected_after": "儿童用品 2件 系列014",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-015",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列015",
+      "expected_after": "清洁剂 5mg 系列015",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-016",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列016",
+      "expected_after": "护肤品 50ml 系列016",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-017",
+      "field": "title",
+      "before": "最高级面霜 30g 系列017",
+      "expected_after": "面霜 30g 系列017",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-018",
+      "field": "description",
+      "before": "最好的食品 100ml 系列018",
+      "expected_after": "食品 100ml 系列018",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-019",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列019",
+      "expected_after": "儿童用品 2件 系列019",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-020",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列020",
+      "expected_after": "清洁剂 5mg 系列020",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-021",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列021",
+      "expected_after": "护肤品 50ml 系列021",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-022",
+      "field": "description",
+      "before": "最高级面霜 30g 系列022",
+      "expected_after": "面霜 30g 系列022",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-023",
+      "field": "title",
+      "before": "最好的食品 100ml 系列023",
+      "expected_after": "食品 100ml 系列023",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-024",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列024",
+      "expected_after": "儿童用品 2件 系列024",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-025",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列025",
+      "expected_after": "清洁剂 5mg 系列025",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-026",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列026",
+      "expected_after": "护肤品 50ml 系列026",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-027",
+      "field": "title",
+      "before": "最高级面霜 30g 系列027",
+      "expected_after": "面霜 30g 系列027",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-028",
+      "field": "description",
+      "before": "最好的食品 100ml 系列028",
+      "expected_after": "食品 100ml 系列028",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-029",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列029",
+      "expected_after": "儿童用品 2件 系列029",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-030",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列030",
+      "expected_after": "清洁剂 5mg 系列030",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-031",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列031",
+      "expected_after": "护肤品 50ml 系列031",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-032",
+      "field": "description",
+      "before": "最高级面霜 30g 系列032",
+      "expected_after": "面霜 30g 系列032",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-033",
+      "field": "title",
+      "before": "最好的食品 100ml 系列033",
+      "expected_after": "食品 100ml 系列033",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-034",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列034",
+      "expected_after": "儿童用品 2件 系列034",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-035",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列035",
+      "expected_after": "清洁剂 5mg 系列035",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-036",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列036",
+      "expected_after": "护肤品 50ml 系列036",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-037",
+      "field": "title",
+      "before": "最高级面霜 30g 系列037",
+      "expected_after": "面霜 30g 系列037",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-038",
+      "field": "description",
+      "before": "最好的食品 100ml 系列038",
+      "expected_after": "食品 100ml 系列038",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-039",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列039",
+      "expected_after": "儿童用品 2件 系列039",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-040",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列040",
+      "expected_after": "清洁剂 5mg 系列040",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-041",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列041",
+      "expected_after": "护肤品 50ml 系列041",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-042",
+      "field": "description",
+      "before": "最高级面霜 30g 系列042",
+      "expected_after": "面霜 30g 系列042",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-043",
+      "field": "title",
+      "before": "最好的食品 100ml 系列043",
+      "expected_after": "食品 100ml 系列043",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-044",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列044",
+      "expected_after": "儿童用品 2件 系列044",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-045",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列045",
+      "expected_after": "清洁剂 5mg 系列045",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-046",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列046",
+      "expected_after": "护肤品 50ml 系列046",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-047",
+      "field": "title",
+      "before": "最高级面霜 30g 系列047",
+      "expected_after": "面霜 30g 系列047",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-048",
+      "field": "description",
+      "before": "最好的食品 100ml 系列048",
+      "expected_after": "食品 100ml 系列048",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-049",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列049",
+      "expected_after": "儿童用品 2件 系列049",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-050",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列050",
+      "expected_after": "清洁剂 5mg 系列050",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-051",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列051",
+      "expected_after": "护肤品 50ml 系列051",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-052",
+      "field": "description",
+      "before": "最高级面霜 30g 系列052",
+      "expected_after": "面霜 30g 系列052",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-053",
+      "field": "title",
+      "before": "最好的食品 100ml 系列053",
+      "expected_after": "食品 100ml 系列053",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-054",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列054",
+      "expected_after": "儿童用品 2件 系列054",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-055",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列055",
+      "expected_after": "清洁剂 5mg 系列055",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-056",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列056",
+      "expected_after": "护肤品 50ml 系列056",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-057",
+      "field": "title",
+      "before": "最高级面霜 30g 系列057",
+      "expected_after": "面霜 30g 系列057",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-058",
+      "field": "description",
+      "before": "最好的食品 100ml 系列058",
+      "expected_after": "食品 100ml 系列058",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-059",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列059",
+      "expected_after": "儿童用品 2件 系列059",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-060",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列060",
+      "expected_after": "清洁剂 5mg 系列060",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-061",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列061",
+      "expected_after": "护肤品 50ml 系列061",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-062",
+      "field": "description",
+      "before": "最高级面霜 30g 系列062",
+      "expected_after": "面霜 30g 系列062",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-063",
+      "field": "title",
+      "before": "最好的食品 100ml 系列063",
+      "expected_after": "食品 100ml 系列063",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-064",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列064",
+      "expected_after": "儿童用品 2件 系列064",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-065",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列065",
+      "expected_after": "清洁剂 5mg 系列065",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-066",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列066",
+      "expected_after": "护肤品 50ml 系列066",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-067",
+      "field": "title",
+      "before": "最高级面霜 30g 系列067",
+      "expected_after": "面霜 30g 系列067",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-068",
+      "field": "description",
+      "before": "最好的食品 100ml 系列068",
+      "expected_after": "食品 100ml 系列068",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-069",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列069",
+      "expected_after": "儿童用品 2件 系列069",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-070",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列070",
+      "expected_after": "清洁剂 5mg 系列070",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-071",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列071",
+      "expected_after": "护肤品 50ml 系列071",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-072",
+      "field": "description",
+      "before": "最高级面霜 30g 系列072",
+      "expected_after": "面霜 30g 系列072",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-073",
+      "field": "title",
+      "before": "最好的食品 100ml 系列073",
+      "expected_after": "食品 100ml 系列073",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-074",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列074",
+      "expected_after": "儿童用品 2件 系列074",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-075",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列075",
+      "expected_after": "清洁剂 5mg 系列075",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-076",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列076",
+      "expected_after": "护肤品 50ml 系列076",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-077",
+      "field": "title",
+      "before": "最高级面霜 30g 系列077",
+      "expected_after": "面霜 30g 系列077",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-078",
+      "field": "description",
+      "before": "最好的食品 100ml 系列078",
+      "expected_after": "食品 100ml 系列078",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-079",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列079",
+      "expected_after": "儿童用品 2件 系列079",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-080",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列080",
+      "expected_after": "清洁剂 5mg 系列080",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-081",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列081",
+      "expected_after": "护肤品 50ml 系列081",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-082",
+      "field": "description",
+      "before": "最高级面霜 30g 系列082",
+      "expected_after": "面霜 30g 系列082",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-083",
+      "field": "title",
+      "before": "最好的食品 100ml 系列083",
+      "expected_after": "食品 100ml 系列083",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-084",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列084",
+      "expected_after": "儿童用品 2件 系列084",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-085",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列085",
+      "expected_after": "清洁剂 5mg 系列085",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-086",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列086",
+      "expected_after": "护肤品 50ml 系列086",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-087",
+      "field": "title",
+      "before": "最高级面霜 30g 系列087",
+      "expected_after": "面霜 30g 系列087",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-088",
+      "field": "description",
+      "before": "最好的食品 100ml 系列088",
+      "expected_after": "食品 100ml 系列088",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-089",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列089",
+      "expected_after": "儿童用品 2件 系列089",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-090",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列090",
+      "expected_after": "清洁剂 5mg 系列090",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-091",
+      "field": "title",
+      "before": "国家级护肤品 50ml 系列091",
+      "expected_after": "护肤品 50ml 系列091",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-092",
+      "field": "description",
+      "before": "最高级面霜 30g 系列092",
+      "expected_after": "面霜 30g 系列092",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-093",
+      "field": "title",
+      "before": "最好的食品 100ml 系列093",
+      "expected_after": "食品 100ml 系列093",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-094",
+      "field": "description",
+      "before": "最佳儿童用品 2件 系列094",
+      "expected_after": "儿童用品 2件 系列094",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-095",
+      "field": "title",
+      "before": "100%安全的清洁剂 5mg 系列095",
+      "expected_after": "清洁剂 5mg 系列095",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-096",
+      "field": "description",
+      "before": "国家级护肤品 50ml 系列096",
+      "expected_after": "护肤品 50ml 系列096",
+      "expected_phrase": "国家级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-097",
+      "field": "title",
+      "before": "最高级面霜 30g 系列097",
+      "expected_after": "面霜 30g 系列097",
+      "expected_phrase": "最高级",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-098",
+      "field": "description",
+      "before": "最好的食品 100ml 系列098",
+      "expected_after": "食品 100ml 系列098",
+      "expected_phrase": "最好的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-099",
+      "field": "title",
+      "before": "最佳儿童用品 2件 系列099",
+      "expected_after": "儿童用品 2件 系列099",
+      "expected_phrase": "最佳",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    },
+    {
+      "id": "remediation-100",
+      "field": "description",
+      "before": "100%安全的清洁剂 5mg 系列100",
+      "expected_after": "清洁剂 5mg 系列100",
+      "expected_phrase": "100%安全的",
+      "expected_section_id": "article-9",
+      "review_status": "pending_human_review"
+    }
+  ]
+}

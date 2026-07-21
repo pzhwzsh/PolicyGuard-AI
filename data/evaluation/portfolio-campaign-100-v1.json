@@ -1,0 +1,1556 @@
+{
+  "name": "portfolio-campaign-100-v1",
+  "label_status": "synthetic_pending_human_review",
+  "samples": [
+    {
+      "case_id": "campaign-001",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-001",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 1",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-002",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-002",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 2",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-003",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-003",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 3",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-004",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-004",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 4",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-005",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-005",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 5",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-006",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-006",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 6",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-007",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-007",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 7",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-008",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-008",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 8",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-009",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-009",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 9",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-010",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-010",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 10",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-011",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-011",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 11",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-012",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-012",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 12",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-013",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-013",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 13",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-014",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-014",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 14",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-015",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-015",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 15",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-016",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-016",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 16",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-017",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-017",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 17",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-018",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-018",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 18",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-019",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-019",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 19",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-020",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-020",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 20",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-021",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-021",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 21",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-022",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-022",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 22",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-023",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-023",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 23",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-024",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-024",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 24",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-025",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-025",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 25",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-026",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-026",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 26",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-027",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-027",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 27",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-028",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-028",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 28",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-029",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-029",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 29",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-030",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-030",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 30",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-031",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-031",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 31",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-032",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-032",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 32",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-033",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-033",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 33",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-034",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-034",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 34",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-035",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-035",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 35",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-036",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-036",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 36",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-037",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-037",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 37",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-038",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-038",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 38",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-039",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-039",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 39",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-040",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-040",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 40",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-041",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-041",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 41",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-042",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-042",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 42",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-043",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-043",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 43",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-044",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-044",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 44",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-045",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-045",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 45",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-046",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-046",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 46",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-047",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-047",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 47",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-048",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-048",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 48",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-049",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-049",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 49",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-050",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-050",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 50",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-051",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-051",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 51",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-052",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-052",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 52",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-053",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-053",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 53",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-054",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-054",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 54",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-055",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-055",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 55",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-056",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-056",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 56",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-057",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-057",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 57",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-058",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-058",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 58",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-059",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-059",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 59",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-060",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-060",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 60",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-061",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-061",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 61",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-062",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-062",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 62",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-063",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-063",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 63",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-064",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-064",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 64",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-065",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-065",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 65",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-066",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-066",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 66",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-067",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-067",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 67",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-068",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-068",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 68",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-069",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-069",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 69",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-070",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-070",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 70",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-071",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-071",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 71",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-072",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-072",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 72",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-073",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-073",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 73",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-074",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-074",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 74",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-075",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-075",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 75",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-076",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-076",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 76",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-077",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-077",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 77",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-078",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-078",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 78",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-079",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-079",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 79",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-080",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-080",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 80",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-081",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-081",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 81",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-082",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-082",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 82",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-083",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-083",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 83",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-084",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-084",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 84",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-085",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-085",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 85",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-086",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-086",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 86",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-087",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-087",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 87",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-088",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-088",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 88",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-089",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-089",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 89",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-090",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-090",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 90",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-091",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-091",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 91",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-092",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-092",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 92",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-093",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-093",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 93",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-094",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-094",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 94",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-095",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-095",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 95",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-096",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-096",
+        "title": "国家级护肤品 50ml",
+        "description": "跨境营销开发样本 96",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-097",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-097",
+        "title": "最高级面霜 30g",
+        "description": "跨境营销开发样本 97",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-098",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-098",
+        "title": "最好的食品 100ml",
+        "description": "跨境营销开发样本 98",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "US"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-099",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-099",
+        "title": "最佳儿童用品 2件",
+        "description": "跨境营销开发样本 99",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    },
+    {
+      "case_id": "campaign-100",
+      "source_type": "synthetic_public_template",
+      "product": {
+        "external_id": "PORTFOLIO-100",
+        "title": "100%安全的清洁剂 5mg",
+        "description": "跨境营销开发样本 100",
+        "category": "all",
+        "attributes": {}
+      },
+      "markets": [
+        "CN",
+        "US",
+        "EU"
+      ],
+      "review_status": "pending_human_review"
+    }
+  ]
+}

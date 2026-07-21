@@ -87,6 +87,13 @@ def test_evidence_publisher_builds_portable_release_from_local_inputs(tmp_path: 
     write_json(benchmarks / "external-smoke.json", {"checks": [{
         "name": "source:one", "status": "failed", "status_code": 403,
     }]})
+    write_json(benchmarks / "portfolio-scale-v1.json", {
+        "rag": {"sample_count": 120}, "workflow": {"case_count": 100},
+    })
+    write_json(benchmarks / "synthetic-pdf-scale-v1.json", {
+        "document_count": 20, "page_count": 200,
+        "data_type": "programmatically_generated_not_real_regulation",
+    })
 
     database_path = tmp_path / "data/policyguard.db"
     connection = sqlite3.connect(database_path)
@@ -119,6 +126,8 @@ def test_evidence_publisher_builds_portable_release_from_local_inputs(tmp_path: 
     assert released["document"]["sections"][0]["text"] == "Truth."
     result = json.loads((target / "benchmarks.json").read_text(encoding="utf-8"))
     assert result["external_smoke"]["checks"][0]["status"] == "blocked"
+    assert result["portfolio_scale"]["workflow"]["case_count"] == 100
+    assert result["synthetic_pdf_scale"]["page_count"] == 200
 
     release_path = target / "sources/source-one.json"
     lf_content = release_path.read_bytes().replace(b"\r\n", b"\n")
