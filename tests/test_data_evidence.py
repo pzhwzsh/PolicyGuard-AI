@@ -1,5 +1,6 @@
 import json
 import sqlite3
+from hashlib import sha256
 from pathlib import Path
 
 from policyguard.application.data_evidence import (
@@ -118,3 +119,9 @@ def test_evidence_publisher_builds_portable_release_from_local_inputs(tmp_path: 
     assert released["document"]["sections"][0]["text"] == "Truth."
     result = json.loads((target / "benchmarks.json").read_text(encoding="utf-8"))
     assert result["external_smoke"]["checks"][0]["status"] == "blocked"
+
+    release_path = target / "sources/source-one.json"
+    lf_content = release_path.read_bytes().replace(b"\r\n", b"\n")
+    release_path.write_bytes(lf_content.replace(b"\n", b"\r\n"))
+    assert validate_published_bundle(target) == []
+    assert inventory["sources"][0]["release_sha256"] == sha256(lf_content).hexdigest()
