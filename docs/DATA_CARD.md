@@ -38,6 +38,10 @@ independent labels.
 No sample has independent human legal verification. Cross-language and remediation labels are
 explicitly marked `ai_reviewed_pending_human_verification`. Metrics are development evidence only.
 
+The scale suite adds 120 unique isolated RAG queries, 100 campaign workflows, and 100 unique
+remediation inputs. All are deterministic synthetic samples marked `synthetic_pending_human_review`.
+They measure repeatability and failure behavior, not production distribution or legal accuracy.
+
 ## Measured results
 
 On the 30-question hard retrieval set, local Jina achieved Hit@5 1.0 and MRR 0.9111, compared with
@@ -52,6 +56,16 @@ Across eight remediation cases, the deterministic pipeline passed 8/8. The bound
 
 PDF quality is measured on one official FTC document and two labeled pages: text accuracy 0.9714,
 heading F1 1.0, and reading-order accuracy 1.0. This is insufficient for a general PDF claim.
+
+A separate generated layout/load set contains 20 documents and 200 pages with two columns, multi-row
+tables, embedded images, and page markers. Marker recall was 1.0 and repeated local parser runs were
+approximately 27 ms/page; exact timings are machine-load dependent and retained in the raw report.
+It is explicitly not a real-regulation accuracy set.
+
+The 100-case deterministic workflow generated 550 events with 0.51 evidence coverage. Serial P95
+was 7.534 ms. At eight workers on local SQLite, all cases completed but throughput fell to 44.36
+cases/s and P95 rose to 1,142.924 ms, identifying SQLite write contention as the current bottleneck.
+Model calls were disabled, so tokens and model cost were both zero for this measurement.
 
 ## Operational evidence
 
@@ -78,4 +92,5 @@ states, dataset truthfulness, and the absence of secret-like fields.
 - No independent cost figure because provider pricing is not configured.
 - BGE-M3 remains unmeasured in this environment.
 - PDF tables, scans, images, and multi-column layouts lack a reportable evaluation sample.
+- The 20-document complex PDF set is synthetic and cannot close the real-document accuracy gap.
 - Coverage is bounded to selected CN/US/EU advertising-related sources.

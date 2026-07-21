@@ -1,0 +1,2270 @@
+{
+  "schema_version": "policyguard-human-review-packet-v1",
+  "status": "pending_real_human_review",
+  "automatic_completion": false,
+  "counts": {
+    "legal_sources": 9,
+    "rag_samples": 120,
+    "remediation_samples": 100,
+    "campaign_samples": 100,
+    "completed_decisions": 0
+  },
+  "instructions": [
+    "Verify each expected section against the exact official source text.",
+    "Reject ambiguous or scope-dependent labels instead of forcing acceptance.",
+    "For remediation, verify meaning preservation and retained product facts.",
+    "A legal source may be activated only after an authorized reviewer confirms it."
+  ],
+  "legal_source_reviews": [
+    {
+      "source_id": "cn-samr-advertising-law",
+      "official_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_5474cf75173c45d6a0379730fb4e8d97.html",
+      "content_hash": "27bdda4bf4469a2b8754dbb91f154ab3d7a0f64672014297627da7fa3b029299",
+      "section_count": 74,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "eu-ucpd-consolidated",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02005L0029-20220528",
+      "content_hash": "c33bff77a80e20d24c5c011e80aae31b8a26c72b31161957d113d38c8fc77893",
+      "section_count": 228,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "us-ftc-health-products-guidance",
+      "official_url": "https://www.ftc.gov/business-guidance/resources/health-products-compliance-guidance",
+      "content_hash": "01e8b8987000e035652e4447f6a20ee396e36778e44a9daea16c67559f928bc0",
+      "section_count": 205,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "us-ftc-can-spam",
+      "official_url": "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business",
+      "content_hash": "a3fc61638fb27088cba4b04af41f084fac5d390aa28b7fcf3d45917c7d180ab6",
+      "section_count": 59,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "eu-cosmetics-claims-655-2013",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32013R0655",
+      "content_hash": "731b08f2ec65381f0f77be5c1cfa1b583c613e00f3f8ea3fc530240588a62c30",
+      "section_count": 37,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "eu-health-claims-1924-2006",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32006R1924",
+      "content_hash": "2dc446c9a16c68ee17808bf1e8915ebd1ac75b616acfbf135443b5a453f2425e",
+      "section_count": 328,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "eu-digital-services-act-2022-2065",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32022R2065",
+      "content_hash": "9e45019e7e32b1769ff94a21fc64a1cb840ff6cd894321ba5df1582c539970ca",
+      "section_count": 1081,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "eu-gdpr-2016-679",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679",
+      "content_hash": "35a58482c79837c8f7be73f600eaf6de23d2889d174f0916786d6d8a44f2555c",
+      "section_count": 1098,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    },
+    {
+      "source_id": "eu-audiovisual-media-services-2010-13",
+      "official_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02010L0013-20181218",
+      "content_hash": "ecbdbd34c47feab067d62a871798afd7677f3d59aea14be90afbcadbc5f5d136",
+      "section_count": 286,
+      "structural_review_status": "passed",
+      "legal_review_status": "pending",
+      "decision": null,
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    }
+  ],
+  "dataset_reviews": [
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-001",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-002",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-003",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-004",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-005",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-006",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-007",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-008",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-009",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-010",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-011",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-012",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-013",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-014",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-015",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-016",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-017",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-018",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-019",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-020",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-021",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-022",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-023",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-024",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-025",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-026",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-027",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-028",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-029",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-030",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-031",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-032",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-033",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-034",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-035",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-036",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-037",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-038",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-039",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-040",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-041",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-042",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-043",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-044",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-045",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-046",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-047",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-048",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-049",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-050",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-051",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-052",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-053",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-054",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-055",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-056",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-057",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-058",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-059",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-pos-060",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-001",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-002",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-003",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-004",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-005",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-006",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-007",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-008",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-009",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-010",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-011",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-012",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-013",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-014",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-015",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-016",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-017",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-018",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-019",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-020",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-021",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-022",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-023",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-024",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-025",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-026",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-027",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-028",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-029",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-030",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-031",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-032",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-033",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-034",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-035",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-036",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-037",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-038",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-039",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-040",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-041",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-042",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-043",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-044",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-045",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-046",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-047",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-048",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-049",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-050",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-051",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-052",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-053",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-054",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-055",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-056",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-057",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-058",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-059",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "sample_id": "holdout-neg-060",
+      "decision": null,
+      "corrected_section_id": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-001",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-002",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-003",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-004",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-005",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-006",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-007",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-008",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-009",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-010",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-011",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-012",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-013",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-014",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-015",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-016",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-017",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-018",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-019",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-020",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-021",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-022",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-023",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-024",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-025",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-026",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-027",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-028",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-029",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-030",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-031",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-032",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-033",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-034",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-035",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-036",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-037",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-038",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-039",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-040",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-041",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-042",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-043",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-044",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-045",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-046",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-047",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-048",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-049",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-050",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-051",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-052",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-053",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-054",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-055",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-056",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-057",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-058",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-059",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-060",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-061",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-062",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-063",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-064",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-065",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-066",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-067",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-068",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-069",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-070",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-071",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-072",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-073",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-074",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-075",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-076",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-077",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-078",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-079",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-080",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-081",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-082",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-083",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-084",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-085",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-086",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-087",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-088",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-089",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-090",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-091",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-092",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-093",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-094",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-095",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-096",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-097",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-098",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-099",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-remediation-100-v1",
+      "sample_id": "remediation-100",
+      "decision": null,
+      "meaning_preserved": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-001",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-002",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-003",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-004",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-005",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-006",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-007",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-008",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-009",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-010",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-011",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-012",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-013",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-014",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-015",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-016",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-017",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-018",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-019",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-020",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-021",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-022",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-023",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-024",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-025",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-026",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-027",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-028",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-029",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-030",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-031",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-032",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-033",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-034",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-035",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-036",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-037",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-038",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-039",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-040",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-041",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-042",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-043",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-044",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-045",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-046",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-047",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-048",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-049",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-050",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-051",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-052",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-053",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-054",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-055",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-056",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-057",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-058",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-059",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-060",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-061",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-062",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-063",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-064",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-065",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-066",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-067",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-068",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-069",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-070",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-071",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-072",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-073",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-074",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-075",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-076",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-077",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-078",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-079",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-080",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-081",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-082",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-083",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-084",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-085",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-086",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-087",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-088",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-089",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-090",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-091",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-092",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-093",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-094",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-095",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-096",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-097",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-098",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-099",
+      "decision": null,
+      "comment": ""
+    },
+    {
+      "dataset": "portfolio-campaign-100-v1",
+      "sample_id": "campaign-100",
+      "decision": null,
+      "comment": ""
+    }
+  ]
+}

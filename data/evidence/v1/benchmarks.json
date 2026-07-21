@@ -17,7 +17,9 @@
     "abstention-jina-hard-v1.json": "ce230ad1274cb246245dc13084006927b669feaf8debdc1791d14b0e23f8bf80",
     "remediation-quality-v1.json": "37502fc491b376197262692c858cf84c72eca3af53f3978c7814b1c54d709ca2",
     "pdf-quality.json": "735b55a78671416e314cd38e1a0b873127f408167099cd244df8c80e3d69e6be",
-    "external-smoke.json": "552766429ab7df45dc50d8e46a9775eb374df88713e26606907b12c3ffdaf9e6"
+    "external-smoke.json": "552766429ab7df45dc50d8e46a9775eb374df88713e26606907b12c3ffdaf9e6",
+    "portfolio-scale-v1.json": "58f1dc99a03fa79ff1a740e0343912caeacd10451e2f0e8fc9b2cd219eb82348",
+    "synthetic-pdf-scale-v1.json": "aa747d29a3090daa1559e76188fac9ee8b8466259870bc3a87f134e09c68369f"
   },
   "embedding": {
     "easy_15": [
@@ -277,6 +279,2708 @@
         "manual_correction_rate": 0.0
       }
     ]
+  },
+  "portfolio_scale": {
+    "rag": {
+      "dataset": "portfolio-rag-isolated-120-v1",
+      "label_status": "synthetic_pending_human_review",
+      "sample_count": 120,
+      "positive_count": 60,
+      "negative_count": 60,
+      "positive_hit_at_5": 1.0,
+      "negative_candidate_presence_rate": 0.8,
+      "mean_latency_ms": 1.986,
+      "p95_latency_ms": 3.356,
+      "answerability_threshold_applied": false,
+      "predictions": [
+        {
+          "id": "holdout-pos-001",
+          "expected_section_id": "article-9",
+          "retrieved_section_ids": [
+            "article-9",
+            "article-28",
+            "article-11",
+            "article-8",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-002",
+          "expected_section_id": "article-11",
+          "retrieved_section_ids": [
+            "article-11",
+            "article-16",
+            "article-8",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-003",
+          "expected_section_id": "article-16",
+          "retrieved_section_ids": [
+            "article-16",
+            "article-25",
+            "article-24",
+            "article-18",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-004",
+          "expected_section_id": "article-18",
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-25",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-005",
+          "expected_section_id": "article-24",
+          "retrieved_section_ids": [
+            "article-24",
+            "article-18",
+            "article-25",
+            "article-16",
+            "article-8"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-006",
+          "expected_section_id": "article-25",
+          "retrieved_section_ids": [
+            "article-25",
+            "article-18",
+            "article-24",
+            "article-9",
+            "article-16"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-007",
+          "expected_section_id": "ftc-truth-evidence",
+          "retrieved_section_ids": [
+            "ftc-truth-evidence",
+            "ftc-specialized-products"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-008",
+          "expected_section_id": "ftc-specialized-products",
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-009",
+          "expected_section_id": "eu-ucpd-article-6",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-010",
+          "expected_section_id": "eu-ucpd-article-7",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-011",
+          "expected_section_id": "article-9",
+          "retrieved_section_ids": [
+            "article-9",
+            "article-28",
+            "article-11",
+            "article-8",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-012",
+          "expected_section_id": "article-11",
+          "retrieved_section_ids": [
+            "article-11",
+            "article-16",
+            "article-8",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-013",
+          "expected_section_id": "article-16",
+          "retrieved_section_ids": [
+            "article-16",
+            "article-25",
+            "article-24",
+            "article-18",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-014",
+          "expected_section_id": "article-18",
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-25",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-015",
+          "expected_section_id": "article-24",
+          "retrieved_section_ids": [
+            "article-24",
+            "article-18",
+            "article-25",
+            "article-16",
+            "article-8"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-016",
+          "expected_section_id": "article-25",
+          "retrieved_section_ids": [
+            "article-25",
+            "article-18",
+            "article-24",
+            "article-9",
+            "article-16"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-017",
+          "expected_section_id": "ftc-truth-evidence",
+          "retrieved_section_ids": [
+            "ftc-truth-evidence",
+            "ftc-specialized-products"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-018",
+          "expected_section_id": "ftc-specialized-products",
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-019",
+          "expected_section_id": "eu-ucpd-article-6",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-020",
+          "expected_section_id": "eu-ucpd-article-7",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-021",
+          "expected_section_id": "article-9",
+          "retrieved_section_ids": [
+            "article-9",
+            "article-28",
+            "article-11",
+            "article-8",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-022",
+          "expected_section_id": "article-11",
+          "retrieved_section_ids": [
+            "article-11",
+            "article-16",
+            "article-8",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-023",
+          "expected_section_id": "article-16",
+          "retrieved_section_ids": [
+            "article-16",
+            "article-25",
+            "article-24",
+            "article-18",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-024",
+          "expected_section_id": "article-18",
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-25",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-025",
+          "expected_section_id": "article-24",
+          "retrieved_section_ids": [
+            "article-24",
+            "article-18",
+            "article-25",
+            "article-16",
+            "article-8"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-026",
+          "expected_section_id": "article-25",
+          "retrieved_section_ids": [
+            "article-25",
+            "article-18",
+            "article-24",
+            "article-9",
+            "article-16"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-027",
+          "expected_section_id": "ftc-truth-evidence",
+          "retrieved_section_ids": [
+            "ftc-truth-evidence",
+            "ftc-specialized-products"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-028",
+          "expected_section_id": "ftc-specialized-products",
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-029",
+          "expected_section_id": "eu-ucpd-article-6",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-030",
+          "expected_section_id": "eu-ucpd-article-7",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-7",
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-031",
+          "expected_section_id": "article-9",
+          "retrieved_section_ids": [
+            "article-9",
+            "article-28",
+            "article-11",
+            "article-8",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-032",
+          "expected_section_id": "article-11",
+          "retrieved_section_ids": [
+            "article-11",
+            "article-16",
+            "article-8",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-033",
+          "expected_section_id": "article-16",
+          "retrieved_section_ids": [
+            "article-16",
+            "article-25",
+            "article-24",
+            "article-18",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-034",
+          "expected_section_id": "article-18",
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-25",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-035",
+          "expected_section_id": "article-24",
+          "retrieved_section_ids": [
+            "article-24",
+            "article-18",
+            "article-25",
+            "article-16",
+            "article-8"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-036",
+          "expected_section_id": "article-25",
+          "retrieved_section_ids": [
+            "article-25",
+            "article-18",
+            "article-24",
+            "article-9",
+            "article-16"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-037",
+          "expected_section_id": "ftc-truth-evidence",
+          "retrieved_section_ids": [
+            "ftc-truth-evidence",
+            "ftc-specialized-products"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-038",
+          "expected_section_id": "ftc-specialized-products",
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-039",
+          "expected_section_id": "eu-ucpd-article-6",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-040",
+          "expected_section_id": "eu-ucpd-article-7",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-041",
+          "expected_section_id": "article-9",
+          "retrieved_section_ids": [
+            "article-9",
+            "article-28",
+            "article-11",
+            "article-8",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-042",
+          "expected_section_id": "article-11",
+          "retrieved_section_ids": [
+            "article-11",
+            "article-16",
+            "article-8",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-043",
+          "expected_section_id": "article-16",
+          "retrieved_section_ids": [
+            "article-16",
+            "article-25",
+            "article-24",
+            "article-18",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-044",
+          "expected_section_id": "article-18",
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-25",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-045",
+          "expected_section_id": "article-24",
+          "retrieved_section_ids": [
+            "article-24",
+            "article-18",
+            "article-25",
+            "article-16",
+            "article-8"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-046",
+          "expected_section_id": "article-25",
+          "retrieved_section_ids": [
+            "article-25",
+            "article-18",
+            "article-24",
+            "article-9",
+            "article-16"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-047",
+          "expected_section_id": "ftc-truth-evidence",
+          "retrieved_section_ids": [
+            "ftc-truth-evidence",
+            "ftc-specialized-products"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-048",
+          "expected_section_id": "ftc-specialized-products",
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-049",
+          "expected_section_id": "eu-ucpd-article-6",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-050",
+          "expected_section_id": "eu-ucpd-article-7",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-051",
+          "expected_section_id": "article-9",
+          "retrieved_section_ids": [
+            "article-9",
+            "article-28",
+            "article-11",
+            "article-8",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-052",
+          "expected_section_id": "article-11",
+          "retrieved_section_ids": [
+            "article-11",
+            "article-16",
+            "article-8",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-053",
+          "expected_section_id": "article-16",
+          "retrieved_section_ids": [
+            "article-16",
+            "article-25",
+            "article-24",
+            "article-18",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-054",
+          "expected_section_id": "article-18",
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-25",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-055",
+          "expected_section_id": "article-24",
+          "retrieved_section_ids": [
+            "article-24",
+            "article-18",
+            "article-25",
+            "article-16",
+            "article-8"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-056",
+          "expected_section_id": "article-25",
+          "retrieved_section_ids": [
+            "article-25",
+            "article-18",
+            "article-24",
+            "article-9",
+            "article-16"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-057",
+          "expected_section_id": "ftc-truth-evidence",
+          "retrieved_section_ids": [
+            "ftc-truth-evidence",
+            "ftc-specialized-products"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-058",
+          "expected_section_id": "ftc-specialized-products",
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-059",
+          "expected_section_id": "eu-ucpd-article-6",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-pos-060",
+          "expected_section_id": "eu-ucpd-article-7",
+          "retrieved_section_ids": [
+            "eu-ucpd-article-7",
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": true,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-001",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-9",
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-002",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-003",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-004",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-28",
+            "article-16",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-005",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-006",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-007",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-008",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-009",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-010",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-8"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-011",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-012",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-013",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-014",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-015",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-016",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-9",
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-017",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-018",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-019",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-28",
+            "article-16",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-020",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-021",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-022",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-023",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-024",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-025",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-8"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-026",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-027",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-028",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-029",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-030",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-031",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-9",
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-032",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-033",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-034",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-28",
+            "article-16",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-035",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-036",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-037",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-038",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-039",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-040",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-8"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-041",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-042",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-043",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-044",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-045",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-046",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-9",
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-047",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-048",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-049",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-28",
+            "article-16",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-050",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-051",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-052",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-053",
+          "expected_section_id": null,
+          "retrieved_section_ids": [],
+          "expected_hit": null,
+          "candidate_present": false
+        },
+        {
+          "id": "holdout-neg-054",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-055",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-8"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-056",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products",
+            "ftc-truth-evidence"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-057",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6",
+            "eu-ucpd-article-7"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-058",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "article-18",
+            "article-8",
+            "article-16",
+            "article-28",
+            "article-25"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-059",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "ftc-specialized-products"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        },
+        {
+          "id": "holdout-neg-060",
+          "expected_section_id": null,
+          "retrieved_section_ids": [
+            "eu-ucpd-article-6"
+          ],
+          "expected_hit": null,
+          "candidate_present": true
+        }
+      ]
+    },
+    "remediation": {
+      "dataset": "portfolio-remediation-100-v1",
+      "label_status": "synthetic_pending_human_review",
+      "sample_count": 100,
+      "positive_count": 100,
+      "exact_after_rate": 1.0,
+      "claim_span_accuracy": 1.0,
+      "citation_section_accuracy": 1.0,
+      "protected_fact_retention": 1.0,
+      "residual_baseline_pass_rate": 1.0,
+      "external_side_effect": false,
+      "limitations": "Measures the bounded phrase-removal baseline only."
+    },
+    "workflow": {
+      "dataset": "portfolio-campaign-100-v1",
+      "traffic_type": "synthetic_public_template_not_production",
+      "case_count": 100,
+      "statuses": {
+        "review_required": 51,
+        "needs_more_evidence": 49
+      },
+      "evidence_coverage": 0.51,
+      "event_count": 550,
+      "mean_latency_ms": 4.719,
+      "p50_latency_ms": 4.189,
+      "p95_latency_ms": 7.534,
+      "throughput_cases_per_second": 211.89,
+      "model_tokens": 0,
+      "cost_usd": 0.0,
+      "cost_scope": "deterministic local baseline only",
+      "outcomes": [
+        {
+          "case_id": "campaign-001",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 9.618
+        },
+        {
+          "case_id": "campaign-002",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.81
+        },
+        {
+          "case_id": "campaign-003",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.114
+        },
+        {
+          "case_id": "campaign-004",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.89
+        },
+        {
+          "case_id": "campaign-005",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.712
+        },
+        {
+          "case_id": "campaign-006",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.529
+        },
+        {
+          "case_id": "campaign-007",
+          "markets": [
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "EU"
+          ],
+          "latency_ms": 3.192
+        },
+        {
+          "case_id": "campaign-008",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.238
+        },
+        {
+          "case_id": "campaign-009",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 5.417
+        },
+        {
+          "case_id": "campaign-010",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.415
+        },
+        {
+          "case_id": "campaign-011",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.688
+        },
+        {
+          "case_id": "campaign-012",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.863
+        },
+        {
+          "case_id": "campaign-013",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.682
+        },
+        {
+          "case_id": "campaign-014",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.951
+        },
+        {
+          "case_id": "campaign-015",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.414
+        },
+        {
+          "case_id": "campaign-016",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.718
+        },
+        {
+          "case_id": "campaign-017",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 5.249
+        },
+        {
+          "case_id": "campaign-018",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.343
+        },
+        {
+          "case_id": "campaign-019",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.759
+        },
+        {
+          "case_id": "campaign-020",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.993
+        },
+        {
+          "case_id": "campaign-021",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 5.07
+        },
+        {
+          "case_id": "campaign-022",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.222
+        },
+        {
+          "case_id": "campaign-023",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.602
+        },
+        {
+          "case_id": "campaign-024",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.987
+        },
+        {
+          "case_id": "campaign-025",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.652
+        },
+        {
+          "case_id": "campaign-026",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.68
+        },
+        {
+          "case_id": "campaign-027",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.075
+        },
+        {
+          "case_id": "campaign-028",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.312
+        },
+        {
+          "case_id": "campaign-029",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.783
+        },
+        {
+          "case_id": "campaign-030",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.326
+        },
+        {
+          "case_id": "campaign-031",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.106
+        },
+        {
+          "case_id": "campaign-032",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.294
+        },
+        {
+          "case_id": "campaign-033",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.552
+        },
+        {
+          "case_id": "campaign-034",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.381
+        },
+        {
+          "case_id": "campaign-035",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.875
+        },
+        {
+          "case_id": "campaign-036",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.246
+        },
+        {
+          "case_id": "campaign-037",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.452
+        },
+        {
+          "case_id": "campaign-038",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.641
+        },
+        {
+          "case_id": "campaign-039",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.089
+        },
+        {
+          "case_id": "campaign-040",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.318
+        },
+        {
+          "case_id": "campaign-041",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 5.142
+        },
+        {
+          "case_id": "campaign-042",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 4.189
+        },
+        {
+          "case_id": "campaign-043",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.907
+        },
+        {
+          "case_id": "campaign-044",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.839
+        },
+        {
+          "case_id": "campaign-045",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.633
+        },
+        {
+          "case_id": "campaign-046",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.21
+        },
+        {
+          "case_id": "campaign-047",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.582
+        },
+        {
+          "case_id": "campaign-048",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.624
+        },
+        {
+          "case_id": "campaign-049",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.208
+        },
+        {
+          "case_id": "campaign-050",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.184
+        },
+        {
+          "case_id": "campaign-051",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.216
+        },
+        {
+          "case_id": "campaign-052",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.378
+        },
+        {
+          "case_id": "campaign-053",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 3.911
+        },
+        {
+          "case_id": "campaign-054",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.078
+        },
+        {
+          "case_id": "campaign-055",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.524
+        },
+        {
+          "case_id": "campaign-056",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.966
+        },
+        {
+          "case_id": "campaign-057",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.298
+        },
+        {
+          "case_id": "campaign-058",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.251
+        },
+        {
+          "case_id": "campaign-059",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 2.946
+        },
+        {
+          "case_id": "campaign-060",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.728
+        },
+        {
+          "case_id": "campaign-061",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.229
+        },
+        {
+          "case_id": "campaign-062",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.067
+        },
+        {
+          "case_id": "campaign-063",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 2.851
+        },
+        {
+          "case_id": "campaign-064",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.448
+        },
+        {
+          "case_id": "campaign-065",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.108
+        },
+        {
+          "case_id": "campaign-066",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.069
+        },
+        {
+          "case_id": "campaign-067",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 2.854
+        },
+        {
+          "case_id": "campaign-068",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.601
+        },
+        {
+          "case_id": "campaign-069",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.649
+        },
+        {
+          "case_id": "campaign-070",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.193
+        },
+        {
+          "case_id": "campaign-071",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 2.831
+        },
+        {
+          "case_id": "campaign-072",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.719
+        },
+        {
+          "case_id": "campaign-073",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.204
+        },
+        {
+          "case_id": "campaign-074",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.147
+        },
+        {
+          "case_id": "campaign-075",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 2.824
+        },
+        {
+          "case_id": "campaign-076",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.149
+        },
+        {
+          "case_id": "campaign-077",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.377
+        },
+        {
+          "case_id": "campaign-078",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.05
+        },
+        {
+          "case_id": "campaign-079",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.143
+        },
+        {
+          "case_id": "campaign-080",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 6.966
+        },
+        {
+          "case_id": "campaign-081",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.401
+        },
+        {
+          "case_id": "campaign-082",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.003
+        },
+        {
+          "case_id": "campaign-083",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.004
+        },
+        {
+          "case_id": "campaign-084",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.05
+        },
+        {
+          "case_id": "campaign-085",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.47
+        },
+        {
+          "case_id": "campaign-086",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 2.991
+        },
+        {
+          "case_id": "campaign-087",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.073
+        },
+        {
+          "case_id": "campaign-088",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.534
+        },
+        {
+          "case_id": "campaign-089",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.943
+        },
+        {
+          "case_id": "campaign-090",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.918
+        },
+        {
+          "case_id": "campaign-091",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.535
+        },
+        {
+          "case_id": "campaign-092",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.037
+        },
+        {
+          "case_id": "campaign-093",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 5.068
+        },
+        {
+          "case_id": "campaign-094",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.982
+        },
+        {
+          "case_id": "campaign-095",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.09
+        },
+        {
+          "case_id": "campaign-096",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 7.007
+        },
+        {
+          "case_id": "campaign-097",
+          "markets": [
+            "CN"
+          ],
+          "status": "review_required",
+          "event_count": 5,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 4.966
+        },
+        {
+          "case_id": "campaign-098",
+          "markets": [
+            "US"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.184
+        },
+        {
+          "case_id": "campaign-099",
+          "markets": [
+            "EU"
+          ],
+          "status": "needs_more_evidence",
+          "event_count": 5,
+          "evidence_markets": [],
+          "latency_ms": 3.419
+        },
+        {
+          "case_id": "campaign-100",
+          "markets": [
+            "CN",
+            "US",
+            "EU"
+          ],
+          "status": "review_required",
+          "event_count": 7,
+          "evidence_markets": [
+            "CN"
+          ],
+          "latency_ms": 8.721
+        }
+      ]
+    },
+    "concurrency": {
+      "case_count": 100,
+      "workers": 8,
+      "success_rate": 1.0,
+      "wall_time_seconds": 2.255,
+      "throughput_cases_per_second": 44.36,
+      "mean_latency_ms": 174.068,
+      "p50_latency_ms": 22.822,
+      "p95_latency_ms": 1142.924,
+      "p99_latency_ms": 1776.562,
+      "model_tokens": 0,
+      "cost_usd": 0.0,
+      "scope": "local SQLite deterministic workflow; excludes network and model latency"
+    }
+  },
+  "synthetic_pdf_scale": {
+    "dataset": "synthetic-complex-pdf-20x10-v1",
+    "data_type": "programmatically_generated_not_real_regulation",
+    "document_count": 20,
+    "page_count": 200,
+    "features": [
+      "two_columns",
+      "multi_row_table",
+      "embedded_image",
+      "page_markers"
+    ],
+    "mean_marker_recall": 1.0,
+    "mean_document_latency_ms": 268.289,
+    "p95_document_latency_ms": 313.316,
+    "mean_page_latency_ms": 26.829,
+    "documents": [
+      {
+        "document_id": "synthetic-complex-01",
+        "pages": 10,
+        "bytes": 34494,
+        "sha256": "de1e27c765b8c9dcf69f530072ef5ee68bd31bc7f1a09a2044d4032c02a3ff86",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 461.778
+      },
+      {
+        "document_id": "synthetic-complex-02",
+        "pages": 10,
+        "bytes": 35295,
+        "sha256": "08b8f42551c262e5d5949f7c56f010de09d6ead80611d6f9efe2f0bf6fb926e8",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 256.225
+      },
+      {
+        "document_id": "synthetic-complex-03",
+        "pages": 10,
+        "bytes": 35426,
+        "sha256": "f61d5f421e68339af91367e736927b699dbb39ac09233f3df49b00999aa76054",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 225.343
+      },
+      {
+        "document_id": "synthetic-complex-04",
+        "pages": 10,
+        "bytes": 34942,
+        "sha256": "1f9084ec5a3485d0c62acd20e67ac44ffed4c932c42c11f0efdf6c61d78a306e",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 276.267
+      },
+      {
+        "document_id": "synthetic-complex-05",
+        "pages": 10,
+        "bytes": 35282,
+        "sha256": "dd40c2c1b68cf21a37b983b3693c386420f65a3e98f56480b26c01eb22a47a32",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 227.389
+      },
+      {
+        "document_id": "synthetic-complex-06",
+        "pages": 10,
+        "bytes": 35457,
+        "sha256": "162bc7d4db84b984b8e9a6a4fcb183ea0747560560d9f4acd86fe91a21ffb21f",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 263.197
+      },
+      {
+        "document_id": "synthetic-complex-07",
+        "pages": 10,
+        "bytes": 35021,
+        "sha256": "55a36f754a3b06d491fb957f6165028427dc8283fa91f5c75e5e843918dead33",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 223.108
+      },
+      {
+        "document_id": "synthetic-complex-08",
+        "pages": 10,
+        "bytes": 35535,
+        "sha256": "7b31288a6c3f72f18098fcb35d3a91ddf302f0797c8f1b21fe5bc0470fa31819",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 298.812
+      },
+      {
+        "document_id": "synthetic-complex-09",
+        "pages": 10,
+        "bytes": 35434,
+        "sha256": "43ec027f3a7cd84107d35cdc6420e333f224263d65f95b875c06cc6a5fede737",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 230.833
+      },
+      {
+        "document_id": "synthetic-complex-10",
+        "pages": 10,
+        "bytes": 34486,
+        "sha256": "b88a2dd1698db1ef81b11b8c2e5a4f724043c13002846747a3efdd75324cb2af",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 313.316
+      },
+      {
+        "document_id": "synthetic-complex-11",
+        "pages": 10,
+        "bytes": 34501,
+        "sha256": "3331eff4f470518be168c98f9f300d607ed487ecb24a396a94fca235864173eb",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 235.614
+      },
+      {
+        "document_id": "synthetic-complex-12",
+        "pages": 10,
+        "bytes": 35510,
+        "sha256": "bc22c011b9f6e4dcf0354619f96081ffd754d20bc41f350d0f18034dbad568ac",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 259.226
+      },
+      {
+        "document_id": "synthetic-complex-13",
+        "pages": 10,
+        "bytes": 35656,
+        "sha256": "4146d8469d530690e667c77ef11239fec1742262a7f764c53c741fec7794349a",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 243.973
+      },
+      {
+        "document_id": "synthetic-complex-14",
+        "pages": 10,
+        "bytes": 35093,
+        "sha256": "778954226e7ff30f0e12c284ff74905171bce25ff3d4b47c9d6aee9a219bf3d6",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 290.554
+      },
+      {
+        "document_id": "synthetic-complex-15",
+        "pages": 10,
+        "bytes": 35524,
+        "sha256": "426a530297ebbcc94ea422ecd18eec614083f49ff34ea949bc6631301c2578b0",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 268.644
+      },
+      {
+        "document_id": "synthetic-complex-16",
+        "pages": 10,
+        "bytes": 35672,
+        "sha256": "6e8e1b38f59f57526b8347bef428a1727ae4f43d1c80608b3a3bd1a0c14be09c",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 282.245
+      },
+      {
+        "document_id": "synthetic-complex-17",
+        "pages": 10,
+        "bytes": 35292,
+        "sha256": "c6c044f879246aa45c2a5a776ff811836b72ee2dc98b6de3bdb9f0dae331371b",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 218.514
+      },
+      {
+        "document_id": "synthetic-complex-18",
+        "pages": 10,
+        "bytes": 35731,
+        "sha256": "d40998d0ca7e2559a902a4e99b649d62bcc00ff1ee4a3d50baf17b7e17631ee6",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 275.682
+      },
+      {
+        "document_id": "synthetic-complex-19",
+        "pages": 10,
+        "bytes": 35700,
+        "sha256": "7046b12e9d4d2c449de0596a1e124af33295316792800dbe2e096fae02d7d785",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 243.828
+      },
+      {
+        "document_id": "synthetic-complex-20",
+        "pages": 10,
+        "bytes": 35284,
+        "sha256": "054f7ba7c2b0066ad194311c7e162e04cfe726a50ad31eede71a09448c319959",
+        "parsed_blocks": 50,
+        "marker_recall": 1.0,
+        "latency_ms": 271.238
+      }
+    ],
+    "limitations": "Engineering load/layout benchmark only; real PDF accuracy remains separately measured."
   },
   "external_smoke": {
     "checks": [
