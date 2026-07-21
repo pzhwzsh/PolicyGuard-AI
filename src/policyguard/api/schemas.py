@@ -217,6 +217,28 @@ class AgentMemoryReviewRequest(BaseModel):
     comment: str = Field(default="", max_length=2000)
 
 
+class EvaluationReviewRequest(BaseModel):
+    reviewer: str = Field(min_length=1, max_length=100)
+    decision: str = Field(pattern="^(accept|correct|reject)$")
+    expected_section_id: str | None = Field(default=None, max_length=200)
+    comment: str = Field(default="", max_length=2000)
+
+
+class EvaluationReviewResponse(BaseModel):
+    dataset: str
+    sample_id: str
+    query: str
+    jurisdiction: str
+    answerable: bool
+    proposed_section_id: str | None
+    review_status: str
+    decision: str | None
+    reviewed_section_id: str | None
+    reviewer: str | None
+    comment: str
+    reviewed_at: datetime | None
+
+
 class DocumentParseResponse(BaseModel):
     document_id: str
     filename: str
