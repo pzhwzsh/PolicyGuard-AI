@@ -27,6 +27,8 @@ from sqlalchemy.orm import Session
 
 from policyguard import __version__
 from policyguard.api.schemas import (
+    AgentMemoryResponse,
+    AgentMemoryReviewRequest,
     BackgroundJobResponse,
     CheckResponse,
     ComplianceWorkflowRequest,
@@ -986,6 +988,55 @@ def create_app(database_url: str | None = None) -> FastAPI:
         except RuntimeError as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
         return ComplianceWorkflowResponse.from_domain(run)
+
+    @application.get(
+        "/api/v1/agent-memories",
+        response_model=list[AgentMemoryResponse],
+        tags=["agent-memory"],
+    )
+    def list_agent_memories(
+        limit: int = Query(default=50, ge=1, le=200),
+        session: Session = Depends(get_session),
+    ) -> list[AgentMemoryResponse]:
+        return [
+            AgentMemoryResponse(
+                id=item.id, run_id=item.run_id, task_type=item.task_type,
+                jurisdictions=list(item.jurisdictions), category=item.category,
+                channel=item.channel, summary=item.summary, outcome=item.outcome,
+                source_versions=item.source_versions, reviewed_by=item.reviewed_by,
+                review_status=item.review_status,
+                invalidated_reason=item.invalidated_reason, created_at=item.created_at,
+            )
+            for item in SqlAlchemyAgentMemoryRepository(session).list_recent(limit)
+        ]
+
+    @application.post(
+        "/api/v1/agent-memories/{memory_id}/review",
+        response_model=AgentMemoryResponse,
+        tags=["agent-memory"],
+    )
+    def review_agent_memory(
+        memory_id: str,
+        payload: AgentMemoryReviewRequest,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> AgentMemoryResponse:
+        try:
+            item = SqlAlchemyAgentMemoryRepository(session).review(
+                memory_id, payload.reviewer, payload.decision, payload.comment
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except (RuntimeError, ValueError) as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return AgentMemoryResponse(
+            id=item.id, run_id=item.run_id, task_type=item.task_type,
+            jurisdictions=list(item.jurisdictions), category=item.category,
+            channel=item.channel, summary=item.summary, outcome=item.outcome,
+            source_versions=item.source_versions, reviewed_by=item.reviewed_by,
+            review_status=item.review_status,
+            invalidated_reason=item.invalidated_reason, created_at=item.created_at,
+        )
 
     return application
 
