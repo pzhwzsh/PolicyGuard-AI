@@ -15,6 +15,11 @@ and versions follow Semantic Versioning.
 - Versioned, machine-enforced jurisdiction, tool, evidence, review, and side-effect guardrails.
 - Reproducible Chinese-query/English-law evaluation across BM25, local Jina Dense, Hybrid RRF,
   and Sol query rewriting, with atomic rewrite caching and explicit BGE-M3 availability failures.
+- Persistent human evaluation decisions and a consolidated legal/evaluation/memory review queue.
+- Near-domain abstention calibration and narrow remediation-quality evaluation suites.
+- Management workbenches for review decisions, evidence-linked diffs, draft rechecks, and memory provenance.
+- Alembic migrations with SQLite round-trip and PostgreSQL 16 CI coverage.
+- Credential-redacted weekly/manual smoke checks for model, OCR, and official-source dependencies.
 
 ## [0.1.0] - 2026-07-21
 
