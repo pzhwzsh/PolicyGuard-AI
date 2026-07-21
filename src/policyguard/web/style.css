@@ -79,11 +79,23 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .job-row button { min-height: 30px; }
 .report-history article { display: grid; grid-template-columns: minmax(0,1fr) 140px 60px 60px; gap: 12px; padding: 10px 0; border-top: 1px solid #d9dfda; }
 .report-history a { color: #075a38; }
+.review-list { display: grid; gap: 8px; max-height: 420px; overflow: auto; }
+.review-row { display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border: 1px solid #d9dfda; }
+.review-row > div { flex: 1; min-width: 0; }
+.review-row p { margin: 5px 0; color: #455249; font-size: 12px; line-height: 1.5; }
+.review-row small { color: #68756d; overflow-wrap: anywhere; }
+.remediation-workbench { margin-top: 28px; padding-top: 22px; border-top: 1px solid #d9dfda; }
+.remediation-item { padding: 16px; margin-bottom: 12px; border: 1px solid #d9dfda; background: white; }
+.diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+.diff-grid div { padding: 10px; background: #f4f6f3; }
+.diff-grid p { margin: 5px 0 0; overflow-wrap: anywhere; }
+.remediation-item pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
+.remediation-item a { display: block; margin-top: 7px; color: #075a38; font-size: 12px; }
 @media (max-width: 760px) {
   .topbar { padding: 12px 18px; align-items: flex-start; }
   .topbar span { display: none; }
   main { padding: 16px 18px 48px; }
-  .form-grid, .result-layout, .upload-row, .operations-grid, .document-compare { grid-template-columns: 1fr; }
+  .form-grid, .result-layout, .upload-row, .operations-grid, .document-compare, .diff-grid { grid-template-columns: 1fr; }
   .metrics { grid-template-columns: repeat(2, 1fr); }
   .metrics div:nth-child(2) { border-right: 0; }
   .markets { flex-wrap: wrap; }

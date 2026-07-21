@@ -87,6 +87,21 @@
       <div><span>当前模型</span><strong id="model-name">-</strong></div>
     </section>
 
+    <section class="review-workbench">
+      <div class="section-heading">
+        <div><p>人工复核</p><h2>评测真值与记忆状态</h2></div>
+        <div class="review-actions">
+          <label>审核人别名<input id="reviewer-alias" value="local-reviewer"></label>
+          <button id="refresh-review-queue" class="secondary" type="button">刷新</button>
+        </div>
+      </div>
+      <div id="review-queue-summary" class="operations-summary"></div>
+      <div class="operations-grid">
+        <div><h3>跨语言评测样本</h3><div id="evaluation-review-list" class="review-list"></div></div>
+        <div><h3>Agent 经验记忆</h3><div id="memory-review-list" class="review-list"></div></div>
+      </div>
+    </section>
+
     <section class="operations">
       <div class="section-heading">
         <div><p>工程指标</p><h2>评测、后台任务与报告历史</h2></div>
@@ -115,6 +130,16 @@
       <div class="result-layout">
         <div><h3>市场证据</h3><div id="market-results"></div></div>
         <aside><h3>执行轨迹</h3><ol id="event-list" class="timeline"></ol></aside>
+      </div>
+      <div class="remediation-workbench">
+        <div class="section-heading compact">
+          <div><p>可逆修改</p><h3>条款依据、最小修改与复检</h3></div>
+          <div class="review-actions">
+            <button id="create-plan-button" type="button">生成修改方案</button>
+            <button id="create-draft-button" type="button">生成内部草稿</button>
+          </div>
+        </div>
+        <div id="remediation-result"></div>
       </div>
     </section>
   </main>

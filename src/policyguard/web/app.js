@@ -50,8 +50,68 @@ function renderRun(run) {
   $("#download-json").href = `/api/v1/workflows/compliance/${run.id}/report?format=json`;
   $("#download-markdown").href = `/api/v1/workflows/compliance/${run.id}/report?format=markdown`;
   $("#download-pdf").href = `/api/v1/workflows/compliance/${run.id}/report?format=pdf`;
+  renderRemediation(run);
   $("#result-section").scrollIntoView({ behavior: "smooth" });
 }
+
+function renderRemediation(run) {
+  const plan = run.result_payload.remediation_plan;
+  const draft = run.result_payload.draft;
+  const agentMeta = run.result_payload.agent_run?.context_metadata;
+  $("#create-plan-button").disabled = run.status !== "review_accepted";
+  $("#create-draft-button").disabled = run.status !== "remediation_planned";
+  const operations = plan?.operations || [];
+  $("#remediation-result").innerHTML = operations.map((item) => `
+    <article class="remediation-item">
+      <div class="market-header"><strong>${escapeHtml(item.field)}</strong><span>${escapeHtml(item.meaning_preservation?.strategy || "review")}</span></div>
+      <div class="diff-grid"><div><small>修改前</small><p>${escapeHtml(item.before)}</p></div><div><small>修改后</small><p>${escapeHtml(item.after)}</p></div></div>
+      <pre>${escapeHtml(item.diff || "")}</pre>
+      ${(item.legal_basis || []).map((basis) => `<a href="${escapeHtml(basis.source_url)}" target="_blank" rel="noreferrer">${escapeHtml(basis.jurisdiction)} · ${escapeHtml(basis.section_id)} · ${escapeHtml(basis.heading)}</a>`).join("")}
+    </article>`).join("") + (draft ? `<p class="notice">复检：${escapeHtml(draft.post_check?.status)} · 剩余风险操作 ${escapeHtml(draft.post_check?.remaining_risky_operation_count)} · 未执行外部发布</p>` : "") + (agentMeta ? `<p>召回记忆：${escapeHtml((agentMeta.recalled_memory_ids || []).join("、") || "无")}</p>` : "");
+}
+
+$("#create-plan-button").addEventListener("click", async () => {
+  if (!currentRunId) return;
+  try {
+    renderRun(await api(`/api/v1/workflows/compliance/${currentRunId}/remediation-plan`, {
+      method: "POST", body: JSON.stringify({plan_id: crypto.randomUUID(), mode: "pipeline"})
+    }));
+  } catch (error) { alert(error.message); }
+});
+
+$("#create-draft-button").addEventListener("click", async () => {
+  if (!currentRunId) return;
+  try {
+    renderRun(await api(`/api/v1/workflows/compliance/${currentRunId}/draft`, {
+      method: "POST", body: JSON.stringify({execution_id: crypto.randomUUID(), approved_by: $("#reviewer-alias").value})
+    }));
+  } catch (error) { alert(error.message); }
+});
+
+async function loadReviewQueue() {
+  const [queue, memories] = await Promise.all([api("/api/v1/review-queue"), api("/api/v1/agent-memories?limit=30")]);
+  $("#review-queue-summary").innerHTML = [
+    ["待核对样本", queue.evaluation.pending], ["待审法规", queue.legal_sources.pending],
+    ["失效记忆", queue.agent_memories.invalidated], ["自动批准", queue.automatic_approval ? "开启" : "关闭"]
+  ].map(([label, value]) => `<div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+  $("#evaluation-review-list").innerHTML = queue.evaluation.items.slice(0, 12).map((item) => `
+    <article class="review-row"><div><strong>${escapeHtml(item.sample_id)} · ${escapeHtml(item.jurisdiction)}</strong><p>${escapeHtml(item.query)}</p><small>${escapeHtml(item.proposed_section_id || "无答案")}</small></div>${item.review_status === "pending_human_review" ? `<button class="accept-evaluation" data-sample-id="${escapeHtml(item.sample_id)}">确认</button>` : `<span>${escapeHtml(item.decision)}</span>`}</article>`).join("");
+  $("#memory-review-list").innerHTML = memories.map((item) => `<article class="review-row"><div><strong>${escapeHtml(item.category)} · ${escapeHtml(item.jurisdictions.join("/"))}</strong><p>${escapeHtml(item.summary)}</p><small>${escapeHtml(item.review_status)} · ${escapeHtml(item.run_id)}</small></div></article>`).join("") || "<p>暂无已确认经验。</p>";
+}
+
+$("#evaluation-review-list").addEventListener("click", async (event) => {
+  const button = event.target.closest(".accept-evaluation");
+  if (!button) return;
+  try {
+    await api(`/api/v1/evaluations/cross-language/reviews/${button.dataset.sampleId}`, {
+      method: "POST", body: JSON.stringify({reviewer: $("#reviewer-alias").value, decision: "accept", comment: "Reviewed in local console"})
+    });
+    await loadReviewQueue();
+  } catch (error) { alert(error.message); }
+});
+
+$("#refresh-review-queue").addEventListener("click", () => loadReviewQueue().catch((error) => alert(error.message)));
+loadReviewQueue().catch(() => {});
 
 async function loadDocumentWorkspace(documentId) {
   const workspace = await api(`/api/v1/documents/${documentId}`);
