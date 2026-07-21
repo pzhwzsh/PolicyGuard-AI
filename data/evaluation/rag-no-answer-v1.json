@@ -1,0 +1,22 @@
+{
+  "name": "out-of-scope-no-answer-v1",
+  "created_at": "2026-07-20",
+  "labeling": "Queries intentionally outside the selected advertising-law sections.",
+  "samples": [
+    {"query": "What is the statutory return period for an online purchase?", "jurisdiction": "CN", "answerable": false},
+    {"query": "How should a company calculate employee overtime compensation?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Which personal data requires separate consent under privacy law?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What customs tariff applies when importing cosmetics?", "jurisdiction": "CN", "answerable": false},
+    {"query": "How long does a Chinese invention patent remain valid?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Can a customer demand a refund for a defective refrigerator?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What tax invoice must an ecommerce seller issue?", "jurisdiction": "CN", "answerable": false},
+    {"query": "How are dangerous goods classified for domestic shipping?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What cybersecurity filing is required for a mobile application?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Does a restaurant need a food production license?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What is the US federal minimum wage?", "jurisdiction": "US", "answerable": false},
+    {"query": "How long may a US company retain employee tax records?", "jurisdiction": "US", "answerable": false},
+    {"query": "What GDPR lawful basis permits employee monitoring?", "jurisdiction": "EU", "answerable": false},
+    {"query": "Which VAT rate applies to digital services in the EU?", "jurisdiction": "EU", "answerable": false},
+    {"query": "How does EU trademark opposition procedure work?", "jurisdiction": "EU", "answerable": false}
+  ]
+}

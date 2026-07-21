@@ -1,0 +1,27 @@
+{
+  "name": "near-domain-no-answer-heldout-v1",
+  "created_at": "2026-07-20",
+  "labeling": "Held-out advertising-compliance questions not answered by the selected source sections.",
+  "samples": [
+    {"query": "Must an internet advertisement display a recognizable advertisement label?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Who is liable when a livestream host promotes an illegal product?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What approval number must be displayed for a medical advertisement?", "jurisdiction": "CN", "answerable": false},
+    {"query": "May tobacco products be promoted on social media?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What restrictions apply to alcohol advertising aimed at minors?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Can a pop-up advertisement omit a one-click close button?", "jurisdiction": "CN", "answerable": false},
+    {"query": "When is an advertising agency jointly liable with the advertiser?", "jurisdiction": "CN", "answerable": false},
+    {"query": "What records must an advertising publisher retain and for how long?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Can prescription medicines be advertised directly to the public?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Which authority approves advertisements for pesticides?", "jurisdiction": "CN", "answerable": false},
+    {"query": "Does native advertising require a disclosure under FTC endorsement rules?", "jurisdiction": "US", "answerable": false},
+    {"query": "What disclosure must an influencer make for a paid endorsement?", "jurisdiction": "US", "answerable": false},
+    {"query": "How does the FTC define a material connection with a brand?", "jurisdiction": "US", "answerable": false},
+    {"query": "Are advertising claims directed at children subject to COPPA?", "jurisdiction": "US", "answerable": false},
+    {"query": "What is the FTC penalty for violating a consent order?", "jurisdiction": "US", "answerable": false},
+    {"query": "Does the Digital Services Act require an online advertisement repository?", "jurisdiction": "EU", "answerable": false},
+    {"query": "How must targeted advertising to minors be restricted under the DSA?", "jurisdiction": "EU", "answerable": false},
+    {"query": "What information must an influencer disclose under national EU consumer law?", "jurisdiction": "EU", "answerable": false},
+    {"query": "Can environmental claims use the term climate neutral without lifecycle evidence?", "jurisdiction": "EU", "answerable": false},
+    {"query": "Which sanctions apply under the EU Green Claims Directive?", "jurisdiction": "EU", "answerable": false}
+  ]
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PolicyGuard AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><strong>PolicyGuard AI</strong><span>跨境营销合规工作台</span></div>
+    <div id="system-status" class="status">正在读取系统状态</div>
+  </header>
+
+  <main>
+    <section class="workspace">
+      <div class="section-heading">
+        <div><p>新建审查</p><h1>商品声明与市场范围</h1></div>
+        <button id="run-button" type="submit" form="review-form">开始审查</button>
+      </div>
+      <form id="review-form" class="form-grid">
+        <label>商品编号<input name="external_id" value="SKU-DEMO-001" required></label>
+        <label>商品类别<input name="category" value="beauty" required></label>
+        <label class="wide">商品标题<input name="title" value="国家级护肤品，100%安全" required></label>
+        <label class="wide">商品描述<textarea name="description" rows="4">使用七天即可永久消除皱纹</textarea></label>
+        <fieldset class="wide markets"><legend>目标市场</legend>
+          <label><input type="checkbox" name="markets" value="CN" checked> 中国</label>
+          <label><input type="checkbox" name="markets" value="US" checked> 美国</label>
+          <label><input type="checkbox" name="markets" value="EU" checked> 欧盟</label>
+        </fieldset>
+      </form>
+    </section>
+
+    <section class="document-upload">
+      <div class="section-heading">
+        <div><p>文档摄取</p><h2>PDF 结构解析与审批</h2></div>
+        <button id="parse-pdf-button" type="button">解析 PDF</button>
+      </div>
+      <div class="upload-row">
+        <label>选择 PDF 文件<input id="pdf-file" type="file" accept="application/pdf"></label>
+        <p>规范 JSON 保存版面真相，Markdown 用于检索。复杂页面进入人工复核，未审批文档不会进入知识库。</p>
+      </div>
+      <pre id="pdf-result" class="parse-result" hidden></pre>
+      <form id="correction-form" class="correction-panel" hidden>
+        <div class="section-heading compact">
+          <div><p>人工校正</p><h3>结构块与解析警告</h3></div>
+          <button id="save-corrections-button" type="submit">保存校正</button>
+        </div>
+        <input id="correction-document-id" type="hidden">
+        <input id="correction-revision" type="hidden">
+        <div id="warning-list" class="warning-list"></div>
+        <div class="document-compare">
+          <iframe id="pdf-preview" title="PDF 原页预览"></iframe>
+          <div id="block-editor" class="block-editor"></div>
+        </div>
+      </form>
+      <form id="approval-form" class="form-grid approval-form" hidden>
+        <input id="approval-document-id" type="hidden">
+        <label>法规标题<input name="title" required></label>
+        <label>发布机构<input name="publisher" required></label>
+        <label class="wide">官方来源 URL<input name="source_url" type="url" placeholder="https://..." required></label>
+        <label>版本<input name="version" required></label>
+        <label>发布日期<input name="published_at" type="date" required></label>
+        <label>司法辖区<input name="jurisdiction" value="CN" required></label>
+        <label>生效日期<input name="effective_from" type="date" required></label>
+        <label>审核人<input name="reviewer" value="local-reviewer" required></label>
+        <div class="approval-action"><button id="approve-document-button" type="submit">审批并激活</button></div>
+      </form>
+    </section>
+
+    <section class="source-updates">
+      <div class="section-heading">
+        <div><p>法规监控</p><h2>待审核官方来源更新</h2></div>
+        <div class="review-actions">
+          <span id="source-check-status" class="inline-status"></span>
+          <button id="refresh-sources-button" class="secondary" type="button">刷新</button>
+          <button id="check-sources-button" type="button">立即检查官方来源</button>
+        </div>
+      </div>
+      <div id="source-update-list" class="source-update-list"><p>正在读取 staged 更新…</p></div>
+    </section>
+
+    <section class="metrics" aria-label="系统指标">
+      <div><span>官方文档</span><strong id="document-count">-</strong></div>
+      <div><span>法规片段</span><strong id="chunk-count">-</strong></div>
+      <div><span>Dense 检索</span><strong id="dense-status">-</strong></div>
+      <div><span>当前模型</span><strong id="model-name">-</strong></div>
+    </section>
+
+    <section class="operations">
+      <div class="section-heading">
+        <div><p>工程指标</p><h2>评测、后台任务与报告历史</h2></div>
+        <button id="refresh-operations-button" class="secondary" type="button">刷新指标</button>
+      </div>
+      <div id="operations-summary" class="operations-summary"></div>
+      <div class="operations-grid">
+        <div><h3>模型评测</h3><div id="evaluation-cards"></div></div>
+        <div><h3>后台任务</h3><div id="job-list"></div></div>
+      </div>
+      <div><h3>报告历史</h3><div id="report-history" class="report-history"></div></div>
+    </section>
+
+    <section id="result-section" class="results" hidden>
+      <div class="section-heading">
+        <div><p>审查结果</p><h2 id="workflow-status">-</h2></div>
+        <div class="review-actions">
+          <a id="download-json" class="button-link secondary" href="#">JSON 报告</a>
+          <a id="download-markdown" class="button-link secondary" href="#">Markdown</a>
+          <a id="download-pdf" class="button-link secondary" href="#">PDF</a>
+          <button id="reject-button" class="secondary" type="button">驳回</button>
+          <button id="accept-button" type="button">接受证据</button>
+        </div>
+      </div>
+      <div id="notice" class="notice"></div>
+      <div class="result-layout">
+        <div><h3>市场证据</h3><div id="market-results"></div></div>
+        <aside><h3>执行轨迹</h3><ol id="event-list" class="timeline"></ol></aside>
+      </div>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "annotation_guide": "Expected JSON must be manually verified against rendered PDF pages.",
+  "samples": [
+    {
+      "sample_id": "official-document-001",
+      "pdf": "pdfs/official-document-001.pdf",
+      "expected_json": "expected/official-document-001.json",
+      "actual_json": "runs/pdfplumber-layout-v1/official-document-001.json",
+      "elapsed_ms": 0,
+      "corrected_block_ids": []
+    }
+  ]
+}

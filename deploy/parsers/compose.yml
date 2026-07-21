@@ -1,0 +1,42 @@
+services:
+  rapidocr:
+    build:
+      context: ./rapid-sidecar
+    ports:
+      - "9013:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  paddleocr:
+    build:
+      context: ./paddle-sidecar
+    environment:
+      PARSER_MODE: paddleocr
+      OCR_LANG: ch
+    ports:
+      - "9011:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  ppstructure:
+    build:
+      context: ./paddle-sidecar
+    environment:
+      PARSER_MODE: ppstructure
+      OCR_LANG: ch
+    ports:
+      - "9012:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

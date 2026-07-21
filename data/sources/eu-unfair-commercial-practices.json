@@ -1,0 +1,33 @@
+{
+  "title": "Directive 2005/29/EC - Unfair Commercial Practices Directive (selected articles)",
+  "publisher": "European Union / EUR-Lex",
+  "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02005L0029-20220528",
+  "version": "consolidated-2022-05-28",
+  "published_at": "2022-05-28",
+  "retrieved_at": "2026-07-19",
+  "scope_note": "Selected English-language provisions. National implementation and category-specific EU rules may also apply.",
+  "scopes": [
+    {
+      "jurisdiction": "EU",
+      "category": "all",
+      "channel": "all",
+      "legal_level": "directive",
+      "source_language": "en",
+      "translation_status": "original",
+      "effective_from": "2022-05-28"
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "eu-ucpd-article-6",
+      "heading": "Article 6 - Misleading actions",
+      "text": "A commercial practice shall be regarded as misleading if it contains false information and is therefore untruthful or in any way, including overall presentation, deceives or is likely to deceive the average consumer, even if the information is factually correct, in relation to one or more elements, and causes or is likely to cause a transactional decision that the consumer would not have taken otherwise. Relevant elements include the existence or nature of the product; its availability, benefits, risks, composition, fitness for purpose, quantity, geographical or commercial origin, expected results, and results or material features of tests; the trader's commitments; and the price or manner in which the price is calculated."
+    },
+    {
+      "section_id": "eu-ucpd-article-7",
+      "heading": "Article 7 - Misleading omissions",
+      "text": "A commercial practice shall be regarded as misleading if it omits material information that the average consumer needs, according to the context, to take an informed transactional decision and thereby causes or is likely to cause a transactional decision that the consumer would not have taken otherwise. It is also a misleading omission when a trader hides or provides material information in an unclear, unintelligible, ambiguous or untimely manner, or fails to identify the commercial intent when it is not already apparent from the context."
+    }
+  ]
+}
+

@@ -1,0 +1,18 @@
+{
+  "embedding": [
+    {"id": "bge-m3", "provider": "openai_compatible", "model": "BAAI/bge-m3", "notes": "multilingual, self-host friendly"},
+    {"id": "bge-large-zh-v1.5", "provider": "openai_compatible", "model": "BAAI/bge-large-zh-v1.5", "notes": "Chinese-focused baseline"},
+    {"id": "multilingual-e5-large", "provider": "openai_compatible", "model": "intfloat/multilingual-e5-large", "notes": "multilingual retrieval"},
+    {"id": "text-embedding-3-small", "provider": "openai_compatible", "model": "text-embedding-3-small", "notes": "hosted low-cost baseline"},
+    {"id": "text-embedding-3-large", "provider": "openai_compatible", "model": "text-embedding-3-large", "notes": "hosted quality candidate"}
+  ],
+  "rerank": [
+    {"id": "bge-reranker-v2-m3", "provider": "cohere_compatible", "model": "BAAI/bge-reranker-v2-m3"},
+    {"id": "jina-reranker-v2-base-multilingual", "provider": "cohere_compatible", "model": "jinaai/jina-reranker-v2-base-multilingual"}
+  ],
+  "llm": [
+    {"id": "qwen", "provider": "openai_compatible", "model": "qwen-plus"},
+    {"id": "deepseek", "provider": "openai_compatible", "model": "deepseek-chat"},
+    {"id": "gpt-mini", "provider": "openai_compatible", "model": "gpt-4o-mini"}
+  ]
+}

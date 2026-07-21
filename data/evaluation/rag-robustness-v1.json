@@ -1,0 +1,1628 @@
+{
+  "name": "rag-retrieval-robustness-v1",
+  "created_at": "2026-07-21",
+  "labeling": "Deterministic variants derived from 45 human-authored positive questions. Use only for retrieval robustness, never as independent human labels.",
+  "sample_count": 180,
+  "samples": [
+    {
+      "query": "广告中可以使用国家级、最高级或者最佳吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-baseline-0-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，广告中可以使用国家级、最高级或者最佳吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-baseline-0-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，广告中可以使用国家级、最高级或者最佳吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-baseline-0-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "广告中可以使用国家级、最高级或者最佳吗",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-baseline-0-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "广告引用统计数据时需要注明出处吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-baseline-1-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，广告引用统计数据时需要注明出处吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-baseline-1-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，广告引用统计数据时需要注明出处吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-baseline-1-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "广告引用统计数据时需要注明出处吗",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-baseline-1-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "医疗器械广告可以保证绝对安全吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-baseline-2-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，医疗器械广告可以保证绝对安全吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-baseline-2-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，医疗器械广告可以保证绝对安全吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-baseline-2-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "医疗器械广告可以保证绝对安全吗",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-baseline-2-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "保健食品能不能宣传疾病治疗功能？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-3-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，保健食品能不能宣传疾病治疗功能？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-3-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，保健食品能不能宣传疾病治疗功能？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-3-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "保健食品能不能宣传疾病治疗功能",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-3-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "保健品广告需要写本品不能代替药物吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-4-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，保健品广告需要写本品不能代替药物吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-4-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，保健品广告需要写本品不能代替药物吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-4-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "保健品广告需要写本品不能代替药物吗",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-baseline-4-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "培训机构可以承诺考试必过吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-baseline-5-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，培训机构可以承诺考试必过吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-baseline-5-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，培训机构可以承诺考试必过吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-baseline-5-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "培训机构可以承诺考试必过吗",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-baseline-5-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "投资广告可以宣传保本无风险吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-baseline-6-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，投资广告可以宣传保本无风险吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-baseline-6-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，投资广告可以宣传保本无风险吗？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-baseline-6-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "投资广告可以宣传保本无风险吗",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-baseline-6-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "广告主是否需要对广告内容真实性负责？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-baseline-7-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，广告主是否需要对广告内容真实性负责？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-baseline-7-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，广告主是否需要对广告内容真实性负责？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-baseline-7-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "广告主是否需要对广告内容真实性负责",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-baseline-7-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "哪些情况会被认定为虚假广告？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-baseline-8-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，哪些情况会被认定为虚假广告？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-baseline-8-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，哪些情况会被认定为虚假广告？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-baseline-8-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "哪些情况会被认定为虚假广告",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-baseline-8-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "商品赠品的信息应当如何说明？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-baseline-9-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "请问，商品赠品的信息应当如何说明？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-baseline-9-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "polite_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "跨境电商商品页面中，商品赠品的信息应当如何说明？",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-baseline-9-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "商品赠品的信息应当如何说明",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-baseline-9-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Must advertising claims be truthful and evidence-based?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-baseline-10-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, must advertising claims be truthful and evidence-based?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-baseline-10-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Must advertising claims be truthful and evidence-based?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-baseline-10-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Must advertising claims be truthful and evidence-based",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-baseline-10-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can specialized products be subject to additional advertising rules?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-baseline-11-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can specialized products be subject to additional advertising rules?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-baseline-11-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can specialized products be subject to additional advertising rules?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-baseline-11-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can specialized products be subject to additional advertising rules",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-baseline-11-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can false information about product benefits mislead an average consumer?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-12-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can false information about product benefits mislead an average consumer?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-12-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can false information about product benefits mislead an average consumer?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-12-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can false information about product benefits mislead an average consumer",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-12-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Is hiding material information a misleading omission?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-baseline-13-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, is hiding material information a misleading omission?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-baseline-13-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Is hiding material information a misleading omission?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-baseline-13-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Is hiding material information a misleading omission",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-baseline-13-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can misleading information about price calculation affect a transactional decision?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-14-0",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can misleading information about price calculation affect a transactional decision?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-14-1",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can misleading information about price calculation affect a transactional decision?",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-14-2",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can misleading information about price calculation affect a transactional decision",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-baseline-14-3",
+      "source_dataset": "rag-baseline.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Who is responsible when an advertisement contains deceptive statements?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-0-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, who is responsible when an advertisement contains deceptive statements?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-0-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Who is responsible when an advertisement contains deceptive statements?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-0-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Who is responsible when an advertisement contains deceptive statements",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-0-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Does a Chinese advertiser have a duty to verify the truth of its copy?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-1-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, does a Chinese advertiser have a duty to verify the truth of its copy?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-1-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Does a Chinese advertiser have a duty to verify the truth of its copy?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-1-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Does a Chinese advertiser have a duty to verify the truth of its copy",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-1-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "General prohibition on misleading consumers in advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-2-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, general prohibition on misleading consumers in advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-2-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: General prohibition on misleading consumers in advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-2-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "General prohibition on misleading consumers in advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-4",
+      "sample_id": "rag-hard-v1-2-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Must the quantity and duration of a free promotional gift be disclosed?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-3-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, must the quantity and duration of a free promotional gift be disclosed?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-3-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Must the quantity and duration of a free promotional gift be disclosed?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-3-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Must the quantity and duration of a free promotional gift be disclosed",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-3-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Product origin price ingredients and warranty must be clearly stated",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-4-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, product origin price ingredients and warranty must be clearly stated",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-4-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Product origin price ingredients and warranty must be clearly stated",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-4-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Product origin price ingredients and warranty must be clearly stated",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-4-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "How should an attached free service be described in a Chinese advertisement?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-5-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, how should an attached free service be described in a Chinese advertisement?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-5-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: How should an attached free service be described in a Chinese advertisement?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-5-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "How should an attached free service be described in a Chinese advertisement",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-8",
+      "sample_id": "rag-hard-v1-5-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can marketing copy call a product national grade or the very best?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-6-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can marketing copy call a product national grade or the very best?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-6-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can marketing copy call a product national grade or the very best?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-6-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can marketing copy call a product national grade or the very best",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-6-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Use of a government agency employee image in commercial advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-7-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, use of a government agency employee image in commercial advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-7-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Use of a government agency employee image in commercial advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-7-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Use of a government agency employee image in commercial advertising",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-7-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "May an advertisement use the national flag or military emblem?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-8-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, may an advertisement use the national flag or military emblem?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-8-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: May an advertisement use the national flag or military emblem?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-8-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "May an advertisement use the national flag or military emblem",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-9",
+      "sample_id": "rag-hard-v1-8-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "A survey result has a limited validity period; must the period be disclosed?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-9-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, a survey result has a limited validity period; must the period be disclosed?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-9-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: A survey result has a limited validity period; must the period be disclosed?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-9-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "A survey result has a limited validity period; must the period be disclosed",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-9-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Rules for citing research statistics and quotations in Chinese ads",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-10-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, rules for citing research statistics and quotations in Chinese ads",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-10-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Rules for citing research statistics and quotations in Chinese ads",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-10-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Rules for citing research statistics and quotations in Chinese ads",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-10-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can an ad cite data without identifying where it came from?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-11-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can an ad cite data without identifying where it came from?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-11-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can an ad cite data without identifying where it came from?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-11-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can an ad cite data without identifying where it came from",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-11",
+      "sample_id": "rag-hard-v1-11-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "May a medical device advertisement promise a specific cure rate?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-12-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, may a medical device advertisement promise a specific cure rate?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-12-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: May a medical device advertisement promise a specific cure rate?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-12-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "May a medical device advertisement promise a specific cure rate",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-12-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Celebrity endorsement proving a medicine is completely safe",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-13-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, celebrity endorsement proving a medicine is completely safe",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-13-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Celebrity endorsement proving a medicine is completely safe",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-13-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Celebrity endorsement proving a medicine is completely safe",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-13-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Comparing the safety of one medical device against another",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-14-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, comparing the safety of one medical device against another",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-14-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Comparing the safety of one medical device against another",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-14-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Comparing the safety of one medical device against another",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-16",
+      "sample_id": "rag-hard-v1-14-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can a health food product claim to prevent or treat disease?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-15-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can a health food product claim to prevent or treat disease?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-15-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can a health food product claim to prevent or treat disease?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-15-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can a health food product claim to prevent or treat disease",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-15-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Required warning that a supplement cannot replace medicine",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-16-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, required warning that a supplement cannot replace medicine",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-16-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Required warning that a supplement cannot replace medicine",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-16-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Required warning that a supplement cannot replace medicine",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-16-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Advertising a supplement as indispensable for maintaining health",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-17-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, advertising a supplement as indispensable for maintaining health",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-17-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Advertising a supplement as indispensable for maintaining health",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-17-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Advertising a supplement as indispensable for maintaining health",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-18",
+      "sample_id": "rag-hard-v1-17-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "A training school promises every student will pass the exam",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-18-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, a training school promises every student will pass the exam",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-18-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: A training school promises every student will pass the exam",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-18-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "A training school promises every student will pass the exam",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-18-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Can an examination setter appear to endorse a tutoring course?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-19-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, can an examination setter appear to endorse a tutoring course?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-19-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Can an examination setter appear to endorse a tutoring course?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-19-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Can an examination setter appear to endorse a tutoring course",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-19-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Education advertising guarantees a degree or qualification certificate",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-20-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, education advertising guarantees a degree or qualification certificate",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-20-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Education advertising guarantees a degree or qualification certificate",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-20-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Education advertising guarantees a degree or qualification certificate",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-24",
+      "sample_id": "rag-hard-v1-20-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Investment promotion promises principal protection and guaranteed returns",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-21-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, investment promotion promises principal protection and guaranteed returns",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-21-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Investment promotion promises principal protection and guaranteed returns",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-21-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Investment promotion promises principal protection and guaranteed returns",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-21-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Must an investment advertisement warn about risk responsibility?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-22-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, must an investment advertisement warn about risk responsibility?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-22-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Must an investment advertisement warn about risk responsibility?",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-22-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Must an investment advertisement warn about risk responsibility",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-22-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Using a beneficiary testimonial to prove future investment income",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-23-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, using a beneficiary testimonial to prove future investment income",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-23-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Using a beneficiary testimonial to prove future investment income",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-23-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Using a beneficiary testimonial to prove future investment income",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-25",
+      "sample_id": "rag-hard-v1-23-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "A nonexistent service and fabricated research are used in an advertisement",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-24-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, a nonexistent service and fabricated research are used in an advertisement",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-24-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: A nonexistent service and fabricated research are used in an advertisement",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-24-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "A nonexistent service and fabricated research are used in an advertisement",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-24-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Product information differs from reality and changes the purchase decision",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-25-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, product information differs from reality and changes the purchase decision",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-25-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Product information differs from reality and changes the purchase decision",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-25-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Product information differs from reality and changes the purchase decision",
+      "jurisdiction": "CN",
+      "expected_section_id": "article-28",
+      "sample_id": "rag-hard-v1-25-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "What evidence standard applies to ordinary US advertising claims?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-hard-v1-26-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, what evidence standard applies to ordinary US advertising claims?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-hard-v1-26-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: What evidence standard applies to ordinary US advertising claims?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-hard-v1-26-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "What evidence standard applies to ordinary US advertising claims",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-truth-evidence",
+      "sample_id": "rag-hard-v1-26-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Should a US business check additional category rules for a specialized service?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-hard-v1-27-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, should a US business check additional category rules for a specialized service?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-hard-v1-27-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Should a US business check additional category rules for a specialized service?",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-hard-v1-27-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Should a US business check additional category rules for a specialized service",
+      "jurisdiction": "US",
+      "expected_section_id": "ftc-specialized-products",
+      "sample_id": "rag-hard-v1-27-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "False information about benefits risks or price changes a consumer decision",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-hard-v1-28-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, false information about benefits risks or price changes a consumer decision",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-hard-v1-28-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: False information about benefits risks or price changes a consumer decision",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-hard-v1-28-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "False information about benefits risks or price changes a consumer decision",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-6",
+      "sample_id": "rag-hard-v1-28-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    },
+    {
+      "query": "Material information is supplied too late or in an ambiguous way",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-hard-v1-29-0",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "original",
+      "synthetic": false
+    },
+    {
+      "query": "For an ecommerce product page, material information is supplied too late or in an ambiguous way",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-hard-v1-29-1",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "commerce_context",
+      "synthetic": true
+    },
+    {
+      "query": "Please answer this advertising-law question: Material information is supplied too late or in an ambiguous way",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-hard-v1-29-2",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "instruction_wrapper",
+      "synthetic": true
+    },
+    {
+      "query": "Material information is supplied too late or in an ambiguous way",
+      "jurisdiction": "EU",
+      "expected_section_id": "eu-ucpd-article-7",
+      "sample_id": "rag-hard-v1-29-3",
+      "source_dataset": "rag-hard-v1.json",
+      "transformation": "punctuation_removed",
+      "synthetic": true
+    }
+  ]
+}

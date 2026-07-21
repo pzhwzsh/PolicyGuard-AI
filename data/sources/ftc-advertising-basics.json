@@ -1,0 +1,33 @@
+{
+  "title": "Advertising and Marketing Basics",
+  "publisher": "U.S. Federal Trade Commission",
+  "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics",
+  "version": "retrieved-2026-07-19",
+  "published_at": "undated",
+  "retrieved_at": "2026-07-19",
+  "scope_note": "FTC business guidance. It is not a substitute for category-specific statutes, rules, or legal advice.",
+  "scopes": [
+    {
+      "jurisdiction": "US",
+      "category": "all",
+      "channel": "all",
+      "legal_level": "regulatory_guidance",
+      "source_language": "en-US",
+      "translation_status": "original",
+      "effective_from": "1900-01-01"
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "ftc-truth-evidence",
+      "heading": "Truth, fairness, and evidence",
+      "text": "Under the law, claims in advertisements must be truthful, cannot be deceptive or unfair, and must be evidence-based. For some specialized products or services, additional rules may apply."
+    },
+    {
+      "section_id": "ftc-specialized-products",
+      "heading": "Additional rules for specialized products",
+      "text": "For some specialized products or services, additional rules may apply. Businesses should identify category-specific requirements in addition to the general truth-in-advertising standards."
+    }
+  ]
+}
+

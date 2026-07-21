@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "annotation_guide": "Expected blocks are manually checked against rendered pages. Metrics apply only to listed pages.",
+  "samples": [
+    {
+      "sample_id": "ftc-health-guidance-pages-2-3",
+      "pdf": "pdfs/ftc-health-guidance.pdf",
+      "expected_json": "expected/ftc-health-guidance-pages-2-3.json",
+      "actual_json": "runs/pdfplumber-layout-v1/ftc-health-guidance.json",
+      "pages": [2, 3],
+      "regenerate_actual": true,
+      "elapsed_ms": 0,
+      "corrected_block_ids": []
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "filename": "ftc-health-guidance.pdf",
+  "content_hash": "manual-ground-truth-pages-2-3",
+  "parser": "human_annotation_v1",
+  "page_count": 2,
+  "status": "parsed",
+  "warnings": [],
+  "blocks": [
+    {
+      "block_id": "gt-p2-heading",
+      "page": 2,
+      "block_type": "heading",
+      "text": "I. Preface",
+      "markdown": "## I. Preface",
+      "bbox": null,
+      "section_path": ["I. Preface"],
+      "confidence": 1.0,
+      "metadata": {"verified_from_render": true}
+    },
+    {
+      "block_id": "gt-p2-body",
+      "page": 2,
+      "block_type": "paragraph",
+      "text": "Federal Trade Commission (FTC) staff has prepared this guidance document to update and replace Dietary Supplements: An Advertising Guide for Industry, issued in 1998. Like the 1998 guide, this document provides guidance from FTC staff on how to ensure that claims about the benefits and safety of health-related products are truthful, not misleading, and supported by science. Since 1998, the FTC has settled or adjudicated more than 200 cases involving false or misleading advertising claims about the benefits or safety of dietary supplements or other health-related products, including foods, over-the-counter (OTC) drugs, homeopathic products, health equipment, diagnostic tests, and health-related apps. This update draws on the issues raised in those cases to illustrate how the FTC identifies the express and implied claims conveyed in advertising and how the agency evaluates the scientific support for those claims. While most of the examples involve dietary supplement advertising, the same legal principles apply to the marketing of any health-related product. This document is intended as business guidance only. It interprets and explains FTC advertising law pursuant to the FTC Act and as set out in case law, and Commission policy statements. The guide, however, doesn’t have the force or effect of law. The principles and examples are intended to help advertisers comply with the basic tenets of FTC law. They don’t provide a safe harbor from potential liability; whether a particular advertising claim is deceptive or otherwise violates the FTC Act will depend on the facts of the specific case.",
+      "markdown": "Federal Trade Commission (FTC) staff has prepared this guidance document to update and replace Dietary Supplements: An Advertising Guide for Industry, issued in 1998.",
+      "bbox": null,
+      "section_path": ["I. Preface"],
+      "confidence": 1.0,
+      "metadata": {"verified_from_render": true}
+    },
+    {
+      "block_id": "gt-p3-heading",
+      "page": 3,
+      "block_type": "heading",
+      "text": "II. Overview of Regulatory Framework",
+      "markdown": "## II. Overview of Regulatory Framework",
+      "bbox": null,
+      "section_path": ["II. Overview of Regulatory Framework"],
+      "confidence": 1.0,
+      "metadata": {"verified_from_render": true}
+    },
+    {
+      "block_id": "gt-p3-subheading",
+      "page": 3,
+      "block_type": "heading",
+      "text": "A. FTC Authority over Advertising of Health-Related Products",
+      "markdown": "### A. FTC Authority over Advertising of Health-Related Products",
+      "bbox": null,
+      "section_path": ["II. Overview of Regulatory Framework", "A. FTC Authority over Advertising of Health-Related Products"],
+      "confidence": 1.0,
+      "metadata": {"verified_from_render": true}
+    },
+    {
+      "block_id": "gt-p3-body",
+      "page": 3,
+      "block_type": "paragraph",
+      "text": "The Federal Trade Commission’s broad mandate is to prevent unfair or deceptive acts or practices. That includes making sure the information marketers provide about the benefits and safety of dietary supplements and other health-related products is accurate so consumers can make informed decisions. Sections 5 and 12 of the FTC Act, along with the FTC’s policy statements on deception and advertising substantiation, are the foundation of FTC truth-in-advertising law, and can be distilled down to two common-sense principles: Advertising must be truthful and not misleading. Before disseminating an ad, advertisers must have adequate substantiation for all objective product claims conveyed, expressly or by implication, to consumers acting reasonably. A deceptive ad is one that contains a material misrepresentation or omission that is likely to mislead consumers acting reasonably under the circumstances. The type of substantiation needed for a claim depends on many factors, including the product being marketed and the nature of the claim. As a general rule, however, claims about the health benefits or safety of foods, dietary supplements, drugs, and other health-related products require substantiation in the form of competent and reliable scientific evidence. Advertising refers to a wide variety of marketing techniques. The term advertising as used throughout this guide refers not only to traditional TV, radio, print, and internet ads, but also more broadly to the variety of marketing techniques and promotion methods that marketers engage in to increase consumer interest in, or demand for, their products. Thus, as used here, advertising includes statements or depictions on packaging and labeling; in promotional materials such as brochures or booklets; on the internet and in other digital content; in social media and influencer marketing; in press releases, press interviews, or other media appearances; at trade shows, conferences, and seminars; and indirectly through healthcare practitioners or other intermediaries. Promotional product information distributed through any of these means must comply with the same truth-in-advertising principles that apply to traditional ads. Anyone participating in deceptive marketing is potentially liable under FTC law. Marketers of dietary supplements and other health-related products should ensure that anyone participating in marketing is familiar with basic FTC advertising principles. All parties who participate directly in marketing and promotion, or who have authority to control those practices, have an obligation to make sure that claims are presented truthfully and to check the adequacy of the support for those claims.",
+      "markdown": "The Federal Trade Commission’s broad mandate is to prevent unfair or deceptive acts or practices.",
+      "bbox": null,
+      "section_path": ["II. Overview of Regulatory Framework"],
+      "confidence": 1.0,
+      "metadata": {"verified_from_render": true}
+    }
+  ]
+}

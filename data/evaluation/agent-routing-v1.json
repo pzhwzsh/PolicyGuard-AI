@@ -1,0 +1,15 @@
+{
+  "name": "dynamic-agent-routing-development-v1",
+  "samples": [
+    {"case_id": "native-1", "context": {"document_type": "native_pdf"}, "expected_route": "parse_native_pdf"},
+    {"case_id": "scan-1", "context": {"scan_requires_ocr": true}, "expected_route": "parse_with_ocr"},
+    {"case_id": "table-1", "context": {"complex_tables": true}, "expected_route": "parse_with_structure"},
+    {"case_id": "language-1", "context": {"language_mismatch": true, "top_score": 0.8}, "expected_route": "rewrite_query"},
+    {"case_id": "weak-1", "context": {"top_score": 0.31}, "expected_route": "rewrite_query"},
+    {"case_id": "unsupported-1", "context": {"evidence_supported": false}, "expected_route": "request_human_review"},
+    {"case_id": "injection-1", "context": {"prompt_injection": true, "document_type": "native_pdf"}, "expected_route": "request_human_review"},
+    {"case_id": "scan-table-priority", "context": {"scan_requires_ocr": true, "complex_tables": true}, "expected_route": "parse_with_ocr"},
+    {"case_id": "unsupported-scan-priority", "context": {"evidence_supported": false, "scan_requires_ocr": true}, "expected_route": "request_human_review"},
+    {"case_id": "unknown", "context": {}, "expected_route": "request_human_review"}
+  ]
+}

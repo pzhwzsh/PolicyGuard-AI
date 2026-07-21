@@ -1,0 +1,15 @@
+{
+  "name": "agent-remediation-development-v1",
+  "created_at": "2026-07-21",
+  "labeling": "Development cases for comparing bounded Agent planning with the deterministic remediation pipeline.",
+  "samples": [
+    {"case_id": "cn-absolute-safety", "product": {"title": "100%安全护肤品", "description": ""}, "expected_removed": ["100%安全"]},
+    {"case_id": "cn-national-level", "product": {"title": "国家级护肤方案", "description": ""}, "expected_removed": ["国家级"]},
+    {"case_id": "cn-best", "product": {"title": "最好的英语课程", "description": ""}, "expected_removed": ["最好"]},
+    {"case_id": "cn-highest", "product": {"title": "最高级投资服务", "description": ""}, "expected_removed": ["最高级"]},
+    {"case_id": "description-risk", "product": {"title": "普通商品", "description": "采用国家级配方，100%安全"}, "expected_removed": ["国家级", "100%安全"]},
+    {"case_id": "multiple-fields", "product": {"title": "最高级产品", "description": "这是最好的选择"}, "expected_removed": ["最高级", "最好"]},
+    {"case_id": "safe-baseline", "product": {"title": "保湿护肤品", "description": "使用方法见包装"}, "expected_removed": []},
+    {"case_id": "empty-description", "product": {"title": "普通商品", "description": ""}, "expected_removed": []}
+  ]
+}

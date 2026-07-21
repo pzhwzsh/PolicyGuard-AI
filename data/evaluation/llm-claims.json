@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "samples": [
+    {"title": "国家级护肤品", "description": "使用七天即可永久消除皱纹"},
+    {"title": "科学研究证明减脂30%", "description": "本产品适用于所有人群"},
+    {"title": "欧盟官方认证食品", "description": "每天食用可以预防癌症"},
+    {"title": "全网最低价耳机", "description": "音质提升200%"},
+    {"title": "零风险投资计划", "description": "保证每月收益20%"}
+  ]
+}

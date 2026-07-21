@@ -1,0 +1,253 @@
+const $ = (selector) => document.querySelector(selector);
+let currentRunId = null;
+
+const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+}[char]));
+
+async function api(path, options = {}) {
+  const response = await fetch(path, { headers: { "Content-Type": "application/json" }, ...options });
+  const body = await response.json();
+  if (!response.ok) throw new Error(body.detail || `HTTP ${response.status}`);
+  return body;
+}
+
+async function loadStatus() {
+  const [stats, retrievers] = await Promise.all([api("/api/v1/knowledge/stats"), api("/api/v1/knowledge/retrievers")]);
+  $("#document-count").textContent = stats.documents;
+  $("#chunk-count").textContent = stats.chunks;
+  $("#dense-status").textContent = retrievers.dense_available ? "可用" : "未配置";
+  $("#model-name").textContent = retrievers.dense_model || "BM25";
+  $("#system-status").textContent = "系统正常 · 本地运行";
+}
+
+function eventDetail(event) {
+  if (event.step === "query_rewrite") {
+    return `改写市场 ${event.detail.rewritten_market_count} · 缓存 ${event.detail.cache_hits}/${event.detail.cache_hits + event.detail.cache_misses} · ${event.detail.total_tokens} token`;
+  }
+  if (event.step === "query_rewrite_drift") return `已拒绝新增约束：${event.detail.added_constraints.join("、")}`;
+  if (event.step === "query_rewrite_fallback") return "模型不可用，已使用原查询";
+  return event.detail.market ? `市场 ${event.detail.market}` : "";
+}
+
+function renderRun(run) {
+  currentRunId = run.id;
+  $("#result-section").hidden = false;
+  $("#workflow-status").textContent = run.status;
+  $("#notice").textContent = run.result_payload.note || "证据需要人工复核。";
+  $("#market-results").innerHTML = (run.result_payload.markets || []).map((market) => `
+    <article class="market">
+      <div class="market-header"><strong>${escapeHtml(market.market)}</strong><span>${market.candidate_evidence.length} 条候选证据</span></div>
+      ${(market.candidate_evidence || []).map((item) => `
+        <div class="evidence">
+          <a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">${escapeHtml(item.section_id)} · ${escapeHtml(item.heading)}</a>
+          <p>${escapeHtml(item.text)}</p>
+        </div>`).join("") || "<p>当前知识库未找到证据。</p>"}
+    </article>`).join("");
+  $("#event-list").innerHTML = run.events.map((event) => `<li><strong>${escapeHtml(event.step)}</strong>${escapeHtml(event.status)}<small>${escapeHtml(eventDetail(event))}</small></li>`).join("");
+  $("#accept-button").disabled = !["review_required", "needs_more_evidence"].includes(run.status);
+  $("#reject-button").disabled = $("#accept-button").disabled;
+  $("#download-json").href = `/api/v1/workflows/compliance/${run.id}/report?format=json`;
+  $("#download-markdown").href = `/api/v1/workflows/compliance/${run.id}/report?format=markdown`;
+  $("#download-pdf").href = `/api/v1/workflows/compliance/${run.id}/report?format=pdf`;
+  $("#result-section").scrollIntoView({ behavior: "smooth" });
+}
+
+async function loadDocumentWorkspace(documentId) {
+  const workspace = await api(`/api/v1/documents/${documentId}`);
+  $("#correction-document-id").value = documentId;
+  $("#correction-revision").value = workspace.manifest.revision || 0;
+  $("#warning-list").innerHTML = (workspace.document.warnings || []).map((warning) => `
+    <label><input type="checkbox" name="resolved_warning" value="${escapeHtml(warning)}"> 标记已人工解决：${escapeHtml(warning)}</label>
+  `).join("") || "<p>没有待处理解析警告。</p>";
+  $("#block-editor").innerHTML = (workspace.document.blocks || []).map((block) => `
+    <label class="block-item">
+      <span>第 ${block.page} 页 · ${escapeHtml(block.block_type)} · ${escapeHtml(block.block_id)}</span>
+      <textarea data-block-id="${escapeHtml(block.block_id)}" rows="4">${escapeHtml(block.text)}</textarea>
+    </label>
+  `).join("");
+  $("#pdf-preview").src = `/api/v1/documents/${documentId}/original#page=1`;
+  $("#correction-form").hidden = false;
+}
+
+$("#review-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = $("#run-button");
+  button.disabled = true;
+  button.textContent = "审查中";
+  const data = new FormData(event.currentTarget);
+  try {
+    renderRun(await api("/api/v1/workflows/compliance", {
+      method: "POST",
+      body: JSON.stringify({
+        product: { external_id: data.get("external_id"), title: data.get("title"), description: data.get("description"), category: data.get("category"), attributes: {} },
+        markets: data.getAll("markets"), category: data.get("category"), channel: "all"
+      })
+    }));
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; button.textContent = "开始审查"; }
+});
+
+async function review(decision) {
+  if (!currentRunId) return;
+  try {
+    renderRun(await api(`/api/v1/workflows/compliance/${currentRunId}/review`, {
+      method: "POST",
+      body: JSON.stringify({ decision_id: crypto.randomUUID(), decision, reviewer: "local-reviewer", comment: "Reviewed in local console" })
+    }));
+  } catch (error) { alert(error.message); }
+}
+
+$("#accept-button").addEventListener("click", () => review("accept"));
+$("#reject-button").addEventListener("click", () => review("reject"));
+
+$("#parse-pdf-button").addEventListener("click", async () => {
+  const file = $("#pdf-file").files[0];
+  if (!file) { alert("请先选择 PDF 文件"); return; }
+  const button = $("#parse-pdf-button");
+  const form = new FormData();
+  form.append("file", file);
+  button.disabled = true;
+  button.textContent = "解析中";
+  try {
+    const response = await fetch("/api/v1/documents/parse", { method: "POST", body: form });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.detail || `HTTP ${response.status}`);
+    $("#pdf-result").hidden = false;
+    $("#pdf-result").textContent = [
+      `文档：${body.filename}`,
+      `状态：${body.status} / ${body.activation_status}`,
+      `路由：${body.parser_route} · ${body.parser} · 平均置信度 ${body.mean_block_confidence}`,
+      `页数：${body.page_count}，布局块：${body.block_count}，Chunk：${body.chunk_count}`,
+      `警告：${body.warnings.join("；") || "无"}`, "", body.markdown_preview
+    ].join("\n");
+    $("#approval-document-id").value = body.document_id;
+    await loadDocumentWorkspace(body.document_id);
+    $("#approval-form").elements.title.value = file.name.replace(/\.pdf$/i, "");
+    $("#approval-form").hidden = body.status !== "parsed" || body.chunk_count === 0;
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; button.textContent = "解析 PDF"; }
+});
+
+$("#correction-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = $("#save-corrections-button");
+  const documentId = $("#correction-document-id").value;
+  const corrections = Array.from($("#block-editor").querySelectorAll("textarea")).map((item) => ({
+    block_id: item.dataset.blockId, text: item.value, markdown: item.value
+  }));
+  const resolvedWarnings = Array.from($("#warning-list").querySelectorAll("input:checked")).map((item) => item.value);
+  button.disabled = true;
+  try {
+    const workspace = await api(`/api/v1/documents/${documentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        expected_revision: Number($("#correction-revision").value),
+        reviewer: "local-reviewer", corrections, resolved_warnings: resolvedWarnings
+      })
+    });
+    $("#correction-revision").value = workspace.manifest.revision;
+    $("#pdf-result").textContent += `\n\n校正已保存：revision ${workspace.manifest.revision}，人工修订率 ${workspace.correction_rate}`;
+    $("#approval-form").hidden = workspace.document.status !== "parsed";
+    await loadDocumentWorkspace(documentId);
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});
+
+async function loadSourceUpdates() {
+  const updates = await api("/api/v1/source-updates");
+  $("#source-update-list").innerHTML = updates.map((item) => `
+    <article class="source-update">
+      <div class="market-header"><strong>${escapeHtml(item.title)}</strong><span>${item.section_count} 个候选段落 · ${escapeHtml(item.status)}</span></div>
+      <p>${escapeHtml(item.source_id)}${item.diff_available ? ` · <a href="/api/v1/source-updates/${escapeHtml(item.source_id)}/${escapeHtml(item.content_hash)}/diff" target="_blank">查看版本 Diff</a>` : ""} · 结构 ${escapeHtml(item.structural_review_status)} · 法律审核 ${escapeHtml(item.legal_review_status)}</p>
+      ${item.preview.map((section) => `<details><summary>${escapeHtml(section.heading)}</summary><p>${escapeHtml(section.text)}</p></details>`).join("")}
+      ${item.status === "staged" && item.eligible_for_activation && item.structural_review_status === "passed" ? `
+        <label class="legal-confirm"><input type="checkbox"> 我已核对官方原文、适用范围和生效信息</label>
+        <button class="approve-source" data-source-id="${escapeHtml(item.source_id)}" data-content-hash="${escapeHtml(item.content_hash)}" type="button">确认法律审核并激活</button>
+      ` : "<p>该来源仅作目录或结构质检未通过，不能直接激活。</p>"}
+    </article>
+  `).join("") || "<p>当前没有 staged 来源更新。</p>";
+}
+
+async function loadOperations() {
+  const [dashboard, jobs] = await Promise.all([
+    api("/api/v1/operations/dashboard"), api("/api/v1/jobs?limit=20")
+  ]);
+  $("#operations-summary").innerHTML = [
+    ["活动文档", dashboard.knowledge.documents],
+    ["活动 Chunk", dashboard.knowledge.chunks],
+    ["待法律审核", dashboard.sources.pending_legal_review],
+    ["失败任务", dashboard.jobs.failed || 0]
+  ].map(([label, value]) => `<div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+  const rag = dashboard.evaluations.rag || {};
+  const agent = dashboard.evaluations.agent || {};
+  const pdf = dashboard.evaluations.pdf || {};
+  $("#evaluation-cards").innerHTML = `
+    <article class="metric-card"><strong>RAG</strong><p>Dense 困难集 MRR ${escapeHtml(rag.dense?.positive_metrics?.["positive-hard"]?.mean_reciprocal_rank ?? "-")}</p></article>
+    <article class="metric-card"><strong>Agent / Pipeline</strong><p>${escapeHtml(agent.agent?.metrics?.success_rate ?? "-")} / ${escapeHtml(agent.pipeline?.metrics?.success_rate ?? "-")}</p></article>
+    <article class="metric-card"><strong>PDF</strong><p>文本准确率 ${escapeHtml(pdf.aggregate?.text_accuracy ?? "-")} · ${escapeHtml(pdf.sample_count ?? 0)} 样本</p></article>`;
+  $("#job-list").innerHTML = jobs.map((job) => `
+    <article class="job-row"><span>${escapeHtml(job.job_type)}</span><strong>${escapeHtml(job.status)}</strong><small>尝试 ${job.attempts}/${job.max_attempts}</small>${job.status === "failed" ? `<button class="retry-job" data-job-id="${escapeHtml(job.id)}">重试</button>` : ""}</article>
+  `).join("") || "<p>暂无后台任务。</p>";
+  $("#report-history").innerHTML = dashboard.report_history.map((item) => `
+    <article><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.status)}</span><a href="${escapeHtml(item.report_json)}">JSON</a><a href="${escapeHtml(item.report_pdf)}">PDF</a></article>
+  `).join("") || "<p>暂无审查报告。</p>";
+}
+
+$("#job-list").addEventListener("click", async (event) => {
+  const button = event.target.closest(".retry-job");
+  if (!button) return;
+  try {
+    await api(`/api/v1/jobs/${button.dataset.jobId}/retry`, {method: "POST", body: "{}"});
+    await loadOperations();
+  } catch (error) { alert(error.message); }
+});
+
+$("#refresh-operations-button").addEventListener("click", () => loadOperations().catch((error) => alert(error.message)));
+
+$("#source-update-list").addEventListener("click", async (event) => {
+  const button = event.target.closest(".approve-source");
+  if (!button) return;
+  const confirmed = button.parentElement.querySelector(".legal-confirm input")?.checked;
+  if (!confirmed) { alert("请先确认已完成法律原文核对"); return; }
+  button.disabled = true;
+  try {
+    await api(`/api/v1/source-updates/${button.dataset.sourceId}/${button.dataset.contentHash}/approve`, {
+      method: "POST", body: JSON.stringify({
+        reviewer: "local-reviewer", legal_review_confirmed: true
+      })
+    });
+    await Promise.all([loadSourceUpdates(), loadStatus()]);
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});
+
+$("#refresh-sources-button").addEventListener("click", () => loadSourceUpdates().catch((error) => alert(error.message)));
+
+$("#check-sources-button").addEventListener("click", async () => {
+  const button = $("#check-sources-button");
+  button.disabled = true;
+  try {
+    const job = await api("/api/v1/source-updates/check", {method: "POST", body: "{}"});
+    $("#source-check-status").textContent = `任务 ${job.status} · ${job.id.slice(0, 8)}`;
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});
+
+$("#approval-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = $("#approve-document-button");
+  const data = new FormData(event.currentTarget);
+  button.disabled = true;
+  button.textContent = "激活中";
+  try {
+    const body = Object.fromEntries(data.entries());
+    const result = await api(`/api/v1/documents/${$("#approval-document-id").value}/approve`, { method: "POST", body: JSON.stringify(body) });
+    $("#pdf-result").textContent += `\n\n激活完成：${result.activated_chunks} 个 Chunk，审核人 ${result.reviewer}`;
+    event.currentTarget.hidden = true;
+    await loadStatus();
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; button.textContent = "审批并激活"; }
+});
+
+Promise.all([loadStatus(), loadSourceUpdates(), loadOperations()]).catch(() => { $("#system-status").textContent = "系统状态读取失败"; });
