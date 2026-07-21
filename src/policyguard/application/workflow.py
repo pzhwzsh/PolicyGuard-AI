@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 from policyguard.application.evidence_support import EvidenceVerifier
+from policyguard.application.guardrails import default_guardrail_policy
 from policyguard.application.knowledge import BM25Retriever
 from policyguard.application.llm import BaselineClaimExtractor, ClaimExtractor
 from policyguard.application.ports import KnowledgeRepository, WorkflowRepository
@@ -58,6 +59,7 @@ class ComplianceWorkflowService:
             },
         )
         try:
+            default_guardrail_policy().validate_jurisdictions(markets)
             self._event(run, "validate_input", "completed", {"market_count": len(markets)})
             baseline_extractor = BaselineClaimExtractor()
             extractor = self.claim_extractor or baseline_extractor
