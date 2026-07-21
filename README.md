@@ -8,7 +8,9 @@ Cross-language retrieval has a reproducible provisional evaluation covering Chin
 against English US/EU sources. See
 [cross-language retrieval evaluation](docs/evaluation/cross-language-retrieval-v1.md) and the
 [human review checklist](data/evaluation/rag-cross-lingual-review-checklist.md). Its metrics are not
-human-verified and must not be represented as production quality.
+human-verified and must not be represented as production quality. The AI source audit and its two
+query corrections are recorded in
+[cross-language-source-audit-v1.md](docs/evaluation/cross-language-source-audit-v1.md).
 
 ## Current End-to-End Capabilities (2026-07-21)
 
@@ -21,9 +23,9 @@ human-verified and must not be represented as production quality.
 - RAG evaluation now has an 80-question human-authored development suite and a separate 180-query robustness set. The robustness set contains 45 originals plus 135 deterministic variants and is never represented as 180 independent human labels. Jina Dense scored Hit@5 1.0 / MRR 0.9329; BM25 scored 0.4222 / 0.4167.
 - Dynamic routing evaluation covers native PDF, OCR, complex tables, query rewriting, evidence failure, prompt injection, and ambiguous priority. The deterministic router scored 10/10 with full manual-review recall; this is the routing baseline before spending Agent tokens.
 - Local operations now include optional `X-Admin-Key` protection for management writes, per-IP rate limiting, write audit logs, PDF active-content rejection, job listing/manual retry, evaluation dashboard, report history, PDF original-vs-block comparison, source diff links, and consistent SQLite/file backups with SHA256 manifests.
-- Complete verification is now 75 tests. Latest management UI was checked at desktop and 390px mobile width with no horizontal overflow or console errors.
+- Complete verification is now 88 tests. Core API/application/domain/infrastructure/MCP statement coverage is 84%; whole-package coverage is 68% because CLI and worker entry points are not broadly unit-tested. Latest management UI was checked at desktop and 390px mobile width with no horizontal overflow or console errors.
 
-- Official registry: 11 SAMR/FTC/EUR-Lex URLs across CN/US/EU. Five sources returned real non-empty snapshots and are staged as 556 reviewable sections; active retrieval remains 3 reviewed documents/13 chunks until a reviewer approves the new drafts. Six EUR-Lex entries still return persistent HTTP 202 after bounded polling.
+- Official registry: 11 SAMR/FTC/EU Publications Office sources across CN/US/EU. Real SAMR/FTC snapshots and six CELLAR EU documents are staged for review; active retrieval remains 3 reviewed documents/13 chunks until a reviewer approves new versions.
 - Source update workflow: canonical visible-text hashing, raw snapshots, conditional requests, bounded 202 polling, unified diffs, staged HTML parsing, manual version approval, old-version effective dates, historical `as_of` retrieval, and queued re-embedding.
 - Document workflow: synchronous and persistent asynchronous PDF ingestion, native parsing, a running RapidOCR/ONNX CPU sidecar, optional PaddleOCR/PP-Structure/MinerU adapters, block-level correction with optimistic revision checks, correction history, staged approval, and active indexing.
 - Report exports: deterministic JSON, Markdown, and PDF generated from persisted claims, evidence, exact source links, review decisions, and model usage.
