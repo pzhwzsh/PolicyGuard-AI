@@ -1,5 +1,8 @@
 # PolicyGuard AI
 
+Repository standards: [contributing guide](CONTRIBUTING.md),
+[Git workflow](docs/GIT_WORKFLOW.md), and [changelog](CHANGELOG.md).
+
 ## Current End-to-End Capabilities (2026-07-21)
 
 ### July 21 completion pass
