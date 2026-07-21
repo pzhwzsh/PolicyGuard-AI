@@ -39,7 +39,7 @@
     {
       "name": "zh-query-en-law-near-domain-no-answer-v1",
       "path": "data/evaluation/rag-cross-lingual-no-answer-near-v1.json",
-      "sha256": "2725049ca8c1f9d6c0f63a8c7882350a0337ddfc321a5fc1824b814604218939",
+      "sha256": "02ea79b9c562f9e001dca587a82b5e0a4725958be7175a098fea7313babee94b",
       "sample_count": 20,
       "label_status": "ai_reviewed_pending_human_verification",
       "human_verified_samples": 0
@@ -47,7 +47,7 @@
     {
       "name": "zh-query-en-law-retrieval-v1",
       "path": "data/evaluation/rag-cross-lingual-zh-en-v1.json",
-      "sha256": "d0ca74ab2049a364567900cc3e54e97902a43763d3c0624ece9b2d27de3d7172",
+      "sha256": "93efb21b9152df1dc19f20f6fad50bb9602cc9096075473b9272c721a3e04f16",
       "sample_count": 22,
       "label_status": "ai_reviewed_pending_human_verification",
       "human_verified_samples": 0
@@ -79,7 +79,7 @@
     {
       "name": "rag-retrieval-robustness-v1",
       "path": "data/evaluation/rag-robustness-v1.json",
-      "sha256": "c9d95397804421d8380e64db046e57fee76aa6a06908208723db732a14c4ec58",
+      "sha256": "dce6934aaa7eecea533b64990b6ac345a15d753f1225befd7eabcc444bc1bfc5",
       "sample_count": 180,
       "label_status": "development_unverified",
       "human_verified_samples": 0
@@ -87,7 +87,7 @@
     {
       "name": "deterministic-remediation-quality-v1",
       "path": "data/evaluation/remediation-quality-v1.json",
-      "sha256": "14d19ac0e02b75538b540728d0dbf0aad0caac5ae6962b43238164ea96e191f5",
+      "sha256": "972e725190c559ba6f0ae1bb9e4057748393ad419f8b1b68c69841c962f0ccd5",
       "sample_count": 6,
       "label_status": "ai_reviewed_pending_human_verification",
       "human_verified_samples": 0

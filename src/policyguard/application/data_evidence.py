@@ -10,7 +10,8 @@ def _read_json(path: Path) -> Any:
 
 
 def _file_hash(path: Path) -> str:
-    return sha256(path.read_bytes()).hexdigest()
+    content = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return sha256(content).hexdigest()
 
 
 def _write_json(path: Path, payload: Any) -> None:

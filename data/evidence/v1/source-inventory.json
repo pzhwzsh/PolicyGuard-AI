@@ -34,7 +34,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/cn-samr-advertising-law.json",
-      "release_sha256": "23d125ea7329ea10154d6287279b66d566f89d23f5cb74c0be99d872fa3ba0b1"
+      "release_sha256": "a4b519515c50c1be1b8e9d4fe4764f01f6c65986b7f747e064c6dc3b0a560425"
     },
     {
       "source_id": "us-ftc-advertising-basics",
@@ -51,7 +51,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-advertising-basics.json",
-      "release_sha256": "47c33af7148e0546e8885adec4c68abdfcb62559a67aa56c7032e590e7fdaed1"
+      "release_sha256": "8fe50388cf0480e3afc3c9d7e8458b7237493ba43a932f7efce7d61fe8c14dc9"
     },
     {
       "source_id": "eu-ucpd-consolidated",
@@ -68,7 +68,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-ucpd-consolidated.json",
-      "release_sha256": "c1c8d05c52573dee1f96f6dbdd77a40ecd79d0252912fe636f7d2986342a0f8c"
+      "release_sha256": "60b8a6ed7043d1de0192f1d605f5657e1e48fcb2bbb3a162f4a4b3562c257cd4"
     },
     {
       "source_id": "us-ftc-endorsements-reviews",
@@ -85,7 +85,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-endorsements-reviews.json",
-      "release_sha256": "01d553e8771bdede9bba64d26f0192d87c6ca24f044da78dfaf254d7b7fdf152"
+      "release_sha256": "cf4a681c8d8cd4a03f7b98bb86ba9cebdeee63273bdf2d9cbadcd33d598184d0"
     },
     {
       "source_id": "us-ftc-health-products-guidance",
@@ -102,7 +102,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-health-products-guidance.json",
-      "release_sha256": "ccd386f123147b4e793357559510de827063e14e70f7640a91f31048f6294cc8"
+      "release_sha256": "9973d31813b016e04e53a3c08abdb7fc9b77abc9a7495b76bf4ba5ac6327aecb"
     },
     {
       "source_id": "us-ftc-can-spam",
@@ -119,7 +119,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-can-spam.json",
-      "release_sha256": "5413acb194268765eda460e0da34cbc076e8d936464f63a6e42074351cf43731"
+      "release_sha256": "accc4fdb17d6fa7c45073b7e58b0be504e87f62f8761b6eb28b2867b52f12309"
     },
     {
       "source_id": "eu-cosmetics-claims-655-2013",
@@ -136,7 +136,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-cosmetics-claims-655-2013.json",
-      "release_sha256": "bd5df3e2e025bf64e6182ef1549c38e8ce8855299a460689d0800811e2a2b3d3"
+      "release_sha256": "0d73ed58c55cad937ba82a074015de95d85d1602a01910d321bc72f6eb7d94d8"
     },
     {
       "source_id": "eu-health-claims-1924-2006",
@@ -153,7 +153,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-health-claims-1924-2006.json",
-      "release_sha256": "a7005509b034f2b6bf608db3164f9a433bb2a903c89ed34f9de6ea5975ff0a9b"
+      "release_sha256": "a64845a1647bcb984fa8a017e25b3aa10c0bbe8b958304b1a5f28cb7350e2899"
     },
     {
       "source_id": "eu-digital-services-act-2022-2065",
@@ -170,7 +170,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-digital-services-act-2022-2065.json",
-      "release_sha256": "9f905079cc2dc424421349a1ed7ba926920c50bf97631261427315bd2a264150"
+      "release_sha256": "f2b985c541ee5c870916e7b2067b659949611562c2fec6905de4a953758ccf9a"
     },
     {
       "source_id": "eu-gdpr-2016-679",
@@ -187,7 +187,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-gdpr-2016-679.json",
-      "release_sha256": "f2d2b41f84bc75c81798866e36a97fca0dc5d0f39ea680c053a58e5262a43916"
+      "release_sha256": "1f2d2b7aadc41b8351d29f5fdcc01ec0d74510cc42353b5405a8dd15a7fe8ad5"
     },
     {
       "source_id": "eu-audiovisual-media-services-2010-13",
@@ -204,7 +204,7 @@
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-audiovisual-media-services-2010-13.json",
-      "release_sha256": "de3253254c18bb13e98af4eb38750f0b076b818744819af0dc86f5d207320d76"
+      "release_sha256": "ae6aa03ec7bc38fe9d8cf63c845d52931d63fe3e418ee9d5d3bf5f8c5000bf07"
     }
   ]
 }
