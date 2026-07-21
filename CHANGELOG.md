@@ -20,6 +20,8 @@ and versions follow Semantic Versioning.
 - Management workbenches for review decisions, evidence-linked diffs, draft rechecks, and memory provenance.
 - Alembic migrations with SQLite round-trip and PostgreSQL 16 CI coverage.
 - Credential-redacted weekly/manual smoke checks for model, OCR, and official-source dependencies.
+- Versioned data evidence release with 11 source copies/3,439 sections, dataset hashes, sanitized
+  benchmark results, runtime counts, and CI-enforced truthfulness checks.
 
 ## [0.1.0] - 2026-07-21
 

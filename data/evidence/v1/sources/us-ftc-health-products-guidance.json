@@ -1,0 +1,1075 @@
+{
+  "schema_version": "policyguard-source-evidence-v1",
+  "evidence_status": "official_source_structurally_parsed_pending_legal_review",
+  "source": {
+    "id": "us-ftc-health-products-guidance",
+    "title": "Health Products Compliance Guidance",
+    "jurisdiction": "US",
+    "publisher": "U.S. Federal Trade Commission",
+    "source_url": "https://www.ftc.gov/business-guidance/resources/health-products-compliance-guidance",
+    "format": "html",
+    "source_language": "en-US",
+    "ingestion_mode": "legal_document",
+    "activation_policy": "manual_review",
+    "reuse_review_status": "official_publication_terms_not_reviewed"
+  },
+  "capture": {
+    "content_hash": "01e8b8987000e035652e4447f6a20ee396e36778e44a9daea16c67559f928bc0",
+    "created_at": "2026-07-21T11:35:10.158114+00:00",
+    "retrieved_at": "2026-07-21",
+    "section_count": 205,
+    "structural_review_status": "passed",
+    "legal_review_status": "pending",
+    "eligible_for_activation": true,
+    "short_section_rate": 0.0341,
+    "replacement_character_count": 0,
+    "validation_errors": []
+  },
+  "document": {
+    "title": "Health Products Compliance Guidance",
+    "publisher": "U.S. Federal Trade Commission",
+    "source_url": "https://www.ftc.gov/business-guidance/resources/health-products-compliance-guidance",
+    "version": "snapshot-01e8b8987000",
+    "published_at": "undated",
+    "retrieved_at": "2026-07-21",
+    "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
+    "scopes": [
+      {
+        "jurisdiction": "US",
+        "category": "health",
+        "channel": "all",
+        "legal_level": "regulatory_guidance",
+        "source_language": "en-US",
+        "translation_status": "original",
+        "effective_from": "1900-01-01"
+      }
+    ],
+    "sections": [
+      {
+        "section_id": "html-4-i-preface",
+        "heading": "I. Preface",
+        "text": "Federal Trade Commission (FTC) staff has prepared this guidance document to update and replace Dietary Supplements: An Advertising Guide for Industry , issued in 1998. Like the 1998 guide, this document provides guidance from FTC staff on how to ensure that claims about the benefits and safety of health-related products are truthful, not misleading, and supported by science. Since 1998, the FTC has settled or adjudicated more than 200 cases involving false or misleading advertising claims about the benefits or safety of dietary supplements or other health-related products, including foods, over-the-counter (OTC) drugs, homeopathic products, health equipment, diagnostic tests, and health-related apps. This update draws on the issues raised in those cases to illustrate how the FTC identifies the express and implied claims conveyed in advertising and how the agency evaluates the scientific support for those claims. While most of the examples involve dietary supplement advertising, the same legal principles apply to the marketing of any health-related product."
+      },
+      {
+        "section_id": "html-5-i-preface",
+        "heading": "I. Preface",
+        "text": "This document is intended as business guidance only. It interprets and explains FTC advertising law pursuant to the FTC Act and as set out in case law, and Commission policy statements. The guide, however, doesn’t have the force or effect of law. The principles and examples are intended to help advertisers comply with the basic tenets of FTC law. They don’t provide a safe harbor from potential liability; whether a particular advertising claim is deceptive or otherwise violates the FTC Act will depend on the facts of the specific case."
+      },
+      {
+        "section_id": "html-6-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "The Federal Trade Commission’s broad mandate is to prevent “unfair or deceptive acts or practices.” That includes making sure the information marketers provide about the benefits and safety of dietary supplements and other health-related products is accurate so consumers can make informed decisions. Sections 5 and 12 of the FTC Act, [1] along with the FTC’s policy statements on deception and advertising substantiation , [2] are the foundation of FTC truth-in-advertising law, and can be distilled down to two common-sense principles:"
+      },
+      {
+        "section_id": "html-7-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "1) Advertising must be truthful and not misleading; and"
+      },
+      {
+        "section_id": "html-8-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "2) Before disseminating an ad, advertisers must have adequate substantiation for all objective product claims conveyed, expressly or by implication, to consumers acting reasonably."
+      },
+      {
+        "section_id": "html-9-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "A deceptive ad is one that contains a material misrepresentation or omission that is likely to mislead consumers acting reasonably under the circumstances. The type of substantiation needed for a claim depends on many factors, including the product being marketed and the nature of the claim. As a general rule, however, claims about the health benefits or safety of foods, dietary supplements, drugs, and other health-related products require substantiation in the form of competent and reliable scientific evidence. [3]"
+      },
+      {
+        "section_id": "html-10-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "“Advertising” refers to a wide variety of marketing techniques . The term “advertising” as used throughout this guide refers not only to traditional TV, radio, print, and internet ads, but also more broadly to the variety of marketing techniques and promotion methods that marketers engage in to increase consumer interest in, or demand for, their products. Thus, as used here, advertising includes statements or depictions on packaging and labeling; in promotional materials such as brochures or booklets; on the internet and in other digital content; in social media and influencer marketing; in press releases, press interviews, or other media appearances; at trade shows, conferences, and seminars; and indirectly through healthcare practitioners or other intermediaries. [4] Promotional product information distributed through any of these means must comply with the same truth-in-advertising principles that apply to traditional ads. [5]"
+      },
+      {
+        "section_id": "html-11-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "Anyone participating in deceptive marketing is potentially liable under FTC law. Marketers of dietary supplements and other health-related products should ensure that anyone participating in marketing is familiar with basic FTC advertising principles. All parties who participate directly in marketing and promotion, or who have authority to control those practices, have an obligation to make sure that claims are presented truthfully and to check the adequacy of the support for those claims. The FTC has taken action not just against product marketers, but also, in appropriate circumstances, against individual owners and corporate officers of the marketer, as well as ad agencies, distributors, retailers, catalog companies, infomercial producers, expert endorsers, and others engaged in deceptive marketing and promotion. [6]"
+      },
+      {
+        "section_id": "html-12-a-ftc-authority-over-advertising-of-health-related",
+        "heading": "A. FTC Authority over Advertising of Health-Related Products",
+        "text": "The FTC can seek a variety of remedies for deceptive advertising. The consequences of deceiving consumers about the safety, efficacy, or other benefits of a product can be substantial. The FTC can obtain an order that stops the deceptive claims and requires that future marketing be truthful and substantiated. In appropriate circumstances, the FTC also can mandate certain disclosures or require that a marketer engage in corrective advertising to cure any lingering deception in the marketplace. [7] In particularly egregious instances, the FTC has asked a court to ban a company or individual from engaging in certain marketing activities altogether. [8] The FTC also can seek financial remedies, including, in some instances, consumer refunds or civil penalties."
+      },
+      {
+        "section_id": "html-13-b-coordination-with-fda",
+        "heading": "B. Coordination with FDA",
+        "text": "The FTC and the Food and Drug Administration (FDA) share jurisdiction over the marketing of dietary supplements, foods, drugs, devices, and other health-related products. The agencies coordinate their enforcement and regulatory efforts pursuant to a Memorandum of Understanding – often called the “FDA-FTC Liaison Agreement” – that governs the basic division of responsibilities between them. [9] The FDA has primary responsibility for claims that appear in labeling , including the package, product inserts, and other promotional materials available at point of sale. The FTC has primary responsibility for claims in all forms of advertising . [10] Because of this shared jurisdiction, the two agencies work closely to ensure that their enforcement efforts are consistent to the fullest extent feasible. Marketers should be aware that the FDA/FTC Liaison Agreement doesn’t limit the FTC’s jurisdiction or prohibit the agency from taking action against deceptive labeling claims or obtaining orders that address all forms of marketing, including claims that appear in labeling."
+      },
+      {
+        "section_id": "html-14-c-key-differences-between-ftc-and-fda-law",
+        "heading": "C. Key Differences Between FTC and FDA Law",
+        "text": "While both the FTC and the FDA require marketing of dietary supplements and other health-related products to be truthful and accurate, there are some key differences in the agencies’ legal frameworks and approaches that marketers should keep in mind."
+      },
+      {
+        "section_id": "html-15-c-key-differences-between-ftc-and-fda-law",
+        "heading": "C. Key Differences Between FTC and FDA Law",
+        "text": "FTC advertising law applies to all products and claims. Unlike FDA law, FTC law makes no bright-line distinctions between categories of health-related products or claims. For example, provisions in the Dietary Supplement Health and Education Act of 1994 (DSHEA) regarding “structure/function” claims [11] in labeling don’t govern the FTC’s assessment of those claims in advertising. [12] The FTC follows the same basic steps when evaluating any health-related claim regardless of whether, under FDA law, the claim would be considered a health claim, a structure/function claim, or a drug claim. Similarly, the FTC’s approach to advertising of health-related products is the same regardless of whether, under FDA law, the product is considered a food, a supplement, or a drug. [13]"
+      },
+      {
+        "section_id": "html-16-c-key-differences-between-ftc-and-fda-law",
+        "heading": "C. Key Differences Between FTC and FDA Law",
+        "text": "The FTC doesn’t pre-approve “health” claims, as that term is defined by FDA labeling laws. The FTC Act doesn’t require pre-market approval of health claims in the advertising of foods, dietary supplements, or other products. Marketers should be aware, however, that the FTC gives great deference to a determination by the FDA of whether there is adequate support for a particular health claim in labeling. Health claims that meet the FDA “significant scientific agreement” standard will be presumed to be substantiated under FTC law. [14] Health claims that do not meet the FDA’s “significant scientific agreement” standard may be deceptive unless the limitations or uncertainty in the supporting science are clearly communicated with qualifying language that is noticed and understood by consumers. [15] Sections III.A.3 and III.B.5 below provide more detailed guidance on the clear and conspicuous disclosure of such limitations for claims based on emerging science."
+      },
+      {
+        "section_id": "html-17-c-key-differences-between-ftc-and-fda-law",
+        "heading": "C. Key Differences Between FTC and FDA Law",
+        "text": "The FTC doesn’t require notification for “structure/function” claims. Under FDA labeling law, dietary supplement marketers must notify the FDA of structure/function claims and other statements of nutritional support that appear in labeling, but don’t need to seek FDA pre-approval. The FTC doesn’t have a parallel notification requirement for such claims in advertising. Despite this difference, both the FDA and the FTC require that marketers have prior substantiation that the claims are truthful and not misleading. Both agencies apply the same basic principles in assessing the quality and adequacy of the science substantiating those claims. [16]"
+      },
+      {
+        "section_id": "html-18-iii-application-of-ftc-law-to-advertising-of-dieta",
+        "heading": "III. Application of FTC Law to Advertising of Dietary Supplements and Other Health-related Products",
+        "text": "To determine whether advertising complies with FTC law, it is first necessary to identify all claims the advertising materials communicate to reasonable consumers. Once the claims are identified, the FTC assesses the scientific evidence upon which the company relies to determine whether there is adequate support for those claims. The following sections describe this two-step process with examples illustrating how the principles of ad interpretation and substantiation apply in the context of advertising for dietary supplements and other health-related products. The examples have been simplified to illustrate one or two specific points. Therefore, advertisers should use these examples as general guidance only."
+      },
+      {
+        "section_id": "html-19-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "1. Identifying Express and Implied Claims"
+      },
+      {
+        "section_id": "html-20-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "The first step in evaluating the truthfulness and accuracy of advertising and marketing materials is to identify all express and implied claims conveyed to consumers acting reasonably. Marketers must make sure that whatever they say expressly in advertising is accurate. Often, however, advertising conveys other claims beyond those expressly stated. Under FTC law, a marketer is equally responsible for the accuracy of claims suggested or reasonably implied in advertising. [17] Marketers can’t suggest benefits, safety, or other characteristics about their product indirectly that they couldn’t claim directly."
+      },
+      {
+        "section_id": "html-21-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "FTC law focuses not on the marketer’s intent, but on the consumer’s understanding. The determination of what claims are made in marketing is consumer-driven – in other words, what reasonable consumers understand the advertising or marketing materials to communicate about the product. When identifying the claims conveyed by an ad, marketers shouldn’t focus narrowly on individual phrases or statements, but rather should consider each ad as a whole, assessing the “net impression” conveyed by all elements of the ad, including the text, product name, and any charts, graphs, and other images. [18] When an ad lends itself to more than one reasonable interpretation, the advertiser is responsible for substantiating each interpretation."
+      },
+      {
+        "section_id": "html-22-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Furthermore, the FTC views advertising claims from the standpoint of the intended audience. [19] For example, terminally ill consumers might be particularly susceptible to exaggerated cure claims. Extrinsic evidence such as consumer surveys and copy tests can be valuable in determining how consumers interpret certain implied claims. In many cases, however, the claims conveyed are clear enough on the face of an ad, without the need for extrinsic evidence. [20]"
+      },
+      {
+        "section_id": "html-23-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 1: A brochure for a weight-loss product shows images of doctors in white lab coats looking through microscopes, molecular structures, and a stack of medical journals. These images give an impression of scientific legitimacy and likely convey an implied claim that the product has been clinically proven to be effective for weight loss."
+      },
+      {
+        "section_id": "html-24-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 2: A magazine ad for a children’s nutritional drink features an image of the straw from the drink box encircling a child to create a barrier as another child sneezes in her direction. The image used in the ad likely implies that the product can help protect children from catching colds or other airborne infections."
+      },
+      {
+        "section_id": "html-25-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 3: An ad for a vitamin supplement claims that 90% of cardiologists regularly take the product. In addition to the express claim about the percentage of cardiologists who use the product, the ad likely conveys an implied claim that the product offers some benefit for the heart."
+      },
+      {
+        "section_id": "html-26-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 4: An ad for an infant formula states that an ingredient added to the formula can reduce the symptoms of colic. The ad includes an unrelated chart from a pediatric journal showing that, as a general principle, the length of time that colicky babies cry tends to decrease over the first 12 weeks of life. The graph has nothing to do with the effect of the infant formula on crying; it merely shows that crying decreases as a function of age. Using the graph in an ad for the infant formula likely implies that the formula, rather than the babies’ ages, causes the decrease in crying time."
+      },
+      {
+        "section_id": "html-27-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Depending on how it is phrased or the context in which it is presented, a statement about a product’s effect on the normal “structure or function” of the body may also convey to consumers an implied claim that the product is beneficial for the treatment of a disease. If elements of an ad imply that the product also provides a disease benefit, the advertiser must be able to substantiate the implied disease claim even if the ad contains no express reference to a disease."
+      },
+      {
+        "section_id": "html-28-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 5: An ad for an herbal supplement claims that the product boosts the immune system to help maintain a healthy nose and throat during the winter season. The ad features the product name “Cold Away” and includes images of people sneezing and coughing. The various elements of the ad – the product name, the depictions of cold sufferers, and the reference to nose and throat health during the winter season – likely convey to consumers that the product helps prevent colds. Even without the product name and images, the reference to nose and throat health during the winter season likely conveys a cold prevention claim."
+      },
+      {
+        "section_id": "html-29-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 6: An ad for a topical ointment called “Arthricure” claims that the product “maintains joint health and mobility” into old age. A “before” picture shows an elderly woman using a walker. An “after” picture shows her dancing with her husband. Even without the product name, which implies the product can cure arthritis, the before-and-after images, along with the references to joint health and mobility, likely convey a claim that the product can dramatically improve the symptoms of arthritis."
+      },
+      {
+        "section_id": "html-30-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "2. When to Disclose Qualifying Information"
+      },
+      {
+        "section_id": "html-31-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "An ad also can be deceptive because of what it fails to say. Under Section 15 of the FTC Act, an ad is misleading if it fails to disclose information that is material in light of the claims in the ad or with respect to how consumers would customarily use the product. [21] Thus, if the ad would be misleading without certain key qualifying information, that information must be disclosed. For example, advertisers should disclose any significant limitations on an advertised health benefit. Similarly, advertising that makes either an express or implied safety representation should include information about any significant safety risks. Even absent affirmative safety representations, advertisers may need to inform consumers of significant safety concerns related to the customary use of a product. [22]"
+      },
+      {
+        "section_id": "html-32-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 7: An ad for a multi-vitamin and mineral supplement claims that the product can eliminate a specific mineral deficiency that results in feelings of fatigue. In fact, less than 2% of the general population to which the ad is targeted suffer from this deficiency. The advertiser should limit the claim so that consumers understand that only the small percentage of people who suffer from the actual mineral deficiency are likely to experience any reduction in fatigue from using the product."
+      },
+      {
+        "section_id": "html-33-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 8: The marketer of a weight-loss supplement cites a placebo-controlled, double-blind clinical study in an ad as demonstrating that the product resulted in an average weight loss of 12 pounds over an eight-week period. The weight loss for the treatment group was, in fact, significantly greater than for the control subjects. However, both the control and test subjects engaged in regular exercise and followed a restricted-calorie diet as part of the study regimen. The ad should make clear that users of the supplement also will need to reduce calories and engage in regular exercise to achieve similar results."
+      },
+      {
+        "section_id": "html-34-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 9: An ad for an herbal product claims it is a natural pain remedy “without the side effects of over-the-counter pain relievers.” However, there is substantial evidence that the product can cause nausea in some consumers when taken regularly. Because of the reference to the side effects of other pain relievers, consumers would likely understand this ad to mean that the herbal product poses no risk of significant side effects. The advertiser should disclose information about the side effects of the herbal product."
+      },
+      {
+        "section_id": "html-35-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 10: An energy drink contains an ingredient that, when consumed daily over an extended period, can result in a significant increase in blood pressure. Even absent any representation about the product’s safety, the marketer should disclose this potentially serious risk."
+      },
+      {
+        "section_id": "html-36-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 11: A botanical supplement is marketed as an all-natural sleep aid for “when life’s stresses get you down or you are just too anxious to fall asleep.” Although the botanical supplement doesn’t present any safety risk when used alone, the active compounds in the product use the same metabolic pathway as common prescription medications for anxiety and depression, interfering with the efficacy of those medications. This potential interaction should be disclosed."
+      },
+      {
+        "section_id": "html-37-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "3. Clear and Conspicuous Disclosure"
+      },
+      {
+        "section_id": "html-38-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "When the disclosure of qualifying information is necessary to prevent an ad from being deceptive, advertisers should present the information clearly and conspicuously, so it is difficult to miss (i.e., easily noticeable) and easily understandable by ordinary consumers. If the claim requiring a disclosure is made both visually and audibly, the disclosure should be made both visually and audibly; if the claim is made just visually or just audibly, the disclosure should at least appear the same way the claim is made, but a simultaneous visual and audible disclosure is more likely to be clear and conspicuous. A visual disclosure should stand out and, based on its size, contrast, location, the length of time it appears, and other characteristics, it should be easily noticed, read, and understood. An audible disclosure should be delivered in a volume, speed, and cadence so that it can be easily heard and understood. In social media, the internet, and other interactive media, the disclosure should be unavoidable; disclosures made through hyperlinks are avoidable . A disclosure should not be contradicted or mitigated by, or inconsistent with, anything else in the ad. When an endorsement targets a specific audience, such as older adults or children, the effectiveness of the disclosure will be judged from the perspective of members of that group."
+      },
+      {
+        "section_id": "html-39-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "The ultimate test of whether a disclosure is effective is the net impression that consumers take from an ad with the disclosure. If a significant minority of consumers take a misleading claim from an ad despite a disclosure, the disclosure isn’t sufficient. [23] If it isn’t possible to make an effective disclosure, the claim should be modified so that a disclosure isn’t necessary – or the claim shouldn’t be made."
+      },
+      {
+        "section_id": "html-40-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 12: A magazine ad for nasal strips claims that nightly application will reduce the sound of snoring. The advertiser has competent and reliable scientific evidence that the strips substantially reduce the sound of snoring but not that they treat sleep apnea, a potentially life-threatening condition for which snoring is a primary symptom. The ad would be deceptive if it fails to adequately disclose that the nasal strips aren’t intended to treat sleep apnea. A fine print disclosure of this fact at the bottom of the ad wouldn’t be clear and conspicuous. A disclosure immediately next to the snoring claim in the same font size as the claim and in black print on a white background is much more likely to be effective at eliminating the deception."
+      },
+      {
+        "section_id": "html-41-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Qualifying information – information that explains or limits the applicability of an ad claim – should be sufficiently simple and clear that consumers not only notice it, but also understand its significance. This can be a particular challenge when explaining complicated scientific concepts to a general audience. For example, it is very difficult to adequately qualify a claim based on limited and still-emerging science to make clear to consumers the uncertain and limited nature of the support for the claim. [24] An advertiser should make sure consumers understand both the extent of scientific support and the existence of any significant contrary evidence."
+      },
+      {
+        "section_id": "html-42-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Vague qualifying terms are inadequate. For example, it’s not enough to say that the product “may” have the claimed benefit or “helps” achieve the claimed benefit. Similarly, consumers are likely to interpret modifiers such as “promising,” “preliminary,” “initial,” or “pilot” as positive product attributes, rather than as substantial disclaimers about the state of the science behind a claim, particularly when the study is positively touted in the ad. [25] Thus, consumers may interpret an ad to mean that a product will prevent or reduce the risk of a disease, even if the ad includes language indicating that the science supporting the effect is limited in some way."
+      },
+      {
+        "section_id": "html-43-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 13: A company has results from two studies suggesting that its supplement helps to maintain healthy cholesterol levels. There are, however, significant limitations to each of the studies and a better study is necessary to confirm whether the effect is genuine. The company makes a claim in advertising that “promising, preliminary scientific studies show that our product may be effective in reducing cholesterol.” The use of the words “promising,” “preliminary,” and “may” is unlikely to sufficiently convey the limitations of the science."
+      },
+      {
+        "section_id": "html-44-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Although a clear and conspicuous disclosure might be effective to clarify an ambiguous claim that might otherwise be deceptive, it can’t directly contradict a claim. [26]"
+      },
+      {
+        "section_id": "html-45-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 14: A smartphone app is marketed for treating acne. Its app store description says, “Better Skin? Get Smart. A renowned dermatologist harnessed the power of in-office acne treatments in a more familiar form: the Smartphone. If you have acne, these flashing lights will be your salvation. Rest your Smartphone against your skin’s acne-prone areas for 2 minutes daily to improve skin health without prescription drugs.” Just below the claim, in the same print size, color, and style, is the statement, “This app is for entertainment purposes only and is not intended for the treatment of any disease or medical condition.” Given the express claim that the app improves acne, the disclaimer that it doesn’t treat medical conditions is directly contradictory and ineffective to negate the acne treatment claim."
+      },
+      {
+        "section_id": "html-46-a-identifying-claims-and-interpreting-ad-meaning",
+        "heading": "A. Identifying Claims and Interpreting Ad Meaning",
+        "text": "Example 15: The marketer of an unproven weight-loss supplement, through the use of medical images ( e.g., people dressed in lab coats, use of the Caduceus symbol) and medical terminology ( e.g., “medical innovation” and “research center”) on its website, conveys a false claim that the product’s efficacy is backed by scientific proof. A fine print disclosure in the “Terms and Conditions” section of the website states that “no clinical study has been performed on the product.” The statement is inadequate to correct the false scientific proof claim both because it directly contradicts the claim and because it is not clear and conspicuous."
+      },
+      {
+        "section_id": "html-47-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "In addition to conveying product claims clearly and accurately, marketers need to ensure that there is adequate support for their claims. Under FTC law, advertisers must have a reasonable basis for their product claims before disseminating an ad. What constitutes a reasonable basis depends greatly on what claims are made, how they are presented in the context of the entire ad, and how they are qualified. The FTC’s substantiation standard is a rigorous one, particularly when claims relate to health. It is designed to ensure that consumers can have confidence in the accuracy of information presented in advertising. A number of factors determine the appropriate amount and type of substantiation required, including: [27]"
+      },
+      {
+        "section_id": "html-48-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The type of product. Generally, products related to consumer health or safety require a relatively high level of scientific substantiation."
+      },
+      {
+        "section_id": "html-49-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The type of claim. Claims that are difficult for consumers to assess on their own– for example, a health benefit claim that may be subject to a placebo effect, that relates to a naturally varying condition, or that can’t be verified by the consumer without medical testing – are held to a more exacting standard."
+      },
+      {
+        "section_id": "html-50-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The benefits of a truthful claim, and the cost or feasibility of developing substantiation for the claim. These factors are often weighed together to ensure that valuable product information isn’t withheld from consumers because the cost of developing substantiation is prohibitive. This doesn’t mean, however, that an advertiser can make any claim it wants without substantiation simply because the cost of research is too high."
+      },
+      {
+        "section_id": "html-51-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The consequences of a false claim. This includes both physical and economic injury. For example, an unsubstantiated claim about the therapeutic benefit of a product could lead a consumer to forgo a more effective treatment or lifestyle change, to her physical detriment. A consumer may suffer economic injury by purchasing an ineffective product or paying a premium for a product that provides no benefit over less expensive alternatives."
+      },
+      {
+        "section_id": "html-52-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The amount of substantiation that experts in the field believe is reasonable. In making this determination, the FTC gives great weight to accepted norms in the relevant fields of research and consults with experts in those fields. For a health-related claim, the FTC will rely primarily on experts in the particular field of health at issue and may, in addition, consult experts on a particular ingredient or type of product. Thus, for example, research supporting a claim about heart benefits would need to meet accepted norms of research in the field of cardiology. Where there is an existing standard for substantiation developed by a government agency such as the FDA or the National Institutes of Health, or another authoritative body such as the National Academy of Sciences, the FTC gives great deference to that standard."
+      },
+      {
+        "section_id": "html-53-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "When applied to claims about the efficacy or safety of health-related products, the factors described above make up the FTC’s rigorous substantiation standard of “competent and reliable scientific evidence.” [28] The FTC has more specifically defined that standard as “ tests, analyses, research, or studies that (1) have been conducted and evaluated in an objective manner by experts in the relevant disease, condition, or function to which the representation relates; and (2) are generally accepted in the profession to yield accurate and reliable results.” [29] In addition, the FTC requires that the research must be “ sufficient in quality and quantity based on standards generally accepted in the relevant scientific fields, when considered in light of the entire body of relevant and reliable scientific evidence, to substantiate that the representation is true .” [30]"
+      },
+      {
+        "section_id": "html-54-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The sections that follow describe various considerations that govern whether the scientific support for a specific health-related claim satisfies the competent and reliable scientific evidence standard. As a general matter, substantiation of health-related benefits will need to be in the form of randomized, controlled human clinical testing to meet the competent and reliable scientific standard. [31] In evaluating the reliability of such testing, the FTC will consider several parameters, such as sample size, duration, and outcome measures, that will vary depending on the exact nature of the hypothesis being tested and accepted norms in the relevant field. Assessing whether a study is well-designed and well-conducted, and whether the data has been properly analyzed and interpreted, are tasks that should be undertaken by someone with appropriate expertise. Marketers of health products are encouraged to consult with an independent expert in the relevant field of research. Independent experts can provide unbiased assessments of the validity of studies, how they fit within the relevant scientific literature, and what conclusions can be legitimately drawn from the results."
+      },
+      {
+        "section_id": "html-55-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "1. Ads that Refer to a Specific Level of Support"
+      },
+      {
+        "section_id": "html-56-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "As a starting point, marketers of health-related products must have at least the level of support that they claim to have. In other words, in addition to meeting the basic requirement that any objective claim about safety or efficacy must be substantiated, the marketer also must ensure that any assertion about the amount, type, or strength of evidence is accurate. [32]"
+      },
+      {
+        "section_id": "html-57-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 16: An ad for a supplement includes the statement “Scientists Now Agree!” in discussing the product’s benefit. This statement likely conveys to consumers that the state of science supporting the benefit has reached the level of scientific consensus. Unless the advertiser possesses evidence demonstrating that scientists have reached that consensus, the claim is false."
+      },
+      {
+        "section_id": "html-58-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 17: An advertiser claims that its product is based on “Nobel Prize-Winning” research and has been “proven effective” by “$5 Million in NIH Research.” The Nobel Prize referred to in the ad, however, was for an unrelated use of the product’s active ingredient and has nothing to do with the claimed health benefits. In addition, the NIH research examined the safety, but not the efficacy, of the active ingredient. The specific claims about the level of support are deceptive even if the advertiser possesses other research that provides competent and reliable scientific evidence of efficacy."
+      },
+      {
+        "section_id": "html-59-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 18: The website for a sports drink touts a “clinically tested ingredient” for improving blood flow and increasing endurance. In this context, the phrase “clinically tested ingredient” implies not just that the ingredient was tested, but also that the test results prove a benefit for blood flow and endurance. The phrase also conveys a claim that the sports drink will provide those benefits. Because the drink also contains other ingredients, the marketer should consult with a qualified expert in the relevant field to determine whether experts in that field would generally require a clinical test of the sports drink itself, rather than the isolated ingredient, to confirm the blood flow and endurance benefits."
+      },
+      {
+        "section_id": "html-60-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "2. The Amount and Type of Evidence"
+      },
+      {
+        "section_id": "html-61-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Even when an advertiser doesn’t make a specific claim about the level of support, claims about the health benefits of a product must still meet the basic substantiation standard of “competent and reliable scientific evidence.” Randomized, controlled human clinical trials (RCTs) are the most reliable form of evidence and are generally the type of substantiation that experts would require for health benefit claims. [33] Although there is no requirement for a specific number of RCTs, the replication of research in an independently-conducted study adds to the weight of the evidence. Replication in a second study by independent researchers reduces the chance that the results of a single RCT may be influenced by unanticipated, undetected, systematic biases that may occur despite the best intentions of sponsors and investigators. An additional, independently conducted study to corroborate findings provides much greater confidence in the validity of the initial results. As discussed in the next section, however, the quality of the research is more important than the quantity. For that reason, numerous flawed and inadequate studies are unlikely to add up to competent and reliable scientific evidence sufficient to substantiate a claim. [34]"
+      },
+      {
+        "section_id": "html-62-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Epidemiological or observational studies can be valuable to show an association between a product or ingredient, but they don’t prove a causal link. [35] Methodologically sound human clinical testing is necessary to prove causation, although there may be limited situations where such testing may not be feasible. In the field of nutrition, for example, it may take decades to determine whether there is a relationship between eating a particular food or nutrient and the risk of developing a disease. The FTC will accept high-quality epidemiologic evidence to substantiate a claim in those limited cases where: 1) it is considered an acceptable substitute for RCTs by experts in the field; and 2) RCTs aren’t otherwise feasible."
+      },
+      {
+        "section_id": "html-63-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Animal and in vitro studies may provide useful supporting or background information, but, without confirmation by human RCTs, they aren’t sufficient to substantiate health-related claims. [36] Animal studies have only limited value in predicting the effect of a product in humans, making it difficult to extrapolate results in animal research to benefits for humans. In vitro studies look at a product’s effect on isolated cells or tissues and may help identify a possible mechanism of action, but similarly are of limited value to predict benefits for humans."
+      },
+      {
+        "section_id": "html-64-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Anecdotal evidence about the individual experiences of consumers, including surveys of consumer experiences, are never sufficient to substantiate claims about the effects of a health product. [37] Even if consumer experiences are genuine, they may be attributable to a placebo effect or other factors unrelated to the product. For the same reason, a healthcare practitioner’s observation about the effect of a health product on patients is anecdotal and doesn’t provide evidence of a causal relationship. Individual experiences aren’t a substitute for scientific research."
+      },
+      {
+        "section_id": "html-65-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Finally, advertisers shouldn’t rely on public health recommendations, such as advisories from a medical organization, as substantiation. Public health recommendations and advisories reflect a judgment based on the best currently available evidence. They aren’t equivalent to a finding that there is a causal link between the recommended course of action and the health benefit. [38] For that reason, public health recommendations alone aren’t sufficient to support a claim. Marketers should instead evaluate the strength of the scientific evidence underlying those recommendations and the relevance of that evidence to the marketed product and advertised claims."
+      },
+      {
+        "section_id": "html-66-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 19: An advertiser relies on animal and in vitro studies to support a claim that its vitamin supplement is more easily absorbed into the bloodstream than other forms of the vitamin. However, the animal research uses a species of animal that, unlike humans, is able to synthesize the vitamin, and the in vitro study uses a different formulation with a higher concentration of the compound than the product being marketed. In addition, in this instance, human research is feasible and is the type of research generally considered necessary by experts to demonstrate vitamin absorption. The substantiation is inadequate because there are significant methodological problems and because human research is both feasible and the accepted approach in the field."
+      },
+      {
+        "section_id": "html-67-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 20: A company advertises its supplement as helpful in maintaining good vision into old age. There have been two large-scale epidemiologic studies showing a strong association between long-term consumption of the ingredient in the supplement and better vision in people over 70. Experts also have identified a plausible biological mechanism that likely explains the effect. A clinical intervention trial would be very difficult and costly to conduct and would take a minimum of 10 years. Assuming that experts in the field generally consider epidemiological evidence to be adequate to support the potential for a protective effect, and assuming the absence of contrary evidence, the claim would be substantiated. Because the evidence is based on long-term consumption, the claim shouldn’t suggest to consumers that they can expect immediate vision benefits."
+      },
+      {
+        "section_id": "html-68-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 21: An ad for a supplement claims that the product will cause dramatic improvements in memory and describes the results of a customer satisfaction survey reporting that more than 75% of customers noticed memory improvement. The survey results are accurately described, but because the survey provides nothing more than a collection of anecdotal experiences, it isn’t adequate to substantiate that the supplement has any benefit for memory."
+      },
+      {
+        "section_id": "html-69-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 22: The marketer of an online brain training program runs a radio promotion touting the recommendation by a well-recognized medical institution that individuals should engage in regular mental stimulation to improve memory and help stave off dementia. The recommendation is accurately reported, but it doesn’t provide substantiation for any express or implied claim that the marketer’s brain training program will provide memory benefits. The marketer must substantiate such a claim with methodologically sound human clinical research on its program documenting improvements in memory using appropriate outcome measures."
+      },
+      {
+        "section_id": "html-70-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "3. The Quality of the Evidence"
+      },
+      {
+        "section_id": "html-71-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "In addition to the amount and type of evidence, the FTC also will examine the internal validity of each piece of evidence. Research should be conducted in a competent and reliable manner to yield meaningful results. The design, implementation, and results of each piece of research are important to assessing the adequacy of a marketer’s substantiation. Because, as a general matter, health benefit claims will require evidence in the form of human clinical testing to substantiate that the product provides the claimed benefit, this section focuses on assessing the quality of such evidence."
+      },
+      {
+        "section_id": "html-72-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The scientific community has generally accepted several basic principles as enhancing the validity of test results. Whether designing and conducting their own research or relying on research conducted by third parties, marketers should ensure that the research upon which they rely for any health-related claim complies with these basic principles. [39]"
+      },
+      {
+        "section_id": "html-73-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Control Group: Human clinical studies should have both a treatment group and a control group. The efficacy of a product should be demonstrated by comparing the results of the treatment group to the results of the control group. Improvements over time in the treatment group alone could result from a placebo effect, spontaneous changes in subjects’ health, improvements in performance on a test measure purely as the result of practice or repetition (the “practice effect”), or other variables unrelated to the product’s benefits. An appropriately designed control (ideally a control using a placebo or sham treatment) helps to isolate the effects of these other variables from the effect of the treatment. When studies employ a cross-over design, in which subjects serve as their own control, they should use a sufficient wash-out period (the period during which subjects don’t receive the treatment) to ensure clarity as to what is causing the observed results. A cross-over design may not be appropriate to test some hypotheses."
+      },
+      {
+        "section_id": "html-74-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Randomization: The study should use appropriate randomization or, in the alternative, careful matching criteria, to prevent selection bias and to assure that demographic characteristics and other variables are similar in the control group and the treatment group. Substantial differences between the control and treatment groups in age, gender, diet, health status, or other characteristics can undermine the validity of any findings."
+      },
+      {
+        "section_id": "html-75-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Double Blinding: Both the participants in a study and the researchers should be blinded as to who is in the treatment group and who is in the control group. This greatly reduces the likelihood that either the subjects or the researchers might consciously or unconsciously take actions potentially biasing the results. In the rare circumstances where a double-blind design isn’t feasible, the study should be blinded to the fullest extent possible and researchers should take steps to minimize any potential for bias."
+      },
+      {
+        "section_id": "html-76-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Statistically Significant Results: To support a health-related claim, human clinical research must yield results that are statistically significant. A study that fails to show a statistically significant difference between the treatment and control groups may indicate that the measured effect is merely the result of placebo effect, unrelated improvement over time, or chance. Studies that use multiple outcome measures should report all outcomes, rather than selectively reporting positive outcomes. Such studies also should include a statistical adjustment to account for the increased likelihood that, when multiple outcomes are measured, a positive result on any one of the measures may be due to chance."
+      },
+      {
+        "section_id": "html-77-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "In addition, a post hoc analysis of data – one that departs from the original study protocol – can be an indication that the researchers are engaging in data mining or “p-hacking” in an attempt to find some positive result to report from a study that otherwise failed to show any treatment effect. The more post hoc comparisons examined, the more likely the data will yield a significant difference that is merely the result of chance. For that reason, post hoc analysis that departs from the originally stated study protocol ( e.g., an analysis that looks at various smaller subgroups of the study population) may identify areas for future exploration, but doesn’t generally provide reliable evidence to substantiate a claim. [40]"
+      },
+      {
+        "section_id": "html-78-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Clinically Meaningful Results: Any statistically significant results must translate to a benefit that is clinically meaningful for consumers. Some results that are statistically significant may be too small to provide real consequences for consumer health. [41]"
+      },
+      {
+        "section_id": "html-79-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Studies that fail to satisfy these basic principles are more prone to bias and other confounding factors, unlikely to yield reliable results, and generally won’t meet the FTC’s competent and reliable scientific evidence standard for substantiating health-related claims."
+      },
+      {
+        "section_id": "html-80-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "In addition to these basic principles, the FTC evaluates other factors in assessing the quality of a study and whether the study meets accepted standards in the relevant field of research to yield accurate and reliable results."
+      },
+      {
+        "section_id": "html-81-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Research should begin with a clear and detailed protocol. Both the research question and the methodology for addressing it should be described at the outset. Primary and secondary outcome measures should be well-defined and specified in advance. Measures that have been independently validated are more reliable."
+      },
+      {
+        "section_id": "html-82-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Submission of the research protocol to an Institutional Review Board (IRB) for review and registration is generally accepted as a necessary step to ensure that the research is ethical and the safety of the subjects is protected."
+      },
+      {
+        "section_id": "html-83-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Registration of the clinical trial in a public database is a generally accepted practice in human research and helps to ensure that the study is conducted and analyzed in conformance with the protocol and that all data is fully reported. This improves transparency, enhances the validity of the evidence, and reduces the chance of “publication bias,” such as failing to fully report negative results or partially reporting only a favorable subset of results."
+      },
+      {
+        "section_id": "html-84-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Inclusion and exclusion criteria for subjects should be clearly stated in the protocol and relevant to the population to which the product is marketed."
+      },
+      {
+        "section_id": "html-85-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Subject dropout rates, non-compliance, or concurrent changes in diet or other health-related behaviors should be carefully assessed to ensure they don’t undermine any findings. For example, researchers should conduct an “intent-to-treat” analysis that includes data from every subject initially assigned to the treatment and control groups, including subjects who dropped out during the course of the study or did not fully comply with the study protocol."
+      },
+      {
+        "section_id": "html-86-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "A study should be of sufficient duration, including any appropriate follow-up period, to demonstrate any express or implied claim that the treatment effect will persist."
+      },
+      {
+        "section_id": "html-87-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "In cases where product safety may be a concern, the study should be of sufficient size and duration to detect potential side effects."
+      },
+      {
+        "section_id": "html-88-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Other aspects of the research results, such as evidence of a dose-response relationship ( i.e. , the larger the dose, the greater the effect) or a recognized biological or chemical mechanism to explain the effect, add weight to research findings."
+      },
+      {
+        "section_id": "html-89-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The nature and quality of the written report of the research is important. The FTC cannot evaluate the quality of a study from an abstract or an informal summary. A study’s write-up should contain sufficient detail to assess what actually took place. The FTC will evaluate research based in part on how closely it adheres to the protocol and how well the report explains any deviations."
+      },
+      {
+        "section_id": "html-90-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "A rigorous, unbiased peer review process, like that required by established and reputable scientific journals, provides some level of assurance that the research meets accepted norms in the relevant field. Research that hasn’t been through a rigorous peer review process will be subject to greater scrutiny by the FTC. In those cases, the FTC will often require the marketer to provide underlying documents and raw data. The mere fact that a study is published, however, isn’t a guarantee of quality or proof that the product is effective for the advertised benefit. The rigor of peer review varies widely from journal to journal, with some journals accepting studies based on little more than payment of a publication fee. In addition, research may yield results that are of sufficient interest to the scientific community to warrant publication, but publication doesn’t necessarily mean that such research is conclusive evidence of a product’s effect."
+      },
+      {
+        "section_id": "html-91-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 23: An advertiser conducts a literature search and finds several abstracts summarizing clinical studies about the association between a nutrient and the ability to perform better on memory tests. The advertiser relies on these summaries to support a claim that its supplement, which contains the same nutrient, aids memory. However, without looking carefully at the specifics of the study design, implementation, and results, there is no way for the advertiser to ascertain whether the research substantiates the product claims. (For example, did the research use a comparable formulation of the ingredient? Was the study adequately controlled? Did the study yield between-group results that are statistically significant?) Thus, the advertiser should carefully review the underlying science with the assistance of an expert before drafting advertising claims."
+      },
+      {
+        "section_id": "html-92-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 24: An advertiser makes an unqualified claim about the anti-clotting effect of a supplement that contains a compound extracted from fruit. There are two human clinical studies supporting the effect and no contrary evidence. One study consists of subjects tested over a one-week period, with no control group. The second study is well-controlled and of longer duration, but shows only a slight effect that isn’t statistically significant. Because both studies have significant limitations, they don’t substantiate a claim about anti-clotting benefits."
+      },
+      {
+        "section_id": "html-93-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 25: The marketer of an herbal supplement claims that its product promotes healthy vision and is approved in Germany for this purpose. The product has been used extensively in Europe for years and has obtained approval from the German regulators through their monograph process for use to improve vision in healthy people. The company has two abstracts of German trials that were the basis of the monograph, showing that the herbal supplement significantly improved the vision of healthy individuals in the treatment group over the placebo group. Approval of the supplement under the German monograph doesn’t constitute substantiation that the supplement is effective. The marketer should examine the underlying research to confirm that it is relevant to the advertiser’s product (for example, that the dosage and formulation are comparable) and to evaluate whether the studies are scientifically sound. The marketer also should examine any other research that supports or contradicts the monograph."
+      },
+      {
+        "section_id": "html-94-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 26: The marketer of a liquid protein and vitamin shake commissioned a study to evaluate whether the shake is effective in treating symptoms of osteoarthritis. The 200 subjects had all been diagnosed with mild to severe osteoarthritis. The study was randomized, placebo-controlled, double-blind, and used a validated measure of osteoarthritis symptoms, assessing subjects at regular intervals over a 90-day period. The study author reported that subjects using the shake showed a statistically significant improvement in symptoms from baseline to day 90. This result, however, doesn’t substantiate a marketing claim that the shake can treat symptoms of osteoarthritis because it doesn’t compare improvement in the treatment group to improvement in the control group. In fact, both groups saw some improvement on the measure over time and the treatment group improvement wasn’t statistically greater than that of the control group. The marketer then searches the data from the study for statistically significant outcomes, looking at comparisons that weren’t part of the original protocol. This post hoc analysis of the findings shows that, for a small subgroup of subjects diagnosed with the mildest osteoarthritis, there is a statistically greater improvement in symptoms in the treatment group compared to the control group. The post hoc analysis of the data doesn’t provide reliable evidence of a benefit for subjects with mild osteoarthritis. Further research on subjects with mild osteoarthritis should be conducted to verify a benefit in this population."
+      },
+      {
+        "section_id": "html-95-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 27: The marketer of an at-home brain stimulation device conducts a randomized, controlled, double-blind study of the effects of its device on subjects with depression. The study uses eight validated measures to assess the impact of the device on symptoms of depression. Subjects show statistically greater improvement in the treatment group compared to the control group on one of the eight measures. The other seven measures reveal no difference between treatment and control group. The study doesn’t include any statistical correction for the use of multiple tests. The fact that only one outcome out of a total of eight showed statistical significance could be the result of chance. The higher the number of outcomes tested, the greater the chance of a false positive result. The marketer can’t rely on this one positive finding from the study to substantiate a claim about any benefit for depression."
+      },
+      {
+        "section_id": "html-96-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 28: A dietary supplement is advertised to treat erectile dysfunction. The advertiser relies on a human clinical study that uses both a validated objective measure and an unvalidated subjective questionnaire. The study detects a small statistically significant difference using the unvalidated questionnaire, but there is no statistically significant difference on the validated measure. The failure to detect a difference using the more reliable validated measure suggests that there wasn’t a significant effect from use of the product, and the claim isn’t substantiated."
+      },
+      {
+        "section_id": "html-97-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "4. The Totality of the Evidence"
+      },
+      {
+        "section_id": "html-98-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Studies can’t be considered in isolation. The surrounding context of the scientific evidence is just as important as the internal validity of individual studies. Advertisers should consider all relevant well-conducted research relating to the claimed benefit and shouldn’t focus only on research that supports an effect, while discounting research that doesn’t. Studies relied on by an advertiser should be largely consistent with the surrounding body of evidence. [42] Wide variations in outcomes of studies and inconsistent or conflicting results raise serious questions about the adequacy of an advertiser’s substantiation. Where there are inconsistencies in the evidence, it is important to examine whether there is a sound explanation for those inconsistencies. In some instances, for example, the differences in results are attributable to differences in dosage, the form of administration ( e.g. , oral or intravenous), the population tested, or other aspects of study methodology. Advertisers should assess how relevant each piece of research is to the specific claim they want to make, and also consider the relative strengths and weaknesses of studies. If a number of studies of different quality have been conducted on a specific topic, advertisers should look first to the results of the studies with more reliable methodologies."
+      },
+      {
+        "section_id": "html-99-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "The surrounding body of evidence will have a significant impact on the type, amount, and quality of evidence required to substantiate a claim, particularly when there is some relevant research that fails to support the claimed benefit. The totality of the evidence also will affect how a claim is presented – that is, how carefully the claim is qualified to reflect accurately the strength of the evidence. If a stronger body of surrounding evidence runs contrary to a claimed effect, even a qualified claim is likely to be deceptive. [43]"
+      },
+      {
+        "section_id": "html-100-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 29: The marketer of a juice high in antioxidants claims that daily consumption of the juice treats erectile dysfunction. The marketer relies on a published 50-person controlled human clinical trial as support for its claim, while disregarding an earlier, higher quality unpublished 100-person study of the juice that failed to show any statistically significant improvement compared to the control group. The marketer commissioned both studies and changed the measured endpoint in the second study after reviewing the results of the first study. The marketer cannot selectively rely only on the favorable results of the second, lower quality study. The erectile dysfunction treatment claims are not substantiated."
+      },
+      {
+        "section_id": "html-101-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 30: An advertiser wants to claim that a supplement will substantially reduce body fat. The advertiser has two controlled, double-blind studies showing a modest but statistically significant loss of fat at the end of a six-week period. However, there is an equally well-controlled, double-blind 12-week study showing no statistically significant difference between treatment and control groups. Assuming other aspects of methodology are similar, the studies taken together suggest that, if the product has any effect on body fat, it would be very small and may not persist over time. Given the totality of the evidence, the claim is unsubstantiated."
+      },
+      {
+        "section_id": "html-102-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 31: The marketer of a fruit drink claims that its product is “proven to promote cardiovascular health.” There is one small human clinical study finding a significant difference in arterial plaque build-up compared to a placebo drink. However, a subsequent larger study found no significant difference between the fruit drink and placebo on arterial plaque or other measures of cardiovascular health. A third large trial also found no difference in arterial plaque, although a post hoc analysis of the data found some benefit over placebo in a subgroup of patients with high HDL/low LDL cholesterol levels. Given the totality of the evidence, the claim is unsubstantiated. Continuing to tout the earlier small study with favorable results would be deceptive. Moreover, a narrow, qualified claim selectively touting the ostensibly favorable post hoc results of the third study, in light of the contradictory results from both that study and the second study, also would be deceptive."
+      },
+      {
+        "section_id": "html-103-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 32: An advertiser runs an ad in a magazine for retired people, claiming that its supplement product has been found effective in improving joint flexibility. The company sponsored a 12-week study, involving 100 subjects over the age of 65, to test the product’s effect on improving flexibility. The study was double-blind and placebo-controlled and has been accepted for publication in a leading medical journal. The study showed dramatic, statistically significant increases in joint flexibility compared to the placebo, based on objective measurements. In addition, European researchers have conducted several large independent trials using a similar formulation and dose of the active ingredient in the supplement. These trials also found statistically significant and clinically meaningful results. The advertiser retained an independent expert in joint flexibility who reviewed the underlying European research and confirmed that it meets accepted research standards. The expert also concluded that the totality of the existing evidence was sufficient to substantiate the advertiser’s claim. The evidence as a whole likely substantiates the claim."
+      },
+      {
+        "section_id": "html-104-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "5. The Relevance of the Evidence to the Specific Product and Claim"
+      },
+      {
+        "section_id": "html-105-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "A common problem in the substantiation of advertising claims is that an advertiser has valid studies, but the studies don’t support the claim made in its ad. Advertisers should make sure that the research on which they rely isn’t just internally valid, but also relevant to their specific product and to the specific advertised benefit. Therefore, advertisers should ask questions such as: How do the dosage and formulation of the advertised product compare to the product used in the study? [44] Is the ingredient or combination of ingredients in the advertised product the same as what was used in the study? [45] Is the advertised product administered in the same manner as the product in the study? How well do the outcomes tested in the study relate to the specific benefits advertised? [46] Does the study population reflect the characteristics of the population targeted by the ad? [47] If there are significant discrepancies between research conditions and the real-life use being promoted, advertisers must evaluate whether it is appropriate to extrapolate from the research to the claimed effect."
+      },
+      {
+        "section_id": "html-106-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "It’s also important that the claims accurately reflect what the research shows. Claims that don’t match the research results, no matter how sound that research is, are likely to be deceptive. Thus, advertisers should be careful not to exaggerate the extent, nature, or permanence of the effects achieved in a study. [48] In addition, claims should be carefully worded to avoid overstating the certainty of science in areas where the science is still emerging. Although emerging science can sometimes be the basis for a carefully qualified claim, advertisers must make consumers aware of any significant limitations or inconsistencies in the scientific literature. [49]"
+      },
+      {
+        "section_id": "html-107-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 33: An ad for a supplement claims that a particular nutrient helps maintain healthy cholesterol levels. There is a substantial body of epidemiologic evidence suggesting that foods high in that nutrient are associated with lower cholesterol levels. There are no studies, however, demonstrating a relationship between the specific nutrient and cholesterol, although it would be feasible to conduct such a study. The health effect may be attributable to other food components or to combinations of various components, so a claim about the cholesterol maintenance benefits of the supplement product isn’t substantiated by this evidence."
+      },
+      {
+        "section_id": "html-108-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 34: A number of well-controlled clinical studies have been conducted to suggest that a tea improves mental alertness in subjects with significantly impaired blood circulation to the brain. A claim suggesting that the tea will improve mental alertness in healthy adults isn’t adequately substantiated by this evidence. Advertisers shouldn’t rely on research based on a specific test population for claims targeting the general population without first making sure it is scientifically sound to make such extrapolations."
+      },
+      {
+        "section_id": "html-109-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 35: An ad for brain training software shows a man trying to remember where he left his keys. The ad claims that the software has been “clinically proven to improve memory.” A clinical study employed three laboratory tasks to test working memory (the short-term mental manipulation of information, such as numbers). Although the study showed statistically significant improvements over the control group in these working memory tasks, these results don’t support a general memory improvement claim because there are other types of memory that weren’t tested. Furthermore, forgetting where one left one’s keys is an example of a different type of memory failure, unrelated to working memory, the type of memory tested."
+      },
+      {
+        "section_id": "html-110-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 36: An advertiser markets a drink that contains a certain strain of probiotic. Two independently conducted, well-controlled clinical studies on Japanese subjects, using a different strain of probiotic administered in time-released capsule form, show that the strain is an effective treatment for reducing the symptoms of Crohn’s disease. The marketer wants to rely upon the Japanese studies to claim that its drink will reduce the symptoms of Crohn’s disease. Before relying on the studies to substantiate claims for the drink, the advertiser should consider the relevance of the evidence to its product and to the population to which the product is marketed. The fact that the study used a different strain of probiotic, in a capsule form that may be more bioavailable than the drink, and administered to a population whose diet may be substantially different from the diet of U.S. consumers are significant differences that would affect whether the findings could reasonably be expected to translate to the advertised product."
+      },
+      {
+        "section_id": "html-111-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 37: An advertiser wants to claim that its energy drink helps increase alertness safely. The drink contains two active ingredients, each of which is known to have central nervous system stimulant effects. The advertiser compiles well-conducted clinical studies demonstrating that each of the ingredients, individually, is safe, effective, and causes no significant side effects in the recommended dose. Studies on the individual ingredients, however, may not be sufficient to substantiate a safety claim about the combination product because the two active ingredients together may affect the body differently than they do individually. The advertiser would need to have a study of the actual product if that is what experts in the field would generally require to substantiate the claim."
+      },
+      {
+        "section_id": "html-112-b-substantiating-claims",
+        "heading": "B. Substantiating Claims",
+        "text": "Example 38: Several well-conducted clinical trials measuring accepted markers of immune system activity have been done on a specific botanical extract consistently showing that the extract is effective for supporting the immune system. The studied extract is a complex combination of several chemical constituents and the active constituents that may actually produce the benefit are still unknown. An advertiser wants to cite this research in its advertising as proof that its product will support the immune system. The advertiser’s product is made using a different extraction method from the same botanical. An analysis of the advertiser’s extract reveals that it has a significantly different chemical profile from the studied extract. The advertiser shouldn’t rely on these clinical trials alone as substantiation because the difference in extracts may result in significant differences in the effectiveness of the two products."
+      },
+      {
+        "section_id": "html-113-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "In addition to the principles of ad meaning and substantiation discussed above, a number of other issues commonly arise in the context of health-related advertising. These include: the use of consumer testimonials and expert endorsements; claims based on alternative medicine or traditional use; the effect of DSHEA disclaimers in advertising; claims about FDA approval or compliance; and the relevance to FTC advertising law of the FDA’s “third-party literature” exemption."
+      },
+      {
+        "section_id": "html-114-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "1. Claims Based on Consumer Testimonials or Expert Endorsements"
+      },
+      {
+        "section_id": "html-115-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Advertisers are liable for the misleading use of endorsements, whether in traditional advertising media like TV and print, on the internet, in social media, or in other forms of marketing. [50] An overarching principle is that advertisers should not make claims through consumer testimonials or expert endorsements that would be deceptive or couldn’t be substantiated if the advertiser made them directly. It’s not enough that a testimonial represents the honest opinion or experience of an endorser. Under FTC law, advertisers also must have appropriate scientific evidence to back up the underlying implied claim that the product is effective and will work for buyers as it did for the endorser. [51]"
+      },
+      {
+        "section_id": "html-116-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 39: A website advertising a smartphone app features testimonials from satisfied customers who say that, after using the app at bedtime for less than a week, their insomnia went away, and they slept soundly through the night. These testimonials don’t constitute substantiation. The advertiser must have competent and reliable scientific evidence that its product is effective in treating insomnia."
+      },
+      {
+        "section_id": "html-117-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 40: A marketer pays a blogger to use its supplement and write a review of the product on her blog. Although the marketer doesn’t make any specific claims about the supplement’s ability to cure acid reflux, the blogger writes that the supplement cures acid reflux and recommends the supplement to readers who suffer from this condition. The marketer doesn’t have any evidence that the product cures acid reflux. In this situation, the marketer is liable for the blogger’s misleading representation. Also, because the marketer is paying the blogger for the review, the blog post must include a clear and conspicuous disclosure of that fact so that consumers don’t mistakenly believe the post is unbiased."
+      },
+      {
+        "section_id": "html-118-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Testimonials that report results more dramatic than users can generally expect are likely to be deceptive. Moreover, attempts to disclaim dramatic results with statements like “Results not typical” don’t cure the deception. Those testimonials should be accompanied by a clear and conspicuous disclosure of the results a typical consumer can actually expect. [52]"
+      },
+      {
+        "section_id": "html-119-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 41: A magazine ad for a weight-loss supplement features before-and-after photographs of a woman and quotes her as saying that she lost 16 pounds in eight weeks while using the product. An asterisk next to the quote references a disclaimer in fine print at the bottom of the ad that reads, “These results are not typical. Your weight loss may not be the same.” The experience of the woman is accurately represented, but a well-conducted RCT demonstrating the efficacy of the supplement shows an average weight loss of only four pounds in eight weeks over placebo. The vague disclosure doesn’t adequately convey to consumers that their weight loss is likely to be much less. The placement and size of the disclaimer is also insufficiently prominent to qualify the claim effectively. The statement, “In an 8-week study, subjects taking the supplement lost an average of 5 pounds. Subjects taking a placebo lost an average of 1 pound,” immediately adjacent to the quote and in prominent font is likely to be effective."
+      },
+      {
+        "section_id": "html-120-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "When an advertiser uses an expert endorser, it should make sure that the endorser has appropriate qualifications to be represented as an expert and has conducted an examination or testing of the product generally recognized in the field as sufficient to support the endorsement. In addition, whenever an expert or consumer endorser is used, the advertiser should clearly and conspicuously disclose any material connection between the endorser and the advertiser of the product. A material connection is one that would affect the weight or credibility of the endorsement. Put another way, any personal, financial, or similar connection that consumers wouldn’t reasonably expect is a material connection. [53]"
+      },
+      {
+        "section_id": "html-121-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 42: An infomercial for a dietary supplement features an expert referred to as a “Doctor” and a “leading clinician in joint health” discussing the effect of the product on the maintenance of healthy joints. The expert isn’t licensed to practice medicine, but has a doctoral degree in psychology and is a trained physical therapist who runs a sports clinic. The expert hasn’t conducted any review of the scientific literature on the active component of the supplement. In return for appearing in the infomercial, she is given a paid position as an officer of the company. The ad is likely to be deceptive for several reasons. First, her qualifications as an expert have been overstated and she hasn’t conducted an examination of the product sufficient to support the endorsement. In addition, her connection to the company is one that consumers might not expect and that might affect the weight or credibility of her endorsement. Even if she were adequately qualified and even if she had conducted an adequate review of the product, her position as an officer of the company should be clearly and conspicuously disclosed."
+      },
+      {
+        "section_id": "html-122-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 43: A best-selling book about the benefits of a popular dietary supplement ingredient recommends a specific brand of the product as the highest quality, most effective brand on the market. The manufacturer of the brand cited in the book has an exclusive promotional agreement with the author and has paid her to reference the product by name. The manufacturer’s ad touts the fact that its product is the only brand recommended in the best-selling book. The ad is deceptive because it suggests to consumers that the endorsement is unbiased when, in fact, the author was paid by the manufacturer to promote the product. The book’s paid promotional reference to a specific brand is also advertising for the product and is deceptive without a clear and conspicuous disclosure of the connection between the manufacturer and the book’s author."
+      },
+      {
+        "section_id": "html-123-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "2. Claims Based on Traditional Use"
+      },
+      {
+        "section_id": "html-124-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "A number of health-related products, including botanical supplements, homeopathic medicines, [54] and other alternative products, have a long history of use as traditional medicine in the United States or in other countries to treat certain conditions or symptoms. Under FTC law, claims for products based on traditional use are subject to the same requirement of substantiation in the form of competent and reliable scientific evidence as any other product. At the same time, FTC law does not prohibit advertising that is sufficiently qualified to be truthful and not misleading. Advertising that merely describes the traditional or historic use of a product and that is carefully qualified to avoid any misleading implications about the product’s efficacy or health benefits may be permissible. [55] An advertiser who wants to describe a product’s historic or traditional use should take the following steps to avoid communicating a misleading message about the product’s efficacy or about the scientific basis for any health benefit:"
+      },
+      {
+        "section_id": "html-125-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "The advertiser should clearly identify the historic or traditional use and make sure that its product is consistent with that use – for example, that it contains the same ingredients and formulation, the same strength or dose, the same form of administration, and the same indications for use. If there is a significant difference between the traditional use of the product and the marketed product, a “traditional use” claim isn’t appropriate."
+      },
+      {
+        "section_id": "html-126-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "A claim that suggests a health-related benefit for which there isn’t competent and reliable scientific evidence must clearly communicate the lack of scientific evidence. To avoid any deceptive implication, a disclosure that there is no scientific basis for the traditional use should stand out and be in close proximity to the claim. To be effective, it may actually need to be incorporated into the claim."
+      },
+      {
+        "section_id": "html-127-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "As with all claims, marketers shouldn’t undercut a disclosure about the lack of science with additional positive statements, consumer endorsements, images, or other elements of the ad suggesting the product is effective."
+      },
+      {
+        "section_id": "html-128-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Given the inherent difficulty of discussing the traditional use of a product while also effectively communicating that there is no scientific basis for its efficacy, an advertiser should consider conducting a copy test or other consumer research to confirm that consumers understand the limited nature of the claim. The FTC will look closely at how consumers perceive a traditional use claim and whether they assume the claim means the product is effective and backed by more evidence than the marketers have. An ad that, despite a disclosure, conveys more substantiation than a marketer has, is deceptive."
+      },
+      {
+        "section_id": "html-129-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 44: The advertiser of an herbal tea makes the claim, “Ancient remedy used for centuries to aid digestion. There is no scientific evidence that it works.” The first statement about traditional use is accurate and the advertised product is consistent with the formulation of the product as traditionally used. The second statement about no scientific evidence is as prominent and legible as the first statement. Taken as a whole, the ad likely conveys the limited nature of support for the claim. If, however, the ad also includes a testimonial from a consumer who says the tea provides instant relief for her upset stomach, that testimonial detracts from and may overwhelm the qualified nature of the claim. In that case, the net impression the ad conveys to consumers is likely that the tea is effective for upset stomach or digestion – a claim that must be substantiated by competent and reliable scientific evidence."
+      },
+      {
+        "section_id": "html-130-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 45: A supplement manufacturer markets a capsule containing a concentrated extract of a botanical product that has been used in its raw form in China to brew teas for increasing energy. The ad clearly and conspicuously conveys that the use of the product for boosting energy is based only on traditional use and is unsupported by scientific evidence. The ad may still be deceptive, however, because the concentrated extract isn’t consistent with the traditional use of the botanical in raw form to brew teas and may produce a significantly different effect."
+      },
+      {
+        "section_id": "html-131-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "There are certain situations where a traditional use claim, in the absence of supporting scientific evidence, could present a substantial risk of serious consumer injury. In such cases, the consequences of a false claim are greater and outweigh the benefits of allowing an appropriately qualified traditional use claim. [56] For that reason, marketers shouldn’t make claims about traditional use for the treatment or cure of serious medical conditions, even if the claim is carefully qualified to disclose the absence of scientific support. Unlike claims about minor or self-limiting health conditions, or claims about supporting general health, traditional use claims about the treatment or cure of serious diseases, even if qualified, could put consumers at substantial risk of injury by encouraging self-treatment without medical supervision or by causing a consumer to forgo a scientifically established treatment in favor of a product that hasn’t been shown to be effective. [57]"
+      },
+      {
+        "section_id": "html-132-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 46: An ad claims that a liquid mineral solution has been a popular American folk remedy for shrinking tumors since the early pioneer days. There is no scientific research that provides any support for this disease benefit claim. Even if the ad includes a clear and conspicuous disclosure that there is no scientific support, the ad is likely to convey to reasonable consumers that the product is an effective treatment for cancer. The strong effect of the claim on a potentially vulnerable consumer could overwhelm the disclaimer leaving a misleading net impression about the product’s efficacy."
+      },
+      {
+        "section_id": "html-133-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "3. Use of the DSHEA Disclaimer in Advertising"
+      },
+      {
+        "section_id": "html-134-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Under DSHEA, all statements of nutritional support for dietary supplements, including “structure/function” claims, must be accompanied by a two-part disclaimer on the product label: that the statement has not been evaluated by FDA and that the product is not intended to diagnose, treat, cure, or prevent any disease."
+      },
+      {
+        "section_id": "html-135-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "DSHEA did not amend and has no effect on the FTC Act and the DSHEA labeling disclaimer isn’t required in other forms of advertising or marketing. Many dietary supplement marketers and even some marketers of other health products nevertheless include the DSHEA disclaimer or a similar statement in their advertising. Marketers should be aware that the DSHEA disclaimer or similar statements won’t cure an otherwise deceptive ad, particularly where the deception concerns claims about the health-related benefits of a product. [58]"
+      },
+      {
+        "section_id": "html-136-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 47: An ad for an herbal supplement includes an unqualified claim that the product will treat diabetes. The advertiser doesn’t have adequate substantiation for this claim, but includes the DSHEA disclaimer prominently in the ad. The inclusion of the DSHEA disclaimer doesn’t negate the explicit and directly contradictory claim that the product treats diabetes. Given the lack of scientific support, the ad is deceptive, despite the disclaimer."
+      },
+      {
+        "section_id": "html-137-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "4. Mischaracterizations of FDA approval"
+      },
+      {
+        "section_id": "html-138-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Advertisers should be careful not to mischaracterize the extent to which a product or claim has been reviewed, authorized, or approved by the FDA. For instance, compliance with the DSHEA notification and disclaimer provisions doesn’t constitute FDA authorization, and advertisers shouldn’t imply that the FDA has specifically approved any claim on that basis. Nor should advertisers mischaracterize or overstate any FDA assessment of the science supporting a particular claim."
+      },
+      {
+        "section_id": "html-139-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 48: The marketer of a nutritional shake petitions the FDA for permission to use a qualified health claim describing the relationship between a substance in the shake and the reduced risk of heart disease. After reviewing the scientific literature, the FDA issues a letter indicating that it will consider exercising its enforcement discretion to allow the marketer to make a claim in labeling that “the relationship between” the substance in the shake “and the reduced risk of heart disease is uncertain, because there is little scientific evidence for the relationship.” Ads for the shake feature a prominent banner stating, “Meets FDA Qualified Health Claim.” By using a technical regulatory term unfamiliar to most consumers, the banner mischaracterizes the FDA’s action and likely communicates both FDA approval of the product for heart disease and a high level of supporting evidence. Use of the banner in advertising is deceptive."
+      },
+      {
+        "section_id": "html-140-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 49: The marketer of an electronic “ab sculpting” belt receives clearance from the FDA to sell the product as a Class II medical device for the intended purpose of stimulating and strengthening healthy muscle. The marketer airs an infomercial for the device with repeated references to the fact that the product is “FDA Approved,” alongside claims that “in just 10 minutes a day for 30 days, you can effortlessly lose two or more inches and 10 pounds from your waist.” The infomercial is deceptive because the juxtaposition of the “FDA Approved” reference and claims about weight loss and reduction in waist circumference gives the impression that the FDA has found the product to be effective for such dramatic effects."
+      },
+      {
+        "section_id": "html-141-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "5. Third-Party Literature"
+      },
+      {
+        "section_id": "html-142-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "The FTC doesn’t regulate the content or accuracy of statements made in independently written and published books, articles, or other non-commercial literature. The FTC does, however, prohibit the deceptive use of such materials in the marketing of products. Marketers of dietary supplements and other health products should be aware that the use of newspaper articles, abstracts of scientific studies, or other third-party literature to promote a particular brand or product can have an impact on how consumers interpret an ad and on what claims the marketer will be responsible for substantiating. [59] The determination of whether information provided through such materials will be subject to FTC jurisdiction turns largely on whether the materials have been created or are being used by a marketer specifically for the purpose of promoting its product. [60] While each case will be fact-specific, marketers may be legally responsible for claims implied by their reference either directly or indirectly to third-party literature."
+      },
+      {
+        "section_id": "html-143-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 50: An author publishes a book on the curative properties of an herb. The book’s title is “The Miracle Cancer Cure.” The book doesn’t endorse or otherwise mention any particular supplement brand. The author/publisher doesn’t sell the herbal supplement and doesn’t have a material connection to any marketers of the herb. As non-commercial speech, the book itself wouldn’t be subject to the FTC’s jurisdiction over advertising. However, if a marketer of the herb quotes the title of the book and uses excerpts to describe the anti-cancer benefits of its product, such references would be considered advertising. The marketer would be responsible for substantiating any claims about its product that are conveyed by these references."
+      },
+      {
+        "section_id": "html-144-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 51: The marketer of the herb described in Example 50 provides a link to a web page that in turn links to the “Miracle Cancer Cure” book. The fact that the book is “two clicks” away from the marketer’s own website doesn’t insulate the marketer from responsibility for substantiating any implied claims that consumers may take from the indirect reference to the book. The FTC will evaluate the marketer’s website, the description it provides in linking indirectly to the book, statements appearing on the linked page, and other elements of the marketing to determine whether the marketer is using references to the book to promote its product."
+      },
+      {
+        "section_id": "html-145-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "Example 52: Advertising for a weight-loss supplement includes references to what appears to be an independent website discussing the risks of gastric bypass surgery and referencing the advertiser’s supplement as a safer alternative. In fact, the advertiser created and owns the gastric bypass website and does not disclose that financial relationship. The website is not independent third-party literature. The advertiser is responsible for the accuracy of claims made on the site and must clearly and conspicuously disclose its ownership of the site."
+      },
+      {
+        "section_id": "html-146-c-other-advertising-issues",
+        "heading": "C. Other Advertising Issues",
+        "text": "For purposes of dietary supplement labeling, Section 5 of DSHEA provides an exemption from labeling requirements for scientific journal articles, books, and other publications used in the sale of dietary supplements, provided these materials are reprinted in their entirety, aren’t false or misleading, don’t promote a specific brand or manufacturer, are presented with other materials to create a balanced view of the scientific information, and are physically separate from the supplements being sold. While the DSHEA third-party literature provision doesn’t provide an exemption from FTC requirements for other forms of advertising, as a practical matter, publications and other materials that comply with the elements of the provision, particularly with the requirement that such materials be truthful, not misleading, and balanced, are also likely to comply with FTC advertising law."
+      },
+      {
+        "section_id": "html-147-iv-conclusion",
+        "heading": "IV. Conclusion",
+        "text": "Marketers of health-related products, including dietary supplements, should be familiar with the requirements under both FDA law and FTC law that labeling and advertising claims be truthful, not misleading, and substantiated. The FTC approach generally requires that health-related claims be backed by competent and reliable scientific evidence substantiating that the representations are true. To ensure compliance with FTC law, marketers of any health-related product should follow two important steps: 1) Consider what express and implied messages consumers are likely to take from your ads. Where appropriate, carefully qualify your claims – in other words, clearly explain the limited circumstances in which the advertised benefits or results apply; 2) Carefully review the support for each claim to make sure it is scientifically sound, adequate in the context of the surrounding body of evidence, and relevant to the specific product and advertising claim."
+      },
+      {
+        "section_id": "html-148-iv-conclusion",
+        "heading": "IV. Conclusion",
+        "text": "For More Information"
+      },
+      {
+        "section_id": "html-149-iv-conclusion",
+        "heading": "IV. Conclusion",
+        "text": "The FTC works to prevent fraudulent, deceptive, and unfair practices that target businesses and consumers. We also provide guidance at business.ftc.gov to help companies comply with the law. Looking for a quick take on recent cases and other initiatives? Subscribe to the FTC’s Business Blog at ftc.gov/news-events/stay-connected . Report scams and bad business practices at ReportFraud.ftc.gov ."
+      },
+      {
+        "section_id": "html-150-endnotes",
+        "heading": "Endnotes",
+        "text": "[1] Section 5 of the FTC Act prohibits “unfair or deceptive acts or practices in or affecting commerce,” and Section 12 prohibits the dissemination of false advertisements for foods, drugs, devices, services, or cosmetics. 15 U.S.C. §§ 45, 52. Section 15 of the FTC Act defines “false advertisement” as “advertising that is misleading in a material respect[.]” 15 U.S.C. § 55(a)(1)."
+      },
+      {
+        "section_id": "html-151-endnotes",
+        "heading": "Endnotes",
+        "text": "[2] See FTC Policy Statement on Deception, appended to Cliffdale Assocs., Inc. , 103 F.T.C. 110, 174 (1983), https://www.ftc.gov/public-statements/1983/10/ftc-policy-statement-deception (“ Deception Policy Statement ”); FTC Policy Statement Regarding Advertising Substantiation , appended to Thompson Med. Co., 104 F.T.C. 648, 839 (1984), aff’d , 791 F.2d 189 (D.C. Cir. 1986), https://www.ftc.gov/public-statements/1983/03/ftc-policy-statement-regarding-advertising-substantiation (“ Substantiation Policy Statement ”)."
+      },
+      {
+        "section_id": "html-152-endnotes",
+        "heading": "Endnotes",
+        "text": "[3] See discussion at Section III.B."
+      },
+      {
+        "section_id": "html-153-endnotes",
+        "heading": "Endnotes",
+        "text": "[4] See, e.g. , Complaint at 7, FTC v. Sunrise Nutraceuticals, Inc. , No. 9:15-cv-81567 (S.D. Fla. Nov. 16, 2015) (stipulated final judgment) (claims made in a press release and on website); Complaint at 5-24, FTC v. NourishLife, LLC , No. 1:15-cv-00093 (N.D. Ill. Jan. 7, 2015) (stipulated order) (claims made in social media, sponsored links, brochures, product packaging, emails, and websites); Complaint at 5-13, FTC v. Sensa Prods., LLC , No. 1:14-cv-00072 (N.D. Ill. Jan. 7, 2014) (stipulated final judgment) (claims made in a book, infomercials, print and radio ads, and email); Daniel Chapter One , 148 F.T.C. 832, 904-35 (2009) (initial decision) (“ Daniel Chapter One Initial Decision ”) (claims made in radio programs, newsletter, catalog, and website)."
+      },
+      {
+        "section_id": "html-154-endnotes",
+        "heading": "Endnotes",
+        "text": "[5] For a discussion of the five factors that determine whether speech is commercial, see POM Wonderful, LLC , 155 F.T.C. 1, 74-75 (2013) (citing R.J. Reynolds Tobacco Co. , 111 F.T.C. 539, 544-46 (1988)), aff’d in part , POM Wonderful LLC v. FTC , 777 F.3d 478, 504-05 (D.C. Cir. 2015)."
+      },
+      {
+        "section_id": "html-155-endnotes",
+        "heading": "Endnotes",
+        "text": "[6] See, e.g. , FTC v. LeadClick Media, LLC , 838 F.3d 158, 167-73 (2d Cir. 2016) (affiliate advertising network); POM Wonderful, LLC , 155 F.T.C. at 82-84 (individual officer); FTC v. Fitness Brands, Inc. , No. 1:12-cv-23065-CMA (S.D. Fla. Aug. 23, 2012) ( s tipulated final judgment) (infomercial host); Dreher , 150 F.T.C. 560 (2010) (consent order) (expert endorser); Campbell Mithun LLC, 133 F.T.C. 702 (2002) (consent order) (ad agency); Tru-Vantage Int’l, LLC , 133 F.T.C. 299 (2002) (consent order) (infomercial producer)."
+      },
+      {
+        "section_id": "html-156-endnotes",
+        "heading": "Endnotes",
+        "text": "[7] See Novartis Corp. v. FTC , 223 F.3d 783, 787-88 (D.C. Cir. 2000) (corrective advertising is appropriate where challenged ads played a substantial role in creating or reinforcing a false belief about a product and that misbelief is likely to linger)."
+      },
+      {
+        "section_id": "html-157-endnotes",
+        "heading": "Endnotes",
+        "text": "[8] See , e.g. , Memorandum Opinion and Order at 10, FTC v. Kevin Trudeau , No. 1:03-cv-03904 (N.D. Ill. Aug. 7, 2008) (imposing three-year ban on Trudeau from participating in any infomercial for any product)."
+      },
+      {
+        "section_id": "html-158-endnotes",
+        "heading": "Endnotes",
+        "text": "[9] Memorandum of Understanding Between the Fed. Trade Comm’n and the Food and Drug Admin., 36 Fed. Reg. 18,539 (Sept. 16, 1971), www.fda.gov/AboutFDA/PartnershipsCollaborations/MemorandaofUnderstandingMOUs/DomesticMOUs/ucm115791.htm ."
+      },
+      {
+        "section_id": "html-159-endnotes",
+        "heading": "Endnotes",
+        "text": "[10] Some forms of marketing may constitute both labeling and advertising under the two agencies’ laws. For example, a website where a dietary supplement can be purchased would fall within the FDA’s definition of labeling in addition to being advertising under FTC law."
+      },
+      {
+        "section_id": "html-160-endnotes",
+        "heading": "Endnotes",
+        "text": "[11] DSHEA amended the Federal Food, Drug, and Cosmetic Act (FDCA). Pursuant to DSHEA, “structure/function” refers to an FDA regulatory term for a category of labeling claims that describe the normal structure or function of the human body or general well-being. Under FDA law, such claims must be truthful, not misleading and substantiated, but do not require prior FDA review or approval. See Structure/Function Claims , Fed. Drug Admin. (last updated Dec. 14, 2017), www.fda.gov/food/food-labeling-nutrition/structurefunction-claims . The term has no legal significance under FTC law relating to claim substantiation."
+      },
+      {
+        "section_id": "html-161-endnotes",
+        "heading": "Endnotes",
+        "text": "[12] See Daniel Chapter One , 148 F.T.C. 832, 1086 (2009) (finding no authority that the DSHEA amendment to the FDCA regarding “structure/function” claims is binding on the Commission), aff’d, 405 Fed. App’x 505 (D.C. Cir. 2010)."
+      },
+      {
+        "section_id": "html-162-endnotes",
+        "heading": "Endnotes",
+        "text": "[13] Id. at 1085-86 (rejecting Respondents’ argument that the FDCA distinctions between foods, drugs, or dietary supplements are binding on the FTC’s enforcement of Sections 5 and 12 of the FTC Act). See also FTC v. NPB Advert . , Inc. , 218 F. Supp. 3d 1352, 1365 n.4 (M.D. Fla. 2016) (passage of DSHEA “imposes no duty on the FTC in this false advertising action”); Bristol-Myers Co. v. FTC , 738 F.2d 554, 559 (2d Cir. 1984) (“FDA requirements and regulations . . .simply do not govern this case”) ."
+      },
+      {
+        "section_id": "html-163-endnotes",
+        "heading": "Endnotes",
+        "text": "[14] See Enforcement Policy Statement on Food Advertising , 59 Fed. Reg. 28,388, 28,393-94 (June 1, 1994), www.ftc.gov/public-statements/1994/05/enforcement-policy-statement-food-advertising (“ Food Advertising Policy Statement ”) ."
+      },
+      {
+        "section_id": "html-165-endnotes",
+        "heading": "Endnotes",
+        "text": "[16] In 2008, the FDA issued a guidance document detailing how it evaluates substantiation for structure/function claims in dietary supplement labeling, stating, “The FTC has typically applied a substantiation standard of ‘competent and reliable scientific evidence’ to claims about the benefits and safety of dietary supplements and other health-related products. FDA intends to apply a standard for the substantiation of dietary supplement claims that is consistent with the FTC approach.” Guidance for Industry: Substantiation for Dietary Supplement Claims Made Under Section 403(r)(6) of the Federal Food, Drug, and Cosmetic Act , Food and Drug Admin. (Jan. 2009), https://www.fda.gov/regulatory-information/search-fda-guidance-documents/guidance-industry-substantiation-dietary-supplement-claims-made-under-section-403r-6-federal-food ."
+      },
+      {
+        "section_id": "html-166-endnotes",
+        "heading": "Endnotes",
+        "text": "[17] Novartis Corp. , 223 F.3d at 787; Kraft, Inc. , 114 F.T.C. 40, 121-22 (1991), aff’d , 970 F.2d 311 (7th Cir. 1992)."
+      },
+      {
+        "section_id": "html-167-endnotes",
+        "heading": "Endnotes",
+        "text": "[18] Deception Policy Statement , 103 F.T.C. at 174-75, 179. See also FTC v. Roca Labs, Inc. , 345 F. Supp. 3d 1375, 1385 (M.D. Fla. 2018); FTC v. Direct Mktg. Concepts, Inc. , 569 F. Supp. 2d 285, 298 (D. Mass. 2008), aff’d , 624 F.3d 1 (1st Cir. 2010); FTC v. Nat’l Urological Group, Inc. , 645 F. Supp. 2d 1167, 1189 (N.D. Ga. 2008); Removatron Int’l Corp. v. FTC , 884 F.2d 1489, 1497 (1st Cir. 1989)."
+      },
+      {
+        "section_id": "html-168-endnotes",
+        "heading": "Endnotes",
+        "text": "[19] See, e.g. , Telebrands Corp. , 140 F.T.C. 278, 291-92 (2005), aff’d , 457 F.3d 354 (4th Cir. 2006)."
+      },
+      {
+        "section_id": "html-169-endnotes",
+        "heading": "Endnotes",
+        "text": "[20] See, e.g. , POM Wonderful LLC , 155 F.T.C. at 13, 66 (noting that Commission can rely on its common sense and expertise to determine what claims were conveyed so long as the claims are reasonably clear); Nat’l Urological Grp., Inc ., 645 F. Supp. 2d at 1189 (“If the advertisement explicitly states or clearly and conspicuously implies a claim, the court need not look to extrinsic evidence to ascertain whether the advertisement made the claim”)."
+      },
+      {
+        "section_id": "html-170-endnotes",
+        "heading": "Endnotes",
+        "text": "[21] 15 U.S.C. § 55(a)(1)."
+      },
+      {
+        "section_id": "html-171-endnotes",
+        "heading": "Endnotes",
+        "text": "[22] See, e.g. , Snore Formula, Inc. , 136 F.T.C. 214, 296 (2003) (consent order) (requiring that snoring treatment claims be accompanied by a disclosure about the dangers of sleep apnea and the need for those with certain symptoms to consult a physician); Formor, Inc. , 132 F.T.C. 72, 101-02 (2001) (consent order) (requiring that ads and labels making efficacy or performance claims for St. John’s Wort products disclose potentially dangerous drug interactions even when no safety claims are made); FTC v. Christopher Enters., Inc ., No. 201 CV-0505ST (D. Utah Dec. 6, 2001) (stipulated final order) (requiring disclosure of risks from certain uses of comfrey regardless of whether safety claims are made); Consumer Direct, Inc ., 113 F.T.C. 923, 925-26 (1990) (consent order) (challenging the failure to disclose the risk of injury from exercise device’s spring snapping or breaking)."
+      },
+      {
+        "section_id": "html-172-endnotes",
+        "heading": "Endnotes",
+        "text": "[23] The Commission has found percentages ranging from 10% to 22% to be sufficient to constitute a significant minority. ECM Biofilms, Inc. , 160 F.T.C. 652, 667-68 (citing Firestone Tire & Rubber Co. v. FTC , 481 F.2d 246, 249 (6th Cir. 1973); Telebrands Corp. , 140 F.T.C. at 325), aff’d ECM Biofilms, Inc. v. FTC , 851 F.3d 599, 611 (6th Cir. 2017) (“We have previously expressed unwillingness ‘to overturn the deception findings of the Commission’ where an ad misleads ‘15% (or 10%) of the buying public.’”)."
+      },
+      {
+        "section_id": "html-173-endnotes",
+        "heading": "Endnotes",
+        "text": "[24] See, e.g. , Nestlé HealthCare Nutr., Inc. , 151 F.T.C. 1, 20 (2011) (consent order) (analysis to aid public comment noting that Commission “ experience and research show that it is very difficult to adequately qualify a disease risk-reduction claim in advertising to indicate that the science supporting the claimed effect is limited”)."
+      },
+      {
+        "section_id": "html-174-endnotes",
+        "heading": "Endnotes",
+        "text": "[25] See, e.g. , POM Wonderful LLC , 155 F.T.C. at 22-23 & nn.13-14 (use of adjectives such as “promising” or “preliminary” does not alter the net impression of the efficacy claims, “especially when the chosen adjectives . . . provide a positive spin on the studies, rather than a substantive disclaimer”) (Commissioner Ohlhausen concurring but finding that certain POM ads warranted extrinsic evidence to determine impact of such qualifiers on establishment claims) ."
+      },
+      {
+        "section_id": "html-175-endnotes",
+        "heading": "Endnotes",
+        "text": "[26] Deception Policy Statement , 103 F.T.C. at 180 (“ pro forma statements or disclaimers may not cure otherwise deceptive messages”); see also Section III.C.3, discussing misuse of the DSHEA disclaimer in advertising to negate an express or implied disease claim."
+      },
+      {
+        "section_id": "html-176-endnotes",
+        "heading": "Endnotes",
+        "text": "[27] Substantiation Policy Statement , 104 F.T.C. at 839. These factors are known as the Pfizer factors, after the 1972 case in which they were first enunciated. Pfizer, Inc. , 81 F.T.C. 23 (1972)."
+      },
+      {
+        "section_id": "html-177-endnotes",
+        "heading": "Endnotes",
+        "text": "[28] See Roca Labs, Inc. , 345 F. Supp. 3d at 1387 (competent and reliable scientific evidence required to support health-related claims, including weight-loss claims); see also POM Wonderful LLC v. FTC , 777 F.3d 478, 495-97 (D.C. Cir. 2015) (affirming Commission’s competent and reliable scientific evidence standard for disease-related claims about food products); Direct Mktg. Concepts, Inc. , 569 F. Supp. 2d at 300 (“because those are non-establishment health-related efficacy claims, the defendants must be able to point to ‘competent and reliable scientific evidence’ as substantiation”) (citing Removatron Int’l Corp. , 884 F.2d at 1498 (1st Cir. 1989)); Nat’l Urological Grp., Inc. , 645 F. Supp. 2d at 1190 (applying same standard to weight loss and erectile dysfunction claims for dietary supplements); FTC v. QT, Inc. , 448 F. Supp. 2d 908, 961 (N.D. Ill. 2006) (applying same standard to pain-related claims for “ionized” bracelet) , aff’d , 512 F.3d 858 (7th Cir. 2008)."
+      },
+      {
+        "section_id": "html-178-endnotes",
+        "heading": "Endnotes",
+        "text": "[29] See, e.g ., FTC v. Roca Labs, Inc. , No. 8:15-cv-2231-MSS-CPT, at 12-13 (M.D. Fla. Jan. 29, 2019) (final judgement and order involving weight-loss supplement) (“ Roca Labs Final Order ”) ; see also POM Wonderful LLC , 155 F.T.C. at 56, 193; Telebrands Corp. , 140 F.T.C. at 347."
+      },
+      {
+        "section_id": "html-179-endnotes",
+        "heading": "Endnotes",
+        "text": "[30] See, e.g. , Roca Labs Final Order at 12-13; FTC v. Sunrise Nutraceuticals , No. 9:15-cv-81567-DMM (S.D. Fla. 2016) (final stipulated judgment involving supplement purported to eliminate symptoms of opiate withdrawal); Lumos Labs, Inc. , No. 3:16-cv-00001-sk (N.D. Cal. 2016) (final stipulated judgment involving online brain training games purported to provide cognitive benefits); FTC v. Keyview Labs, Inc. , No. 8:15-cv-1047 (C.D. Cal. 2015) (final stipulated judgment involving supplement purported to improve memory)."
+      },
+      {
+        "section_id": "html-180-endnotes",
+        "heading": "Endnotes",
+        "text": "[31] See, e.g ., Roca Labs, Inc. , 345 F. Supp. 3d at 1387 (requiring a randomized controlled human clinical trial (“RCT”) to substantiate weight-loss claims). The court in Roca Labs rejected defendants’ reliance on U.S. v. Bayer , No. 07-01 (JLL), 2015 WL 5822595 (D.N.J. Sept. 24, 2015), as authority that RCTs should not be required. Roca Labs, Inc. , 345 F. Supp. 3d at 1387. The court ruled that Bayer was “inapposite both procedurally and factually,” because it turned on a narrow question of whether Bayer had violated an existing FTC consent decree. It reasoned that the Bayer court’s refusal to read an RCT requirement into the language of a specific FTC decree provision did not preclude the FTC from “requiring RCTs or challenging claims for lack of an RCT” in the case before it. Id ."
+      },
+      {
+        "section_id": "html-181-endnotes",
+        "heading": "Endnotes",
+        "text": "The case law both before and after Bayer has consistently applied an RCT standard in cases challenging health-related advertising claims as unsubstantiated. See, e.g. , FTC v. Nat’l Urological Grp., Inc. , No. 1:04-CV-3294-CAgP, 2017 U.S. Dist. LEXIS 182256 at *49-51 (N.D. Ga. Oct. 10, 2017) (applying an RCT substantiation standard to weight-loss claims and distinguishing Bayer as a case with a “noticeably different” procedural posture), aff’d , 786 F. App’x 947 (11th Cir. 2019) ; POM Wonderful LLC, 777 F.3d at 504-05 (affirming Commission holding that competent and reliable scientific evidence consisting of RCTs is needed for disease-related claims but finding fencing-in order requirement of two such tests was not justified in this instance) ; see also FTC v. Coorga Nutraceuticals Corp ., 201 F. Supp. 3d 1300 (D. Wyo. 2016) (final judgment and order requiring human clinical testing for claims that product reverses or prevents formation of gray hair); Nat’l Urological Grp., Inc. , 645 F. Supp. 2d at 1202-03 (accepting undisputed expert testimony that erectile dysfunction claims require well-designed, placebo-controlled, randomized, double-blind clinical trials for substantiation); Direct Mktg. Concepts, Inc. , 569 F. Supp. 2d at 303 (“[I]t seems well-accepted that double-blind, placebo-controlled studies are necessary to substantiate health-related efficacy claims.”); Removatron Int’l Corp. , 111 F.T.C. 206 (1988), aff’d , 884 F.2d 1489, 1498 (1st Cir. 1989) (requiring “adequate and well-controlled clinical testing” to substantiate claims for hair removal product); Thompson Med. Co. , 104 F.T.C. at 826 (requiring well-controlled clinical studies to substantiate certain analgesic drug claims). The Commission has also accepted numerous settlements that required randomized controlled human clinical testing for disease treatment and prevention claims. See , e.g. , FTC v. Sunrise Nutraceuticals , No. 9:15-cv-81567-DMM (S.D. Fla. 2016) (stipulated final judgment requiring human clinical testing for claims that a product can alleviate symptoms of drug addiction withdrawal or increase likelihood of successful withdrawal); Brown , 152 F.T.C. 466, 481-82 (2011) (consent order); Nestlé HealthCare Nutr., Inc. , 151 F.T.C. at 13 (consent order); Viral Response Sys., Inc. , 115 F.T.C. 676, 691 (1992) (consent order)."
+      },
+      {
+        "section_id": "html-182-endnotes",
+        "heading": "Endnotes",
+        "text": "[32] See, e.g. , POM Wonderful LLC , 777 F.3d at 491; Removatron Int’l Corp. , 111 F.T.C. at 297-98, 306."
+      },
+      {
+        "section_id": "html-183-endnotes",
+        "heading": "Endnotes",
+        "text": "[33] See supra note 31 ."
+      },
+      {
+        "section_id": "html-184-endnotes",
+        "heading": "Endnotes",
+        "text": "[34] See, e.g. , QT, Inc. , 448 F. Supp. 2d at 940-44, 965 (multiple studies, each with significant flaws, failed to substantiate pain relief claims for “Q-ray” bracelet)."
+      },
+      {
+        "section_id": "html-185-endnotes",
+        "heading": "Endnotes",
+        "text": "[35] See, e.g. , POM Wonderful LLC , 777 F.3d at 495 (citing expert testimony that observational research is insufficient to establish a causal link between a food or nutrient and a reduction in disease risk)."
+      },
+      {
+        "section_id": "html-186-endnotes",
+        "heading": "Endnotes",
+        "text": "[36] See, e.g. , Nat’l Urological Grp., Inc. , 2017 U.S. Dist. LEXIS 182256 at *95-98 (“only human studies can confirm that a specific substance actually has an effect in humans and extrapolating data obtained from animal studies and in vitro studies to humans has significant limitations”); FTC v. SlimAmerica, Inc. , 77 F. Supp. 2d 1263, 1274 (S.D. Fla. 1999) (stating animal and in vitro studies “cannot be characterized as serious scientific research” without medical proof that effects would be the same in humans) ."
+      },
+      {
+        "section_id": "html-187-endnotes",
+        "heading": "Endnotes",
+        "text": "[37] FTC v. QT, Inc. , 512 F.3d 858, 862 (7th Cir. 2008) (testimonials “are not a form of proof because most testimonials represent a logical fallacy: post hoc ergo propter hoc,” i.e., “[a] person who experiences a reduction in pain after donning the bracelet may have enjoyed the same reduction without it.”)."
+      },
+      {
+        "section_id": "html-188-endnotes",
+        "heading": "Endnotes",
+        "text": "[38] See, e.g. , POM Wonderful LLC , 777 F.3d at 495 (citing expert’s acknowledgement that health recommendations are made when the data is not supported by RCTs, based on “best available evidence” which is “not the same as stating that a causal link has been established.”)"
+      },
+      {
+        "section_id": "html-189-endnotes",
+        "heading": "Endnotes",
+        "text": "[39] See POM Wonderful LLC , 155 F.T.C. at 36-39 (setting out essential elements of RCT substantiating disease claims including control, randomization, validated measures, statistical significance between groups, and double-blinding when feasible); see also Nat’l Urological Grp., Inc. , 2017 U.S. Dist. LEXIS 182256 at *98-106 (describing the rationale for requiring that human clinical studies substantiating a claim must have placebo controls, double blinding, randomization, be of sufficient size and duration, use appropriate endpoints, and show statistically significant results between treatment and control group) ."
+      },
+      {
+        "section_id": "html-190-endnotes",
+        "heading": "Endnotes",
+        "text": "[40] See, e.g. , POM Wonderful LLC , 777 F.3d at 485 (noting that authors of cardiac study emphasized that subgroup findings were based on “post hoc exploratory analyses” which should be interpreted “with caution” because of an increased risk of “type I errors” or false positives). See also id. at 494 (citing Commission opinion that POM’s “selective touting of ostensibly favorable results and nondisclosure of contrary indications from the same or a later study” were deceptive omissions of material facts)."
+      },
+      {
+        "section_id": "html-191-endnotes",
+        "heading": "Endnotes",
+        "text": "[41] See, e.g. , POM Wonderful LLC , 155 F.T.C. at 51 (accepting expert opinion that RCTs producing both statistically significant and clinically significant results needed to support erectile dysfunction claims); Thompson Med. Co. , 104 F.T.C. at 724 (initial decision) (results of clinical trials should be both statistically significant and clinically important)."
+      },
+      {
+        "section_id": "html-192-endnotes",
+        "heading": "Endnotes",
+        "text": "[42] See Food Advertising Policy Statement, supra note 14 at Section IV.A."
+      },
+      {
+        "section_id": "html-194-endnotes",
+        "heading": "Endnotes",
+        "text": "[44] See, e.g. , NBTY, Inc ., 151 F.T.C. 201, 205 (2011) (consent order) (settling charges that claims that 100 mg of DHA promotes healthy brain and eye development in children are deceptive for a supplement containing only 100 mcg of DHA); Gen. Nutr., Inc. , 113 F.T.C. 146, 175 (1986) (initial decision) (studies involving the anti-cancer benefits of vegetables do not support claims for tablets containing equivalent of 1/16 serving of vegetables)."
+      },
+      {
+        "section_id": "html-195-endnotes",
+        "heading": "Endnotes",
+        "text": "[45] See, e.g. , Nat’l Urological Grp., Inc. , 645 F. Supp. 2d at 1202 (accepting undisputed expert testimony that study on different dose or different combination of active ingredients would not be sufficient to substantiate efficacy claim); see also FTC v. Wellness Support Network, Inc. , No. 3:10-cv-04879 (N.D. Cal. Feb. 19, 2014) (order granting FTC summary judgment) (accepting expert requirement that RCTs for diabetes supplement should be on the same dosage and formulation rather than on individual ingredients because “there may be interactions between the ingredients that affect their physiological actions”)."
+      },
+      {
+        "section_id": "html-196-endnotes",
+        "heading": "Endnotes",
+        "text": "[46] See, e.g. , Nat’l Urological Grp., Inc. , 2017 U.S. Dist. LEXIS 182256 at *105-106 (determining whether a product causes weight loss requires a study evaluating change in weight as an endpoint; a study examining metabolic endpoints cannot determine whether weight loss will also occur)."
+      },
+      {
+        "section_id": "html-197-endnotes",
+        "heading": "Endnotes",
+        "text": "[47] See, e.g. , POM Wonderful LLC , 155 F.T.C. at 38 (“the population from which the groups draw must be appropriate for the purposes of the study . . . in a prostate cancer prevention trial the appropriate population would involve healthy men having no sign of prostate cancer, whereas in a prostate cancer treatment trial, the appropriate sample population would depend on the stage of the disease targeted by the study”)."
+      },
+      {
+        "section_id": "html-198-endnotes",
+        "heading": "Endnotes",
+        "text": "[48] See, e.g. , Quigley Corp. , 129 F.T.C. 406 (2000) (consent order) (challenged claims that zinc lozenge could prevent colds and pneumonia went beyond research on reducing severity of colds)."
+      },
+      {
+        "section_id": "html-199-endnotes",
+        "heading": "Endnotes",
+        "text": "[49] See also Section III.A.3 discussing disclosures about the limited nature of supporting science for a claim."
+      },
+      {
+        "section_id": "html-200-endnotes",
+        "heading": "Endnotes",
+        "text": "[50] The FTC has provided detailed guidance on this subject in its Guides Concerning Use of Endorsements and Testimonials in Advertising, 16 C.F.R. § 255 (2022), http://www.ecfr.gov/cgi-bin/text-idx?SID=de10601c673ac6ac7500291dbfecca38&mc=true&node=pt16.1.255&rgn=div5 (“ Endorsement Guides ”)."
+      },
+      {
+        "section_id": "html-201-endnotes",
+        "heading": "Endnotes",
+        "text": "[51] Id . § 255.2(a); see also Daniel Chapter One Initial Decision , 148 F.T.C. at 993; FTC v. Bronson Partners, LLC , 564 F. Supp. 2d 119, 125 (D. Conn. 2008), aff’d, 654 F.3d 359 (2d Cir. 2011)."
+      },
+      {
+        "section_id": "html-202-endnotes",
+        "heading": "Endnotes",
+        "text": "[52] Endorsement Guides , supra note 50, § 255.2(b)."
+      },
+      {
+        "section_id": "html-203-endnotes",
+        "heading": "Endnotes",
+        "text": "[53] Id. § 255.5."
+      },
+      {
+        "section_id": "html-204-endnotes",
+        "heading": "Endnotes",
+        "text": "[54] Enforcement Policy Statement on Marketing Claims for OTC Homeopathic Drugs, 81 Fed. Reg. 90,122 (Dec. 13, 2016) (“ Homeopathic Drugs Policy Statement ”)."
+      },
+      {
+        "section_id": "html-205-endnotes",
+        "heading": "Endnotes",
+        "text": "[55] Id. at 90,123."
+      },
+      {
+        "section_id": "html-206-endnotes",
+        "heading": "Endnotes",
+        "text": "[56] See also discussion at Section III.B of factors the FTC considers in determining the amount and type of evidence required to substantiate a claim."
+      },
+      {
+        "section_id": "html-207-endnotes",
+        "heading": "Endnotes",
+        "text": "[57] Cf. Homeopathic Drugs Policy Statement , supra note 54 at 90,122 & n.1 (limiting application of policy statement to the treatment of disease conditions that resolve spontaneously with or without specific treatment)."
+      },
+      {
+        "section_id": "html-208-endnotes",
+        "heading": "Endnotes",
+        "text": "[58] See, e.g. , Daniel Chapter One Initial Decision , 148 F.T.C at 944-45 (DSHEA disclosure did not alter the overall net impression from the advertisements that the challenged products prevent, treat, or cure cancer); Direct Mktg. Concepts, 624 F.3d at 12 n.9 (disclaimers that products were not intended to diagnose, treat, or cure any disease, in light of statement that studies prove disease cure, “ leaves an overall impression of nonsense, not clarity”); Spencer , 132 F.T.C. 174, 179-189, 191 (2001) (consent order) (challenging disease treatment and cure claims for colloidal silver despite presence of DSHEA disclosures)."
+      },
+      {
+        "section_id": "html-209-endnotes",
+        "heading": "Endnotes",
+        "text": "[59] See POM Wonderful LLC , 155 F.T.C. at 21, 103 (citation to clinical studies can contribute to a clinically proven claim)."
+      },
+      {
+        "section_id": "html-210-endnotes",
+        "heading": "Endnotes",
+        "text": "[60] Id. at 74-75."
+      }
+    ]
+  }
+}

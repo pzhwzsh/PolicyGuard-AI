@@ -158,9 +158,9 @@ python -m uvicorn policyguard.api.main:app
 后续每个里程碑都要在本文件补充：样本数量、实验日期、代码版本、指标、失败案例以及仍未解决的问题。
 # Latest completion audit
 
-The current branch collects 97 tests: 96 pass locally and one PostgreSQL migration integration test
-is skipped without `POSTGRES_TEST_URL`. GitHub CI now provisions PostgreSQL 16 for that test. Core service statement coverage is 84%
-(68% including CLI/worker scripts). Cross-language retrieval, reviewed memory lifecycle,
+The current branch collects 99 tests: 98 pass locally and one PostgreSQL migration integration test
+is skipped without `POSTGRES_TEST_URL`. GitHub CI provisions PostgreSQL 16 for that test. Whole-package
+statement coverage is 69%. Cross-language retrieval, reviewed memory lifecycle,
 evidence-grounded remediation, and machine guardrails are integrated. The Chinese-to-English-law
 dataset has an AI source audit with two corrected queries but still has zero human-verified samples.
 See `docs/roadmap/project-completion-audit.md` for the remaining P0/P1/P2 work.
@@ -191,3 +191,15 @@ See `docs/roadmap/project-completion-audit.md` for the remaining P0/P1/P2 work.
 - Weekly/manual external smoke covers LLM, Embedding, RapidOCR, and 11 sources. On 2026-07-21, LLM
   and OCR passed, Embedding failed, six EU sources passed, and SAMR/four FTC pages returned access
   controls (403). Reports omit credentials.
+
+# Published data evidence
+
+`data/evidence/v1` is the reviewable data release. It contains all 11 latest parsed official-source
+copies (3,439 sections), a 16-version/3,995-section capture inventory, dataset hashes, sanitized
+benchmark metrics, and a local runtime-count snapshot. CI validates the bundle with
+`python -m policyguard.scripts.publish_data_evidence --validate`. This makes the GitHub evidence
+auditable without committing mutable databases, secrets, provider errors, or machine-local paths.
+
+The release is not active legal truth: nine legal/guidance sources passed structural checks, two
+catalog pages are blocked, and all 11 remain without legal-review confirmation. See
+`docs/DATA_CARD.md` for exact metrics and limitations.

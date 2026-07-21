@@ -1,0 +1,104 @@
+{
+  "schema_version": "policyguard-dataset-inventory-v1",
+  "independent_sample_count": null,
+  "independent_sample_count_reason": "Some suites and robustness rows reuse or derive from the same authored questions.",
+  "human_verified_samples": 0,
+  "datasets": [
+    {
+      "name": "agent-remediation-development-v1",
+      "path": "data/evaluation/agent-remediation-v1.json",
+      "sha256": "378aaac0fc376c19783772d7e5a61c22973dca8e77817c9fc8596b58dd02b1eb",
+      "sample_count": 8,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "dynamic-agent-routing-development-v1",
+      "path": "data/evaluation/agent-routing-v1.json",
+      "sha256": "352f4771e038adcc025ad18fd746c04aa2fd6780ff12481bbaeed11480802624",
+      "sample_count": 10,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "llm-claims",
+      "path": "data/evaluation/llm-claims.json",
+      "sha256": "40a9ab799ef44ddedb3ab1cf0b9316ddab08da713a286b65ea00b5ee641bb3c3",
+      "sample_count": 5,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "advertising-law-lexical-baseline-v1",
+      "path": "data/evaluation/rag-baseline.json",
+      "sha256": "5245c4a2102ef63e2548d879c24e981bae6ee172a55d70be6e7c894917914563",
+      "sample_count": 15,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "zh-query-en-law-near-domain-no-answer-v1",
+      "path": "data/evaluation/rag-cross-lingual-no-answer-near-v1.json",
+      "sha256": "2725049ca8c1f9d6c0f63a8c7882350a0337ddfc321a5fc1824b814604218939",
+      "sample_count": 20,
+      "label_status": "ai_reviewed_pending_human_verification",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "zh-query-en-law-retrieval-v1",
+      "path": "data/evaluation/rag-cross-lingual-zh-en-v1.json",
+      "sha256": "d0ca74ab2049a364567900cc3e54e97902a43763d3c0624ece9b2d27de3d7172",
+      "sample_count": 22,
+      "label_status": "ai_reviewed_pending_human_verification",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "cross-market-hard-retrieval-v1",
+      "path": "data/evaluation/rag-hard-v1.json",
+      "sha256": "8446dc5b951b3c46714187bbda1888b22fc57159bbf91f6e1a2b56ecc8765479",
+      "sample_count": 30,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "near-domain-no-answer-heldout-v1",
+      "path": "data/evaluation/rag-no-answer-near-v1.json",
+      "sha256": "ef400c6f9ca282322d224dc5cc6ac8710ed7fb96a1fd9d49f43ac6030fefd056",
+      "sample_count": 20,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "out-of-scope-no-answer-v1",
+      "path": "data/evaluation/rag-no-answer-v1.json",
+      "sha256": "d81505eb8897c22212b86bda94499dbab098c3928aa3b91950a8884ca1c5bd96",
+      "sample_count": 15,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "rag-retrieval-robustness-v1",
+      "path": "data/evaluation/rag-robustness-v1.json",
+      "sha256": "c9d95397804421d8380e64db046e57fee76aa6a06908208723db732a14c4ec58",
+      "sample_count": 180,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "deterministic-remediation-quality-v1",
+      "path": "data/evaluation/remediation-quality-v1.json",
+      "sha256": "14d19ac0e02b75538b540728d0dbf0aad0caac5ae6962b43238164ea96e191f5",
+      "sample_count": 6,
+      "label_status": "ai_reviewed_pending_human_verification",
+      "human_verified_samples": 0
+    },
+    {
+      "name": "policyguard-rag-suite-v1",
+      "path": "data/evaluation/suite-v1.json",
+      "sha256": "4321b7d7a3cf89c7284288bd1d5c611e82d8ce77ad2d55d2bef463adf352f561",
+      "sample_count": 0,
+      "label_status": "development_unverified",
+      "human_verified_samples": 0
+    }
+  ]
+}
