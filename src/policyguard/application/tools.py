@@ -41,7 +41,10 @@ class SuggestConservativeRewriteTool:
     name = "suggest_conservative_rewrite"
     description = "Create an internal rewrite plan without mutating an external product."
 
-    _risky_phrases = ("国家级", "最高级", "最佳", "最好", "100%安全")
+    # Longer forms come first so deletion does not leave a dangling Chinese particle.
+    _risky_phrases = (
+        "100%安全的", "最好的", "国家级", "最高级", "最佳", "最好", "100%安全"
+    )
 
     def execute(self, arguments: dict[str, Any]) -> ToolResult:
         product = arguments["product"]
