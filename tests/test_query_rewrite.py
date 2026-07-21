@@ -58,3 +58,12 @@ def test_drift_detector_finds_added_actor_penalty_and_number() -> None:
         jurisdiction="US",
     )
     assert rewrite.added_constraints() == ["advertiser", "fine", "liability", "1000"]
+
+
+def test_rewrite_cache_save_is_atomic(tmp_path) -> None:
+    from policyguard.application.query_rewrite import JsonQueryRewriteCache
+
+    cache = JsonQueryRewriteCache(tmp_path / "rewrites.json")
+    cache.save({"one": {"canonical_query": "truthful advertising"}})
+    assert cache.load()["one"]["canonical_query"] == "truthful advertising"
+    assert not (tmp_path / "rewrites.json.tmp").exists()
