@@ -158,7 +158,8 @@ python -m uvicorn policyguard.api.main:app
 后续每个里程碑都要在本文件补充：样本数量、实验日期、代码版本、指标、失败案例以及仍未解决的问题。
 # Latest completion audit
 
-The current main branch passes 88 tests and GitHub Actions. Core service statement coverage is 84%
+The current branch collects 97 tests: 96 pass locally and one PostgreSQL migration integration test
+is skipped without `POSTGRES_TEST_URL`. GitHub CI now provisions PostgreSQL 16 for that test. Core service statement coverage is 84%
 (68% including CLI/worker scripts). Cross-language retrieval, reviewed memory lifecycle,
 evidence-grounded remediation, and machine guardrails are integrated. The Chinese-to-English-law
 dataset has an AI source audit with two corrected queries but still has zero human-verified samples.
@@ -172,3 +173,21 @@ See `docs/roadmap/project-completion-audit.md` for the remaining P0/P1/P2 work.
 - Recall filters task type, jurisdiction, category, channel, confirmation, and invalidation state.
 - Policy activation invalidates memories whose recorded source version is no longer active.
 - This is deliberately not user-profile memory, chat history, or autonomous self-learning.
+
+# Seven-item closure
+
+- Human review records and a management queue now support accept/correct/reject decisions. The
+  22-sample cross-language dataset still has zero real human confirmations.
+- Staged official documents expose review state and diff, and activation requires an explicit
+  reviewer plus legal confirmation. Automatic activation remains forbidden.
+- Abstention calibration uses 20 near-domain negatives. The same-set development result is threshold
+  0.397214, precision/recall/F1 0.944444, false-answer rate 0.05; it is not a deployment threshold.
+- Remediation evaluation uses six narrow cases and checks spans, cited sections, protected facts and
+  residual risk. All development checks pass, but semantic preservation still needs human labels.
+- The console exposes the review queue, corrections, memory provenance, remediation diff, citations,
+  and draft recheck.
+- Alembic owns new schema creation; SQLite round-trip is verified locally and PostgreSQL is exercised
+  in CI.
+- Weekly/manual external smoke covers LLM, Embedding, RapidOCR, and 11 sources. On 2026-07-21, LLM
+  and OCR passed, Embedding failed, six EU sources passed, and SAMR/four FTC pages returned access
+  controls (403). Reports omit credentials.

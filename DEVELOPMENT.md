@@ -119,3 +119,22 @@ $env:APP_ENV='test'
 Query Rewrite tests must cover provider success, cache reuse, drift rejection, and provider failure fallback. PDF changes must cover staged output, parser routing, approval rejection, real knowledge activation, and the ground-truth quality metrics. Never replace these tests with live API calls.
 
 The optional MinerU/PaddleOCR/PP-Structure processes use the canonical `POST /parse` sidecar contract documented in README. Do not install their conflicting GPU/runtime dependencies into the API environment.
+# Database migrations
+
+New databases must be created with Alembic:
+
+```powershell
+alembic upgrade head
+```
+
+Before adopting migrations for an existing local SQLite database, create a backup, verify its schema
+matches the initial revision, then stamp it once:
+
+```powershell
+python -m policyguard.scripts.backup_local
+alembic stamp 7b835d0aef2b
+```
+
+Future model changes require a new reviewed migration. Do not edit the initial revision or rely on
+`Base.metadata.create_all` as a production migration mechanism. CI runs the migration against both
+SQLite and PostgreSQL 16.

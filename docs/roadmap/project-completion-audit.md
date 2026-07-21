@@ -21,7 +21,8 @@ These percentages are engineering judgment, not measured product KPIs.
 
 ## Verified engineering state
 
-- 88 automated tests pass.
+- 97 automated tests are collected: 96 pass locally and the PostgreSQL-only case is skipped when
+  `POSTGRES_TEST_URL` is absent. CI provisions PostgreSQL 16 for the complete run.
 - Core API/application/domain/infrastructure/MCP statement coverage is 84%.
 - Whole-package coverage is 68% because many CLI, benchmark, backup, and worker entry points are not
   invoked by unit tests.
@@ -34,6 +35,9 @@ These percentages are engineering judgment, not measured product KPIs.
   installed FastEmbed runtime does not support it.
 
 ## P0: required before calling the interview project complete
+
+The software paths for all seven items below are implemented. Items 1 and 2 deliberately remain
+operationally pending because code cannot substitute for a real reviewer or legal sign-off.
 
 1. **Human ground truth:** have a person review the cross-language set, PDF labels, citation labels,
    and remediation meaning-preservation cases. Keep reviewer identity optional but record date and
@@ -52,6 +56,18 @@ These percentages are engineering judgment, not measured product KPIs.
    upgrade from the current SQLite schema. Add a PostgreSQL integration test.
 7. **Live smoke suite:** run bounded nightly/manual provider checks for LLM, Embedding, OCR, and
    official sources without putting paid or flaky calls in ordinary CI.
+
+## P0 engineering closure evidence
+
+| Item | Engineering status | Evidence and remaining human work |
+|---|---|---|
+| Human ground truth | Implemented, human work pending | Persistent accept/correct/reject review records and queue; 22 cross-language samples still have 0 human confirmations. |
+| Legal activation | Implemented, human work pending | Staged version review, diff, reviewer identity and explicit legal confirmation; automatic approval is always false. Active truth remains 3 documents/13 chunks. |
+| Abstention | Implemented as development calibration | 20 near-domain negatives; threshold 0.397214, precision/recall/F1 0.944444, false-answer rate 0.05 on the same development set. Requires a held-out human-reviewed set. |
+| Remediation quality | Implemented as narrow baseline | Six cases; span, citation, protected-fact and residual checks all scored 1.0 on the development set. Requires broader categories and human meaning-preservation labels. |
+| Management UI | Implemented | Evaluation review, legal queue, memory provenance, before/after diff, citations and draft recheck are exposed. |
+| Database lifecycle | Implemented, CI verification pending | Explicit initial Alembic revision, SQLite round trip, and PostgreSQL 16 CI service/test. |
+| External smoke | Implemented and locally exercised | LLM and OCR returned 200; Embedding failed; six EU sources returned 200; SAMR and four FTC pages returned 403 and are reported as access-blocked. |
 
 ## P1: high-value product capabilities
 
