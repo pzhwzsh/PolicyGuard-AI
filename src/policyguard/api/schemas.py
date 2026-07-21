@@ -195,6 +195,28 @@ class DraftCreationRequest(BaseModel):
     approved_by: str = Field(min_length=1, max_length=100)
 
 
+class AgentMemoryResponse(BaseModel):
+    id: str
+    run_id: str
+    task_type: str
+    jurisdictions: list[str]
+    category: str
+    channel: str
+    summary: str
+    outcome: dict[str, Any]
+    source_versions: dict[str, str]
+    reviewed_by: str
+    review_status: str
+    invalidated_reason: str | None
+    created_at: datetime
+
+
+class AgentMemoryReviewRequest(BaseModel):
+    reviewer: str = Field(min_length=1, max_length=100)
+    decision: str = Field(pattern="^(confirm|invalidate)$")
+    comment: str = Field(default="", max_length=2000)
+
+
 class DocumentParseResponse(BaseModel):
     document_id: str
     filename: str

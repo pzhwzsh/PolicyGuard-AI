@@ -60,3 +60,22 @@ def test_context_builder_exposes_memory_provenance_and_budget(tmp_path: Path) ->
         assert context["context_metadata"]["recalled_memory_ids"] == ["memory-run-source"]
         assert context["context_metadata"]["estimated_tokens"] <= 6000
         assert "higher authority" in context["instruction"]
+
+
+def test_human_memory_review_can_invalidate_and_requires_live_sources(tmp_path: Path) -> None:
+    db = Database(f"sqlite:///{(tmp_path / 'review.db').as_posix()}")
+    db.initialize()
+    with db.session_factory() as session:
+        repository = SqlAlchemyAgentMemoryRepository(session)
+        memory = _memory("run-review")
+        repository.save_confirmed(memory)
+        invalidated = repository.review(memory.id, "reviewer-2", "invalidate", "bad case")
+        assert invalidated.review_status == "invalidated"
+        assert invalidated.invalidated_reason == "human_review:bad case"
+        assert repository.list_recent()[0].id == memory.id
+        try:
+            repository.review(memory.id, "reviewer-3", "confirm", "checked")
+        except RuntimeError as exc:
+            assert str(exc) == "agent_memory_source_unavailable"
+        else:
+            raise AssertionError("missing active source must block memory confirmation")

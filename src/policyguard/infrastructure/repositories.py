@@ -457,6 +457,37 @@ class SqlAlchemyAgentMemoryRepository:
         ).all()
         return {record.source_url: record.version for record in records}
 
+    def list_recent(self, limit: int = 50) -> list[AgentMemory]:
+        records = self.session.scalars(
+            select(AgentMemoryRecord)
+            .order_by(AgentMemoryRecord.created_at.desc())
+            .limit(limit)
+        ).all()
+        return [self._domain(record) for record in records]
+
+    def review(
+        self, memory_id: str, reviewer: str, decision: str, comment: str
+    ) -> AgentMemory:
+        record = self.session.get(AgentMemoryRecord, memory_id)
+        if record is None:
+            raise LookupError("agent_memory_not_found")
+        if decision == "invalidate":
+            record.review_status = "invalidated"
+            record.invalidated_reason = f"human_review:{comment or 'no_comment'}"
+        elif decision == "confirm":
+            urls = list(record.source_versions)
+            current = self.active_source_versions(urls)
+            if len(current) != len(urls):
+                raise RuntimeError("agent_memory_source_unavailable")
+            record.source_versions = current
+            record.review_status = "confirmed"
+            record.invalidated_reason = None
+        else:
+            raise ValueError("agent_memory_invalid_review_decision")
+        record.reviewed_by = reviewer
+        self.session.commit()
+        return self._domain(record)
+
     @staticmethod
     def _domain(record: AgentMemoryRecord) -> AgentMemory:
         return AgentMemory(
