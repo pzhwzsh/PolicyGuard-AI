@@ -30,7 +30,9 @@ def load_cross_language_dataset(path: Path) -> dict:
     if len(ids) != len(set(ids)):
         raise ValueError("cross_language_dataset_duplicate_id")
     if payload.get("label_status") not in {
-        "ai_assisted_pending_human_review", "human_verified"
+        "ai_assisted_pending_human_review",
+        "ai_reviewed_pending_human_verification",
+        "human_verified",
     }:
         raise ValueError("cross_language_dataset_invalid_label_status")
     return payload

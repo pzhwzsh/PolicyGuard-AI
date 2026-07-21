@@ -4,9 +4,9 @@ Date: 2026-07-21
 
 Dataset: `data/evaluation/rag-cross-lingual-zh-en-v1.json`
 
-Status: **provisional**. The 22 questions and labels were prepared with AI assistance. They are not
-human-verified ground truth and must not be presented as a production or resume metric until the
-review checklist is completed.
+Status: **provisional**. The 22 questions and labels passed an AI source-fidelity audit, including
+two wording corrections, but they are not human-verified ground truth and must not be presented as
+a production or resume metric until the review checklist is completed.
 
 ## Scope
 
@@ -28,6 +28,9 @@ Latency above is a cached-vector local run and excludes the first LLM rewrite. T
 rewrite pass used 2 batches, 11,500 tokens, and 42.42 seconds. A cached rerun used 0 model tokens;
 provider pricing was not configured, so cost is deliberately reported as unknown rather than
 estimated from an invented price.
+
+After the source audit changed two queries, an incremental rewrite run used 4,938 tokens and 18.99
+seconds for 2 cache misses while reusing 16 cached entries. Hit@5 and MRR remained unchanged.
 
 All dense modes returned a candidate for all four no-answer questions. Candidate presence rate was
 therefore 1.0, proving that retrieval success cannot be used as an answerability or legal decision.

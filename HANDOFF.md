@@ -156,6 +156,14 @@ python -m uvicorn policyguard.api.main:app
 ## 面试证据日志
 
 后续每个里程碑都要在本文件补充：样本数量、实验日期、代码版本、指标、失败案例以及仍未解决的问题。
+# Latest completion audit
+
+The current main branch passes 88 tests and GitHub Actions. Core service statement coverage is 84%
+(68% including CLI/worker scripts). Cross-language retrieval, reviewed memory lifecycle,
+evidence-grounded remediation, and machine guardrails are integrated. The Chinese-to-English-law
+dataset has an AI source audit with two corrected queries but still has zero human-verified samples.
+See `docs/roadmap/project-completion-audit.md` for the remaining P0/P1/P2 work.
+
 # Agent context and memory handoff
 
 - `AgentContextBuilder` assembles remediation context and records estimated budget/provenance metadata.
