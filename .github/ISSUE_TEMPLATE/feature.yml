@@ -1,0 +1,27 @@
+name: Feature
+description: Propose a measurable PolicyGuard capability
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user or engineering problem, not only the desired implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Include observable behavior, evaluation data, and safety boundaries.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Verification plan
+      description: State tests, datasets, and metrics that will prove completion.
+    validations:
+      required: true
+
