@@ -34,10 +34,27 @@ DRIFT_CONSTRAINTS = (
 )
 
 
-def should_rewrite(query: str, jurisdiction: str, top_score: float | None = None) -> bool:
+def query_language(query: str) -> str:
     cjk_count = sum("\u4e00" <= char <= "\u9fff" for char in query)
     latin_count = sum(char.isascii() and char.isalpha() for char in query)
-    language_mismatch = jurisdiction.upper() == "CN" and latin_count > cjk_count * 2
+    if cjk_count > latin_count / 2:
+        return "zh"
+    if latin_count:
+        return "en"
+    return "unknown"
+
+
+def jurisdiction_source_language(jurisdiction: str) -> str:
+    return "zh" if jurisdiction.upper() == "CN" else "en"
+
+
+def is_cross_language_query(query: str, jurisdiction: str) -> bool:
+    detected = query_language(query)
+    return detected != "unknown" and detected != jurisdiction_source_language(jurisdiction)
+
+
+def should_rewrite(query: str, jurisdiction: str, top_score: float | None = None) -> bool:
+    language_mismatch = is_cross_language_query(query, jurisdiction)
     weak_retrieval = top_score is not None and top_score < 0.45
     return language_mismatch or weak_retrieval
 

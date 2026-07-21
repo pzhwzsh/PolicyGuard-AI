@@ -8,6 +8,7 @@ from policyguard.application.ports import KnowledgeRepository, WorkflowRepositor
 from policyguard.application.query_rewrite import (
     JsonQueryRewriteCache,
     cached_rewrite_batch,
+    is_cross_language_query,
     multi_query_search,
     should_rewrite,
 )
@@ -117,9 +118,9 @@ class ComplianceWorkflowService:
                     top_score = hits[0].score if hits else None
                     if should_rewrite(claims, market_id, top_score):
                         rewrite_reasons[market_id] = {
-                            "language_mismatch": market_id == "CN"
-                            and sum(char.isascii() and char.isalpha() for char in claims)
-                            > sum("\u4e00" <= char <= "\u9fff" for char in claims) * 2,
+                            "language_mismatch": is_cross_language_query(claims, market_id),
+                            "original_language_preserved": True,
+                            "target_source_language": "zh" if market_id == "CN" else "en",
                             "weak_top_score": top_score is not None and top_score < 0.45,
                             "original_top_score": top_score,
                         }

@@ -144,3 +144,27 @@ def test_workflow_rejects_drift_and_survives_rewriter_failure(tmp_path: Path) ->
     assert any(event.step == "query_rewrite_drift" for event in drifted.events)
     assert any(event.step == "query_rewrite_fallback" for event in failed.events)
     assert failed.status != WorkflowStatus.FAILED
+
+
+def test_workflow_rewrites_chinese_claim_for_english_law_and_keeps_original(tmp_path: Path) -> None:
+    database = Database(f"sqlite:///{(tmp_path / 'cross-language.db').as_posix()}")
+    database.initialize()
+    rewriter = FixedRewriter()
+    with database.session_factory() as session:
+        knowledge = SqlAlchemyKnowledgeRepository(session)
+        ingest_source_directory(knowledge, ROOT / "data/sources")
+        run = ComplianceWorkflowService(
+            knowledge,
+            SqlAlchemyWorkflowRepository(session),
+            query_rewriter=rewriter,
+            query_rewrite_cache=JsonQueryRewriteCache(tmp_path / "cross-language.json"),
+        ).execute(
+            product={"title": "这款产品绝对安全，在美国可以这样宣传吗", "description": ""},
+            markets=["US"], category="all", channel="all", as_of=None,
+        )
+    event = next(item for item in run.events if item.step == "query_rewrite")
+    reason = event.detail["reasons"]["US"]
+    assert reason["language_mismatch"] is True
+    assert reason["original_language_preserved"] is True
+    assert reason["target_source_language"] == "en"
+    assert event.detail["retrieval_strategy"] == "original_plus_rewrites_rrf"
