@@ -4,9 +4,9 @@ Snapshot date: 2026-07-22
 
 ## Intended use
 
-This release demonstrates official-source collection, parsing, retrieval evaluation, bounded Agent
-execution, and human-review controls for a local interview project. It is not a complete corpus of
-global advertising law and is not a substitute for legal advice.
+This release supports reproducible validation of official-source collection, parsing, retrieval,
+bounded Agent execution, and human-review controls. It is not a complete corpus of global
+advertising law and is not a substitute for legal advice.
 
 ## Published official-source evidence
 
@@ -26,7 +26,7 @@ files are excluded.
 
 Reuse terms have not been reviewed source by source. Each released copy is marked
 `official_publication_terms_not_reviewed`; confirm the relevant regulator's reuse terms before
-redistribution outside this engineering portfolio.
+redistribution outside this repository.
 
 ## Evaluation data
 
