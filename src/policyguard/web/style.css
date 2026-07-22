@@ -5,6 +5,8 @@ body { margin: 0; }
 .topbar strong { font-size: 18px; margin-right: 14px; }
 .topbar span, .status { color: #c7d7ce; font-size: 13px; }
 main { max-width: 1280px; margin: 0 auto; padding: 28px 32px 64px; }
+.user-main { max-width: 960px; }
+.user-workspace { padding-top: 36px; }
 section { border-bottom: 1px solid #d9dfda; padding: 24px 0; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
 .section-heading p { margin: 0 0 5px; color: #68756d; font-size: 12px; text-transform: uppercase; }

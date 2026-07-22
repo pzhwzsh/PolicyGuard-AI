@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PolicyGuard AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><strong>PolicyGuard AI</strong><span>跨境营销内容审查</span></div>
+    <div id="service-status" class="status">服务检查中</div>
+  </header>
+
+  <main class="user-main">
+    <section class="workspace user-workspace">
+      <div class="section-heading">
+        <div><p>内容审查</p><h1>检查营销内容在目标市场的风险</h1></div>
+        <button id="run-button" type="submit" form="review-form">开始检查</button>
+      </div>
+      <form id="review-form" class="form-grid">
+        <label>内容编号<input name="external_id" placeholder="例如 SKU-001" required></label>
+        <label>商品类别<input name="category" placeholder="例如 beauty" required></label>
+        <label class="wide">商品标题<input name="title" placeholder="填写需要检查的商品标题" required></label>
+        <label class="wide">商品描述<textarea name="description" rows="6" placeholder="填写广告文案、商品描述或营销声明"></textarea></label>
+        <fieldset class="wide markets"><legend>目标市场</legend>
+          <label><input type="checkbox" name="markets" value="CN" checked> 中国</label>
+          <label><input type="checkbox" name="markets" value="US"> 美国</label>
+          <label><input type="checkbox" name="markets" value="EU"> 欧盟</label>
+        </fieldset>
+      </form>
+    </section>
+
+    <section id="result-section" class="results" hidden>
+      <div class="section-heading">
+        <div><p>检查结果</p><h2 id="result-title">-</h2></div>
+        <div class="review-actions">
+          <a id="download-report" class="button-link secondary" href="#">下载报告</a>
+          <button id="reject-button" class="secondary" type="button">结果有误</button>
+          <button id="accept-button" type="button">确认风险依据</button>
+        </div>
+      </div>
+      <div id="notice" class="notice"></div>
+      <div id="market-results"></div>
+      <div class="remediation-workbench">
+        <div class="section-heading compact">
+          <div><p>修改建议</p><h3>在保留原意的前提下降低风险</h3></div>
+          <div class="review-actions">
+            <button id="create-plan-button" type="button">生成修改建议</button>
+            <button id="create-draft-button" type="button">生成修改稿</button>
+          </div>
+        </div>
+        <div id="remediation-result"></div>
+      </div>
+    </section>
+  </main>
+  <script src="/static/user.js"></script>
+</body>
+</html>

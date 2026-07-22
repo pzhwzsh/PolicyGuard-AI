@@ -139,6 +139,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
 
     @application.get("/", include_in_schema=False)
     def dashboard() -> FileResponse:
+        return FileResponse(web_dir / "user.html")
+
+    @application.get("/admin", include_in_schema=False)
+    def admin_dashboard() -> FileResponse:
         return FileResponse(web_dir / "index.html")
 
     @application.middleware("http")
