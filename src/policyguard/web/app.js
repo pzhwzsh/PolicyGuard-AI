@@ -1,6 +1,20 @@
 const $ = (selector) => document.querySelector(selector);
 let currentRunId = null;
 
+function selectAdminPanel(panel) {
+  document.querySelectorAll("[data-admin-panel]").forEach((section) => {
+    section.hidden = section.dataset.adminPanel !== panel
+      || (section.id === "result-section" && !currentRunId);
+  });
+  document.querySelectorAll(".admin-tab").forEach((button) => {
+    button.classList.toggle("active", button.dataset.panel === panel);
+  });
+}
+
+document.querySelectorAll(".admin-tab").forEach((button) => {
+  button.addEventListener("click", () => selectAdminPanel(button.dataset.panel));
+});
+
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
 }[char]));
@@ -32,6 +46,7 @@ function eventDetail(event) {
 
 function renderRun(run) {
   currentRunId = run.id;
+  selectAdminPanel("content");
   $("#result-section").hidden = false;
   $("#workflow-status").textContent = run.status;
   $("#notice").textContent = run.result_payload.note || "证据需要人工复核。";
@@ -252,6 +267,28 @@ async function loadOperations() {
   $("#report-history").innerHTML = dashboard.report_history.map((item) => `
     <article><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.status)}</span><a href="${escapeHtml(item.report_json)}">JSON</a><a href="${escapeHtml(item.report_pdf)}">PDF</a></article>
   `).join("") || "<p>暂无审查报告。</p>";
+
+  const workflow = dashboard.performance?.workflow || {};
+  const concurrent = dashboard.performance?.concurrency || {};
+  const pdfScale = dashboard.performance?.pdf || {};
+  const formatMs = (value) => Number.isFinite(Number(value)) ? `${Number(value).toFixed(1)} ms` : "-";
+  const formatRate = (value) => Number.isFinite(Number(value)) ? Number(value).toFixed(2) : "-";
+  $("#perf-p50").textContent = formatMs(concurrent.p50_latency_ms);
+  $("#perf-p95").textContent = formatMs(concurrent.p95_latency_ms);
+  $("#perf-p99").textContent = formatMs(concurrent.p99_latency_ms);
+  $("#perf-throughput").textContent = formatRate(concurrent.throughput_cases_per_second);
+  $("#perf-success").textContent = Number.isFinite(Number(concurrent.success_rate))
+    ? `${(Number(concurrent.success_rate) * 100).toFixed(0)}%` : "-";
+  $("#performance-scope").textContent = `${concurrent.workers || "-"} worker · SQLite · ${concurrent.case_count || "-"} cases`;
+  $("#serial-p95").textContent = formatMs(workflow.p95_latency_ms);
+  $("#pdf-p95").textContent = formatMs(pdfScale.p95_document_latency_ms);
+  $("#overview-knowledge").textContent = `${dashboard.knowledge.documents} / ${dashboard.knowledge.chunks}`;
+  $("#overview-failed-jobs").textContent = dashboard.jobs.failed || 0;
+  [["p50", concurrent.p50_latency_ms], ["p95", concurrent.p95_latency_ms], ["p99", concurrent.p99_latency_ms]].forEach(([key, value]) => {
+    $("#chart-" + key).textContent = formatMs(value);
+    const ceiling = Math.max(Number(concurrent.p99_latency_ms) || 1, 1);
+    $("#bar-" + key).style.width = `${Math.max((Number(value) || 0) / ceiling * 100, 2)}%`;
+  });
 }
 
 $("#job-list").addEventListener("click", async (event) => {

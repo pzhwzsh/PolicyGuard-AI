@@ -310,6 +310,7 @@ class OperationsDashboardResponse(BaseModel):
     knowledge: dict[str, Any]
     sources: dict[str, Any]
     jobs: dict[str, int]
+    performance: dict[str, Any]
     evaluations: dict[str, Any]
     report_history: list[dict[str, Any]]
 
