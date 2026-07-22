@@ -19,8 +19,8 @@
         <button id="run-button" type="submit" form="review-form">开始检查</button>
       </div>
       <form id="review-form" class="form-grid">
-        <label>内容编号<input name="external_id" placeholder="例如 SKU-001" required></label>
-        <label>商品类别<input name="category" placeholder="例如 beauty" required></label>
+        <input name="external_id" type="hidden">
+        <label class="wide">商品类别<input name="category" placeholder="例如：美妆、保健食品、电子产品" required></label>
         <label class="wide">商品标题<input name="title" placeholder="填写需要检查的商品标题" required></label>
         <label class="wide">商品描述<textarea name="description" rows="6" placeholder="填写广告文案、商品描述或营销声明"></textarea></label>
         <fieldset class="wide markets"><legend>目标市场</legend>

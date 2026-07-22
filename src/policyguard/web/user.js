@@ -93,7 +93,7 @@ $("#review-form").addEventListener("submit", async (event) => {
       method: "POST",
       body: JSON.stringify({
         product: {
-          external_id: data.get("external_id"), title: data.get("title"),
+          external_id: data.get("external_id") || `WEB-${Date.now()}`, title: data.get("title"),
           description: data.get("description"), category: data.get("category"), attributes: {}
         },
         markets: data.getAll("markets"), category: data.get("category"), channel: "all"

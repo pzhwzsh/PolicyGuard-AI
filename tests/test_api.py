@@ -20,6 +20,11 @@ def test_health_and_check_round_trip(tmp_path: Path) -> None:
         assert health.headers["server-timing"].startswith("app;dur=")
         assert health.json()["ai_enabled"] is False
 
+        operations = client.get("/api/v1/operations/dashboard")
+        assert operations.status_code == 200
+        assert operations.json()["performance"]["concurrency"]["p95_latency_ms"] > 0
+        assert operations.json()["performance"]["concurrency"]["p99_latency_ms"] > 0
+
         created = client.post(
             "/api/v1/checks",
             json={

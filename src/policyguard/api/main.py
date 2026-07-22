@@ -598,6 +598,40 @@ def create_app(database_url: str | None = None) -> FastAPI:
         }.items():
             if path.exists():
                 evaluations[name] = json.loads(path.read_text(encoding="utf-8"))
+        performance: dict[str, object] = {}
+        evidence_path = root / "data/evidence/v1/benchmarks.json"
+        if evidence_path.exists():
+            evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+            portfolio = evidence.get("portfolio_scale", {})
+            workflow_metrics = portfolio.get("workflow", {})
+            concurrency_metrics = portfolio.get("concurrency", {})
+            pdf_metrics = evidence.get("synthetic_pdf_scale", {})
+            performance = {
+                "as_of": evidence.get("as_of"),
+                "traffic_type": portfolio.get("traffic_type"),
+                "workflow": {
+                    key: workflow_metrics.get(key)
+                    for key in (
+                        "case_count", "mean_latency_ms", "p50_latency_ms",
+                        "p95_latency_ms", "throughput_cases_per_second",
+                    )
+                },
+                "concurrency": {
+                    key: concurrency_metrics.get(key)
+                    for key in (
+                        "case_count", "workers", "success_rate", "mean_latency_ms",
+                        "p50_latency_ms", "p95_latency_ms", "p99_latency_ms",
+                        "throughput_cases_per_second", "scope",
+                    )
+                },
+                "pdf": {
+                    key: pdf_metrics.get(key)
+                    for key in (
+                        "document_count", "page_count", "mean_document_latency_ms",
+                        "p95_document_latency_ms", "mean_page_latency_ms",
+                    )
+                },
+            }
         reports = []
         for run in SqlAlchemyWorkflowRepository(session).list_recent(30):
             reports.append({
@@ -623,6 +657,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 ),
             },
             jobs=PersistentJobQueue(session).stats(),
+            performance=performance,
             evaluations=evaluations,
             report_history=reports,
         )

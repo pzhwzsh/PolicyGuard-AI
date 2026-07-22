@@ -10,6 +10,8 @@ and versions follow Semantic Versioning.
 - Split the customer review page from the management console. The public workflow no longer exposes
   policy ingestion, source activation, evaluation queues, model status, job controls, or execution
   traces; those controls remain under `/admin`.
+- Reorganized the internal console into focused panels and added evidence-backed P50/P95/P99,
+  throughput, success-rate, serial-workflow, and PDF benchmark summaries.
 
 - Rebuilt the handoff and development guides as UTF-8, removed stale and contradictory project
   states, and defined one source of truth for change history, current status, remaining work, data
