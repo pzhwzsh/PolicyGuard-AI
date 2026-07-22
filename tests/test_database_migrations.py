@@ -6,7 +6,6 @@ from alembic import command
 from alembic.config import Config
 from sqlalchemy import create_engine, inspect
 
-
 ROOT = Path(__file__).parents[1]
 
 
@@ -25,7 +24,9 @@ def test_sqlite_migration_upgrade_and_downgrade(tmp_path: Path) -> None:
     command.upgrade(config, "head")
     engine = create_engine(url)
     tables = set(inspect(engine).get_table_names())
-    assert {"workflow_runs", "agent_memories", "evaluation_reviews"}.issubset(tables)
+    assert {
+        "workflow_runs", "agent_memories", "evaluation_reviews", "runtime_metrics"
+    }.issubset(tables)
     command.downgrade(config, "base")
     assert set(inspect(engine).get_table_names()) <= {"alembic_version"}
     engine.dispose()
@@ -39,5 +40,7 @@ def test_postgres_migration_round_trip() -> None:
     command.upgrade(config, "head")
     engine = create_engine(url)
     tables = set(inspect(engine).get_table_names())
-    assert {"policy_documents", "workflow_runs", "evaluation_reviews"}.issubset(tables)
+    assert {
+        "policy_documents", "workflow_runs", "evaluation_reviews", "runtime_metrics"
+    }.issubset(tables)
     engine.dispose()

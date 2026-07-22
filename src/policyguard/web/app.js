@@ -1,5 +1,29 @@
 const $ = (selector) => document.querySelector(selector);
 let currentRunId = null;
+let latestRuntime = {};
+
+const formatRuntimeMs = (value) => Number.isFinite(Number(value))
+  ? `${Number(value).toFixed(1)} ms` : "暂无数据";
+
+function renderRuntimeWindow(windowKey) {
+  const item = latestRuntime?.windows?.[windowKey] || {};
+  $("#live-requests").textContent = item.request_count ?? 0;
+  $("#live-rpm").textContent = `${Number(item.requests_per_minute || 0).toFixed(2)} req/min`;
+  $("#live-p50").textContent = formatRuntimeMs(item.p50_latency_ms);
+  $("#live-p95").textContent = formatRuntimeMs(item.p95_latency_ms);
+  $("#live-p99").textContent = formatRuntimeMs(item.p99_latency_ms);
+  $("#live-success").textContent = Number.isFinite(Number(item.success_rate))
+    ? `${(Number(item.success_rate) * 100).toFixed(1)}%` : "暂无数据";
+  $("#live-tokens").textContent = Number(item.total_tokens || 0).toLocaleString();
+  const cacheTotal = Number(item.cache_hits || 0) + Number(item.cache_misses || 0);
+  $("#live-cache").textContent = cacheTotal
+    ? `缓存命中 ${((Number(item.cache_hits || 0) / cacheTotal) * 100).toFixed(1)}%`
+    : "暂无改写缓存请求";
+}
+
+$("#runtime-window").addEventListener("change", (event) => {
+  renderRuntimeWindow(event.target.value);
+});
 
 function selectAdminPanel(panel) {
   document.querySelectorAll("[data-admin-panel]").forEach((section) => {
@@ -271,6 +295,8 @@ async function loadOperations() {
   const workflow = dashboard.performance?.workflow || {};
   const concurrent = dashboard.performance?.concurrency || {};
   const pdfScale = dashboard.performance?.pdf || {};
+  latestRuntime = dashboard.performance?.runtime || {};
+  renderRuntimeWindow($("#runtime-window").value);
   const formatMs = (value) => Number.isFinite(Number(value)) ? `${Number(value).toFixed(1)} ms` : "-";
   const formatRate = (value) => Number.isFinite(Number(value)) ? Number(value).toFixed(2) : "-";
   $("#perf-p50").textContent = formatMs(concurrent.p50_latency_ms);

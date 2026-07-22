@@ -12,6 +12,8 @@ and versions follow Semantic Versioning.
   traces; those controls remain under `/admin`.
 - Reorganized the internal console into focused panels and added evidence-backed P50/P95/P99,
   throughput, success-rate, serial-workflow, and PDF benchmark summaries.
+- Workflow checkpoints now append immutable events instead of deleting and reinserting the full
+  event history on every save.
 
 - Rebuilt the handoff and development guides as UTF-8, removed stale and contradictory project
   states, and defined one source of truth for change history, current status, remaining work, data
@@ -19,6 +21,10 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Batched runtime telemetry with 1-hour, 24-hour, and 7-day P50/P95/P99, success-rate,
+  request-rate, token, and query-rewrite cache summaries in the internal console.
+- An isolated SQLite/PostgreSQL backend benchmark command guarded against non-benchmark databases.
+- Alembic-managed runtime metric storage and PostgreSQL connection-pool defaults.
 - Repository governance with CI, pull-request templates, ownership, and release conventions.
 - Controlled reviewed-case Agent memory with scoped recall and source-version invalidation.
 - Human maintenance APIs for reviewed Agent memory and auditable context provenance.

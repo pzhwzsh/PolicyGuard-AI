@@ -325,7 +325,7 @@ class SqlAlchemyWorkflowRepository:
             record.current_step = run.current_step
             record.result_payload = run.result_payload
             record.updated_at = run.updated_at
-        record.events.clear()
+        existing_sequences = {event.sequence for event in record.events}
         record.events.extend(
             WorkflowEventRecord(
                 sequence=event.sequence,
@@ -335,6 +335,7 @@ class SqlAlchemyWorkflowRepository:
                 created_at=event.created_at,
             )
             for event in run.events
+            if event.sequence not in existing_sequences
         )
         self.session.commit()
         return run

@@ -9,7 +9,7 @@ from policyguard.application.knowledge import BM25Retriever, ingest_source_direc
 from policyguard.application.remediation_evaluation import evaluate_remediation_dataset
 from policyguard.application.workflow import ComplianceWorkflowService
 from policyguard.domain.models import KnowledgeFilter
-from policyguard.infrastructure.database import Database
+from policyguard.infrastructure.database import Base, Database
 from policyguard.infrastructure.repositories import (
     SqlAlchemyKnowledgeRepository,
     SqlAlchemyWorkflowRepository,
@@ -247,11 +247,24 @@ def evaluate_workflow_cases(root: Path, cases: list[dict]) -> dict:
     }
 
 
-def evaluate_concurrent_workflows(root: Path, cases: list[dict], workers: int = 8) -> dict:
+def evaluate_concurrent_workflows(
+    root: Path,
+    cases: list[dict],
+    workers: int = 8,
+    *,
+    database_url: str | None = None,
+    backend: str = "sqlite",
+) -> dict:
     database_path = root / "tmp/portfolio-concurrency.db"
-    database_path.parent.mkdir(parents=True, exist_ok=True)
-    database_path.unlink(missing_ok=True)
-    database = Database(f"sqlite:///{database_path.as_posix()}")
+    if database_url is None:
+        database_path.parent.mkdir(parents=True, exist_ok=True)
+        database_path.unlink(missing_ok=True)
+        database_url = f"sqlite:///{database_path.as_posix()}"
+    elif "benchmark" not in database_url.lower():
+        raise ValueError("benchmark_database_url_must_contain_benchmark")
+    database = Database(database_url)
+    if backend != "sqlite":
+        Base.metadata.drop_all(database.engine)
     database.initialize()
     with database.session_factory() as session:
         ingest_source_directory(SqlAlchemyKnowledgeRepository(session), root / "data/sources")
@@ -275,7 +288,8 @@ def evaluate_concurrent_workflows(root: Path, cases: list[dict], workers: int = 
     elapsed = perf_counter() - started
     latencies = [item[0] for item in results]
     database.engine.dispose()
-    database_path.unlink(missing_ok=True)
+    if backend == "sqlite":
+        database_path.unlink(missing_ok=True)
     return {
         "case_count": len(cases),
         "workers": workers,
@@ -288,7 +302,10 @@ def evaluate_concurrent_workflows(root: Path, cases: list[dict], workers: int = 
         "p99_latency_ms": percentile(latencies, 0.99),
         "model_tokens": 0,
         "cost_usd": 0.0,
-        "scope": "local SQLite deterministic workflow; excludes network and model latency",
+        "backend": backend,
+        "scope": (
+            f"local {backend} deterministic workflow; excludes network and model latency"
+        ),
     }
 
 

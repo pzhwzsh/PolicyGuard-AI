@@ -5,6 +5,7 @@ from sqlalchemy import (
     JSON,
     Boolean,
     DateTime,
+    Float,
     ForeignKey,
     Integer,
     String,
@@ -237,6 +238,20 @@ class AuditLogRecord(Base):
     )
 
 
+class RuntimeMetricRecord(Base):
+    __tablename__ = "runtime_metrics"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    trace_id: Mapped[str] = mapped_column(String(64), index=True)
+    method: Mapped[str] = mapped_column(String(20))
+    path: Mapped[str] = mapped_column(String(500), index=True)
+    status_code: Mapped[int] = mapped_column(Integer, index=True)
+    duration_ms: Mapped[float] = mapped_column(Float)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True
+    )
+
+
 DEMO_RULES = (
     {
         "code": "DEMO-ABSOLUTE-001",
@@ -262,7 +277,10 @@ DEMO_RULES = (
 class Database:
     def __init__(self, url: str) -> None:
         connect_args = {"check_same_thread": False} if url.startswith("sqlite") else {}
-        self.engine = create_engine(url, connect_args=connect_args)
+        engine_options = {"connect_args": connect_args, "pool_pre_ping": True}
+        if not url.startswith("sqlite"):
+            engine_options.update({"pool_size": 10, "max_overflow": 20})
+        self.engine = create_engine(url, **engine_options)
         self.session_factory = sessionmaker(bind=self.engine, expire_on_commit=False)
 
     def initialize(self) -> None:
