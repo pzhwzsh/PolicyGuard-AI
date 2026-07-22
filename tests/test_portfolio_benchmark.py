@@ -6,6 +6,7 @@ from policyguard.application.portfolio_benchmark import (
     build_marketing_cases,
     build_rag_holdout,
     build_remediation_dataset,
+    evaluate_concurrent_workflows,
     run_portfolio_benchmark,
 )
 
@@ -49,3 +50,17 @@ def test_portfolio_benchmark_runs_end_to_end(tmp_path: Path) -> None:
     assert packet["status"] == "pending_real_human_review"
     assert packet["counts"]["completed_decisions"] == 0
     assert len(packet["dataset_reviews"]) == 320
+
+
+def test_postgres_benchmark_requires_isolated_database_name(tmp_path: Path) -> None:
+    try:
+        evaluate_concurrent_workflows(
+            tmp_path,
+            [],
+            database_url="postgresql+psycopg://localhost/policyguard",
+            backend="postgresql",
+        )
+    except ValueError as exc:
+        assert str(exc) == "benchmark_database_url_must_contain_benchmark"
+    else:
+        raise AssertionError("unsafe benchmark database URL was accepted")

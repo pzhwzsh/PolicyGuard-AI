@@ -23,7 +23,25 @@
 
     <section class="admin-overview" data-admin-panel="overview">
       <div class="section-heading">
-        <div><p>本地基准</p><h1>运行概览</h1></div>
+        <div><p>内部数据</p><h1>运行概览</h1></div>
+        <label class="window-select">统计窗口
+          <select id="runtime-window">
+            <option value="1h">最近 1 小时</option>
+            <option value="24h" selected>最近 24 小时</option>
+            <option value="7d">最近 7 天</option>
+          </select>
+        </label>
+      </div>
+      <div class="runtime-grid">
+        <article><span>请求数</span><strong id="live-requests">-</strong><small id="live-rpm">- req/min</small></article>
+        <article><span>P50</span><strong id="live-p50">-</strong><small>实际请求</small></article>
+        <article><span>P95</span><strong id="live-p95">-</strong><small>实际请求</small></article>
+        <article><span>P99</span><strong id="live-p99">-</strong><small>实际请求</small></article>
+        <article><span>成功率</span><strong id="live-success">-</strong><small>HTTP &lt; 500</small></article>
+        <article><span>模型 Token</span><strong id="live-tokens">-</strong><small id="live-cache">缓存 -</small></article>
+      </div>
+      <div class="benchmark-heading">
+        <div><p>固定压测</p><h2>并发基准</h2></div>
         <span id="performance-scope" class="scope-badge">读取中</span>
       </div>
       <div class="performance-grid">

@@ -107,11 +107,17 @@ from policyguard.infrastructure.repositories import (
     SqlAlchemyWorkflowRepository,
     SqlAlchemyAgentMemoryRepository,
 )
+from policyguard.infrastructure.telemetry import (
+    RuntimeMetric,
+    RuntimeMetricBuffer,
+    runtime_summary,
+)
 
 
 def create_app(database_url: str | None = None) -> FastAPI:
     settings = get_settings()
     database = Database(database_url or settings.database_url)
+    telemetry = RuntimeMetricBuffer(database.session_factory)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -120,8 +126,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
             ingest_source_directory(
                 SqlAlchemyKnowledgeRepository(session), Path(settings.source_dir)
             )
-        yield
-        database.engine.dispose()
+        await telemetry.start()
+        try:
+            yield
+        finally:
+            await telemetry.stop()
+            database.engine.dispose()
 
     application = FastAPI(
         title=settings.app_name,
@@ -133,6 +143,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         lifespan=lifespan,
     )
     application.state.database = database
+    application.state.telemetry = telemetry
     request_windows: dict[str, deque[float]] = defaultdict(deque)
     web_dir = Path(__file__).parents[1] / "web"
     application.mount("/static", StaticFiles(directory=web_dir), name="static")
@@ -161,9 +172,30 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 headers={"X-Trace-ID": trace_id, "Retry-After": "60"},
             )
         window.append(now)
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        except Exception:
+            if not request.url.path.startswith("/static"):
+                telemetry.record(RuntimeMetric(
+                    trace_id=trace_id,
+                    method=request.method,
+                    path=request.url.path,
+                    status_code=500,
+                    duration_ms=(perf_counter() - started) * 1000,
+                    created_at=datetime.now(UTC),
+                ))
+            raise
         response.headers["X-Trace-ID"] = trace_id
         response.headers["Server-Timing"] = f"app;dur={(perf_counter() - started) * 1000:.1f}"
+        if not request.url.path.startswith("/static"):
+            telemetry.record(RuntimeMetric(
+                trace_id=trace_id,
+                method=request.method,
+                path=request.url.path,
+                status_code=response.status_code,
+                duration_ms=(perf_counter() - started) * 1000,
+                created_at=datetime.now(UTC),
+            ))
         if request.method in {"POST", "PATCH", "PUT", "DELETE"}:
             try:
                 with database.session_factory() as audit_session:
@@ -632,6 +664,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
                     )
                 },
             }
+        performance["runtime"] = {
+            **runtime_summary(session),
+            "dropped_metrics": telemetry.dropped,
+        }
         reports = []
         for run in SqlAlchemyWorkflowRepository(session).list_recent(30):
             reports.append({

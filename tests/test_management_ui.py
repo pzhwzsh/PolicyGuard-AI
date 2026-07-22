@@ -15,6 +15,8 @@ def test_management_ui_exposes_review_and_remediation_workbenches() -> None:
     assert 'id="remediation-result"' in html
     assert 'id="perf-p95"' in html
     assert 'id="perf-p99"' in html
+    assert 'id="live-p99"' in html
+    assert 'id="runtime-window"' in html
     assert 'data-panel="overview"' in html
     assert "/api/v1/review-queue" in script
     assert "/remediation-plan" in script
