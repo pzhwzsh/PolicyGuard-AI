@@ -260,6 +260,8 @@ async function loadSourceUpdates() {
       <div class="market-header"><strong>${escapeHtml(item.title)}</strong><span>${item.section_count} 个候选段落 · ${escapeHtml(item.status)}</span></div>
       <p>${escapeHtml(item.source_id)}${item.diff_available ? ` · <a href="/api/v1/source-updates/${escapeHtml(item.source_id)}/${escapeHtml(item.content_hash)}/diff" target="_blank">查看版本 Diff</a>` : ""} · 结构 ${escapeHtml(item.structural_review_status)} · 法律审核 ${escapeHtml(item.legal_review_status)}</p>
       ${item.preview.map((section) => `<details><summary>${escapeHtml(section.heading)}</summary><p>${escapeHtml(section.text)}</p></details>`).join("")}
+      <div class="impact-result" data-impact-result></div>
+      <button class="analyze-impact secondary" data-source-id="${escapeHtml(item.source_id)}" data-content-hash="${escapeHtml(item.content_hash)}" type="button">分析历史影响</button>
       ${item.status === "staged" && item.eligible_for_activation && item.structural_review_status === "passed" ? `
         <label class="legal-confirm"><input type="checkbox"> 我已核对官方原文、适用范围和生效信息</label>
         <button class="approve-source" data-source-id="${escapeHtml(item.source_id)}" data-content-hash="${escapeHtml(item.content_hash)}" type="button">确认法律审核并激活</button>
@@ -329,6 +331,21 @@ $("#job-list").addEventListener("click", async (event) => {
 $("#refresh-operations-button").addEventListener("click", () => loadOperations().catch((error) => alert(error.message)));
 
 $("#source-update-list").addEventListener("click", async (event) => {
+  const impactButton = event.target.closest(".analyze-impact");
+  if (impactButton) {
+    impactButton.disabled = true;
+    try {
+      const impact = await api(`/api/v1/source-updates/${impactButton.dataset.sourceId}/${impactButton.dataset.contentHash}/impact`, {method: "POST", body: "{}"});
+      impactButton.parentElement.querySelector("[data-impact-result]").innerHTML = `
+        <strong>影响分析</strong>
+        <span>变更条款 ${escapeHtml(impact.changed_section_count)}</span>
+        <span>历史报告 ${escapeHtml(impact.affected_workflow_count)}</span>
+        <span>Agent 记忆 ${escapeHtml(impact.affected_memory_count)}</span>
+        <span>复审任务 ${escapeHtml(impact.re_review_job_ids.length)}</span>`;
+    } catch (error) { alert(error.message); }
+    finally { impactButton.disabled = false; }
+    return;
+  }
   const button = event.target.closest(".approve-source");
   if (!button) return;
   const confirmed = button.parentElement.querySelector(".legal-confirm input")?.checked;

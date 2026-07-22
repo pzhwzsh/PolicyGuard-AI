@@ -189,6 +189,7 @@ class ComplianceWorkflowService:
                                 "rank": hit.rank,
                                 "score": hit.score,
                                 "section_id": hit.chunk.section_id,
+                                "document_id": hit.chunk.document_id,
                                 "heading": hit.chunk.heading,
                                 "text": hit.chunk.text,
                                 "source_url": hit.chunk.source_url,

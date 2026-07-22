@@ -108,6 +108,8 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .source-update > p, .source-update details p { color: #59655d; font-size: 12px; line-height: 1.6; }
 .source-update details { margin: 8px 0; }
 .source-update button { margin-top: 12px; }
+.impact-result { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; padding: 10px 12px; border-left: 3px solid #d1a63a; background: #f7f4e9; font-size: 12px; }
+.impact-result:empty { display: none; }
 .legal-confirm { display: block; margin-top: 14px; color: #26332b; }
 .legal-confirm input { display: inline; width: auto; margin: 0 7px 0 0; }
 .inline-status { align-self: center; color: #68756d; font-size: 12px; }
