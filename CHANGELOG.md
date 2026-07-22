@@ -5,6 +5,12 @@ and versions follow Semantic Versioning.
 
 ## [Unreleased]
 
+### Changed
+
+- Rebuilt the handoff and development guides as UTF-8, removed stale and contradictory project
+  states, and defined one source of truth for change history, current status, remaining work, data
+  evidence, and architecture decisions.
+
 ### Added
 
 - Repository governance with CI, pull-request templates, ownership, and release conventions.
