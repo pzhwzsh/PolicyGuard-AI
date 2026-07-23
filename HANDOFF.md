@@ -1,124 +1,81 @@
-# PolicyGuard AI 项目交接
+# Handoff
 
-> 最后核对：2026-07-23
->
-> 当前版本：`feat/batch-xlsx-review@c14f297`（本文更新前）
->
-> 项目阶段：本地工程验证；暂不部署公网
+Last updated: 2026-07-23
 
-## 1. 当前真实状态
+## Current state
 
-PolicyGuard AI 已形成一条可本地演示的跨境营销合规链路：官方来源采集与版本化、
-PDF/OCR 解析、跨语言检索、证据审核、受控 Agent 规划、最小化修改、人工复核、
-记忆失效、MCP 和管理控制台。
+- `main` contains the working API, management UI, RAG workflow, document ingestion, review flow,
+  remediation flow, Agent memory, MCP server, migrations, and CI.
+- Policy changes can be compared at section level and mapped to affected workflow evidence and
+  reviewed Agent memories; re-review jobs are idempotent and do not auto-activate legal content.
+- CSV/XLSX product files can be reviewed through resumable background jobs with bounded retries,
+  row-level workflow IDs, and formula-safe CSV exports.
+- SQLite is the default local database. PostgreSQL migration coverage runs in CI.
+- RapidOCR is the supported local OCR sidecar. Other parser sidecars are optional.
+- Downloaded policy versions remain staged until explicitly reviewed and activated.
+- Detailed dataset and evaluation status is maintained in `docs/DATA_CARD.md`.
 
-它还不是商业法律产品，也不能替代律师或合规人员作最终判断。
+## Open work
 
-| 项目 | 当前状态 |
-|---|---|
-| 官方来源 | 11 个 CN/US/EU 来源，16 个捕获版本，3,995 个解析 section |
-| 最新发布证据 | 11 个版本，3,439 个 section，位于 `data/evidence/v1` |
-| 已激活 RAG 真值 | 3 个文档 / 13 个 chunk |
-| 自动化测试 | 收集 113 项；本地 112 通过，PostgreSQL 用例无连接时跳过 |
-| 人工金标 | 0；待审核包 320 项，未伪造审核结果 |
-| 法律审核 | 0；下载和结构解析成功不等于法律激活 |
-| 部署 | 仅本地，公网部署不在当前范围 |
+### Data and evaluation
 
-详细数据口径见 `docs/DATA_CARD.md`，完成度审计见
-`docs/roadmap/project-completion-audit.md`。
+- Complete human review of retrieval, citation, PDF, and remediation evaluation samples.
+- Add a representative set of real complex-layout PDFs.
+- Re-run retrieval, abstention, citation, and remediation evaluation on a held-out reviewed set.
 
-## 2. 已完成的工程闭环
+### Knowledge lifecycle
 
-- 版本化官方来源、原文快照、内容哈希、差异检测和分阶段激活。
-- BM25、Dense、Hybrid RRF、Rerank、条件式 Query Rewrite 与拒答校准。
-- 中文问题检索英文法规：保留原查询，生成受约束改写，再通过 RRF 合并。
-- PDF 原生文本快路、OCR sidecar、表格/标题/图片占位结构和人工修订记录。
-- 确定性合规工作流、受预算约束的 Agent、Checkpoint、幂等与失败恢复。
-- 违规片段、引用条款、最小修改建议、受保护事实检查和修改后复检。
-- 仅写入人工批准案例的 Agent 记忆，以及法规版本变化后的记忆失效。
-- 条款级法规版本差异、历史工作流/记忆影响定位和幂等复审任务。
-- CSV/XLSX 批量审核、1000 行限制、逐行 checkpoint、有限重试与安全结果导出。
-- 无登录本地管理台、审核队列、MCP、Alembic、PostgreSQL CI 和外部服务冒烟检查。
-- 可复现实验与规模证据，但合成数据均明确标注为合成数据。
+- Review staged policy versions before activation.
+- Expand jurisdiction, category, channel, and platform-specific policy coverage.
 
-## 3. 尚未完成
+### Product workflow
 
-以下内容有代码入口或审核流程，不代表实际业务闭环已经完成：
+- Add image and video claim extraction with frame-level evidence.
+- Add retention and deletion controls for uploaded files and derived artifacts.
+- Add exportable review packages.
 
-### P0：验证证据仍需补齐
+### Runtime
 
-1. 由真实人员审核跨语言检索、PDF、引用和修改保真样本，形成独立金标集。
-2. 由具备资格的人审核并激活已暂存法规；当前不能把 3,439 个 section 都称为有效知识库。
-3. 使用独立留出集重新评估召回、拒答、引用正确性和语义保持，避免只报告开发集结果。
-4. 增加真实复杂 PDF，而不是只依赖合成 PDF 和一份 FTC PDF。
-5. 在 PostgreSQL 与真实并发任务环境中补充稳定性、恢复和资源使用证据。
+- Validate worker recovery and concurrency against PostgreSQL.
+- Replace SQLite for concurrent job execution where write contention is material.
+- Add operational monitoring for queues, parser failures, model calls, and source updates.
 
-### P1：产品能力
+## Known issues
 
-- 图片、视频广告中的 OCR、字幕、视觉声明和帧级引用。
-- 更完整的国家、品类、平台规则包及规则冲突矩阵。
-- 上传文件、解析结果、审核记录的保留与删除策略。
-- 可导出的完整审核包与不可变哈希。
+- Some official-source endpoints may return access controls or asynchronous responses.
+- Heavyweight PDF parser sidecars are not part of the default local environment.
+- External LLM, embedding, rerank, and OCR availability depends on local `.env` configuration.
+- Human review queues contain pending items; an empty decision must not be treated as approval.
 
-### 明确不做
-
-- 暂不公网部署，不做登录和多租户。
-- 不让 AI 自动作最终法律结论。
-- 不自动激活新抓取法规，不自动向外部平台发布修改结果。
-- 不把聊天历史当作无限记忆，不让 Agent 未经审核自行学习。
-
-## 4. 最近完成的更新
-
-截至当前功能分支：
-
-- 发布可审计的数据证据包和数据卡。
-- 增加 120 条隔离 RAG 问题、100 条工作流、100 条修改样本、20 份合成 PDF/200 页。
-- 增加 320 项空白人工审核包，明确当前人工审核数为 0。
-- 增加 SQLite 8 worker 压测，暴露写竞争问题。
-- 完成 Agent 上下文、受控记忆、跨语言查询、引用修改和机器约束。
-- 增加法规变更影响分析，并把受影响工作流和记忆送入幂等复审任务。
-- 增加 CSV/XLSX 批量审核、断点续跑、下载模板和公式注入安全的 CSV 导出。
-- 增加实际请求 P50/P95/P99、成功率、Token 与缓存遥测。
-- 精简 GitHub 首页；详细指标保留在数据卡和证据目录，不堆入 README。
-
-逐项提交历史以 `CHANGELOG.md` 和 Git commit 为准。
-
-## 5. 下一次开发建议
-
-后续开发优先级为：
-
-1. 先完成人工金标和真实 PDF 样本，解决“指标来自合成数据”的核心弱点。
-2. 补图片/视频多模态审核与帧级证据。
-3. 建立检索失败分类、人工评测流程和质量看板。
-4. 基于质量、延迟和成本数据实现模型路由；公网部署仍等用户明确授权。
-
-## 6. 本地接手
+## Local handoff
 
 ```powershell
 cd D:\DeskTop\PolicyGuard-AI
-python -m pip install -e ".[dev,pdf]"
+python -m pip install -e ".[dev,pdf,mcp]"
+Copy-Item .env.example .env
 alembic upgrade head
 $env:APP_ENV='test'
 $env:PYTHON_DOTENV_DISABLED='1'
-python -m pytest -q
+python -m pytest
 python -m ruff check .
+python -m policyguard.scripts.publish_data_evidence --validate
 python -m uvicorn policyguard.api.main:app --port 8002
 ```
 
-OCR 服务按需启动：
+Optional services:
 
 ```powershell
 docker compose -f deploy/parsers/compose.yml up -d rapidocr
+python -m policyguard.scripts.job_worker
+policyguard-mcp
 ```
 
-不要提交 `.env`、数据库、原始用户文件、密钥、提供商错误响应或机器本地路径。
+## References
 
-## 7. 交接维护规则
-
-每次功能合并后必须同步完成：
-
-1. 在 `CHANGELOG.md` 的 `[Unreleased]` 记录“本次改了什么”。
-2. 更新本文的当前状态、已完成项和未完成项；删除已经失效的描述。
-3. 若数据口径变化，更新 `docs/DATA_CARD.md` 和对应证据文件。
-4. 若技术决策、命令或开发约束变化，更新 `DEVELOPMENT.md` 或新增 ADR。
-5. 使用功能分支和可解释 commit；验证通过后再合并到 `main`。
+- Product overview: `README.md`
+- Environment variables: `.env.example`
+- Development setup and conventions: `DEVELOPMENT.md`
+- Change history: `CHANGELOG.md`
+- Data and evaluation status: `docs/DATA_CARD.md`
+- Git workflow: `docs/GIT_WORKFLOW.md`
+- Architecture decisions: `docs/adr/`

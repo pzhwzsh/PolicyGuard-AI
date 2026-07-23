@@ -4,16 +4,16 @@ Date: 2026-07-21
 
 ## Current maturity
 
-PolicyGuard AI is an interview-grade local engineering project with a complete demonstrable path:
-official-source ingestion, versioned RAG, cross-language retrieval, evidence review, bounded Agent
-planning, internal remediation drafts, controlled memory, PDF processing, MCP, and operations UI.
+PolicyGuard AI has a locally runnable engineering path covering official-source ingestion, versioned
+RAG, cross-language retrieval, evidence review, bounded Agent planning, internal remediation drafts,
+controlled memory, PDF processing, MCP, and operations UI.
 
 It is not yet a production legal-compliance product. “Complete” is evaluated at three different
 levels:
 
 | Target | Current estimate | Meaning |
 |---|---:|---|
-| Interview-grade local project | 85% | Architecture and core paths are demonstrable and measured. |
+| Local engineering prototype | 85% | Architecture and core paths are runnable and measured. |
 | Production single-tenant service | 55% | Persistence, migrations, observability, auth, and live SLO evidence remain incomplete. |
 | Commercial legal-compliance product | 25% | Jurisdiction coverage, legal validation, liability process, and continuous expert review are far larger than the software implementation. |
 
@@ -33,7 +33,7 @@ These percentages are engineering judgment, not measured product KPIs.
 - Local Jina is measured; BGE-M3 is not measured because the relay lacks `/embeddings` and the
   installed FastEmbed runtime does not support it.
 
-## P0: required before calling the interview project complete
+## P0: required before calling the engineering prototype complete
 
 The software paths for all seven items below are implemented. Items 1 and 2 deliberately remain
 operationally pending because code cannot substitute for a real reviewer or legal sign-off.

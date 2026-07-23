@@ -18,6 +18,8 @@ and versions follow Semantic Versioning.
 - Rebuilt the handoff and development guides as UTF-8, removed stale and contradictory project
   states, and defined one source of truth for change history, current status, remaining work, data
   evidence, and architecture decisions.
+- Removed repeated deployment-status wording from the internal handoff.
+- Removed audience-specific positioning language from engineering documentation.
 
 ### Added
 
