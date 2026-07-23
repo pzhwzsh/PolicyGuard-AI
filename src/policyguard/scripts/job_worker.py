@@ -5,6 +5,7 @@ from time import sleep
 
 import httpx
 
+from policyguard.application.batch_review import process_batch_review
 from policyguard.application.cellar import CellarClient
 from policyguard.application.document_ingestion import (
     configured_document_router,
@@ -121,6 +122,16 @@ def handle_reindex_embeddings(settings, session) -> dict:
     }
 
 
+def handle_batch_review(settings, session, payload: dict) -> dict:
+    upload_root = Path(settings.upload_dir).resolve()
+    input_path = Path(payload["path"]).resolve()
+    batch_root = (upload_root / "batches").resolve()
+    if batch_root not in input_path.parents or not input_path.is_file():
+        raise ValueError("batch_path_invalid")
+    output_dir = batch_root / payload["batch_id"]
+    return process_batch_review(session, input_path, output_dir)
+
+
 def main() -> None:
     args = parse_args()
     settings = get_settings()
@@ -131,7 +142,9 @@ def main() -> None:
         with database.session_factory() as session:
             queue = PersistentJobQueue(session)
             queue.requeue_stale()
-            job = queue.claim({"parse_document", "source_monitor", "reindex_embeddings"})
+            job = queue.claim({
+                "parse_document", "source_monitor", "reindex_embeddings", "batch_compliance_review"
+            })
             if job is None:
                 if args.max_jobs:
                     break
@@ -142,6 +155,8 @@ def main() -> None:
                     result = handle_parse_document(job.payload, settings)
                 elif job.job_type == "source_monitor":
                     result = handle_source_monitor(settings)
+                elif job.job_type == "batch_compliance_review":
+                    result = handle_batch_review(settings, session, job.payload)
                 else:
                     result = handle_reindex_embeddings(settings, session)
                 queue.complete(job.id, result)

@@ -31,6 +31,18 @@
       </form>
     </section>
 
+    <section class="batch-review">
+      <div class="section-heading">
+        <div><p>批量检查</p><h2>上传商品表格</h2></div>
+        <a class="button-link secondary" href="/api/v1/batches/template">下载模板</a>
+      </div>
+      <div class="batch-upload-row">
+        <label>CSV 或 XLSX 文件<input id="batch-file" type="file" accept=".csv,.xlsx"></label>
+        <button id="batch-upload-button" type="button">提交批量任务</button>
+      </div>
+      <div id="batch-status" class="batch-status" hidden></div>
+    </section>
+
     <section id="result-section" class="results" hidden>
       <div class="section-heading">
         <div><p>检查结果</p><h2 id="result-title">-</h2></div>

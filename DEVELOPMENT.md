@@ -43,7 +43,7 @@ FastAPI、SQLAlchemy 或具体 Agent 框架。
 复制 `.env.example` 为 `.env`，密钥只保存在本机：
 
 ```powershell
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,pdf]"
 alembic upgrade head
 python -m uvicorn policyguard.api.main:app --port 8002
 ```
@@ -58,10 +58,14 @@ docker compose -f deploy/parsers/compose.yml up -d rapidocr
 
 ```powershell
 $env:APP_ENV='test'
+$env:PYTHON_DOTENV_DISABLED='1'
 python -m pytest -q
 python -m ruff check .
 python -m compileall -q src
 ```
+
+`PYTHON_DOTENV_DISABLED=1` 用于防止测试读取本机 `.env` 中的真实模型配置；需要验证真实
+模型或外部服务时，使用单独的受控 smoke test。
 
 ## 5. 功能验收门槛
 

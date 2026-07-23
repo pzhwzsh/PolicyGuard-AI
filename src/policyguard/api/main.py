@@ -29,8 +29,6 @@ from policyguard import __version__
 from policyguard.api.schemas import (
     AgentMemoryResponse,
     AgentMemoryReviewRequest,
-    EvaluationReviewRequest,
-    EvaluationReviewResponse,
     BackgroundJobResponse,
     CheckResponse,
     ComplianceWorkflowRequest,
@@ -41,6 +39,8 @@ from policyguard.api.schemas import (
     DocumentParseResponse,
     DocumentWorkspaceResponse,
     DraftCreationRequest,
+    EvaluationReviewRequest,
+    EvaluationReviewResponse,
     HealthResponse,
     KnowledgeStatsResponse,
     MarketCompareRequest,
@@ -73,8 +73,8 @@ from policyguard.application.document_workspace import (
     document_workspace_payload,
 )
 from policyguard.application.embeddings import DenseRetriever, configured_embedding_provider
-from policyguard.application.evidence_support import configured_evidence_verifier
 from policyguard.application.evaluation_review import EvaluationReviewService
+from policyguard.application.evidence_support import configured_evidence_verifier
 from policyguard.application.hybrid import HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
@@ -103,10 +103,10 @@ from policyguard.domain.models import (
 )
 from policyguard.infrastructure.database import AuditLogRecord, Database
 from policyguard.infrastructure.repositories import (
+    SqlAlchemyAgentMemoryRepository,
     SqlAlchemyComplianceRepository,
     SqlAlchemyKnowledgeRepository,
     SqlAlchemyWorkflowRepository,
-    SqlAlchemyAgentMemoryRepository,
 )
 from policyguard.infrastructure.telemetry import (
     RuntimeMetric,
@@ -376,6 +376,66 @@ def create_app(database_url: str | None = None) -> FastAPI:
             result=job.result, attempts=job.attempts,
             max_attempts=job.max_attempts, error=job.error,
         )
+
+    @application.get("/api/v1/batches/template", tags=["batch-review"])
+    def batch_review_template() -> PlainTextResponse:
+        return PlainTextResponse(
+            "external_id,category,title,description,markets\n"
+            "SKU-001,beauty,商品标题,商品描述,CN\n",
+            media_type="text/csv; charset=utf-8",
+            headers={"Content-Disposition": 'attachment; filename="policyguard-template.csv"'},
+        )
+
+    @application.post(
+        "/api/v1/batches/review",
+        response_model=BackgroundJobResponse,
+        status_code=status.HTTP_202_ACCEPTED,
+        tags=["batch-review"],
+    )
+    async def enqueue_batch_review(
+        file: UploadFile = File(...),
+        session: Session = Depends(get_session),
+    ) -> BackgroundJobResponse:
+        suffix = Path(file.filename or "").suffix.lower()
+        if suffix not in {".csv", ".xlsx"}:
+            raise HTTPException(status_code=415, detail="batch_file_type_not_supported")
+        content = await file.read(5 * 1024 * 1024 + 1)
+        if len(content) > 5 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="batch_file_too_large")
+        digest = sha256(content).hexdigest()
+        batch_id = digest[:20]
+        inbox = Path(settings.upload_dir) / "batches" / "inbox"
+        inbox.mkdir(parents=True, exist_ok=True)
+        path = inbox / f"{digest}{suffix}"
+        if not path.exists():
+            path.write_bytes(content)
+        job = PersistentJobQueue(session).enqueue(
+            "batch_compliance_review",
+            {"batch_id": batch_id, "path": str(path.resolve()), "filename": file.filename},
+            idempotency_key=f"batch-review:{digest}",
+            max_attempts=5,
+        )
+        return BackgroundJobResponse(
+            id=job.id, job_type=job.job_type, status=job.status,
+            result=job.result, attempts=job.attempts,
+            max_attempts=job.max_attempts, error=job.error,
+        )
+
+    @application.get("/api/v1/batches/{job_id}/result", tags=["batch-review"])
+    def download_batch_result(
+        job_id: str,
+        session: Session = Depends(get_session),
+    ) -> FileResponse:
+        job = PersistentJobQueue(session).get(job_id)
+        if job is None or job.job_type != "batch_compliance_review":
+            raise HTTPException(status_code=404, detail="batch_job_not_found")
+        if job.status != "completed" or not job.result.get("output_path"):
+            raise HTTPException(status_code=409, detail="batch_result_not_ready")
+        path = Path(job.result["output_path"]).resolve()
+        batch_root = (Path(settings.upload_dir) / "batches").resolve()
+        if batch_root not in path.parents or not path.is_file():
+            raise HTTPException(status_code=404, detail="batch_result_not_found")
+        return FileResponse(path, media_type="text/csv", filename="policyguard-results.csv")
 
     def source_update_response(item: dict) -> SourceUpdateResponse:
         policy = json.loads(Path(item["policy_path"]).read_text(encoding="utf-8"))
