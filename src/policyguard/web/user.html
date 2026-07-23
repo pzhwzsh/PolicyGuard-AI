@@ -3,103 +3,187 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PolicyGuard AI</title>
+  <meta name="theme-color" content="#111827">
+  <title>PolicyGuard AI · 合规工作台</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
-  <header class="topbar">
-    <div><strong>PolicyGuard AI</strong><span>跨境营销内容审查</span></div>
-    <div id="service-status" class="status">服务检查中</div>
-  </header>
+<body class="product-body">
+  <div class="app-shell">
+    <aside class="product-sidebar">
+      <a class="brand-lockup" href="#overview" aria-label="PolicyGuard AI 首页">
+        <span class="brand-mark">P</span>
+        <span><strong>PolicyGuard</strong><small>AI Compliance</small></span>
+      </a>
+      <nav class="product-nav" aria-label="工作台导航">
+        <a class="active" href="#overview"><span>⌂</span>工作台</a>
+        <a href="#product-center"><span>◇</span>商品中心</a>
+        <a href="#content-review"><span>✓</span>内容审查</a>
+        <a href="#batch-tools"><span>▦</span>批量与媒体</a>
+        <a href="#creative-studio"><span>✦</span>合规创意</a>
+        <a href="#task-center"><span>↻</span>任务中心</a>
+        <a href="#system-readiness"><span>⌁</span>系统状态</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="security-note"><span>●</span><div><strong>安全边界已启用</strong><small>人工审批 · 全程审计</small></div></div>
+        <a href="/admin">进入管理控制台 →</a>
+      </div>
+    </aside>
 
-  <main class="user-main">
-    <section class="workspace user-workspace">
-      <div class="section-heading">
-        <div><p>内容审查</p><h1>检查营销内容在目标市场的风险</h1></div>
-        <button id="run-button" type="submit" form="review-form">开始检查</button>
-      </div>
-      <form id="review-form" class="form-grid">
-        <input name="external_id" type="hidden">
-        <label class="wide">商品类别<input name="category" placeholder="例如：美妆、保健食品、电子产品" required></label>
-        <label class="wide">商品标题<input name="title" placeholder="填写需要检查的商品标题" required></label>
-        <label class="wide">商品描述<textarea name="description" rows="6" placeholder="填写广告文案、商品描述或营销声明"></textarea></label>
-        <fieldset class="wide markets"><legend>目标市场</legend>
-          <label><input type="checkbox" name="markets" value="CN" checked> 中国</label>
-          <label><input type="checkbox" name="markets" value="US"> 美国</label>
-          <label><input type="checkbox" name="markets" value="EU"> 欧盟</label>
-        </fieldset>
-      </form>
-    </section>
-
-    <section class="batch-review">
-      <div class="section-heading">
-        <div><p>批量检查</p><h2>上传商品表格</h2></div>
-        <a class="button-link secondary" href="/api/v1/batches/template">下载模板</a>
-      </div>
-      <div class="batch-upload-row">
-        <label>CSV 或 XLSX 文件<input id="batch-file" type="file" accept=".csv,.xlsx"></label>
-        <button id="batch-upload-button" type="button">清洗并预览</button>
-      </div>
-      <div id="batch-status" class="batch-status" hidden></div>
-      <div id="batch-cleaning-preview" class="cleaning-preview" hidden></div>
-    </section>
-
-    <section class="batch-review">
-      <div class="section-heading">
-        <div><p>图片与视频</p><h2>提取画面中的营销声明</h2></div>
-      </div>
-      <div class="batch-upload-row">
-        <label>PNG、JPG、MP4 或 WebM<input id="media-file" type="file" accept=".png,.jpg,.jpeg,.mp4,.webm"></label>
-        <button id="media-upload-button" type="button">提交 OCR</button>
-      </div>
-      <div id="media-status" class="batch-status" hidden></div>
-      <p class="metric-footnote">视频每 2 秒采样一帧，最多 30 帧；结果保留时间戳并进入人工复核，不自动发布。</p>
-    </section>
-
-    <section class="batch-review creative-studio">
-      <div class="section-heading">
-        <div><p>合规创意</p><h2>广告语、商品主图与 SKU 图</h2></div>
-        <button id="create-creative-button" type="button">创建创意项目</button>
-      </div>
-      <div class="form-grid" id="creative-form">
-        <label>商品编号<input id="creative-external-id" value="SKU-DEMO-001"></label>
-        <label>商品名称<input id="creative-product-name" value="轻盈保温杯"></label>
-        <label>品类<input id="creative-category" value="all"></label>
-        <label>品牌<input id="creative-brand" value="Demo Brand"></label>
-        <label>平台<select id="creative-platform"><option value="amazon">Amazon</option><option value="tiktok_shop">TikTok Shop</option><option value="shopee">Shopee</option><option value="temu">Temu</option><option value="taobao">淘宝</option><option value="generic">通用</option></select></label>
-        <label>市场<select id="creative-market"><option value="CN">中国</option><option value="US">美国</option><option value="EU">欧盟</option></select></label>
-        <label>已验证事实名称<input id="creative-fact-name" value="容量"></label>
-        <label>已验证事实内容<input id="creative-fact-value" value="500ml"></label>
-        <label class="wide">事实证据编号或文件引用<input id="creative-fact-evidence" value="SPEC-2026-001"></label>
-        <label>SKU 编号<input id="creative-sku-id" value="WHITE-500"></label>
-        <label>SKU 名称<input id="creative-sku-label" value="白色 500ml"></label>
-      </div>
-      <div id="creative-project" class="cleaning-preview" hidden></div>
-    </section>
-
-    <section id="result-section" class="results" hidden>
-      <div class="section-heading">
-        <div><p>检查结果</p><h2 id="result-title">-</h2></div>
-        <div class="review-actions">
-          <a id="download-report" class="button-link secondary" href="#">下载报告</a>
-          <button id="reject-button" class="secondary" type="button">结果有误</button>
-          <button id="accept-button" type="button">确认风险依据</button>
+    <main class="product-main">
+      <header class="workspace-header">
+        <div>
+          <p class="eyebrow">跨境营销合规工作台</p>
+          <h1>早上好，开始今天的内容审查</h1>
+          <p>从商品事实到平台素材，每一步都有证据、边界和人工确认。</p>
         </div>
-      </div>
-      <div id="notice" class="notice"></div>
-      <div id="market-results"></div>
-      <div class="remediation-workbench">
-        <div class="section-heading compact">
-          <div><p>修改建议</p><h3>在保留原意的前提下降低风险</h3></div>
-          <div class="review-actions">
-            <button id="create-plan-button" type="button">生成修改建议</button>
-            <button id="create-draft-button" type="button">生成修改稿</button>
+        <div class="header-actions">
+          <span id="draft-state" class="draft-state">草稿已自动保存</span>
+          <span id="service-status" class="service-pill"><i></i>服务检查中</span>
+        </div>
+      </header>
+
+      <section id="overview" class="dashboard-section overview-section">
+        <div class="summary-grid">
+          <article><span class="metric-icon violet">◇</span><div><small>商品档案</small><strong id="summary-products">—</strong><p>可直接复用事实与 SKU</p></div></article>
+          <article><span class="metric-icon blue">↻</span><div><small>进行中任务</small><strong id="summary-active-jobs">—</strong><p>后台处理与自动重试</p></div></article>
+          <article><span class="metric-icon amber">!</span><div><small>待处理异常</small><strong id="summary-failed-jobs">—</strong><p>进入死信队列，可重放</p></div></article>
+          <article><span class="metric-icon green">✓</span><div><small>系统状态</small><strong id="summary-readiness">检查中</strong><p>模型缺失不会伪造结果</p></div></article>
+        </div>
+        <div class="guide-card">
+          <div class="guide-copy"><span>推荐流程</span><h2>第一次使用？跟着这 6 步走</h2><p>信息会自动保存。随时离开，回来后可以继续。</p></div>
+          <ol class="workflow-steps">
+            <li><b>1</b><span>建立商品<small>事实与 SKU</small></span></li>
+            <li><b>2</b><span>检查内容<small>定位风险</small></span></li>
+            <li><b>3</b><span>核对证据<small>人工确认</small></span></li>
+            <li><b>4</b><span>生成素材<small>文案与图片</small></span></li>
+            <li><b>5</b><span>发布前总检<small>红黄绿报告</small></span></li>
+            <li><b>6</b><span>审批导出<small>保留审计包</small></span></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="product-center" class="dashboard-section">
+        <div class="product-section-heading">
+          <div><p class="eyebrow">Product library</p><h2>商品中心</h2><p>保存经过验证的商品事实，后续审查和创意不用重复填写。</p></div>
+          <button id="new-product-button" class="button ghost" type="button">＋ 新建商品</button>
+        </div>
+        <div class="split-panel">
+          <form id="product-form" class="surface product-editor">
+            <input id="product-revision" type="hidden">
+            <div class="form-title"><div><span class="step-tag">基础档案</span><h3>商品与证据</h3></div><span id="product-save-state">尚未保存</span></div>
+            <div class="form-grid compact-grid">
+              <label>商品编号<input id="product-external-id" value="SKU-DEMO-001" required></label>
+              <label>商品名称<input id="product-name" value="轻盈保温杯" required></label>
+              <label>品类<input id="product-category" value="all" required></label>
+              <label>品牌<input id="product-brand" value="Demo Brand"></label>
+              <label>目标市场<select id="product-market"><option value="CN">中国</option><option value="US">美国</option><option value="EU">欧盟</option></select></label>
+              <label>目标平台<select id="product-platform"><option value="amazon">Amazon</option><option value="tiktok_shop">TikTok Shop</option><option value="shopee">Shopee</option><option value="temu">Temu</option><option value="taobao">淘宝</option><option value="generic">通用</option></select></label>
+              <label>事实名称<input id="product-fact-name" value="容量"></label>
+              <label>事实内容<input id="product-fact-value" value="500ml"></label>
+              <label class="wide">证据引用<input id="product-fact-evidence" value="SPEC-2026-001" placeholder="规格书、检测报告或内部证据编号"></label>
+              <label>SKU 编号<input id="product-sku-id" value="WHITE-500"></label>
+              <label>SKU 名称<input id="product-sku-label" value="白色 500ml"></label>
+              <label class="wide">备注<textarea id="product-notes" rows="3" placeholder="可选，不要填写客户隐私信息"></textarea></label>
+            </div>
+            <div class="form-footer"><span>保存时自动进行提示注入和隐私扫描</span><button id="save-product-button" type="submit">保存商品档案</button></div>
+          </form>
+          <div class="surface library-panel">
+            <div class="form-title"><div><span class="step-tag">已保存</span><h3>最近商品</h3></div><button id="refresh-products" class="icon-button" type="button" aria-label="刷新商品">↻</button></div>
+            <div id="product-list" class="product-list"><div class="empty-state"><b>◇</b><p>正在加载商品档案</p></div></div>
           </div>
         </div>
-        <div id="remediation-result"></div>
-      </div>
-    </section>
-  </main>
+      </section>
+
+      <section id="content-review" class="dashboard-section">
+        <div class="product-section-heading">
+          <div><p class="eyebrow">Evidence review</p><h2>内容合规审查</h2><p>确定性规则先行，RAG 只提供可追溯的候选依据。</p></div>
+          <button id="run-button" type="submit" form="review-form">开始检查 <span>→</span></button>
+        </div>
+        <form id="review-form" class="surface review-composer">
+          <input name="external_id" type="hidden">
+          <div class="composer-main">
+            <label>商品类别<input name="category" placeholder="例如：美妆、保健食品、电子产品" required></label>
+            <label>商品标题<input name="title" placeholder="填写需要检查的商品标题" required></label>
+            <label>商品描述<textarea name="description" rows="7" placeholder="填写广告文案、商品描述或营销声明"></textarea></label>
+          </div>
+          <aside class="composer-aside">
+            <fieldset class="markets"><legend>目标市场</legend>
+              <label><input type="checkbox" name="markets" value="CN" checked><span>CN</span>中国</label>
+              <label><input type="checkbox" name="markets" value="US"><span>US</span>美国</label>
+              <label><input type="checkbox" name="markets" value="EU"><span>EU</span>欧盟</label>
+            </fieldset>
+            <div id="text-safety-state" class="safety-box"><b>安全预检</b><p>输入内容会在提交前检查隐私信息和提示注入。</p></div>
+          </aside>
+        </form>
+      </section>
+
+      <section id="batch-tools" class="dashboard-section">
+        <div class="product-section-heading"><div><p class="eyebrow">Bulk tools</p><h2>批量与媒体工具</h2><p>上传先扫描，再进入清洗、OCR 和人工复核。</p></div></div>
+        <div class="tool-grid">
+          <article class="surface upload-tool">
+            <span class="tool-symbol blue">▦</span><div><h3>商品表格</h3><p>CSV / XLSX · 多 Sheet 表头识别 · 异常行报告</p></div>
+            <label class="drop-field">选择 CSV 或 XLSX<input id="batch-file" type="file" accept=".csv,.xlsx"></label>
+            <div class="tool-actions"><a href="/api/v1/batches/template">下载模板</a><button id="batch-upload-button" type="button">安全扫描并预览</button></div>
+            <div id="batch-status" class="batch-status" hidden></div>
+          </article>
+          <article class="surface upload-tool">
+            <span class="tool-symbol violet">◉</span><div><h3>图片与视频</h3><p>PNG / JPG / MP4 / WebM · 限帧 OCR · 时间戳溯源</p></div>
+            <label class="drop-field">选择图片或视频<input id="media-file" type="file" accept=".png,.jpg,.jpeg,.mp4,.webm"></label>
+            <div class="tool-actions"><span>最多 30 帧</span><button id="media-upload-button" type="button">安全扫描并提取</button></div>
+            <div id="media-status" class="batch-status" hidden></div>
+          </article>
+        </div>
+        <div id="batch-cleaning-preview" class="cleaning-preview" hidden></div>
+      </section>
+
+      <section id="creative-studio" class="dashboard-section">
+        <div class="product-section-heading">
+          <div><p class="eyebrow">Creative studio</p><h2>合规创意工作室</h2><p>只使用已验证事实，生成平台尺寸素材；永不自动发布。</p></div>
+          <button id="create-creative-button" type="button">生成创意方案 <span>✦</span></button>
+        </div>
+        <div class="surface creative-layout">
+          <div class="creative-intro"><span>AI 辅助，人工负责</span><h3>一套商品事实，多平台安全复用</h3><p>先生成可解释文案与真实原图模板，再选择是否调用身份保持场景模型。</p><ul><li>未经验证数字自动拦截</li><li>认证和专利必须带证据</li><li>场景图强制身份复核</li></ul></div>
+          <div class="form-grid compact-grid" id="creative-form">
+            <label>商品编号<input id="creative-external-id" value="SKU-DEMO-001"></label>
+            <label>商品名称<input id="creative-product-name" value="轻盈保温杯"></label>
+            <label>品类<input id="creative-category" value="all"></label>
+            <label>品牌<input id="creative-brand" value="Demo Brand"></label>
+            <label>平台<select id="creative-platform"><option value="amazon">Amazon</option><option value="tiktok_shop">TikTok Shop</option><option value="shopee">Shopee</option><option value="temu">Temu</option><option value="taobao">淘宝</option><option value="generic">通用</option></select></label>
+            <label>市场<select id="creative-market"><option value="CN">中国</option><option value="US">美国</option><option value="EU">欧盟</option></select></label>
+            <label>事实名称<input id="creative-fact-name" value="容量"></label>
+            <label>事实内容<input id="creative-fact-value" value="500ml"></label>
+            <label class="wide">事实证据<input id="creative-fact-evidence" value="SPEC-2026-001"></label>
+            <label>SKU 编号<input id="creative-sku-id" value="WHITE-500"></label>
+            <label>SKU 名称<input id="creative-sku-label" value="白色 500ml"></label>
+          </div>
+        </div>
+        <div id="creative-project" class="cleaning-preview" hidden></div>
+        <div id="preflight-panel" class="surface preflight-panel" hidden></div>
+      </section>
+
+      <section id="task-center" class="dashboard-section">
+        <div class="product-section-heading"><div><p class="eyebrow">Background jobs</p><h2>统一任务中心</h2><p>查看进度、重试次数、错误和可取消状态。</p></div><button id="refresh-tasks" class="button ghost" type="button">↻ 刷新</button></div>
+        <div id="task-list" class="surface task-list"><div class="empty-state"><b>↻</b><p>正在读取任务</p></div></div>
+      </section>
+
+      <section id="system-readiness" class="dashboard-section">
+        <div class="product-section-heading"><div><p class="eyebrow">System readiness</p><h2>系统自检</h2><p>缺失配置、容量风险和失败队列会直接显示，不会静默降级。</p></div><button id="refresh-readiness" class="button ghost" type="button">重新检查</button></div>
+        <div id="readiness-grid" class="readiness-grid"></div>
+      </section>
+
+      <section id="result-section" class="dashboard-section results" hidden>
+        <div class="product-section-heading">
+          <div><p class="eyebrow">Review result</p><h2 id="result-title">检查结果</h2></div>
+          <div class="review-actions"><a id="download-report" class="button-link secondary" href="#">下载报告</a><button id="reject-button" class="secondary" type="button">结果有误</button><button id="accept-button" type="button">确认风险依据</button></div>
+        </div>
+        <div class="surface result-surface"><div id="notice" class="notice"></div><div id="market-results"></div>
+          <div class="remediation-workbench"><div class="section-heading compact"><div><p>修改建议</p><h3>在保留原意的前提下降低风险</h3></div><div class="review-actions"><button id="create-plan-button" type="button">生成修改建议</button><button id="create-draft-button" type="button">生成修改稿</button></div></div><div id="remediation-result"></div></div>
+        </div>
+      </section>
+      <footer class="product-footer"><span>PolicyGuard AI · Evidence before automation</span><span>所有结果均需人工确认后使用</span></footer>
+    </main>
+  </div>
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
   <script src="/static/user.js"></script>
 </body>
 </html>

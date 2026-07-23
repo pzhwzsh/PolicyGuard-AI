@@ -27,7 +27,12 @@ const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => 
 async function api(path, options = {}) {
   const response = await fetch(path, {headers: {"Content-Type": "application/json"}, ...options});
   const body = await response.json();
-  if (!response.ok) throw new Error(body.detail || `HTTP ${response.status}`);
+  if (!response.ok) {
+    const detail = typeof body.detail === "string"
+      ? body.detail
+      : body.detail?.issues?.join("、") || JSON.stringify(body.detail || body);
+    throw new Error(detail || `HTTP ${response.status}`);
+  }
   return body;
 }
 
@@ -151,6 +156,7 @@ $("#create-draft-button").addEventListener("click", async () => {
 fetch("/health")
   .then((response) => {
     $("#service-status").textContent = response.ok ? "服务可用" : "服务异常";
+    $("#service-status").classList.toggle("ready", response.ok);
   })
   .catch(() => { $("#service-status").textContent = "服务异常"; });
 
@@ -370,7 +376,7 @@ function renderCreativeProject(project) {
     <div class="creative-copy-list">${copies}</div>
     ${project.assets?.length ? `<div class="creative-assets">${assets}</div>` : ""}
     ${project.status === "awaiting_source_image" ? `<div class="batch-upload-row"><label>上传真实商品原图<input id="creative-source-image" type="file" accept=".png,.jpg,.jpeg"></label><button id="upload-creative-source" type="button">生成主图和 SKU 图</button></div>` : ""}
-    ${project.status === "review_required" ? `<div class="cleaning-actions"><span>请核对商品身份、包装文字、SKU 属性和广告语。</span>${hasSceneCandidate ? "" : `<button id="generate-creative-scene" type="button">生成场景图（可选）</button>`}<button id="approve-creative-project" type="button">批准素材</button></div><p id="creative-scene-status" class="cleaning-note">${hasSceneCandidate ? "场景图待人工核对商品一致性，不会自动发布。" : "场景图需要配置兼容的图片编辑模型；未配置时会明确提示。"}</p>` : ""}
+    ${project.status === "review_required" ? `<div class="cleaning-actions"><span>请核对商品身份、包装文字、SKU 属性和广告语。</span><button id="run-creative-preflight" class="secondary" type="button">发布前总检</button>${hasSceneCandidate ? "" : `<button id="generate-creative-scene" type="button">生成场景图（可选）</button>`}<button id="approve-creative-project" type="button">批准素材</button></div><p id="creative-scene-status" class="cleaning-note">${hasSceneCandidate ? "场景图待人工核对商品一致性，不会自动发布。" : "场景图需要配置兼容的图片编辑模型；未配置时会明确提示。"}</p>` : ""}
     ${project.status === "approved" ? `<div class="cleaning-actions"><span>已通过人工审批，可导出带审计清单的素材包。</span><a class="button-link" href="/api/v1/creatives/${escapeHtml(project.project_id)}/package">下载素材包</a></div>` : ""}`;
 }
 
@@ -440,6 +446,14 @@ $("#creative-project").addEventListener("click", async (event) => {
     }
     return;
   }
+  const preflight = event.target.closest("#run-creative-preflight");
+  if (preflight && currentCreativeProject) {
+    preflight.disabled = true;
+    try { renderPreflight(await creativePreflight(currentCreativeProject)); }
+    catch (error) { showToast(error.message, "error"); }
+    finally { preflight.disabled = false; }
+    return;
+  }
   const approve = event.target.closest("#approve-creative-project");
   if (!approve || !currentCreativeProject) return;
   const approvedIndexes = Array.from(
@@ -461,3 +475,258 @@ $("#creative-project").addEventListener("click", async (event) => {
   } catch (error) { alert(error.message); }
   finally { approve.disabled = false; }
 });
+
+const experienceErrorLabels = {
+  product_revision_conflict: "商品档案已被其他操作更新，请刷新后再保存。",
+  product_expected_revision_required: "这个商品已存在，请先从右侧商品列表打开再编辑。",
+  product_prompt_injection_detected: "商品资料包含疑似提示注入内容，已阻止保存。",
+  tenant_active_job_limit_reached: "进行中的任务已达到容量上限，请等待、取消任务或稍后重试。",
+  job_not_cancellable: "任务已经开始或结束，当前不能取消。",
+  image_generation_provider_not_configured: "尚未配置场景图片模型，主图与 SKU 图仍可使用。"
+};
+
+function showToast(message, type = "success") {
+  const normalized = experienceErrorLabels[message] || message;
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.textContent = normalized;
+  $("#toast-region").appendChild(toast);
+  window.setTimeout(() => toast.remove(), 4200);
+}
+
+function productPayload() {
+  return {
+    external_id: $("#product-external-id").value.trim(),
+    name: $("#product-name").value.trim(),
+    category: $("#product-category").value.trim(),
+    brand: $("#product-brand").value.trim(),
+    markets: [$("#product-market").value],
+    platforms: [$("#product-platform").value],
+    verified_facts: [{
+      name: $("#product-fact-name").value.trim(),
+      value: $("#product-fact-value").value.trim(),
+      evidence_reference: $("#product-fact-evidence").value.trim() || null
+    }],
+    skus: [{
+      sku_id: $("#product-sku-id").value.trim(),
+      label: $("#product-sku-label").value.trim(),
+      attributes: {specification: $("#product-fact-value").value.trim()}
+    }],
+    notes: $("#product-notes").value.trim(),
+    expected_revision: $("#product-revision").value
+      ? Number($("#product-revision").value) : null
+  };
+}
+
+function applyProduct(product) {
+  const fact = product.verified_facts?.[0] || {};
+  const sku = product.skus?.[0] || {};
+  $("#product-external-id").value = product.external_id;
+  $("#product-name").value = product.name;
+  $("#product-category").value = product.category;
+  $("#product-brand").value = product.brand || "";
+  $("#product-market").value = product.markets?.[0] || "CN";
+  $("#product-platform").value = product.platforms?.[0] || "generic";
+  $("#product-fact-name").value = fact.name || "";
+  $("#product-fact-value").value = fact.value || "";
+  $("#product-fact-evidence").value = fact.evidence_reference || "";
+  $("#product-sku-id").value = sku.sku_id || "";
+  $("#product-sku-label").value = sku.label || "";
+  $("#product-notes").value = product.notes || "";
+  $("#product-revision").value = product.revision || "";
+  $("#product-save-state").textContent = `版本 ${product.revision} · 已载入`;
+  document.querySelector('[name="external_id"]').value = product.external_id;
+  document.querySelector('[name="category"]').value = product.category;
+  document.querySelector('[name="title"]').value = product.name;
+  $("#creative-external-id").value = product.external_id;
+  $("#creative-product-name").value = product.name;
+  $("#creative-category").value = product.category;
+  $("#creative-brand").value = product.brand || "";
+  $("#creative-market").value = product.markets?.[0] || "CN";
+  $("#creative-platform").value = product.platforms?.[0] || "generic";
+  $("#creative-fact-name").value = fact.name || "";
+  $("#creative-fact-value").value = fact.value || "";
+  $("#creative-fact-evidence").value = fact.evidence_reference || "";
+  $("#creative-sku-id").value = sku.sku_id || "";
+  $("#creative-sku-label").value = sku.label || "";
+  showToast("商品事实已同步到内容审查和创意工作室");
+}
+
+async function loadProducts() {
+  const products = await api("/api/v1/products");
+  $("#product-list").innerHTML = products.length ? products.map((product) => `
+    <article class="product-item" data-product-id="${escapeHtml(product.external_id)}">
+      <b>${escapeHtml((product.name || "P").slice(0, 1))}</b>
+      <div><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(product.external_id)} · ${escapeHtml(product.brand || "未填写品牌")} · v${product.revision}</small></div>
+      <span>›</span>
+    </article>`).join("") : `<div class="empty-state"><b>◇</b><p>还没有商品档案<br>从左侧保存第一件商品</p></div>`;
+  $("#summary-products").textContent = products.length;
+}
+
+$("#product-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = $("#save-product-button");
+  button.disabled = true;
+  try {
+    const payload = productPayload();
+    const safety = await api("/api/v1/safety/text-scan", {
+      method: "POST", body: JSON.stringify({content: JSON.stringify(payload)})
+    });
+    if (Object.keys(safety.pii || {}).length) {
+      throw new Error("发现手机号、邮箱或证件号，请脱敏后再保存。");
+    }
+    if (safety.prompt_injection?.length) throw new Error("发现疑似提示注入内容，已阻止保存。");
+    const product = await api(`/api/v1/products/${encodeURIComponent(payload.external_id)}`, {
+      method: "PUT", body: JSON.stringify(payload)
+    });
+    applyProduct(product);
+    $("#product-save-state").textContent = `版本 ${product.revision} · 刚刚保存`;
+    await loadProducts();
+  } catch (error) { showToast(error.message, "error"); }
+  finally { button.disabled = false; }
+});
+
+$("#product-list").addEventListener("click", async (event) => {
+  const item = event.target.closest("[data-product-id]");
+  if (!item) return;
+  try { applyProduct(await api(`/api/v1/products/${encodeURIComponent(item.dataset.productId)}`)); }
+  catch (error) { showToast(error.message, "error"); }
+});
+
+$("#new-product-button").addEventListener("click", () => {
+  $("#product-form").reset();
+  $("#product-revision").value = "";
+  $("#product-save-state").textContent = "新商品 · 尚未保存";
+  $("#product-external-id").focus();
+});
+$("#refresh-products").addEventListener("click", () => loadProducts().catch((error) => showToast(error.message, "error")));
+
+async function loadWorkspaceSummary() {
+  const summary = await api("/api/v1/workspace/summary");
+  $("#summary-products").textContent = summary.products;
+  $("#summary-active-jobs").textContent = `${summary.active_jobs}/${summary.capacity.active_jobs_limit}`;
+  $("#summary-failed-jobs").textContent = summary.failed_jobs;
+}
+
+const jobTypeLabels = {
+  parse_document: "文档解析", batch_compliance_review: "批量合规审查",
+  media_claim_extraction: "媒体声明提取", creative_scene_generation: "商品场景图",
+  model_evaluation: "模型评测", reindex_embeddings: "知识库重建",
+  source_monitor: "法规源监控"
+};
+
+async function loadTasks() {
+  const jobs = await api("/api/v1/jobs?limit=30");
+  $("#task-list").innerHTML = jobs.length ? jobs.map((job) => `
+    <article class="task-row">
+      <b>↻</b><div><strong>${escapeHtml(jobTypeLabels[job.job_type] || job.job_type)}</strong><small>${escapeHtml(job.id)}${job.error ? ` · ${escapeHtml(job.error)}` : ""}</small></div>
+      <span class="task-status ${escapeHtml(job.status)}">${escapeHtml(job.status)}</span>
+      <span>尝试 ${job.attempts}/${job.max_attempts}</span>
+      ${["queued", "retry"].includes(job.status) ? `<button class="secondary" data-cancel-job="${escapeHtml(job.id)}">取消</button>` : job.status === "failed" ? `<button data-retry-job="${escapeHtml(job.id)}">重试</button>` : ""}
+    </article>`).join("") : `<div class="empty-state"><b>✓</b><p>暂无后台任务</p></div>`;
+  await loadWorkspaceSummary();
+}
+
+$("#task-list").addEventListener("click", async (event) => {
+  const cancel = event.target.closest("[data-cancel-job]");
+  const retry = event.target.closest("[data-retry-job]");
+  if (!cancel && !retry) return;
+  const button = cancel || retry;
+  button.disabled = true;
+  try {
+    await api(`/api/v1/jobs/${cancel ? cancel.dataset.cancelJob : retry.dataset.retryJob}/${cancel ? "cancel" : "retry"}`, {method: "POST"});
+    showToast(cancel ? "任务已取消" : "任务已重新进入队列");
+    await loadTasks();
+  } catch (error) { showToast(error.message, "error"); button.disabled = false; }
+});
+$("#refresh-tasks").addEventListener("click", () => loadTasks().catch((error) => showToast(error.message, "error")));
+
+const readinessLabels = {
+  database: "数据库", storage: "存储空间", llm: "语言模型", image_generation: "图片模型",
+  ocr: "OCR 服务", authentication: "身份验证", worker_queue: "任务队列"
+};
+
+async function loadReadiness() {
+  const readiness = await api("/api/v1/readiness");
+  $("#summary-readiness").textContent = readiness.overall === "ready" ? "正常" : "需关注";
+  $("#readiness-grid").innerHTML = readiness.checks.map((item) => `
+    <article class="readiness-card"><header><strong>${escapeHtml(readinessLabels[item.component] || item.component)}</strong><i class="signal ${escapeHtml(item.status)}"></i></header><p>${escapeHtml(item.detail)}</p>${item.action ? `<p><b>建议：</b>${escapeHtml(item.action)}</p>` : ""}</article>`).join("");
+}
+$("#refresh-readiness").addEventListener("click", () => loadReadiness().catch((error) => showToast(error.message, "error")));
+
+async function creativePreflight(project) {
+  const selected = Array.from(document.querySelectorAll("input[data-copy-index]:checked"));
+  const index = selected.length ? Number(selected[0].dataset.copyIndex) : 0;
+  return api("/api/v1/publish-preflight", {
+    method: "POST",
+    body: JSON.stringify({
+      ...project.payload,
+      platform: project.payload.platform,
+      copy: project.copy_candidates[index]?.text || "",
+      assets: project.assets || []
+    })
+  });
+}
+
+function renderPreflight(report) {
+  const panel = $("#preflight-panel");
+  panel.hidden = false;
+  const decision = {ready: "可以进入人工审批", human_review: "存在待人工确认项", blocked: "发现阻断项"}[report.decision];
+  panel.innerHTML = `<div class="form-title"><div><span class="step-tag">Publish preflight</span><h3>${escapeHtml(decision)}</h3></div><span>${report.summary.red} 红 · ${report.summary.yellow} 黄 · ${report.summary.green} 绿</span></div><div class="preflight-grid">${report.checks.map((item) => `<article class="check-card"><header><strong>${escapeHtml(item.title)}</strong><i class="signal ${escapeHtml(item.status)}"></i></header><p>${escapeHtml(item.detail)}</p></article>`).join("")}</div><p class="cleaning-note">系统不会自动发布；通过总检后仍需人工确认商品身份、法规适用范围和平台规则。</p>`;
+  panel.scrollIntoView({behavior: "smooth", block: "center"});
+}
+
+const draftControls = Array.from(document.querySelectorAll("input, textarea, select"))
+  .filter((element) => element.id || element.name);
+let draftTimer = null;
+function saveDraft() {
+  const data = {};
+  draftControls.forEach((element) => {
+    const key = element.id || element.name;
+    if (element.type === "checkbox") data[key + ":" + element.value] = element.checked;
+    else if (element.type !== "file" && element.type !== "hidden") data[key] = element.value;
+  });
+  localStorage.setItem("policyguard-workspace-draft-v2", JSON.stringify(data));
+  $("#draft-state").textContent = "草稿刚刚自动保存";
+}
+function restoreDraft() {
+  try {
+    const data = JSON.parse(localStorage.getItem("policyguard-workspace-draft-v2") || "{}");
+    draftControls.forEach((element) => {
+      const key = element.id || element.name;
+      if (element.type === "checkbox" && Object.hasOwn(data, key + ":" + element.value)) element.checked = data[key + ":" + element.value];
+      else if (element.type !== "file" && element.type !== "hidden" && Object.hasOwn(data, key)) element.value = data[key];
+    });
+  } catch { localStorage.removeItem("policyguard-workspace-draft-v2"); }
+}
+draftControls.forEach((element) => element.addEventListener("input", () => {
+  clearTimeout(draftTimer);
+  $("#draft-state").textContent = "正在保存草稿…";
+  draftTimer = window.setTimeout(saveDraft, 500);
+}));
+
+const reviewText = document.querySelector('[name="description"]');
+let safetyTimer = null;
+reviewText.addEventListener("input", () => {
+  clearTimeout(safetyTimer);
+  safetyTimer = window.setTimeout(async () => {
+    if (!reviewText.value.trim()) return;
+    try {
+      const result = await api("/api/v1/safety/text-scan", {method: "POST", body: JSON.stringify({content: reviewText.value})});
+      const box = $("#text-safety-state");
+      box.classList.toggle("safe", result.safe_for_model);
+      box.innerHTML = result.safe_for_model
+        ? "<b>安全预检通过</b><p>未发现明显隐私信息或提示注入。</p>"
+        : `<b>需要处理</b><p>${result.prompt_injection.length ? "疑似提示注入；" : ""}${Object.keys(result.pii).length ? "请先移除个人敏感信息。" : ""}</p>`;
+    } catch { /* The submit endpoint remains the final enforcement point. */ }
+  }, 450);
+});
+
+document.querySelectorAll(".product-nav a").forEach((link) => link.addEventListener("click", () => {
+  document.querySelectorAll(".product-nav a").forEach((item) => item.classList.remove("active"));
+  link.classList.add("active");
+}));
+
+restoreDraft();
+Promise.all([loadProducts(), loadTasks(), loadReadiness()]).catch((error) => showToast(error.message, "error"));
+window.setInterval(() => loadTasks().catch(() => {}), 15000);

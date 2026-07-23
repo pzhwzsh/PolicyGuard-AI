@@ -24,7 +24,7 @@ from fastapi import (
 )
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from policyguard import __version__
@@ -57,6 +57,8 @@ from policyguard.api.schemas import (
     ModelPromotionRequest,
     OperationsDashboardResponse,
     ProductCheckRequest,
+    ProductWorkspaceRequest,
+    PublishPreflightRequest,
     RemediationPlanRequest,
     RetrieverStatusResponse,
     SearchHitResponse,
@@ -67,6 +69,7 @@ from policyguard.api.schemas import (
     TableCleaningConfirmationRequest,
     TableCleaningConfirmationResponse,
     TableCleaningPreviewResponse,
+    TextSafetyRequest,
     WorkflowReviewRequest,
 )
 from policyguard.application.agent import AgentBudget, ControlledAgent, configured_agent_planner
@@ -106,6 +109,13 @@ from policyguard.application.knowledge import BM25Retriever, ingest_source_direc
 from policyguard.application.llm import configured_claim_extractor
 from policyguard.application.media_ingestion import MEDIA_TYPES, validate_media
 from policyguard.application.policy_impact import analyze_policy_impact
+from policyguard.application.product_experience import (
+    ProductWorkspace,
+    publish_preflight,
+    scan_text_safety,
+    scan_upload,
+    system_readiness,
+)
 from policyguard.application.query_rewrite import (
     JsonQueryRewriteCache,
     configured_query_rewriter,
@@ -131,6 +141,7 @@ from policyguard.domain.models import (
 )
 from policyguard.infrastructure.database import (
     AuditLogRecord,
+    BackgroundJobRecord,
     Database,
     ResourceOwnershipRecord,
 )
@@ -287,6 +298,20 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 return
             raise HTTPException(status_code=404, detail=f"{resource_type}_not_found")
 
+    def ensure_job_capacity(session: Session, tenant: str) -> None:
+        owned_ids = select(ResourceOwnershipRecord.resource_id).where(
+            ResourceOwnershipRecord.resource_type == "job",
+            ResourceOwnershipRecord.tenant_id == tenant,
+        )
+        active = session.scalar(
+            select(func.count()).select_from(BackgroundJobRecord).where(
+                BackgroundJobRecord.status.in_(["queued", "retry", "running"]),
+                BackgroundJobRecord.id.in_(owned_ids),
+            )
+        )
+        if (active or 0) >= settings.max_active_jobs_per_tenant:
+            raise HTTPException(status_code=429, detail="tenant_active_job_limit_reached")
+
     def require_admin(x_admin_key: str = Header(default="")) -> None:
         if settings.admin_api_key and not hmac.compare_digest(
             x_admin_key, settings.admin_api_key
@@ -335,6 +360,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         content = await file.read(20 * 1024 * 1024 + 1)
         if len(content) > 20 * 1024 * 1024:
             raise HTTPException(status_code=413, detail="pdf_too_large")
+        intake = scan_upload(file.filename or "upload.pdf", content, max_bytes=20 * 1024 * 1024)
+        if intake["status"] == "blocked":
+            raise HTTPException(status_code=422, detail=intake)
         try:
             validate_pdf_safety(content)
         except ValueError as exc:
@@ -395,6 +423,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         raw_path = inbox / f"{digest}.pdf"
         if not raw_path.exists():
             raw_path.write_bytes(content)
+        ensure_job_capacity(session, tenant)
         job = PersistentJobQueue(session).enqueue(
             "parse_document",
             {
@@ -489,6 +518,55 @@ def create_app(database_url: str | None = None) -> FastAPI:
             max_attempts=job.max_attempts, error=job.error,
         )
 
+    @application.post(
+        "/api/v1/jobs/{job_id}/cancel",
+        response_model=BackgroundJobResponse,
+        tags=["jobs"],
+    )
+    def cancel_background_job(
+        job_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> BackgroundJobResponse:
+        require_resource(session, "job", job_id, tenant)
+        try:
+            job = PersistentJobQueue(session).cancel(job_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return BackgroundJobResponse(
+            id=job.id, job_type=job.job_type, status=job.status,
+            result=job.result, attempts=job.attempts,
+            max_attempts=job.max_attempts, error=job.error,
+        )
+
+    @application.get(
+        "/api/v1/dead-letter-jobs",
+        response_model=list[BackgroundJobResponse],
+        tags=["jobs"],
+    )
+    def list_dead_letter_jobs(
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> list[BackgroundJobResponse]:
+        owned_ids = set(session.scalars(
+            select(ResourceOwnershipRecord.resource_id).where(
+                ResourceOwnershipRecord.resource_type == "job",
+                ResourceOwnershipRecord.tenant_id == tenant,
+            )
+        ).all())
+        return [
+            BackgroundJobResponse(
+                id=job.id, job_type=job.job_type, status=job.status,
+                result=job.result, attempts=job.attempts,
+                max_attempts=job.max_attempts, error=job.error,
+            )
+            for job in PersistentJobQueue(session).list(200)
+            if job.status == "failed"
+            and ((not tenant_keys and tenant == "default") or job.id in owned_ids)
+        ]
+
     @application.get("/api/v1/batches/template", tags=["batch-review"])
     def batch_review_template() -> PlainTextResponse:
         return PlainTextResponse(
@@ -515,6 +593,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         content = await file.read(5 * 1024 * 1024 + 1)
         if len(content) > 5 * 1024 * 1024:
             raise HTTPException(status_code=413, detail="batch_file_too_large")
+        intake = scan_upload(file.filename or f"upload{suffix}", content, max_bytes=5 * 1024 * 1024)
+        if intake["status"] == "blocked":
+            raise HTTPException(status_code=422, detail=intake)
         digest = sha256(content).hexdigest()
         batch_id = sha256(f"{tenant}:{digest}".encode()).hexdigest()[:20]
         inbox = Path(settings.upload_dir) / "batches" / "inbox"
@@ -522,6 +603,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         path = inbox / f"{batch_id}{suffix}"
         if not path.exists():
             path.write_bytes(content)
+        ensure_job_capacity(session, tenant)
         job = PersistentJobQueue(session).enqueue(
             "batch_compliance_review",
             {"batch_id": batch_id, "path": str(path.resolve()), "filename": file.filename},
@@ -553,6 +635,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         content = await file.read(limit + 1)
         if len(content) > limit:
             raise HTTPException(status_code=413, detail="media_too_large")
+        intake = scan_upload(file.filename or f"upload{suffix}", content, max_bytes=limit)
+        if intake["status"] == "blocked":
+            raise HTTPException(status_code=422, detail=intake)
         try:
             validate_media(content, suffix)
         except ValueError as exc:
@@ -564,6 +649,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         path = inbox / f"original{suffix}"
         if not path.exists():
             path.write_bytes(content)
+        ensure_job_capacity(session, tenant)
         job = PersistentJobQueue(session).enqueue(
             "media_claim_extraction",
             {"path": str(path.resolve()), "filename": file.filename, "tenant_id": tenant},
@@ -576,6 +662,126 @@ def create_app(database_url: str | None = None) -> FastAPI:
             result=job.result, attempts=job.attempts,
             max_attempts=job.max_attempts, error=job.error,
         )
+
+    @application.get("/api/v1/readiness", tags=["experience"])
+    def readiness(
+        session: Session = Depends(get_session),
+        _: str = Depends(tenant_identity),
+    ) -> dict:
+        return system_readiness(settings, session)
+
+    @application.get("/api/v1/workspace/summary", tags=["experience"])
+    def workspace_summary(
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        products = ProductWorkspace(Path(settings.upload_dir), tenant).list()
+        jobs = PersistentJobQueue(session).list(limit=100)
+        owned_job_ids = set(
+            session.scalars(
+                select(ResourceOwnershipRecord.resource_id).where(
+                    ResourceOwnershipRecord.resource_type == "job",
+                    ResourceOwnershipRecord.tenant_id == tenant,
+                )
+            ).all()
+        )
+        tenant_jobs = [job for job in jobs if job.id in owned_job_ids]
+        return {
+            "products": len(products),
+            "active_jobs": sum(job.status in {"queued", "retry", "running"} for job in tenant_jobs),
+            "failed_jobs": sum(job.status == "failed" for job in tenant_jobs),
+            "recent_products": products[:5],
+            "capacity": {
+                "active_jobs": sum(
+                    job.status in {"queued", "retry", "running"}
+                    for job in tenant_jobs
+                ),
+                "active_jobs_limit": settings.max_active_jobs_per_tenant,
+                "max_upload_bytes": settings.max_upload_bytes,
+            },
+        }
+
+    @application.get("/api/v1/products", tags=["product-center"])
+    def list_products(tenant: str = Depends(tenant_identity)) -> list[dict]:
+        return ProductWorkspace(Path(settings.upload_dir), tenant).list()
+
+    @application.get("/api/v1/products/{external_id}", tags=["product-center"])
+    def get_product(
+        external_id: str,
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        try:
+            return ProductWorkspace(Path(settings.upload_dir), tenant).get(external_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    @application.put("/api/v1/products/{external_id}", tags=["product-center"])
+    def save_product(
+        external_id: str,
+        payload: ProductWorkspaceRequest,
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        if external_id != payload.external_id:
+            raise HTTPException(status_code=422, detail="product_identifier_mismatch")
+        content = payload.model_dump(exclude={"expected_revision"})
+        safety = scan_text_safety(content)
+        if safety["prompt_injection"]:
+            raise HTTPException(status_code=422, detail="product_prompt_injection_detected")
+        try:
+            return ProductWorkspace(Path(settings.upload_dir), tenant).save(
+                content, payload.expected_revision
+            )
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    @application.delete("/api/v1/products/{external_id}", tags=["product-center"])
+    def delete_product(
+        external_id: str,
+        expected_revision: int = Query(ge=1),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        try:
+            return ProductWorkspace(Path(settings.upload_dir), tenant).delete(
+                external_id, expected_revision
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @application.post("/api/v1/safety/text-scan", tags=["safety"])
+    def text_safety_scan(
+        payload: TextSafetyRequest,
+        _: str = Depends(tenant_identity),
+    ) -> dict:
+        return scan_text_safety(payload.content)
+
+    @application.post("/api/v1/safety/upload-scan", tags=["safety"])
+    async def upload_safety_scan(
+        file: UploadFile = File(...),
+        _: str = Depends(tenant_identity),
+    ) -> dict:
+        content = await file.read(settings.max_upload_bytes + 1)
+        result = scan_upload(
+            file.filename or "upload", content, max_bytes=settings.max_upload_bytes
+        )
+        if result["status"] == "blocked":
+            raise HTTPException(status_code=422, detail=result)
+        return result
+
+    @application.post("/api/v1/publish-preflight", tags=["creative-studio"])
+    def run_publish_preflight(
+        payload: PublishPreflightRequest,
+        _: str = Depends(tenant_identity),
+    ) -> dict:
+        try:
+            return publish_preflight(payload.model_dump(by_alias=True))
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     @application.post(
         "/api/v1/creatives",
@@ -732,6 +938,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             raise HTTPException(status_code=409, detail="creative_project_revision_conflict")
         if project["status"] != "review_required" or not project.get("source_image"):
             raise HTTPException(status_code=409, detail="creative_source_image_required")
+        ensure_job_capacity(session, tenant)
         job = PersistentJobQueue(session).enqueue(
             "creative_scene_generation",
             {"project_id": project_id, "expected_revision": expected_revision},
@@ -858,6 +1065,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         manifest = confirmed["manifest"]
+        ensure_job_capacity(session, tenant)
         job = PersistentJobQueue(session).enqueue(
             "batch_compliance_review",
             {
@@ -1544,6 +1752,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             "dataset": str(dataset_path), "candidates": candidates,
             "top_k": payload.top_k, "thresholds": thresholds,
         }, sort_keys=True).encode()).hexdigest()
+        ensure_job_capacity(session, tenant)
         job = PersistentJobQueue(session).enqueue(
             "model_evaluation",
             {
