@@ -64,16 +64,15 @@ Last updated: 2026-07-23
 
 ### Product workflow
 
-- Add image and video claim extraction with frame-level evidence.
-- Extend retention/deletion controls from staged PDF workspaces to batch CSV/XLSX inputs and
-  exported review results.
-- Add exportable review packages.
+- Connect reviewed image/video OCR frames to the same claim-to-policy evidence workflow; the media
+  sidecar and frame provenance are present, but multimodal semantic claim matching still needs a
+  reviewed evaluation set.
 
 ### Runtime
 
 - Validate worker recovery and concurrency against PostgreSQL.
 - Replace SQLite for concurrent job execution where write contention is material.
-- Add operational monitoring for queues, parser failures, model calls, and source updates.
+- Connect the dashboard alert payload to the deployment's external pager/notification channel.
 
 ## Known issues
 
@@ -99,6 +98,8 @@ python -m policyguard.scripts.publish_data_evidence --validate
 python -m policyguard.scripts.audit_pdf_corpus
 # Preview staged uploads older than 30 days; add --apply only after reviewing the list.
 python -m policyguard.scripts.cleanup_uploads --days 30
+# Batch retention is inventory-only; actual deletion requires the authenticated two-stage API.
+python -m policyguard.scripts.cleanup_batches --days 30
 # After creating a private reviewed holdout file:
 # python -m policyguard.scripts.audit_holdout data/evaluation/holdout-v1.json `
 #   --development data/evaluation/rag-baseline.json data/evaluation/rag-hard-v1.json
@@ -109,6 +110,7 @@ Optional services:
 
 ```powershell
 docker compose -f deploy/parsers/compose.yml up -d rapidocr
+docker compose -f docker-compose.prod.yml up -d --build
 python -m policyguard.scripts.job_worker
 policyguard-mcp
 ```

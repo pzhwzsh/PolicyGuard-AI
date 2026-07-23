@@ -149,9 +149,13 @@ class OpenAICompatibleQueryRewriter:
             policy=self.retry_policy,
         )
         payload = response.json()
-        return self.parse(payload["choices"][0]["message"].get("content", ""), items), payload.get(
-            "usage", {}
-        )
+        usage = {
+            **payload.get("usage", {}),
+            "provider_attempts": response.extensions.get("policyguard_attempts", 1),
+        }
+        return self.parse(
+            payload["choices"][0]["message"].get("content", ""), items
+        ), usage
 
     @staticmethod
     def parse(content: str, items: list[dict]) -> list[RewrittenQuery]:

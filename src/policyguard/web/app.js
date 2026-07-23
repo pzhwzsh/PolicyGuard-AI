@@ -312,6 +312,17 @@ async function loadOperations() {
   const pdfScale = dashboard.performance?.pdf || {};
   latestRuntime = dashboard.performance?.runtime || {};
   renderRuntimeWindow($("#runtime-window").value);
+  const live24h = latestRuntime.windows?.["24h"] || {};
+  const queue = latestRuntime.queue || {};
+  const alerts = latestRuntime.alerts || [];
+  $("#ops-fallback-rate").textContent = `${(Number(live24h.fallback_rate || 0) * 100).toFixed(1)}%`;
+  $("#ops-queue-depth").textContent = queue.depth ?? 0;
+  $("#ops-oldest-job").textContent = `最老等待 ${Number(queue.oldest_waiting_seconds || 0).toFixed(0)} 秒`;
+  $("#ops-retry-rate").textContent = `${(Number(live24h.provider_retry_rate || 0) * 100).toFixed(1)}%`;
+  $("#ops-job-retry-rate").textContent = `后台任务重试 ${(Number(queue.retry_rate || 0) * 100).toFixed(1)}%`;
+  $("#ops-alert-count").textContent = alerts.length;
+  $("#ops-alert-codes").textContent = alerts.map((item) => item.code).join("、") || "当前无告警";
+  $("#ops-model-cost").textContent = `$${Number(dashboard.performance?.cost?.estimated_cost_usd || 0).toFixed(4)}`;
   const formatMs = (value) => Number.isFinite(Number(value)) ? `${Number(value).toFixed(1)} ms` : "-";
   const formatRate = (value) => Number.isFinite(Number(value)) ? Number(value).toFixed(2) : "-";
   $("#perf-p50").textContent = formatMs(concurrent.p50_latency_ms);
@@ -331,6 +342,49 @@ async function loadOperations() {
     $("#bar-" + key).style.width = `${Math.max((Number(value) || 0) / ceiling * 100, 2)}%`;
   });
 }
+
+async function pollModelEvaluation(jobId) {
+  const target = $("#model-evaluation-result");
+  for (let index = 0; index < 120; index += 1) {
+    const job = await api(`/api/v1/jobs/${jobId}`);
+    target.innerHTML = `<p>任务 ${escapeHtml(job.status)} · 尝试 ${job.attempts}/${job.max_attempts}</p>`;
+    if (job.status === "completed") {
+      const result = job.result || {};
+      target.innerHTML = (result.results || []).map((row) => `
+        <article class="metric-card"><strong>${escapeHtml(row.model)}</strong>
+        <p>Hit@5 ${escapeHtml(row.hit_rate_at_k)} · MRR ${escapeHtml(row.mean_reciprocal_rank)} · ${escapeHtml(row.latency_ms)} ms · $${escapeHtml(row.estimated_cost_usd)}</p>
+        <small>${escapeHtml(row.status)}${row.error ? ` · ${escapeHtml(row.error)}` : ""}</small></article>`).join("")
+        + `<p class="notice">推荐：${escapeHtml(result.recommended_model || "无模型达到阈值")}；状态：${escapeHtml(result.promotion_status)}</p>`;
+      return;
+    }
+    if (job.status === "failed") {
+      target.innerHTML = `<p class="notice">评测失败：${escapeHtml(job.error)}</p>`;
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  target.innerHTML = "<p class=\"notice\">评测仍在后台运行，可稍后刷新任务列表。</p>";
+}
+
+$("#run-model-evaluation").addEventListener("click", async () => {
+  const button = $("#run-model-evaluation");
+  button.disabled = true;
+  try {
+    const candidates = $("#evaluation-models").value.split(",").map((item) => item.trim()).filter(Boolean);
+    const job = await api("/api/v1/evaluations/models", {
+      method: "POST",
+      body: JSON.stringify({
+        dataset: $("#evaluation-dataset").value.trim(), candidates, top_k: 5,
+        min_hit_rate_at_k: Number($("#evaluation-min-hit").value),
+        min_mrr: Number($("#evaluation-min-mrr").value),
+        max_latency_ms: Number($("#evaluation-max-latency").value)
+      })
+    });
+    await pollModelEvaluation(job.id);
+    await loadOperations();
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});
 
 $("#job-list").addEventListener("click", async (event) => {
   const button = event.target.closest(".retry-job");

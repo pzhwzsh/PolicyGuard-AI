@@ -298,3 +298,35 @@ $("#batch-cleaning-preview").addEventListener("click", async (event) => {
 $("#batch-cleaning-preview").addEventListener("change", (event) => {
   if (event.target.matches("select[data-column]")) validateMappingSelections();
 });
+
+async function pollMedia(jobId, attempts = 0) {
+  const job = await api(`/api/v1/jobs/${jobId}`);
+  const target = $("#media-status");
+  target.hidden = false;
+  target.innerHTML = `<strong>媒体 OCR</strong><span>${escapeHtml(job.status)} · 已尝试 ${escapeHtml(job.attempts)}/${escapeHtml(job.max_attempts)}</span>`;
+  if (job.status === "completed") {
+    target.innerHTML += `<span>${escapeHtml(job.result.frame_count || 0)} 个采样帧 · 等待人工复核</span>`;
+    return;
+  }
+  if (job.status === "failed" || attempts >= 180) {
+    target.innerHTML += `<span>${escapeHtml(job.error || "处理超时")}</span>`;
+    return;
+  }
+  window.setTimeout(() => pollMedia(jobId, attempts + 1).catch(() => {}), 1000);
+}
+
+$("#media-upload-button").addEventListener("click", async () => {
+  const file = $("#media-file").files[0];
+  if (!file) { alert("请先选择图片或视频文件"); return; }
+  const button = $("#media-upload-button");
+  const form = new FormData();
+  form.append("file", file);
+  button.disabled = true;
+  try {
+    const response = await fetch("/api/v1/media/claims", {method: "POST", body: form});
+    const job = await response.json();
+    if (!response.ok) throw new Error(job.detail || `HTTP ${response.status}`);
+    await pollMedia(job.id);
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});

@@ -7,7 +7,18 @@ from statistics import mean
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
-from policyguard.infrastructure.database import RuntimeMetricRecord, WorkflowEventRecord
+from policyguard.infrastructure.database import (
+    BackgroundJobRecord,
+    RuntimeMetricRecord,
+    WorkflowEventRecord,
+)
+
+FALLBACK_STEPS = {
+    "claim_extraction_fallback",
+    "retrieval_fallback",
+    "query_rewrite_fallback",
+    "evidence_support_fallback",
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -111,11 +122,28 @@ def _window_summary(
     token_total = 0
     cache_hits = 0
     cache_misses = 0
+    fallback_events = 0
+    degraded_events = 0
+    failed_events = 0
+    model_calls = 0
+    provider_attempts = 0
+    models: dict[str, dict[str, int]] = {}
     for event in selected_events:
         detail = event.detail or {}
         token_total += int(detail.get("total_tokens", 0) or 0)
         cache_hits += int(detail.get("cache_hits", 0) or 0)
         cache_misses += int(detail.get("cache_misses", 0) or 0)
+        fallback_events += int(event.step in FALLBACK_STEPS or detail.get("fallback_used") is True)
+        degraded_events += int(event.status == "degraded")
+        failed_events += int(event.status == "failed")
+        model = str(detail.get("model") or detail.get("selected_model") or "").strip()
+        if model:
+            model_calls += 1
+            provider_attempts += int(detail.get("provider_attempts", 1) or 1)
+            bucket = models.setdefault(model, {"calls": 0, "tokens": 0, "fallback_calls": 0})
+            bucket["calls"] += 1
+            bucket["tokens"] += int(detail.get("total_tokens", 0) or 0)
+            bucket["fallback_calls"] += int(detail.get("fallback_used") is True)
     return {
         "hours": hours,
         "request_count": len(selected),
@@ -128,6 +156,17 @@ def _window_summary(
         "total_tokens": token_total,
         "cache_hits": cache_hits,
         "cache_misses": cache_misses,
+        "model_calls": model_calls,
+        "provider_attempts": provider_attempts,
+        "provider_retry_count": max(provider_attempts - model_calls, 0),
+        "provider_retry_rate": round(
+            max(provider_attempts - model_calls, 0) / provider_attempts, 4
+        ) if provider_attempts else 0.0,
+        "fallback_events": fallback_events,
+        "fallback_rate": round(fallback_events / model_calls, 4) if model_calls else 0.0,
+        "degraded_events": degraded_events,
+        "failed_events": failed_events,
+        "models": models,
     }
 
 
@@ -154,17 +193,73 @@ def runtime_summary(session: Session, *, now: datetime | None = None) -> dict:
             .limit(50_000)
         ).all()
     )
+    jobs = list(session.scalars(select(BackgroundJobRecord)).all())
+    waiting = [item for item in jobs if item.status in {"queued", "retry"}]
+    retry_count = sum(max(item.attempts - 1, 0) for item in jobs)
+    attempted = sum(item.attempts for item in jobs)
+    failures = [item for item in jobs if item.status == "failed"]
+    recent_failures = [
+        {
+            "job_id": item.id,
+            "job_type": item.job_type,
+            "attempts": item.attempts,
+            "error": item.error,
+            "updated_at": _utc(item.updated_at).isoformat(),
+        }
+        for item in sorted(failures, key=lambda value: _utc(value.updated_at), reverse=True)[:10]
+    ]
+    queue = {
+        "depth": len(waiting),
+        "oldest_waiting_seconds": round(
+            max((current - _utc(item.created_at)).total_seconds() for item in waiting), 1
+        ) if waiting else 0.0,
+        "retry_count": retry_count,
+        "retry_rate": round(retry_count / attempted, 4) if attempted else 0.0,
+        "final_failure_count": len(failures),
+        "recent_failures": recent_failures,
+    }
+    windows = {
+        "1h": _window_summary(metrics, events, since=current - timedelta(hours=1), hours=1),
+        "24h": _window_summary(metrics, events, since=current - timedelta(hours=24), hours=24),
+        "7d": _window_summary(metrics, events, since=current - timedelta(days=7), hours=168),
+    }
+    alerts = []
+    if queue["oldest_waiting_seconds"] > 300:
+        alerts.append({"severity": "warning", "code": "queue_wait_excessive"})
+    if queue["final_failure_count"]:
+        alerts.append({"severity": "critical", "code": "background_jobs_failed"})
+    if windows["1h"]["fallback_rate"] > 0.25:
+        alerts.append({"severity": "warning", "code": "provider_fallback_rate_high"})
     return {
         "generated_at": current.isoformat(),
-        "windows": {
-            "1h": _window_summary(
-                metrics, events, since=current - timedelta(hours=1), hours=1
-            ),
-            "24h": _window_summary(
-                metrics, events, since=current - timedelta(hours=24), hours=24
-            ),
-            "7d": _window_summary(
-                metrics, events, since=current - timedelta(days=7), hours=168
-            ),
-        },
+        "windows": windows,
+        "queue": queue,
+        "alerts": alerts,
+    }
+
+
+def estimated_model_cost(
+    runtime: dict,
+    *,
+    model_prices_per_million: dict[str, float],
+) -> dict:
+    models = runtime.get("windows", {}).get("24h", {}).get("models", {})
+    estimated = 0.0
+    unknown = []
+    breakdown = []
+    for model, usage in models.items():
+        price = model_prices_per_million.get(model)
+        if price is None:
+            unknown.append(model)
+            cost = None
+        else:
+            cost = usage["tokens"] * price / 1_000_000
+            estimated += cost
+        breakdown.append({"model": model, **usage, "estimated_cost_usd": cost})
+    return {
+        "window": "24h",
+        "estimated_cost_usd": round(estimated, 6),
+        "method": "provider_total_tokens_priced_as_input_tokens",
+        "unknown_price_models": unknown,
+        "breakdown": breakdown,
     }

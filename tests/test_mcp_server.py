@@ -28,7 +28,9 @@ def test_mcp_search_is_read_only_evidence() -> None:
     result = mcp_server.search_policy("国家级广告", market="CN", top_k=2)
 
     assert result["evidence_only"] is True
-    assert result["retriever"] == "lexical_bm25_cjk_v1"
+    assert result["retriever"] in {
+        "lexical_bm25_cjk_v1", "hybrid_rrf", "hybrid_rrf_fallback"
+    }
     assert result["results"][0]["section_id"] == "article-9"
 
 

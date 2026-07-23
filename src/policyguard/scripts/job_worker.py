@@ -15,13 +15,15 @@ from policyguard.application.embeddings import (
     configured_embedding_chain,
     index_missing_embeddings,
 )
+from policyguard.application.evaluation_workbench import run_retrieval_evaluation
 from policyguard.application.jobs import PersistentJobQueue
+from policyguard.application.media_ingestion import parse_media_with_sidecar, stage_media_result
 from policyguard.application.provider_http import is_transient_provider_error
 from policyguard.application.source_monitor import OfficialSourceMonitor
 from policyguard.application.source_registry import load_source_registry
 from policyguard.application.source_updates import stage_source_snapshot
 from policyguard.config import get_settings
-from policyguard.infrastructure.database import Database
+from policyguard.infrastructure.database import Database, ResourceOwnershipRecord
 from policyguard.infrastructure.repositories import SqlAlchemyKnowledgeRepository
 
 
@@ -142,6 +144,31 @@ def handle_batch_review(settings, session, payload: dict) -> dict:
     return process_batch_review(session, input_path, output_dir)
 
 
+def handle_model_evaluation(session, payload: dict) -> dict:
+    return run_retrieval_evaluation(
+        session,
+        root=Path(__file__).parents[3],
+        dataset=payload["dataset"],
+        candidates=payload["candidates"],
+        top_k=payload["top_k"],
+        thresholds=payload["thresholds"],
+    )
+
+
+def handle_media_claim_extraction(settings, payload: dict) -> dict:
+    upload_root = Path(settings.upload_dir).resolve()
+    path = Path(payload["path"]).resolve()
+    inbox = (upload_root / "media" / "inbox").resolve()
+    if inbox not in path.parents or not path.is_file():
+        raise ValueError("media_path_invalid")
+    result = parse_media_with_sidecar(
+        path,
+        base_url=settings.rapidocr_base_url,
+        api_key=settings.document_parser_api_key,
+    )
+    return stage_media_result(upload_root, path, result)
+
+
 def main() -> None:
     args = parse_args()
     settings = get_settings()
@@ -153,7 +180,9 @@ def main() -> None:
             queue = PersistentJobQueue(session)
             queue.requeue_stale()
             job = queue.claim({
-                "parse_document", "source_monitor", "reindex_embeddings", "batch_compliance_review"
+                "parse_document", "source_monitor", "reindex_embeddings",
+                "batch_compliance_review", "model_evaluation",
+                "media_claim_extraction",
             })
             if job is None:
                 if args.max_jobs:
@@ -163,10 +192,32 @@ def main() -> None:
             try:
                 if job.job_type == "parse_document":
                     result = handle_parse_document(job.payload, settings)
+                    tenant_id = job.payload.get("tenant_id")
+                    ownership_key = ("document", result["document_id"], tenant_id)
+                    if tenant_id and session.get(ResourceOwnershipRecord, ownership_key) is None:
+                        session.add(ResourceOwnershipRecord(
+                            resource_type="document",
+                            resource_id=result["document_id"],
+                            tenant_id=tenant_id,
+                        ))
+                        session.commit()
                 elif job.job_type == "source_monitor":
                     result = handle_source_monitor(settings)
                 elif job.job_type == "batch_compliance_review":
                     result = handle_batch_review(settings, session, job.payload)
+                elif job.job_type == "model_evaluation":
+                    result = handle_model_evaluation(session, job.payload)
+                elif job.job_type == "media_claim_extraction":
+                    result = handle_media_claim_extraction(settings, job.payload)
+                    tenant_id = job.payload.get("tenant_id")
+                    ownership_key = ("media", result["media_id"], tenant_id)
+                    if tenant_id and session.get(ResourceOwnershipRecord, ownership_key) is None:
+                        session.add(ResourceOwnershipRecord(
+                            resource_type="media",
+                            resource_id=result["media_id"],
+                            tenant_id=tenant_id,
+                        ))
+                        session.commit()
                 else:
                     result = handle_reindex_embeddings(settings, session)
                 queue.complete(job.id, result)

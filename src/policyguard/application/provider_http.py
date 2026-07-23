@@ -74,6 +74,7 @@ def post_with_retry(
             response = httpx.post(url, headers=headers, json=json, timeout=timeout)
             if response.status_code not in RETRYABLE_STATUS_CODES:
                 response.raise_for_status()
+                response.extensions["policyguard_attempts"] = attempt
                 return response
             if attempt == policy.max_attempts:
                 response.raise_for_status()

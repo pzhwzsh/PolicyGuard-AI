@@ -1,15 +1,23 @@
+import base64
 import io
+import tempfile
 from hashlib import sha256
+from pathlib import Path
 
 import fitz
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image
+from pydantic import BaseModel
 from rapidocr_onnxruntime import RapidOCR
-
 
 app = FastAPI(title="PolicyGuard RapidOCR PDF Sidecar")
 _engine = None
+
+
+class MediaRequest(BaseModel):
+    filename: str
+    content_base64: str
 
 
 def engine() -> RapidOCR:
@@ -17,6 +25,24 @@ def engine() -> RapidOCR:
     if _engine is None:
         _engine = RapidOCR()
     return _engine
+
+
+def ocr_frame(image: np.ndarray, frame_index: int, timestamp_seconds: float) -> dict:
+    result, _ = engine()(image)
+    lines = []
+    for line in result or []:
+        points, text, confidence = line
+        lines.append({
+            "text": str(text),
+            "confidence": float(confidence),
+            "bbox": [[float(point[0]), float(point[1])] for point in points],
+        })
+    return {
+        "frame_index": frame_index,
+        "timestamp_seconds": round(timestamp_seconds, 3),
+        "lines": lines,
+        "text": "\n".join(item["text"] for item in lines),
+    }
 
 
 @app.get("/health")
@@ -60,4 +86,51 @@ async def parse(file: UploadFile = File(...)) -> dict:
         "status": "review_required" if warnings else "parsed",
         "warnings": warnings,
         "blocks": blocks,
+    }
+
+
+@app.post("/parse-media")
+def parse_media(payload: MediaRequest) -> dict:
+    try:
+        content = base64.b64decode(payload.content_base64, validate=True)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail="media_base64_invalid") from exc
+    suffix = Path(payload.filename).suffix.lower()
+    if suffix in {".png", ".jpg", ".jpeg"}:
+        try:
+            image = np.asarray(Image.open(io.BytesIO(content)).convert("RGB"))
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="image_decode_failed") from exc
+        frames = [ocr_frame(image, 0, 0.0)]
+    elif suffix in {".mp4", ".webm"}:
+        import cv2
+
+        temporary = tempfile.NamedTemporaryFile(suffix=suffix, delete=False)
+        try:
+            temporary.write(content)
+            temporary.close()
+            capture = cv2.VideoCapture(temporary.name)
+            fps = max(float(capture.get(cv2.CAP_PROP_FPS) or 0), 1.0)
+            interval = max(int(fps * 2), 1)
+            frames = []
+            index = 0
+            while len(frames) < 30:
+                ok, frame = capture.read()
+                if not ok:
+                    break
+                if index % interval == 0:
+                    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    frames.append(ocr_frame(rgb, index, index / fps))
+                index += 1
+            capture.release()
+        finally:
+            Path(temporary.name).unlink(missing_ok=True)
+    else:
+        raise HTTPException(status_code=415, detail="media_type_not_supported")
+    return {
+        "filename": payload.filename,
+        "content_hash": sha256(content).hexdigest(),
+        "frames": frames,
+        "warnings": [] if frames else ["media_no_frames"],
+        "sampling": "image_once_or_video_every_2_seconds_max_30",
     }

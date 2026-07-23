@@ -4,6 +4,7 @@ import re
 from collections import defaultdict, deque
 from collections.abc import Iterator
 from contextlib import asynccontextmanager
+from dataclasses import replace
 from datetime import UTC, datetime
 from hashlib import sha256
 from pathlib import Path
@@ -23,6 +24,7 @@ from fastapi import (
 )
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from policyguard import __version__
@@ -48,6 +50,8 @@ from policyguard.api.schemas import (
     MarketCompareRequest,
     MarketCompareResponse,
     MarketEvidenceResponse,
+    ModelEvaluationRequest,
+    ModelPromotionRequest,
     OperationsDashboardResponse,
     ProductCheckRequest,
     RemediationPlanRequest,
@@ -64,11 +68,17 @@ from policyguard.api.schemas import (
 )
 from policyguard.application.agent import AgentBudget, ControlledAgent, configured_agent_planner
 from policyguard.application.agent_context import AgentContextBuilder
+from policyguard.application.automation_handoff import (
+    build_dingtalk_preview,
+    build_rpa_handoff,
+)
+from policyguard.application.batch_artifacts import BatchArtifactWorkspace
 from policyguard.application.compliance_report import (
     build_compliance_report,
     report_markdown,
     report_pdf,
 )
+from policyguard.application.cost_control import WorkflowModelBudget
 from policyguard.application.document_ingestion import (
     configured_document_router,
     stage_parsed_document,
@@ -83,12 +93,14 @@ from policyguard.application.embeddings import (
     configured_embedding_chain,
 )
 from policyguard.application.evaluation_review import EvaluationReviewService
+from policyguard.application.evaluation_workbench import validate_evaluation_path
 from policyguard.application.evidence_support import configured_evidence_verifier
 from policyguard.application.execution_policy import choose_remediation_mode
 from policyguard.application.hybrid import FallbackRetriever, HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
 from policyguard.application.llm import configured_claim_extractor
+from policyguard.application.media_ingestion import MEDIA_TYPES, validate_media
 from policyguard.application.policy_impact import analyze_policy_impact
 from policyguard.application.query_rewrite import (
     JsonQueryRewriteCache,
@@ -113,7 +125,11 @@ from policyguard.domain.models import (
     PolicySection,
     Product,
 )
-from policyguard.infrastructure.database import AuditLogRecord, Database
+from policyguard.infrastructure.database import (
+    AuditLogRecord,
+    Database,
+    ResourceOwnershipRecord,
+)
 from policyguard.infrastructure.repositories import (
     SqlAlchemyAgentMemoryRepository,
     SqlAlchemyComplianceRepository,
@@ -123,12 +139,14 @@ from policyguard.infrastructure.repositories import (
 from policyguard.infrastructure.telemetry import (
     RuntimeMetric,
     RuntimeMetricBuffer,
+    estimated_model_cost,
     runtime_summary,
 )
 
 
 def create_app(database_url: str | None = None) -> FastAPI:
     settings = get_settings()
+    provider_settings = replace(settings, app_env="test") if database_url else settings
     database = Database(database_url or settings.database_url)
     telemetry = RuntimeMetricBuffer(database.session_factory)
 
@@ -158,6 +176,15 @@ def create_app(database_url: str | None = None) -> FastAPI:
     application.state.database = database
     application.state.telemetry = telemetry
     request_windows: dict[str, deque[float]] = defaultdict(deque)
+    try:
+        tenant_keys = json.loads(settings.tenant_keys_json) if settings.tenant_keys_json else {}
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("tenant_keys_json_invalid") from exc
+    if not isinstance(tenant_keys, dict) or any(
+        not isinstance(key, str) or not isinstance(value, str)
+        for key, value in tenant_keys.items()
+    ):
+        raise RuntimeError("tenant_keys_json_invalid")
     web_dir = Path(__file__).parents[1] / "web"
     application.mount("/static", StaticFiles(directory=web_dir), name="static")
 
@@ -227,6 +254,35 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def get_session() -> Iterator[Session]:
         yield from database.sessions()
 
+    def tenant_identity(
+        x_tenant_id: str = Header(default=""),
+        x_tenant_key: str = Header(default=""),
+    ) -> str:
+        if not tenant_keys:
+            return "default"
+        tenant_id = x_tenant_id.strip()
+        expected = tenant_keys.get(tenant_id)
+        if not expected or not hmac.compare_digest(x_tenant_key, expected):
+            raise HTTPException(status_code=401, detail="tenant_credentials_required")
+        return tenant_id
+
+    def bind_resource(session: Session, resource_type: str, resource_id: str, tenant: str) -> None:
+        ownership = session.get(ResourceOwnershipRecord, (resource_type, resource_id, tenant))
+        if ownership is None:
+            session.add(ResourceOwnershipRecord(
+                resource_type=resource_type, resource_id=resource_id, tenant_id=tenant
+            ))
+            session.commit()
+
+    def require_resource(
+        session: Session, resource_type: str, resource_id: str, tenant: str
+    ) -> None:
+        ownership = session.get(ResourceOwnershipRecord, (resource_type, resource_id, tenant))
+        if ownership is None:
+            if tenant == "default" and not tenant_keys:
+                return
+            raise HTTPException(status_code=404, detail=f"{resource_type}_not_found")
+
     def require_admin(x_admin_key: str = Header(default="")) -> None:
         if settings.admin_api_key and not hmac.compare_digest(
             x_admin_key, settings.admin_api_key
@@ -237,7 +293,13 @@ def create_app(database_url: str | None = None) -> FastAPI:
         x_admin_key: str = Header(default=""),
         x_reviewer: str = Header(default=""),
     ) -> str:
-        require_admin(x_admin_key)
+        if settings.admin_api_key:
+            admin_match = hmac.compare_digest(x_admin_key, settings.admin_api_key)
+            reviewer_match = bool(settings.reviewer_api_key) and hmac.compare_digest(
+                x_admin_key, settings.reviewer_api_key
+            )
+            if not (admin_match or reviewer_match):
+                raise HTTPException(status_code=401, detail="reviewer_or_admin_key_required")
         reviewer = x_reviewer.strip()
         if settings.admin_api_key and not reviewer:
             raise HTTPException(status_code=401, detail="reviewer_identity_required")
@@ -248,7 +310,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
         return HealthResponse(
             status="ok",
             version=__version__,
-            ai_enabled=settings.app_env != "test"
+            ai_enabled=database_url is None
+            and settings.app_env != "test"
             and bool(settings.llm_base_url and settings.llm_api_key and settings.llm_model),
         )
 
@@ -258,7 +321,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
         status_code=status.HTTP_201_CREATED,
         tags=["documents"],
     )
-    async def parse_document(file: UploadFile = File(...)) -> DocumentParseResponse:
+    async def parse_document(
+        file: UploadFile = File(...),
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> DocumentParseResponse:
         if file.content_type not in {"application/pdf", "application/octet-stream"}:
             raise HTTPException(status_code=415, detail="pdf_required")
         content = await file.read(20 * 1024 * 1024 + 1)
@@ -279,6 +346,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         document_id, chunks = stage_parsed_document(
             parsed, route, Path(settings.upload_dir)
         )
+        bind_resource(session, "document", document_id, tenant)
         original_path = Path(settings.upload_dir) / document_id / "original.pdf"
         if not original_path.exists():
             original_path.write_bytes(content)
@@ -306,6 +374,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         file: UploadFile = File(...),
         session: Session = Depends(get_session),
         _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
     ) -> BackgroundJobResponse:
         if file.content_type not in {"application/pdf", "application/octet-stream"}:
             raise HTTPException(status_code=415, detail="pdf_required")
@@ -324,10 +393,14 @@ def create_app(database_url: str | None = None) -> FastAPI:
             raw_path.write_bytes(content)
         job = PersistentJobQueue(session).enqueue(
             "parse_document",
-            {"path": str(raw_path), "filename": file.filename or "upload.pdf"},
-            idempotency_key=f"parse-document:{digest}",
+            {
+                "path": str(raw_path), "filename": file.filename or "upload.pdf",
+                "tenant_id": tenant,
+            },
+            idempotency_key=f"parse-document:{tenant}:{digest}",
             max_attempts=3,
         )
+        bind_resource(session, "job", job.id, tenant)
         return BackgroundJobResponse(
             id=job.id,
             job_type=job.job_type,
@@ -344,8 +417,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tags=["jobs"],
     )
     def get_background_job(
-        job_id: str, session: Session = Depends(get_session)
+        job_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> BackgroundJobResponse:
+        require_resource(session, "job", job_id, tenant)
         job = PersistentJobQueue(session).get(job_id)
         if job is None:
             raise HTTPException(status_code=404, detail="job_not_found")
@@ -367,7 +443,14 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def list_background_jobs(
         limit: int = Query(default=50, ge=1, le=200),
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> list[BackgroundJobResponse]:
+        owned_ids = set(session.scalars(
+            select(ResourceOwnershipRecord.resource_id).where(
+                ResourceOwnershipRecord.resource_type == "job",
+                ResourceOwnershipRecord.tenant_id == tenant,
+            )
+        ).all())
         return [
             BackgroundJobResponse(
                 id=job.id, job_type=job.job_type, status=job.status,
@@ -375,6 +458,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 max_attempts=job.max_attempts, error=job.error,
             )
             for job in PersistentJobQueue(session).list(limit)
+            if (not tenant_keys and tenant == "default") or job.id in owned_ids
         ]
 
     @application.post(
@@ -386,7 +470,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         job_id: str,
         session: Session = Depends(get_session),
         _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
     ) -> BackgroundJobResponse:
+        require_resource(session, "job", job_id, tenant)
         try:
             job = PersistentJobQueue(session).retry(job_id)
         except LookupError as exc:
@@ -417,6 +503,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
     async def enqueue_batch_review(
         file: UploadFile = File(...),
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> BackgroundJobResponse:
         suffix = Path(file.filename or "").suffix.lower()
         if suffix not in {".csv", ".xlsx"}:
@@ -425,18 +512,61 @@ def create_app(database_url: str | None = None) -> FastAPI:
         if len(content) > 5 * 1024 * 1024:
             raise HTTPException(status_code=413, detail="batch_file_too_large")
         digest = sha256(content).hexdigest()
-        batch_id = digest[:20]
+        batch_id = sha256(f"{tenant}:{digest}".encode()).hexdigest()[:20]
         inbox = Path(settings.upload_dir) / "batches" / "inbox"
         inbox.mkdir(parents=True, exist_ok=True)
-        path = inbox / f"{digest}{suffix}"
+        path = inbox / f"{batch_id}{suffix}"
         if not path.exists():
             path.write_bytes(content)
         job = PersistentJobQueue(session).enqueue(
             "batch_compliance_review",
             {"batch_id": batch_id, "path": str(path.resolve()), "filename": file.filename},
-            idempotency_key=f"batch-review:{digest}",
+            idempotency_key=f"batch-review:{tenant}:{digest}",
             max_attempts=5,
         )
+        bind_resource(session, "job", job.id, tenant)
+        return BackgroundJobResponse(
+            id=job.id, job_type=job.job_type, status=job.status,
+            result=job.result, attempts=job.attempts,
+            max_attempts=job.max_attempts, error=job.error,
+        )
+
+    @application.post(
+        "/api/v1/media/claims",
+        response_model=BackgroundJobResponse,
+        status_code=status.HTTP_202_ACCEPTED,
+        tags=["media"],
+    )
+    async def enqueue_media_claim_extraction(
+        file: UploadFile = File(...),
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> BackgroundJobResponse:
+        suffix = Path(file.filename or "").suffix.lower()
+        if suffix not in MEDIA_TYPES:
+            raise HTTPException(status_code=415, detail="media_type_not_supported")
+        limit = 10 * 1024 * 1024 if suffix in {".png", ".jpg", ".jpeg"} else 50 * 1024 * 1024
+        content = await file.read(limit + 1)
+        if len(content) > limit:
+            raise HTTPException(status_code=413, detail="media_too_large")
+        try:
+            validate_media(content, suffix)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        digest = sha256(content).hexdigest()
+        media_key = sha256(f"{tenant}:{digest}".encode()).hexdigest()[:24]
+        inbox = Path(settings.upload_dir) / "media" / "inbox" / media_key
+        inbox.mkdir(parents=True, exist_ok=True)
+        path = inbox / f"original{suffix}"
+        if not path.exists():
+            path.write_bytes(content)
+        job = PersistentJobQueue(session).enqueue(
+            "media_claim_extraction",
+            {"path": str(path.resolve()), "filename": file.filename, "tenant_id": tenant},
+            idempotency_key=f"media-claims:{tenant}:{digest}",
+            max_attempts=3,
+        )
+        bind_resource(session, "job", job.id, tenant)
         return BackgroundJobResponse(
             id=job.id, job_type=job.job_type, status=job.status,
             result=job.result, attempts=job.attempts,
@@ -451,6 +581,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
     )
     async def preview_batch_cleaning(
         file: UploadFile = File(...),
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> TableCleaningPreviewResponse:
         suffix = Path(file.filename or "").suffix.lower()
         if suffix not in {".csv", ".xlsx"}:
@@ -466,6 +598,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         analysis = staged["analysis"]
         manifest = staged["manifest"]
+        bind_resource(session, "table", staged["table_id"], tenant)
         return TableCleaningPreviewResponse(
             table_id=staged["table_id"],
             revision=manifest["revision"],
@@ -488,7 +621,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         payload: TableCleaningConfirmationRequest,
         session: Session = Depends(get_session),
         authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
     ) -> TableCleaningConfirmationResponse:
+        require_resource(session, "table", table_id, tenant)
         if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
             raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         try:
@@ -516,9 +651,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 "filename": manifest["filename"],
                 "cleaning_revision": manifest["revision"],
             },
-            idempotency_key=f"batch-cleaning:{table_id}:{manifest['revision']}",
+            idempotency_key=f"batch-cleaning:{tenant}:{table_id}:{manifest['revision']}",
             max_attempts=5,
         )
+        bind_resource(session, "job", job.id, tenant)
         job_response = BackgroundJobResponse(
             id=job.id,
             job_type=job.job_type,
@@ -541,7 +677,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
         "/api/v1/batches/cleaning/{table_id}/report",
         tags=["batch-review"],
     )
-    def download_table_cleaning_report(table_id: str) -> FileResponse:
+    def download_table_cleaning_report(
+        table_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> FileResponse:
+        require_resource(session, "table", table_id, tenant)
         try:
             manifest, _ = TableCleaningWorkspace(
                 Path(settings.upload_dir) / "tables"
@@ -564,7 +705,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def download_batch_result(
         job_id: str,
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> FileResponse:
+        require_resource(session, "job", job_id, tenant)
         job = PersistentJobQueue(session).get(job_id)
         if job is None or job.job_type != "batch_compliance_review":
             raise HTTPException(status_code=404, detail="batch_job_not_found")
@@ -575,6 +718,113 @@ def create_app(database_url: str | None = None) -> FastAPI:
         if batch_root not in path.parents or not path.is_file():
             raise HTTPException(status_code=404, detail="batch_result_not_found")
         return FileResponse(path, media_type="text/csv", filename="policyguard-results.csv")
+
+    def _completed_batch_job(job_id: str, session: Session, tenant: str):
+        require_resource(session, "job", job_id, tenant)
+        job = PersistentJobQueue(session).get(job_id)
+        if job is None or job.job_type != "batch_compliance_review":
+            raise HTTPException(status_code=404, detail="batch_job_not_found")
+        if job.status != "completed" or not job.result.get("output_path"):
+            raise HTTPException(status_code=409, detail="batch_result_not_ready")
+        return job
+
+    @application.get("/api/v1/batches/{job_id}/package", tags=["batch-review"])
+    def download_batch_package(
+        job_id: str,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
+    ) -> FileResponse:
+        job = _completed_batch_job(job_id, session, tenant)
+        records = []
+        checkpoint = Path(job.result["output_path"]).parent / "results.jsonl"
+        workflow_repository = SqlAlchemyWorkflowRepository(session)
+        if checkpoint.is_file():
+            for line in checkpoint.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                summary = json.loads(line)
+                run = workflow_repository.get(summary["workflow_id"])
+                if run:
+                    records.append({
+                        "workflow_id": run.id,
+                        "status": run.status.value,
+                        "input": run.input_payload,
+                        "result": run.result_payload,
+                        "events": [
+                            {
+                                "sequence": event.sequence,
+                                "step": event.step,
+                                "status": event.status,
+                                "detail": event.detail,
+                                "created_at": event.created_at.isoformat(),
+                            }
+                            for event in run.events
+                        ],
+                    })
+        try:
+            package = BatchArtifactWorkspace(Path(settings.upload_dir)).package(
+                job.payload["batch_id"],
+                input_path=Path(job.payload["path"]),
+                workflow_records=records,
+            )
+        except (ValueError, RuntimeError) as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return FileResponse(package, media_type="application/zip", filename="review-package.zip")
+
+    @application.get("/api/v1/batches/{job_id}/lifecycle", tags=["batch-review"])
+    def batch_artifact_lifecycle(
+        job_id: str,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        job = _completed_batch_job(job_id, session, tenant)
+        return BatchArtifactWorkspace(Path(settings.upload_dir)).load_manifest(
+            job.payload["batch_id"]
+        )
+
+    @application.post("/api/v1/batches/{job_id}/deletion", tags=["batch-review"])
+    def stage_batch_deletion(
+        job_id: str,
+        payload: DocumentDeletionRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        job = _completed_batch_job(job_id, session, tenant)
+        try:
+            return BatchArtifactWorkspace(Path(settings.upload_dir)).stage_deletion(
+                job.payload["batch_id"], expected_revision=payload.expected_revision,
+                reviewer=payload.reviewer, reason=payload.reason,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @application.delete("/api/v1/batches/{job_id}", tags=["batch-review"])
+    def confirm_batch_deletion(
+        job_id: str,
+        payload: DocumentDeletionRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        job = _completed_batch_job(job_id, session, tenant)
+        try:
+            return BatchArtifactWorkspace(Path(settings.upload_dir)).confirm_deletion(
+                job.payload["batch_id"], expected_revision=payload.expected_revision,
+                reviewer=payload.reviewer, input_path=Path(job.payload["path"]),
+            )
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     def source_update_response(item: dict) -> SourceUpdateResponse:
         policy = json.loads(Path(item["policy_path"]).read_text(encoding="utf-8"))
@@ -755,7 +1005,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         payload: DocumentApprovalRequest,
         session: Session = Depends(get_session),
         _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
     ) -> DocumentApprovalResponse:
+        require_resource(session, "document", document_id, tenant)
         if not re.fullmatch(r"[a-f0-9]{24}", document_id):
             raise HTTPException(status_code=404, detail="document_not_found")
         staged = Path(settings.upload_dir) / document_id
@@ -826,7 +1078,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
         response_model=DocumentWorkspaceResponse,
         tags=["documents"],
     )
-    def get_document_workspace(document_id: str) -> DocumentWorkspaceResponse:
+    def get_document_workspace(
+        document_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> DocumentWorkspaceResponse:
+        require_resource(session, "document", document_id, tenant)
         try:
             document, manifest = DocumentWorkspace(Path(settings.upload_dir)).load(document_id)
         except LookupError as exc:
@@ -837,7 +1094,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
         "/api/v1/documents/{document_id}/original",
         tags=["documents"],
     )
-    def get_original_document(document_id: str) -> FileResponse:
+    def get_original_document(
+        document_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> FileResponse:
+        require_resource(session, "document", document_id, tenant)
         try:
             path = (
                 DocumentWorkspace(Path(settings.upload_dir)).directory(document_id)
@@ -857,8 +1119,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def correct_document(
         document_id: str,
         payload: DocumentCorrectionRequest,
+        session: Session = Depends(get_session),
         _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
     ) -> DocumentWorkspaceResponse:
+        require_resource(session, "document", document_id, tenant)
         try:
             document, manifest = DocumentWorkspace(Path(settings.upload_dir)).correct(
                 document_id,
@@ -883,8 +1148,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def delete_staged_document(
         document_id: str,
         payload: DocumentDeletionRequest,
+        session: Session = Depends(get_session),
         authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
     ) -> DocumentDeletionResponse:
+        require_resource(session, "document", document_id, tenant)
         if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
             raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         try:
@@ -909,6 +1177,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
     )
     def operations_dashboard(
         session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
     ) -> OperationsDashboardResponse:
         root = Path(__file__).parents[3]
         knowledge = SqlAlchemyKnowledgeRepository(session)
@@ -955,12 +1225,28 @@ def create_app(database_url: str | None = None) -> FastAPI:
                     )
                 },
             }
+        runtime = runtime_summary(session)
         performance["runtime"] = {
-            **runtime_summary(session),
+            **runtime,
             "dropped_metrics": telemetry.dropped,
         }
+        performance["cost"] = estimated_model_cost(
+            runtime,
+            model_prices_per_million={
+                settings.llm_model: settings.llm_input_price_per_million,
+                settings.llm_fallback_model: settings.llm_fallback_input_price_per_million,
+            },
+        )
+        owned_workflows = set(session.scalars(
+            select(ResourceOwnershipRecord.resource_id).where(
+                ResourceOwnershipRecord.resource_type == "workflow",
+                ResourceOwnershipRecord.tenant_id == tenant,
+            )
+        ).all())
         reports = []
         for run in SqlAlchemyWorkflowRepository(session).list_recent(30):
+            if tenant_keys and run.id not in owned_workflows:
+                continue
             reports.append({
                 "workflow_id": run.id,
                 "status": run.status.value,
@@ -969,6 +1255,22 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 "report_json": f"/api/v1/workflows/compliance/{run.id}/report?format=json",
                 "report_pdf": f"/api/v1/workflows/compliance/{run.id}/report?format=pdf",
             })
+        if tenant_keys:
+            owned_jobs = set(session.scalars(
+                select(ResourceOwnershipRecord.resource_id).where(
+                    ResourceOwnershipRecord.resource_type == "job",
+                    ResourceOwnershipRecord.tenant_id == tenant,
+                )
+            ).all())
+            tenant_jobs = [
+                job for job in PersistentJobQueue(session).list(10_000) if job.id in owned_jobs
+            ]
+            job_stats = {
+                state: sum(job.status == state for job in tenant_jobs)
+                for state in {"queued", "running", "retry", "completed", "failed"}
+            }
+        else:
+            job_stats = PersistentJobQueue(session).stats()
         return OperationsDashboardResponse(
             knowledge={
                 "documents": knowledge.document_count(),
@@ -983,11 +1285,115 @@ def create_app(database_url: str | None = None) -> FastAPI:
                     item.get("legal_review_status") == "pending" for item in staged_updates
                 ),
             },
-            jobs=PersistentJobQueue(session).stats(),
+            jobs=job_stats,
             performance=performance,
             evaluations=evaluations,
             report_history=reports,
         )
+
+    @application.post(
+        "/api/v1/evaluations/models",
+        response_model=BackgroundJobResponse,
+        status_code=status.HTTP_202_ACCEPTED,
+        tags=["model-evaluation"],
+    )
+    def enqueue_model_evaluation(
+        payload: ModelEvaluationRequest,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
+    ) -> BackgroundJobResponse:
+        root = Path(__file__).parents[3]
+        try:
+            dataset_path = validate_evaluation_path(root, payload.dataset)
+        except (ValueError, json.JSONDecodeError) as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        allowed = {
+            "bm25",
+            settings.embedding_model,
+            settings.embedding_fallback_model,
+        } - {""}
+        candidates = list(dict.fromkeys(item.strip() for item in payload.candidates))
+        if len(candidates) < 2 or any(item not in allowed for item in candidates):
+            raise HTTPException(
+                status_code=422,
+                detail={"code": "evaluation_candidate_not_allowed", "allowed": sorted(allowed)},
+            )
+        thresholds = {
+            "min_hit_rate_at_k": payload.min_hit_rate_at_k,
+            "min_mrr": payload.min_mrr,
+            "max_latency_ms": payload.max_latency_ms,
+        }
+        signature = sha256(json.dumps({
+            "tenant": tenant,
+            "dataset": str(dataset_path), "candidates": candidates,
+            "top_k": payload.top_k, "thresholds": thresholds,
+        }, sort_keys=True).encode()).hexdigest()
+        job = PersistentJobQueue(session).enqueue(
+            "model_evaluation",
+            {
+                "dataset": payload.dataset,
+                "candidates": candidates,
+                "top_k": payload.top_k,
+                "thresholds": thresholds,
+            },
+            idempotency_key=f"model-evaluation:{signature}",
+            max_attempts=1,
+        )
+        bind_resource(session, "job", job.id, tenant)
+        return BackgroundJobResponse(
+            id=job.id, job_type=job.job_type, status=job.status,
+            result=job.result, attempts=job.attempts,
+            max_attempts=job.max_attempts, error=job.error,
+        )
+
+    @application.post(
+        "/api/v1/evaluations/models/{job_id}/approve",
+        tags=["model-evaluation"],
+    )
+    def approve_model_evaluation(
+        job_id: str,
+        payload: ModelPromotionRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        require_resource(session, "job", job_id, tenant)
+        job = PersistentJobQueue(session).get(job_id)
+        if job is None or job.job_type != "model_evaluation":
+            raise HTTPException(status_code=404, detail="model_evaluation_not_found")
+        if job.status != "completed":
+            raise HTTPException(status_code=409, detail="model_evaluation_not_completed")
+        result = job.result
+        if result.get("dataset_sha256") != payload.expected_dataset_sha256:
+            raise HTTPException(status_code=409, detail="evaluation_dataset_revision_conflict")
+        eligible = {
+            row["model"] for row in result.get("results", [])
+            if row.get("status") == "ok"
+            and row.get("hit_rate_at_k", 0) >= result["thresholds"]["min_hit_rate_at_k"]
+            and row.get("mean_reciprocal_rank", 0) >= result["thresholds"]["min_mrr"]
+            and row.get("latency_ms", float("inf")) <= result["thresholds"]["max_latency_ms"]
+        }
+        if payload.model not in eligible:
+            raise HTTPException(status_code=422, detail="model_does_not_meet_thresholds")
+        promotion = {
+            "job_id": job_id,
+            "model": payload.model,
+            "dataset": result["dataset"],
+            "dataset_sha256": result["dataset_sha256"],
+            "reviewer": payload.reviewer,
+            "comment": payload.comment,
+            "approved_at": datetime.now(UTC).isoformat(),
+            "status": "approved_for_configuration_change",
+            "note": "Approval is recorded; environment defaults are never mutated automatically.",
+        }
+        target = Path(__file__).parents[3] / "data/update-state/model-promotions.jsonl"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(promotion, ensure_ascii=False) + "\n")
+        return promotion
 
     def evaluation_review_service(session: Session) -> EvaluationReviewService:
         return EvaluationReviewService(
@@ -1102,7 +1508,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         scope = KnowledgeFilter(
             jurisdiction=market.upper(), category=category, channel=channel, as_of=as_of
         )
-        embedding_providers, _ = configured_embedding_chain(settings)
+        embedding_providers, _ = configured_embedding_chain(provider_settings)
         provider = embedding_providers[0] if embedding_providers else None
         if mode in {"dense", "hybrid", "hybrid_rerank"}:
             if provider is None:
@@ -1115,7 +1521,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
                 hits = HybridRetriever(repository, dense).search(q, top_k=top_k, scope=scope)
                 retriever_name = f"hybrid:rrf+{provider.provider_name}/{provider.model_name}"
             else:
-                reranker = configured_reranker(settings)
+                reranker = configured_reranker(provider_settings)
                 if reranker is None:
                     raise HTTPException(status_code=503, detail="reranker_not_configured")
                 hits = RerankedHybridRetriever(
@@ -1162,7 +1568,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         session: Session = Depends(get_session),
     ) -> KnowledgeStatsResponse:
         repository = SqlAlchemyKnowledgeRepository(session)
-        embedding_providers, _ = configured_embedding_chain(settings)
+        embedding_providers, _ = configured_embedding_chain(provider_settings)
         return KnowledgeStatsResponse(
             documents=repository.document_count(),
             chunks=len(repository.list_chunks()),
@@ -1176,13 +1582,15 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tags=["knowledge"],
     )
     def retriever_status() -> RetrieverStatusResponse:
-        embedding_providers, initialization_failures = configured_embedding_chain(settings)
+        embedding_providers, initialization_failures = configured_embedding_chain(
+            provider_settings
+        )
         provider = embedding_providers[0] if embedding_providers else None
         fallback_provider = (
             embedding_providers[1] if len(embedding_providers) > 1 else None
         )
-        reranker = configured_reranker(settings)
-        query_rewriter = configured_query_rewriter(settings)
+        reranker = configured_reranker(provider_settings)
+        query_rewriter = configured_query_rewriter(provider_settings)
         return RetrieverStatusResponse(
             bm25_available=True,
             dense_available=provider is not None,
@@ -1259,10 +1667,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def start_compliance_workflow(
         payload: ComplianceWorkflowRequest,
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
         knowledge_repository = SqlAlchemyKnowledgeRepository(session)
         workflow_repository = SqlAlchemyWorkflowRepository(session)
-        embedding_providers, embedding_failures = configured_embedding_chain(settings)
+        embedding_providers, embedding_failures = configured_embedding_chain(provider_settings)
         retrieval_candidates = [
             HybridRetriever(
                 knowledge_repository,
@@ -1281,11 +1690,15 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run = ComplianceWorkflowService(
             knowledge_repository,
             workflow_repository,
-            claim_extractor=configured_claim_extractor(settings),
+            claim_extractor=configured_claim_extractor(provider_settings),
             retriever=workflow_retriever,
-            evidence_verifier=configured_evidence_verifier(settings),
-            query_rewriter=configured_query_rewriter(settings),
+            evidence_verifier=configured_evidence_verifier(provider_settings),
+            query_rewriter=configured_query_rewriter(provider_settings),
             query_rewrite_cache=JsonQueryRewriteCache(Path(settings.query_rewrite_cache)),
+            model_budget=WorkflowModelBudget(
+                max_calls=settings.workflow_model_call_budget,
+                max_estimated_input_tokens=settings.workflow_input_token_budget,
+            ),
         ).execute(
             product=payload.product.model_dump(),
             markets=payload.markets,
@@ -1293,6 +1706,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             channel=payload.channel,
             as_of=payload.as_of,
         )
+        bind_resource(session, "workflow", run.id, tenant)
         return ComplianceWorkflowResponse.from_domain(run)
 
     @application.get(
@@ -1303,7 +1717,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def get_compliance_workflow(
         run_id: str,
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
+        require_resource(session, "workflow", run_id, tenant)
         run = SqlAlchemyWorkflowRepository(session).get(run_id)
         if run is None:
             raise HTTPException(status_code=404, detail="workflow_not_found")
@@ -1317,7 +1733,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run_id: str,
         format: str = Query(default="json", pattern="^(json|markdown|pdf)$"),
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> Response:
+        require_resource(session, "workflow", run_id, tenant)
         run = SqlAlchemyWorkflowRepository(session).get(run_id)
         if run is None:
             raise HTTPException(status_code=404, detail="workflow_not_found")
@@ -1344,6 +1762,30 @@ def create_app(database_url: str | None = None) -> FastAPI:
             headers={"Content-Disposition": f'attachment; filename="{filename}.json"'},
         )
 
+    @application.get(
+        "/api/v1/workflows/compliance/{run_id}/automation-handoff",
+        tags=["integrations"],
+    )
+    def export_automation_handoff(
+        run_id: str,
+        target: str = Query(pattern="^(rpa|dingtalk)$"),
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "workflow", run_id, tenant)
+        run = SqlAlchemyWorkflowRepository(session).get(run_id)
+        if run is None:
+            raise HTTPException(status_code=404, detail="workflow_not_found")
+        if target == "dingtalk":
+            return build_dingtalk_preview(
+                run, f"/api/v1/workflows/compliance/{run_id}/report?format=pdf"
+            )
+        try:
+            return build_rpa_handoff(run)
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
     @application.post(
         "/api/v1/workflows/compliance/{run_id}/review",
         response_model=ComplianceWorkflowResponse,
@@ -1354,14 +1796,16 @@ def create_app(database_url: str | None = None) -> FastAPI:
         payload: WorkflowReviewRequest,
         session: Session = Depends(get_session),
         authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
+        require_resource(session, "workflow", run_id, tenant)
         if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
             raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         service = ComplianceWorkflowService(
             SqlAlchemyKnowledgeRepository(session),
             SqlAlchemyWorkflowRepository(session),
-            claim_extractor=configured_claim_extractor(settings),
-            evidence_verifier=configured_evidence_verifier(settings),
+            claim_extractor=configured_claim_extractor(provider_settings),
+            evidence_verifier=configured_evidence_verifier(provider_settings),
         )
         try:
             run = service.review(
@@ -1386,7 +1830,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run_id: str,
         payload: RemediationPlanRequest,
         session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
+        require_resource(session, "workflow", run_id, tenant)
         service = RemediationService(
             SqlAlchemyWorkflowRepository(session),
             ToolRegistry([SuggestConservativeRewriteTool()]),
@@ -1402,7 +1848,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             except ValueError as exc:
                 raise HTTPException(status_code=422, detail=str(exc)) from exc
             if execution.mode == "agent":
-                planner = configured_agent_planner(settings)
+                planner = configured_agent_planner(provider_settings)
                 if planner is None:
                     raise HTTPException(status_code=503, detail="agent_planner_not_configured")
                 run = service.plan_with_agent(
@@ -1432,7 +1878,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         payload: DraftCreationRequest,
         session: Session = Depends(get_session),
         authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
+        require_resource(session, "workflow", run_id, tenant)
         if settings.admin_api_key and payload.approved_by != authenticated_reviewer:
             raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         service = RemediationService(

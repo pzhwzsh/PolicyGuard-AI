@@ -34,6 +34,10 @@ class Settings:
     llm_fallback_model: str
     provider_max_attempts: int
     provider_backoff_seconds: float
+    workflow_model_call_budget: int
+    workflow_input_token_budget: int
+    llm_input_price_per_million: float
+    llm_fallback_input_price_per_million: float
     query_rewrite_enabled: bool
     query_rewrite_cache: str
     upload_dir: str
@@ -43,6 +47,8 @@ class Settings:
     ppstructure_base_url: str
     document_parser_api_key: str
     admin_api_key: str
+    reviewer_api_key: str
+    tenant_keys_json: str
     rate_limit_per_minute: int
 
 
@@ -79,6 +85,12 @@ def get_settings() -> Settings:
         llm_fallback_model=getenv("LLM_FALLBACK_MODEL", ""),
         provider_max_attempts=int(getenv("PROVIDER_MAX_ATTEMPTS", "3")),
         provider_backoff_seconds=float(getenv("PROVIDER_BACKOFF_SECONDS", "0.5")),
+        workflow_model_call_budget=int(getenv("WORKFLOW_MODEL_CALL_BUDGET", "3")),
+        workflow_input_token_budget=int(getenv("WORKFLOW_INPUT_TOKEN_BUDGET", "12000")),
+        llm_input_price_per_million=float(getenv("LLM_INPUT_PRICE_PER_MILLION", "0")),
+        llm_fallback_input_price_per_million=float(
+            getenv("LLM_FALLBACK_INPUT_PRICE_PER_MILLION", "0")
+        ),
         query_rewrite_enabled=getenv("QUERY_REWRITE_ENABLED", "true").casefold() == "true",
         query_rewrite_cache=getenv(
             "QUERY_REWRITE_CACHE", "./data/query-cache/rewrites.json"
@@ -90,5 +102,7 @@ def get_settings() -> Settings:
         ppstructure_base_url=getenv("PPSTRUCTURE_BASE_URL", ""),
         document_parser_api_key=getenv("DOCUMENT_PARSER_API_KEY", ""),
         admin_api_key=getenv("ADMIN_API_KEY", ""),
+        reviewer_api_key=getenv("REVIEWER_API_KEY", ""),
+        tenant_keys_json=getenv("TENANT_KEYS_JSON", ""),
         rate_limit_per_minute=int(getenv("RATE_LIMIT_PER_MINUTE", "120")),
     )

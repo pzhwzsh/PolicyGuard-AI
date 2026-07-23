@@ -62,7 +62,10 @@ class OpenAICompatibleEvidenceVerifier:
         )
         payload = response.json()
         decisions = self.parse(payload["choices"][0]["message"].get("content", ""), cases)
-        return decisions, payload.get("usage", {})
+        return decisions, {
+            **payload.get("usage", {}),
+            "provider_attempts": response.extensions.get("policyguard_attempts", 1),
+        }
 
     @staticmethod
     def parse(content: str, cases: list[dict]) -> list[EvidenceDecision]:

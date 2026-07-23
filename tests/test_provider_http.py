@@ -25,6 +25,7 @@ def test_provider_http_retries_transient_status_and_honors_retry_after(monkeypat
     )
 
     assert result.status_code == 200
+    assert result.extensions["policyguard_attempts"] == 2
     assert delays == [2.0]
 
 

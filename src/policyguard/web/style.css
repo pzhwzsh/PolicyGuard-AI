@@ -149,6 +149,13 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .operations-summary span { color: #68756d; font-size: 12px; }
 .operations-summary strong { margin-top: 6px; }
 .operations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.reliability-grid { display: grid; grid-template-columns: repeat(5, 1fr); margin: 0 0 28px; border: 1px solid #d9dfda; background: #fff; }
+.reliability-grid article { padding: 16px; border-right: 1px solid #d9dfda; }
+.reliability-grid article:last-child { border-right: 0; }
+.reliability-grid span, .reliability-grid small { display: block; color: #68756d; font-size: 11px; }
+.reliability-grid strong { display: block; margin: 7px 0 4px; font-size: 20px; }
+.evaluation-workbench { margin: 28px 0; padding: 22px; border: 1px solid #d9dfda; background: #fff; }
+.evaluation-results { margin-top: 18px; }
 .metric-card, .job-row { padding: 12px; background: white; border: 1px solid #d9dfda; margin-bottom: 8px; }
 .metric-card p, .job-row small { color: #68756d; font-size: 12px; }
 .job-row { display: flex; align-items: center; gap: 12px; }
@@ -185,6 +192,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
   .section-heading { align-items: flex-start; }
   .review-actions { flex-wrap: wrap; }
   .operations-summary { grid-template-columns: repeat(2, 1fr); }
+  .reliability-grid { grid-template-columns: repeat(2, 1fr); }
   .report-history article { grid-template-columns: 1fr auto auto; }
   .report-history article span { grid-column: 1 / -1; }
   .admin-tabs { gap: 16px; overflow-x: auto; }

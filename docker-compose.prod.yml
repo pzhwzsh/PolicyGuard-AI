@@ -1,0 +1,60 @@
+services:
+  migrate:
+    build: .
+    command: ["python", "-m", "alembic", "upgrade", "head"]
+    env_file: [.env.production]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build: .
+    env_file: [.env.production]
+    ports: ["127.0.0.1:8000:8000"]
+    volumes:
+      - policyguard_data:/app/data
+      - model_cache:/home/policyguard/.cache
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    stop_grace_period: 30s
+
+  worker:
+    build: .
+    command: ["python", "-m", "policyguard.scripts.job_worker", "--poll-seconds", "1"]
+    env_file: [.env.production]
+    volumes:
+      - policyguard_data:/app/data
+      - model_cache:/home/policyguard/.cache
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    stop_grace_period: 30s
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: policyguard
+      POSTGRES_USER: policyguard
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets: [postgres_password]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U policyguard -d policyguard"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+secrets:
+  postgres_password:
+    file: ./deploy/secrets/postgres_password.txt
+
+volumes:
+  postgres_data:
+  policyguard_data:
+  model_cache:
+

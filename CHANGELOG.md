@@ -7,6 +7,16 @@ and versions follow Semantic Versioning.
 
 ### Changed
 
+- Add a live reliability and cost view with provider/job retry rates, fallback rate, queue age,
+  categorized failures, per-model token totals, price-based estimates, and threshold alerts.
+- Add an asynchronous retrieval-model A/B workbench with allowlisted candidates, dataset hashes,
+  quality/latency thresholds, local-cost accounting, and human-gated promotion records.
+- Add exportable batch evidence packages plus revision-protected staged deletion, deletion
+  tombstones, and a dry-run retention inventory for CSV/XLSX inputs and review results.
+- Add per-workflow model-call/token budgets, separate admin/reviewer keys, tenant-owned resources,
+  failure-injection tests, and a PostgreSQL API/worker production Compose stack.
+- Add bounded image/video OCR jobs with frame timestamps and a 30-frame cap, plus preview-only
+  RPA and DingTalk handoffs that never execute or send automatically.
 - Add bounded transient provider retries, primary-to-backup model routing, runtime retrieval
   degradation to BM25, and reranker degradation to the original hybrid candidate ranking.
 - Accept confirmed spreadsheet-cleaning inputs in the batch worker instead of repeatedly rejecting

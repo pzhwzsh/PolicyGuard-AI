@@ -166,9 +166,30 @@
         <button id="refresh-operations-button" class="secondary" type="button">刷新指标</button>
       </div>
       <div id="operations-summary" class="operations-summary"></div>
+      <div class="reliability-grid">
+        <article><span>降级率（24h）</span><strong id="ops-fallback-rate">-</strong><small>主模型转备用或确定性兜底</small></article>
+        <article><span>队列深度</span><strong id="ops-queue-depth">-</strong><small id="ops-oldest-job">最老等待 -</small></article>
+        <article><span>模型提供商重试率</span><strong id="ops-retry-rate">-</strong><small id="ops-job-retry-rate">后台任务重试 -</small></article>
+        <article><span>运行告警</span><strong id="ops-alert-count">-</strong><small id="ops-alert-codes">当前无告警</small></article>
+        <article><span>模型成本（24h）</span><strong id="ops-model-cost">-</strong><small>按配置单价估算</small></article>
+      </div>
       <div class="operations-grid">
         <div><h3>模型评测</h3><div id="evaluation-cards"></div></div>
         <div><h3>后台任务</h3><div id="job-list"></div></div>
+      </div>
+      <div class="evaluation-workbench">
+        <div class="section-heading compact">
+          <div><p>可复现评测</p><h3>模型 A/B 工作台</h3></div>
+          <button id="run-model-evaluation" type="button">提交后台评测</button>
+        </div>
+        <div class="form-grid">
+          <label class="wide">候选模型（逗号分隔）<input id="evaluation-models" value="jinaai/jina-embeddings-v2-base-zh,BAAI/bge-small-zh-v1.5,bm25"></label>
+          <label>数据集<input id="evaluation-dataset" value="data/evaluation/rag-hard-v1.json"></label>
+          <label>最低 Hit@5<input id="evaluation-min-hit" type="number" min="0" max="1" step="0.01" value="0.80"></label>
+          <label>最低 MRR<input id="evaluation-min-mrr" type="number" min="0" max="1" step="0.01" value="0.65"></label>
+          <label>最大总延迟(ms)<input id="evaluation-max-latency" type="number" min="1" value="60000"></label>
+        </div>
+        <div id="model-evaluation-result" class="evaluation-results"><p>尚未提交评测。</p></div>
       </div>
       <div><h3>报告历史</h3><div id="report-history" class="report-history"></div></div>
     </section>

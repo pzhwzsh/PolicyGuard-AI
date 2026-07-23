@@ -44,6 +44,18 @@
       <div id="batch-cleaning-preview" class="cleaning-preview" hidden></div>
     </section>
 
+    <section class="batch-review">
+      <div class="section-heading">
+        <div><p>图片与视频</p><h2>提取画面中的营销声明</h2></div>
+      </div>
+      <div class="batch-upload-row">
+        <label>PNG、JPG、MP4 或 WebM<input id="media-file" type="file" accept=".png,.jpg,.jpeg,.mp4,.webm"></label>
+        <button id="media-upload-button" type="button">提交 OCR</button>
+      </div>
+      <div id="media-status" class="batch-status" hidden></div>
+      <p class="metric-footnote">视频每 2 秒采样一帧，最多 30 帧；结果保留时间戳并进入人工复核，不自动发布。</p>
+    </section>
+
     <section id="result-section" class="results" hidden>
       <div class="section-heading">
         <div><p>检查结果</p><h2 id="result-title">-</h2></div>

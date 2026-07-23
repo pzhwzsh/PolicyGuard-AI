@@ -17,6 +17,9 @@ def test_management_ui_exposes_review_and_remediation_workbenches() -> None:
     assert 'id="perf-p99"' in html
     assert 'id="live-p99"' in html
     assert 'id="runtime-window"' in html
+    assert 'id="ops-fallback-rate"' in html
+    assert 'id="run-model-evaluation"' in html
+    assert "/api/v1/evaluations/models" in script
     assert 'data-panel="overview"' in html
     assert "/api/v1/review-queue" in script
     assert "/impact" in script
@@ -45,6 +48,8 @@ def test_user_ui_hides_management_and_runtime_controls(tmp_path: Path) -> None:
     assert "/api/v1/batches/clean-preview" in script
     assert "field_mappings" in script
     assert 'id="batch-cleaning-preview"' in html
+    assert 'id="media-upload-button"' in html
+    assert "/api/v1/media/claims" in script
 
     with TestClient(create_app(f"sqlite:///{tmp_path / 'ui.db'}")) as client:
         user_page = client.get("/")

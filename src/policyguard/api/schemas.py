@@ -363,6 +363,22 @@ class OperationsDashboardResponse(BaseModel):
     report_history: list[dict[str, Any]]
 
 
+class ModelEvaluationRequest(BaseModel):
+    dataset: str = Field(default="data/evaluation/rag-hard-v1.json", max_length=300)
+    candidates: list[str] = Field(min_length=2, max_length=5)
+    top_k: int = Field(default=5, ge=1, le=20)
+    min_hit_rate_at_k: float = Field(default=0.8, ge=0, le=1)
+    min_mrr: float = Field(default=0.65, ge=0, le=1)
+    max_latency_ms: float = Field(default=60_000, gt=0, le=3_600_000)
+
+
+class ModelPromotionRequest(BaseModel):
+    reviewer: str = Field(min_length=1, max_length=100)
+    expected_dataset_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    model: str = Field(min_length=1, max_length=300)
+    comment: str = Field(default="", max_length=1000)
+
+
 class SourceUpdateResponse(BaseModel):
     source_id: str
     content_hash: str

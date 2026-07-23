@@ -1,6 +1,7 @@
 from datetime import UTC, datetime
 from uuid import uuid4
 
+from policyguard.application.cost_control import WorkflowModelBudget
 from policyguard.application.evidence_support import EvidenceVerifier
 from policyguard.application.guardrails import default_guardrail_policy
 from policyguard.application.knowledge import BM25Retriever
@@ -29,6 +30,7 @@ class ComplianceWorkflowService:
         evidence_verifier: EvidenceVerifier | None = None,
         query_rewriter=None,
         query_rewrite_cache: JsonQueryRewriteCache | None = None,
+        model_budget: WorkflowModelBudget | None = None,
     ) -> None:
         self.retriever = retriever or BM25Retriever(knowledge_repository)
         self.workflow_repository = workflow_repository
@@ -36,6 +38,7 @@ class ComplianceWorkflowService:
         self.evidence_verifier = evidence_verifier
         self.query_rewriter = query_rewriter
         self.query_rewrite_cache = query_rewrite_cache
+        self.model_budget = model_budget or WorkflowModelBudget()
 
     def execute(
         self,
@@ -63,6 +66,14 @@ class ComplianceWorkflowService:
             self._event(run, "validate_input", "completed", {"market_count": len(markets)})
             baseline_extractor = BaselineClaimExtractor()
             extractor = self.claim_extractor or baseline_extractor
+            if extractor is not baseline_extractor and not self.model_budget.reserve(
+                f"{product.get('title', '')}\n{product.get('description', '')}"
+            ):
+                extractor = baseline_extractor
+                self._event(
+                    run, "cost_budget_route", "degraded",
+                    {**self.model_budget.snapshot(), "fallback": "deterministic_claim_extraction"},
+                )
             try:
                 extracted_claims = extractor.extract(
                     title=product.get("title", ""), description=product.get("description", "")
@@ -146,6 +157,14 @@ class ComplianceWorkflowService:
                                 "jurisdiction": market_id,
                             }
                         )
+            if rewrite_items and not self.model_budget.reserve(
+                "\n".join(item["query"] for item in rewrite_items)
+            ):
+                self._event(
+                    run, "cost_budget_route", "degraded",
+                    {**self.model_budget.snapshot(), "skipped": "query_rewrite"},
+                )
+                rewrite_items = []
             if rewrite_items:
                 try:
                     rewrites, rewrite_usage = cached_rewrite_batch(
@@ -182,6 +201,7 @@ class ComplianceWorkflowService:
                             "total_tokens": rewrite_usage.get("total_tokens", 0),
                             "cache_hits": rewrite_usage.get("cache_hits", 0),
                             "cache_misses": rewrite_usage.get("cache_misses", 0),
+                            "provider_attempts": rewrite_usage.get("provider_attempts", 1),
                             "retrieval_strategy": "original_plus_rewrites_rrf",
                             "reasons": rewrite_reasons,
                         },
@@ -223,7 +243,13 @@ class ComplianceWorkflowService:
             has_evidence = any(item["candidate_evidence"] for item in market_results)
             evidence_supported = None
             evidence_usage = {}
-            if self.evidence_verifier and has_evidence:
+            evidence_context = "\n".join(
+                evidence["text"]
+                for item in market_results
+                for evidence in item["candidate_evidence"][:3]
+            )
+            evidence_budget_available = self.model_budget.reserve(claims + evidence_context)
+            if self.evidence_verifier and has_evidence and evidence_budget_available:
                 cases = [
                     {
                         "case_id": item["market"],
@@ -267,6 +293,7 @@ class ComplianceWorkflowService:
                             "total_tokens": evidence_usage.get("total_tokens"),
                             "model": evidence_usage.get("selected_model"),
                             "fallback_used": evidence_usage.get("fallback_used", False),
+                            "provider_attempts": evidence_usage.get("provider_attempts", 1),
                         },
                     )
                 except Exception as exc:
@@ -277,6 +304,12 @@ class ComplianceWorkflowService:
                         "degraded",
                         {"error": type(exc).__name__, "fallback": "human_review"},
                     )
+            elif self.evidence_verifier and has_evidence and not evidence_budget_available:
+                self._event(
+                    run, "cost_budget_route", "degraded",
+                    {**self.model_budget.snapshot(), "skipped": "evidence_verification",
+                     "fallback": "human_review"},
+                )
             run.result_payload = {
                 "evidence_only": True,
                 "claims": extracted_claims,

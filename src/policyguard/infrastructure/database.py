@@ -252,6 +252,17 @@ class RuntimeMetricRecord(Base):
     )
 
 
+class ResourceOwnershipRecord(Base):
+    __tablename__ = "resource_ownership"
+
+    resource_type: Mapped[str] = mapped_column(String(40), primary_key=True)
+    resource_id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(100), primary_key=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
+    )
+
+
 DEMO_RULES = (
     {
         "code": "DEMO-ABSOLUTE-001",

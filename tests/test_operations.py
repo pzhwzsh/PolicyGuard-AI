@@ -80,3 +80,57 @@ def test_admin_identity_protects_source_structure_corrections(tmp_path: Path, mo
         assert mismatch.json()["detail"] == "reviewer_identity_mismatch"
     finally:
         get_settings.cache_clear()
+
+
+def test_reviewer_role_cannot_run_admin_operation(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setenv("ADMIN_API_KEY", "admin-secret")
+    monkeypatch.setenv("REVIEWER_API_KEY", "review-secret")
+    get_settings.cache_clear()
+    app = create_app(f"sqlite:///{(tmp_path / 'roles.db').as_posix()}")
+    try:
+        with TestClient(app) as client:
+            denied = client.post(
+                "/api/v1/source-updates/check",
+                json={},
+                headers={"X-Admin-Key": "review-secret", "X-Reviewer": "alice"},
+            )
+        assert denied.status_code == 401
+        assert denied.json()["detail"] == "admin_key_required"
+    finally:
+        get_settings.cache_clear()
+
+
+def test_tenant_owned_workflow_is_not_visible_to_other_tenant(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.setenv("TENANT_KEYS_JSON", '{"tenant-a":"key-a","tenant-b":"key-b"}')
+    monkeypatch.setenv("APP_ENV", "test")
+    get_settings.cache_clear()
+    app = create_app(f"sqlite:///{(tmp_path / 'tenants.db').as_posix()}")
+    payload = {
+        "product": {
+            "external_id": "sku-1", "title": "claim", "description": "",
+            "category": "all", "attributes": {},
+        },
+        "markets": ["CN"], "category": "all", "channel": "all",
+    }
+    try:
+        with TestClient(app) as client:
+            created = client.post(
+                "/api/v1/workflows/compliance", json=payload,
+                headers={"X-Tenant-ID": "tenant-a", "X-Tenant-Key": "key-a"},
+            )
+            run_id = created.json()["id"]
+            hidden = client.get(
+                f"/api/v1/workflows/compliance/{run_id}",
+                headers={"X-Tenant-ID": "tenant-b", "X-Tenant-Key": "key-b"},
+            )
+            visible = client.get(
+                f"/api/v1/workflows/compliance/{run_id}",
+                headers={"X-Tenant-ID": "tenant-a", "X-Tenant-Key": "key-a"},
+            )
+        assert created.status_code == 201
+        assert hidden.status_code == 404
+        assert visible.status_code == 200
+    finally:
+        get_settings.cache_clear()
