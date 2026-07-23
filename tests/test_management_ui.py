@@ -19,6 +19,7 @@ def test_management_ui_exposes_review_and_remediation_workbenches() -> None:
     assert 'id="runtime-window"' in html
     assert 'data-panel="overview"' in html
     assert "/api/v1/review-queue" in script
+    assert "/impact" in script
     assert "/remediation-plan" in script
     assert "/draft" in script
     assert "dashboard.performance?.concurrency" in script

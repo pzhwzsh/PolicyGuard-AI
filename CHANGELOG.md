@@ -23,6 +23,8 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Section-level policy change impact analysis that finds affected workflow evidence and reviewed
+  Agent memories, then creates idempotent re-review jobs without activating the staged source.
 - Batched runtime telemetry with 1-hour, 24-hour, and 7-day P50/P95/P99, success-rate,
   request-rate, token, and query-rewrite cache summaries in the internal console.
 - An isolated SQLite/PostgreSQL backend benchmark command guarded against non-benchmark databases.

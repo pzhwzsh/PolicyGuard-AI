@@ -79,6 +79,7 @@ from policyguard.application.hybrid import HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
 from policyguard.application.llm import configured_claim_extractor
+from policyguard.application.policy_impact import analyze_policy_impact
 from policyguard.application.query_rewrite import (
     JsonQueryRewriteCache,
     configured_query_rewriter,
@@ -425,6 +426,30 @@ def create_app(database_url: str | None = None) -> FastAPI:
         if not path.is_file():
             raise HTTPException(status_code=404, detail="source_update_diff_not_found")
         return PlainTextResponse(path.read_text(encoding="utf-8"), media_type="text/plain")
+
+    @application.post(
+        "/api/v1/source-updates/{source_id}/{content_hash}/impact",
+        tags=["sources"],
+    )
+    def analyze_source_update_impact(
+        source_id: str,
+        content_hash: str,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> dict:
+        if not re.fullmatch(r"[a-z0-9-]{3,100}", source_id) or not re.fullmatch(
+            r"[a-f0-9]{64}", content_hash
+        ):
+            raise HTTPException(status_code=404, detail="source_update_not_found")
+        try:
+            return analyze_policy_impact(
+                session,
+                Path("data/update-state/staged"),
+                source_id,
+                content_hash,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @application.post(
         "/api/v1/source-updates/{source_id}/{content_hash}/approve",
