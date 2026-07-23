@@ -1,6 +1,6 @@
 import json
 import re
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 from policyguard.application.html_ingestion import parse_official_html
@@ -52,7 +52,10 @@ def source_structure_quality(source: dict, sections: list) -> dict:
     eligible = source.get("ingestion_mode") == "legal_document"
     generic = sum(heading.casefold() == "official source update" for heading in headings)
     generic_rate = generic / max(len(headings), 1)
-    temporal_complete = bool(source.get("published_at") and source.get("effective_from"))
+    temporal_values = (source.get("published_at"), source.get("effective_from"))
+    temporal_complete = all(
+        value and value not in {"undated", "1900-01-01"} for value in temporal_values
+    )
     blocking_reasons = []
     if not eligible:
         blocking_reasons.append("not_a_legal_document")
@@ -119,8 +122,10 @@ def stage_source_snapshot(source: dict, state: dict, root: Path) -> dict:
     quality = source_structure_quality(source, sections)
     manifest = {
         "source_id": source["id"],
+        "ingestion_mode": source.get("ingestion_mode", "legal_document"),
         "content_hash": content_hash,
         "status": "staged",
+        "revision": 0,
         "section_count": len(sections),
         **quality,
         "snapshot_path": str(snapshot),
@@ -131,6 +136,96 @@ def stage_source_snapshot(source: dict, state: dict, root: Path) -> dict:
     (directory / "manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+    return manifest
+
+
+def revise_staged_source_update(
+    root: Path,
+    source_id: str,
+    content_hash: str,
+    *,
+    reviewer: str,
+    expected_revision: int,
+    published_at: str | None = None,
+    effective_from: str | None = None,
+    heading_overrides: dict[str, str] | None = None,
+) -> dict:
+    """Apply a reviewer's structural corrections without activating legal content."""
+    directory = root / source_id / content_hash
+    manifest_path = directory / "manifest.json"
+    if not manifest_path.is_file():
+        raise LookupError("source_update_not_found")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("status") != "staged":
+        raise RuntimeError("source_update_not_staged")
+    if manifest.get("ingestion_mode") is None:
+        raise RuntimeError("source_update_restage_required")
+    revision = int(manifest.get("revision", 0))
+    if expected_revision != revision:
+        raise RuntimeError("source_update_revision_conflict")
+    if not any((published_at, effective_from, heading_overrides)):
+        raise RuntimeError("source_update_no_corrections")
+    for value in (published_at, effective_from):
+        if value is not None:
+            try:
+                date.fromisoformat(value)
+            except ValueError as exc:
+                raise ValueError("source_update_invalid_date") from exc
+
+    policy_path = Path(manifest["policy_path"])
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    changed_headings = []
+    overrides = heading_overrides or {}
+    sections_by_id = {item["section_id"]: item for item in policy["sections"]}
+    unknown_ids = sorted(set(overrides) - set(sections_by_id))
+    if unknown_ids:
+        raise ValueError("source_update_unknown_section_id")
+    for section_id, heading in overrides.items():
+        cleaned = heading.strip()
+        if not cleaned or len(cleaned) > 500:
+            raise ValueError("source_update_invalid_heading")
+        if sections_by_id[section_id]["heading"] != cleaned:
+            sections_by_id[section_id]["heading"] = cleaned
+            changed_headings.append(section_id)
+
+    if published_at is not None:
+        policy["published_at"] = published_at
+    if effective_from is not None:
+        for scope in policy.get("scopes", []):
+            scope["effective_from"] = effective_from
+    effective_date = next(
+        (scope.get("effective_from") for scope in policy.get("scopes", []) if scope), None
+    )
+    source = {
+        "id": source_id,
+        "ingestion_mode": manifest["ingestion_mode"],
+        "published_at": policy.get("published_at"),
+        "effective_from": effective_date,
+    }
+    quality = source_structure_quality(source, [
+        type("Section", (), {"text": item["text"], "heading": item["heading"]})()
+        for item in policy["sections"]
+    ])
+    policy_path.write_text(json.dumps(policy, ensure_ascii=False, indent=2), encoding="utf-8")
+    history = list(manifest.get("structural_review_history", []))
+    history.append({
+        "revision": revision + 1,
+        "reviewer": reviewer,
+        "reviewed_at": datetime.now(UTC).isoformat(),
+        "published_at_changed": published_at is not None,
+        "effective_from_changed": effective_from is not None,
+        "changed_heading_count": len(changed_headings),
+        "changed_heading_ids": changed_headings,
+        "structural_review_status": quality["structural_review_status"],
+        "blocking_reasons": quality["blocking_reasons"],
+    })
+    manifest.update({
+        **quality,
+        "revision": revision + 1,
+        "structural_review_history": history,
+        "legal_review_status": "pending",
+    })
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     return manifest
 
 

@@ -320,6 +320,7 @@ class SourceUpdateResponse(BaseModel):
     source_id: str
     content_hash: str
     status: str
+    revision: int = 0
     section_count: int
     diff_available: bool
     title: str
@@ -329,8 +330,21 @@ class SourceUpdateResponse(BaseModel):
     structural_review_status: str
     legal_review_status: str
     short_section_rate: float
+    temporal_review_status: str = "missing"
+    generic_heading_rate: float | None = None
+    blocking_reasons: list[str] = Field(default_factory=list)
 
 
 class SourceUpdateApprovalRequest(BaseModel):
     reviewer: str = Field(min_length=1, max_length=100)
     legal_review_confirmed: bool
+
+
+class SourceUpdateCorrectionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    reviewer: str = Field(min_length=1, max_length=100)
+    expected_revision: int = Field(ge=0)
+    published_at: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    effective_from: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    heading_overrides: dict[str, str] = Field(default_factory=dict)

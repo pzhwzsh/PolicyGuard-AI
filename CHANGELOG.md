@@ -15,6 +15,8 @@ and versions follow Semantic Versioning.
   recall and specificity are invalid when decision coverage is incomplete.
 - Mark retrieved citations as unverified candidates and require authenticated reviewer identity for
   workflow decisions and draft approvals when admin authentication is enabled.
+- Add versioned reviewer corrections for blocked source headings and temporal metadata, with
+  optimistic-concurrency checks and immutable structural-review history.
 
 - Split the customer review page from the management console. The public workflow no longer exposes
   policy ingestion, source activation, evaluation queues, model status, job controls, or execution

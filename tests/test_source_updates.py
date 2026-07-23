@@ -1,7 +1,10 @@
+import json
+from pathlib import Path
 
 from policyguard.application.html_ingestion import HtmlSection, parse_official_html
 from policyguard.application.source_updates import (
     clean_source_sections,
+    revise_staged_source_update,
     source_structure_quality,
 )
 
@@ -61,3 +64,47 @@ def test_catalog_source_is_never_eligible_for_activation() -> None:
     )
     assert quality["eligible_for_activation"] is False
     assert quality["structural_review_status"] == "blocked"
+
+
+def test_manual_structural_correction_is_versioned_and_needs_separate_legal_review(
+    tmp_path: Path,
+) -> None:
+    source_id = "eu-law"
+    content_hash = "a" * 64
+    directory = tmp_path / source_id / content_hash
+    directory.mkdir(parents=True)
+    policy_path = directory / "policy.json"
+    policy_path.write_text(json.dumps({
+        "published_at": "undated",
+        "scopes": [{"effective_from": "1900-01-01"}],
+        "sections": [
+            {"section_id": f"s-{index}", "heading": "Official source update",
+             "text": f"Legal text paragraph {index}."}
+            for index in range(3)
+        ],
+    }), encoding="utf-8")
+    manifest_path = directory / "manifest.json"
+    manifest_path.write_text(json.dumps({
+        "source_id": source_id, "content_hash": content_hash, "status": "staged",
+        "ingestion_mode": "legal_document", "policy_path": str(policy_path), "revision": 0,
+    }), encoding="utf-8")
+
+    revised = revise_staged_source_update(
+        tmp_path, source_id, content_hash, reviewer="reviewer-1", expected_revision=0,
+        published_at="2024-01-01", effective_from="2024-02-01",
+        heading_overrides={"s-0": "Article 1", "s-1": "Article 2", "s-2": "Article 3"},
+    )
+    assert revised["revision"] == 1
+    assert revised["structural_review_status"] == "passed"
+    assert revised["legal_review_status"] == "pending"
+    assert revised["structural_review_history"][0]["changed_heading_count"] == 3
+
+    try:
+        revise_staged_source_update(
+            tmp_path, source_id, content_hash, reviewer="reviewer-2", expected_revision=0,
+            published_at="2024-01-01",
+        )
+    except RuntimeError as exc:
+        assert str(exc) == "source_update_revision_conflict"
+    else:
+        raise AssertionError("stale correction was accepted")

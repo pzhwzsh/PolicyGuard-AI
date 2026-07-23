@@ -28,6 +28,8 @@ Last updated: 2026-07-23
   holdout evidence.
 - Workflow review and draft approval require an authenticated reviewer identity whenever
   `ADMIN_API_KEY` is configured.
+- Blocked staged sources now expose a versioned structural-correction endpoint for reviewer-supplied
+  section headings and verified publication/effective dates; corrections never auto-activate content.
 
 ## Open work
 
@@ -44,6 +46,8 @@ Last updated: 2026-07-23
 - Review staged policy versions before activation.
 - Re-parse and re-review all staged sources under quality schema v2; restore legal hierarchy for
   the six EU sources with generic headings and verify publication/effective dates.
+- Use `PATCH /api/v1/source-updates/{source_id}/{content_hash}/structure` with the returned
+  `revision`, then rerun impact analysis and submit the separate legal approval.
 - Expand jurisdiction, category, channel, and platform-specific policy coverage.
 
 ### Product workflow

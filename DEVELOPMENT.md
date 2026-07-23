@@ -137,6 +137,8 @@ is database-specific.
 - Keep external writes idempotent and bounded by timeout, retry, and authorization checks.
 - Require explicit review before activating policy versions or publishing generated changes.
 - Label generated, authored, AI-reviewed, and human-reviewed data accurately.
+- Source structural corrections must include the current revision and are never activation by
+  themselves; legal approval remains a separate authenticated operation.
 
 ## Pull requests
 

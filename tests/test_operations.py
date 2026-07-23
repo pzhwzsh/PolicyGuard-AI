@@ -59,3 +59,24 @@ def test_admin_identity_protects_workflow_review_and_draft(tmp_path: Path, monke
         assert mismatch.json()["detail"] == "reviewer_identity_mismatch"
     finally:
         get_settings.cache_clear()
+
+
+def test_admin_identity_protects_source_structure_corrections(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setenv("ADMIN_API_KEY", "secret")
+    get_settings.cache_clear()
+    app = create_app(f"sqlite:///{(tmp_path / 'source-admin.db').as_posix()}")
+    payload = {"reviewer": "alice", "expected_revision": 0, "published_at": "2024-01-01"}
+    path = f"/api/v1/source-updates/eu-law/{'a' * 64}/structure"
+    try:
+        with TestClient(app) as client:
+            missing = client.patch(path, json=payload)
+            mismatch = client.patch(
+                path,
+                headers={"X-Admin-Key": "secret", "X-Reviewer": "bob"},
+                json=payload,
+            )
+        assert missing.status_code == 401
+        assert mismatch.status_code == 403
+        assert mismatch.json()["detail"] == "reviewer_identity_mismatch"
+    finally:
+        get_settings.cache_clear()

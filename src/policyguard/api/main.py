@@ -53,6 +53,7 @@ from policyguard.api.schemas import (
     SearchHitResponse,
     SearchResponse,
     SourceUpdateApprovalRequest,
+    SourceUpdateCorrectionRequest,
     SourceUpdateResponse,
     WorkflowReviewRequest,
 )
@@ -91,6 +92,7 @@ from policyguard.application.service import ComplianceCheckService
 from policyguard.application.source_updates import (
     approve_source_update,
     list_staged_source_updates,
+    revise_staged_source_update,
 )
 from policyguard.application.tools import SuggestConservativeRewriteTool, ToolRegistry
 from policyguard.application.workflow import ComplianceWorkflowService
@@ -454,6 +456,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             source_id=item["source_id"],
             content_hash=item["content_hash"],
             status=item["status"],
+            revision=int(item.get("revision", 0)),
             section_count=item["section_count"],
             diff_available=bool(item.get("diff_path")),
             title=policy["title"],
@@ -466,6 +469,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
             structural_review_status=item.get("structural_review_status", "blocked"),
             legal_review_status=item.get("legal_review_status", "pending"),
             short_section_rate=float(item.get("short_section_rate", 0)),
+            temporal_review_status=item.get("temporal_review_status", "missing"),
+            generic_heading_rate=item.get("generic_heading_rate"),
+            blocking_reasons=item.get("blocking_reasons", []),
         )
 
     @application.get(
@@ -532,12 +538,14 @@ def create_app(database_url: str | None = None) -> FastAPI:
         content_hash: str,
         payload: SourceUpdateApprovalRequest,
         session: Session = Depends(get_session),
-        _: None = Depends(require_admin),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
     ) -> SourceUpdateResponse:
         if not re.fullmatch(r"[a-z0-9-]{3,100}", source_id) or not re.fullmatch(
             r"[a-f0-9]{64}", content_hash
         ):
             raise HTTPException(status_code=404, detail="source_update_not_found")
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         try:
             item = approve_source_update(
                 Path("data/update-state/staged"), source_id, content_hash,
@@ -554,6 +562,40 @@ def create_app(database_url: str | None = None) -> FastAPI:
             idempotency_key=f"reindex-source:{source_id}:{content_hash}",
         )
         item["reindex_job_id"] = reindex_job.id
+        return source_update_response(item)
+
+    @application.patch(
+        "/api/v1/source-updates/{source_id}/{content_hash}/structure",
+        response_model=SourceUpdateResponse,
+        tags=["sources"],
+    )
+    def revise_staged_source_structure(
+        source_id: str,
+        content_hash: str,
+        payload: SourceUpdateCorrectionRequest,
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+    ) -> SourceUpdateResponse:
+        if not re.fullmatch(r"[a-z0-9-]{3,100}", source_id) or not re.fullmatch(
+            r"[a-f0-9]{64}", content_hash
+        ):
+            raise HTTPException(status_code=404, detail="source_update_not_found")
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        try:
+            item = revise_staged_source_update(
+                Path("data/update-state/staged"), source_id, content_hash,
+                reviewer=payload.reviewer,
+                expected_revision=payload.expected_revision,
+                published_at=payload.published_at,
+                effective_from=payload.effective_from,
+                heading_overrides=payload.heading_overrides,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
         return source_update_response(item)
 
     @application.post(
