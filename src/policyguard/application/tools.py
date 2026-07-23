@@ -105,6 +105,7 @@ class SuggestConservativeRewriteTool:
                     "heading": hit.get("heading"),
                     "quote": str(hit.get("text", ""))[:1200],
                     "source_url": hit.get("source_url"),
-                    "evidence_status": "human_reviewed_candidate",
+                    "evidence_status": "retrieval_candidate_unverified",
+                    "requires_human_review": True,
                 })
         return basis

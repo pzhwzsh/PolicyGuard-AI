@@ -24,11 +24,33 @@ def test_samr_cleaner_keeps_articles_and_drops_navigation() -> None:
         HtmlSection("a2", "Page", "第二条 广告不得欺骗消费者。"),
         HtmlSection("a3", "Page", "第三条 广告内容应当合法。"),
     ]
-    source = {"id": "cn-samr-advertising-law", "ingestion_mode": "legal_document"}
+    source = {
+        "id": "cn-samr-advertising-law",
+        "ingestion_mode": "legal_document",
+        "published_at": "2021-04-29",
+        "effective_from": "2021-04-29",
+    }
     cleaned = clean_source_sections(source, sections)
     quality = source_structure_quality(source, cleaned)
     assert [item.heading for item in cleaned] == ["第一条", "第二条", "第三条"]
     assert quality["structural_review_status"] == "passed"
+    assert quality["quality_schema_version"] == "2.0"
+    assert quality["generic_heading_rate"] == 0
+
+
+def test_quality_gate_blocks_generic_headings_and_missing_dates() -> None:
+    sections = [
+        HtmlSection(str(index), "Official source update", f"Paragraph {index} legal text")
+        for index in range(5)
+    ]
+    quality = source_structure_quality(
+        {"id": "eu-law", "ingestion_mode": "legal_document"}, sections
+    )
+    assert quality["structural_review_status"] == "blocked"
+    assert quality["blocking_reasons"] == [
+        "generic_heading_dominance",
+        "temporal_metadata_missing",
+    ]
 
 
 def test_catalog_source_is_never_eligible_for_activation() -> None:

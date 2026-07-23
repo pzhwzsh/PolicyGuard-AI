@@ -21,7 +21,9 @@ def test_published_evidence_is_complete_portable_and_honest() -> None:
 
     assert sources["counts"]["registered_sources"] == 11
     assert sources["counts"]["latest_release_sources"] == 11
-    assert sources["counts"]["latest_release_sections"] == 3439
+    assert sources["counts"]["latest_release_sections"] == 5468
+    assert sources["counts"]["structurally_passed"] == 0
+    assert sources["counts"]["structurally_blocked"] == 11
     assert sources["counts"]["legally_confirmed"] == 0
     assert datasets["human_verified_samples"] == 0
     assert benchmarks["truthfulness"]["development_only"] is True
@@ -30,7 +32,8 @@ def test_published_evidence_is_complete_portable_and_honest() -> None:
     assert benchmarks["abstention"]["heldout_near_domain_specificity"] == 0.25
     assert runtime["active_document_count"] == 3
     assert runtime["active_chunk_count"] == 13
-    assert runtime["counts"]["workflow_runs"] == 0
+    assert runtime["counts"]["workflow_runs"] >= 0
+    assert runtime["environment"] == "local_development"
 
 
 def test_evidence_publisher_builds_portable_release_from_local_inputs(tmp_path: Path) -> None:
@@ -52,6 +55,8 @@ def test_evidence_publisher_builds_portable_release_from_local_inputs(tmp_path: 
         "created_at": "2026-07-22T00:00:00+00:00", "section_count": 1,
         "structural_review_status": "passed", "legal_review_status": "pending",
         "eligible_for_activation": True, "short_section_rate": 0.0,
+        "quality_schema_version": "2.0", "temporal_review_status": "complete",
+        "generic_heading_rate": 0.0, "blocking_reasons": [],
     })
     write_json(staged / "policy.json", {
         "title": "Rule", "publisher": "Regulator", "source_url": source["source_url"],

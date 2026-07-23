@@ -6,7 +6,7 @@
     {"id": "r-01", "field": "title", "before": "国家级护肤品 50ml", "expected_after": "护肤品 50ml", "expected_phrase": "国家级", "expected_section_id": "article-9"},
     {"id": "r-02", "field": "title", "before": "最高级面霜 30g", "expected_after": "面霜 30g", "expected_phrase": "最高级", "expected_section_id": "article-9"},
     {"id": "r-03", "field": "description", "before": "最好的日常护理产品 100ml", "expected_after": "日常护理产品 100ml", "expected_phrase": "最好的", "expected_section_id": "article-9"},
-    {"id": "r-04", "field": "title", "before": "100%安全的儿童用品 2件", "expected_after": "儿童用品 2件", "expected_phrase": "100%安全的", "expected_section_id": "article-9"},
+    {"id": "r-04", "field": "title", "before": "100%安全的儿童用品 2件", "expected_after": "儿童用品 2件", "expected_phrase": "100%安全的", "expected_section_id": "article-4"},
     {"id": "r-05", "field": "description", "before": "最佳配方 5mg", "expected_after": "配方 5mg", "expected_phrase": "最佳", "expected_section_id": "article-9"},
     {"id": "r-06", "field": "title", "before": "普通护肤品 50ml", "expected_after": "普通护肤品 50ml", "expected_phrase": null, "expected_section_id": null}
   ]

@@ -22,6 +22,12 @@ Last updated: 2026-07-23
   explicit experimental opt-in and remains subject to the existing tool and step budgets.
 - Model smoke reports now include input/output tokens and P50/P95/P99. Cost is emitted only when
   the exact relay price is configured.
+- Legacy source manifests are now structurally blocked until they pass quality schema v2, including
+  heading hierarchy and temporal metadata checks.
+- Synthetic template-expanded RAG rows are stress-test data only and are not reportable legal
+  holdout evidence.
+- Workflow review and draft approval require an authenticated reviewer identity whenever
+  `ADMIN_API_KEY` is configured.
 
 ## Open work
 
@@ -36,6 +42,8 @@ Last updated: 2026-07-23
 ### Knowledge lifecycle
 
 - Review staged policy versions before activation.
+- Re-parse and re-review all staged sources under quality schema v2; restore legal hierarchy for
+  the six EU sources with generic headings and verify publication/effective dates.
 - Expand jurisdiction, category, channel, and platform-specific policy coverage.
 
 ### Product workflow

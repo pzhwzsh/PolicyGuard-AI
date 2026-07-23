@@ -9,12 +9,12 @@
     "policy_scopes": 3,
     "compliance_checks": 0,
     "findings": 0,
-    "workflow_runs": 0,
-    "workflow_events": 0,
+    "workflow_runs": 2,
+    "workflow_events": 14,
     "agent_memories": 0,
     "evaluation_reviews": 0,
-    "background_jobs": 2,
-    "audit_logs": 0
+    "background_jobs": 3,
+    "audit_logs": 4
   },
   "active_document_count": 3,
   "active_chunk_count": 13,

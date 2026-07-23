@@ -14,6 +14,38 @@ from policyguard.infrastructure.database import Database
 from policyguard.infrastructure.repositories import SqlAlchemyKnowledgeRepository
 
 
+def calculate_quality_metrics(cases: list[dict], labels: dict, decisions: list) -> dict:
+    by_id = {item.case_id: item for item in decisions}
+    positive_ids = [case_id for case_id, expected in labels.items() if expected]
+    negative_ids = [case_id for case_id, expected in labels.items() if not expected]
+    decided_positive = [case_id for case_id in positive_ids if case_id in by_id]
+    decided_negative = [case_id for case_id in negative_ids if case_id in by_id]
+    coverage = len(by_id) / len(cases) if cases else 0
+    complete = len(by_id) == len(cases) and len(by_id) == len(decisions)
+    return {
+        "quality_metric_status": "valid" if complete else "invalid_incomplete_provider_run",
+        "quality_metrics_valid": complete,
+        "answerable_recall": (
+            sum(by_id[case_id].supported for case_id in positive_ids) / len(positive_ids)
+            if complete and positive_ids else None
+        ),
+        "no_answer_specificity": (
+            sum(not by_id[case_id].supported for case_id in negative_ids) / len(negative_ids)
+            if complete and negative_ids else None
+        ),
+        "observed_answerable_recall": (
+            sum(by_id[case_id].supported for case_id in decided_positive)
+            / len(decided_positive) if decided_positive else None
+        ),
+        "observed_no_answer_specificity": (
+            sum(not by_id[case_id].supported for case_id in decided_negative)
+            / len(decided_negative) if decided_negative else None
+        ),
+        "decision_coverage": coverage,
+        "missing_decision_count": len(cases) - len(by_id),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--positive-limit", type=int, default=10)
@@ -76,26 +108,15 @@ def main() -> None:
                     failures.append(f"{type(exc).__name__}: {exc}")
         latencies.append((time.perf_counter() - began) * 1000)
     by_id = {item.case_id: item for item in decisions}
-    true_positive = sum(
-        by_id.get(case_id) is not None and by_id[case_id].supported
-        for case_id, expected in labels.items()
-        if expected
-    )
-    true_negative = sum(
-        by_id.get(case_id) is not None and not by_id[case_id].supported
-        for case_id, expected in labels.items()
-        if not expected
-    )
     positive_count = sum(labels.values())
     negative_count = len(labels) - positive_count
+    quality = calculate_quality_metrics(cases, labels, decisions)
     result = {
         "model": verifier.model,
         "reasoning_effort": verifier.reasoning_effort,
         "positive_count": positive_count,
         "negative_count": negative_count,
-        "answerable_recall": true_positive / positive_count if positive_count else 0,
-        "no_answer_specificity": true_negative / negative_count if negative_count else 0,
-        "decision_coverage": len(decisions) / len(cases) if cases else 0,
+        **quality,
         "quote_valid_rate": sum(item.quote_valid for item in decisions) / len(decisions)
         if decisions
         else 0,

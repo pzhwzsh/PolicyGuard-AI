@@ -14,14 +14,20 @@
     "reuse_review_status": "official_publication_terms_not_reviewed"
   },
   "capture": {
-    "content_hash": "01e8b8987000e035652e4447f6a20ee396e36778e44a9daea16c67559f928bc0",
-    "created_at": "2026-07-21T11:35:10.158114+00:00",
-    "retrieved_at": "2026-07-21",
-    "section_count": 205,
-    "structural_review_status": "passed",
+    "content_hash": "9a32fd92132f56db6b6668b7580f0f2490944e71515339174ab6a97d32db8773",
+    "created_at": "2026-07-22T05:04:35.789155+00:00",
+    "retrieved_at": "2026-07-22",
+    "section_count": 210,
+    "quality_schema_version": "legacy",
+    "structural_review_status": "blocked",
     "legal_review_status": "pending",
-    "eligible_for_activation": true,
-    "short_section_rate": 0.0341,
+    "eligible_for_activation": false,
+    "temporal_review_status": "missing",
+    "generic_heading_rate": null,
+    "blocking_reasons": [
+      "quality_gate_version_outdated"
+    ],
+    "short_section_rate": null,
     "replacement_character_count": 0,
     "validation_errors": []
   },
@@ -29,9 +35,9 @@
     "title": "Health Products Compliance Guidance",
     "publisher": "U.S. Federal Trade Commission",
     "source_url": "https://www.ftc.gov/business-guidance/resources/health-products-compliance-guidance",
-    "version": "snapshot-01e8b8987000",
+    "version": "snapshot-9a32fd92132f",
     "published_at": "undated",
-    "retrieved_at": "2026-07-21",
+    "retrieved_at": "2026-07-22",
     "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
     "scopes": [
       {
@@ -45,6 +51,21 @@
       }
     ],
     "sections": [
+      {
+        "section_id": "html-1-official-source-update",
+        "heading": "Official source update",
+        "text": "Tags:"
+      },
+      {
+        "section_id": "html-2-official-source-update",
+        "heading": "Official source update",
+        "text": "Advertising and Marketing"
+      },
+      {
+        "section_id": "html-3-official-source-update",
+        "heading": "Official source update",
+        "text": "Health Claims"
+      },
       {
         "section_id": "html-4-i-preface",
         "heading": "I. Preface",
@@ -846,6 +867,11 @@
         "text": "[14] See Enforcement Policy Statement on Food Advertising , 59 Fed. Reg. 28,388, 28,393-94 (June 1, 1994), www.ftc.gov/public-statements/1994/05/enforcement-policy-statement-food-advertising (“ Food Advertising Policy Statement ”) ."
       },
       {
+        "section_id": "html-164-endnotes",
+        "heading": "Endnotes",
+        "text": "[15] Id."
+      },
+      {
         "section_id": "html-165-endnotes",
         "heading": "Endnotes",
         "text": "[16] In 2008, the FDA issued a guidance document detailing how it evaluates substantiation for structure/function claims in dietary supplement labeling, stating, “The FTC has typically applied a substantiation standard of ‘competent and reliable scientific evidence’ to claims about the benefits and safety of dietary supplements and other health-related products. FDA intends to apply a standard for the substantiation of dietary supplement claims that is consistent with the FTC approach.” Guidance for Industry: Substantiation for Dietary Supplement Claims Made Under Section 403(r)(6) of the Federal Food, Drug, and Cosmetic Act , Food and Drug Admin. (Jan. 2009), https://www.fda.gov/regulatory-information/search-fda-guidance-documents/guidance-industry-substantiation-dietary-supplement-claims-made-under-section-403r-6-federal-food ."
@@ -984,6 +1010,11 @@
         "section_id": "html-192-endnotes",
         "heading": "Endnotes",
         "text": "[42] See Food Advertising Policy Statement, supra note 14 at Section IV.A."
+      },
+      {
+        "section_id": "html-193-endnotes",
+        "heading": "Endnotes",
+        "text": "[43] Id."
       },
       {
         "section_id": "html-194-endnotes",

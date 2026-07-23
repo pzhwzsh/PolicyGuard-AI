@@ -15,13 +15,19 @@
   },
   "capture": {
     "content_hash": "c33bff77a80e20d24c5c011e80aae31b8a26c72b31161957d113d38c8fc77893",
-    "created_at": "2026-07-21T12:54:10.390966+00:00",
-    "retrieved_at": "2026-07-21",
-    "section_count": 228,
-    "structural_review_status": "passed",
+    "created_at": "2026-07-22T05:04:35.270297+00:00",
+    "retrieved_at": "2026-07-22",
+    "section_count": 320,
+    "quality_schema_version": "legacy",
+    "structural_review_status": "blocked",
     "legal_review_status": "pending",
-    "eligible_for_activation": true,
-    "short_section_rate": 0.0658,
+    "eligible_for_activation": false,
+    "temporal_review_status": "missing",
+    "generic_heading_rate": null,
+    "blocking_reasons": [
+      "quality_gate_version_outdated"
+    ],
+    "short_section_rate": null,
     "replacement_character_count": 0,
     "validation_errors": []
   },
@@ -31,7 +37,7 @@
     "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02005L0029-20220528",
     "version": "snapshot-c33bff77a80e",
     "published_at": "undated",
-    "retrieved_at": "2026-07-21",
+    "retrieved_at": "2026-07-22",
     "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
     "scopes": [
       {
@@ -54,6 +60,11 @@
         "section_id": "html-2-official-source-update",
         "heading": "Official source update",
         "text": "This text is meant purely as a documentation tool and has no legal effect. The Union's institutions do not assume any liability for its contents. The authentic versions of the relevant acts, including their preambles, are those published in the Official Journal of the European Union and available in EUR-Lex. Those official texts are directly accessible through the links embedded in this document"
+      },
+      {
+        "section_id": "html-3-official-source-update",
+        "heading": "Official source update",
+        "text": "►B"
       },
       {
         "section_id": "html-4-official-source-update",
@@ -86,9 +97,34 @@
         "text": "(OJ L 149 11.6.2005, p. 22)"
       },
       {
+        "section_id": "html-10-official-source-update",
+        "heading": "Official source update",
+        "text": "Amended by:"
+      },
+      {
         "section_id": "html-11-official-source-update",
         "heading": "Official source update",
         "text": "Official Journal"
+      },
+      {
+        "section_id": "html-12-official-source-update",
+        "heading": "Official source update",
+        "text": "No"
+      },
+      {
+        "section_id": "html-13-official-source-update",
+        "heading": "Official source update",
+        "text": "page"
+      },
+      {
+        "section_id": "html-14-official-source-update",
+        "heading": "Official source update",
+        "text": "date"
+      },
+      {
+        "section_id": "html-15-official-source-update",
+        "heading": "Official source update",
+        "text": "►M1"
       },
       {
         "section_id": "html-16-official-source-update",
@@ -96,14 +132,79 @@
         "text": "DIRECTIVE (EU) 2019/2161 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 27 November 2019"
       },
       {
+        "section_id": "html-17-official-source-update",
+        "heading": "Official source update",
+        "text": "L 328"
+      },
+      {
+        "section_id": "html-18-official-source-update",
+        "heading": "Official source update",
+        "text": "18.12.2019"
+      },
+      {
+        "section_id": "html-19-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-20-official-source-update",
+        "heading": "Official source update",
+        "text": "DIRECTIVE 2005/29/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL"
+      },
+      {
+        "section_id": "html-21-official-source-update",
+        "heading": "Official source update",
+        "text": "of 11 May 2005"
+      },
+      {
+        "section_id": "html-22-official-source-update",
+        "heading": "Official source update",
+        "text": "concerning unfair business-to-consumer commercial practices in the internal market and amending Council Directive 84/450/EEC, Directives 97/7/EC, 98/27/EC and 2002/65/EC of the European Parliament and of the Council and Regulation (EC) No 2006/2004 of the European Parliament and of the Council"
+      },
+      {
+        "section_id": "html-23-official-source-update",
+        "heading": "Official source update",
+        "text": "(‘Unfair Commercial Practices Directive’)"
+      },
+      {
+        "section_id": "html-24-official-source-update",
+        "heading": "Official source update",
+        "text": "(Text with EEA relevance)"
+      },
+      {
+        "section_id": "html-25-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER 1"
+      },
+      {
         "section_id": "html-26-official-source-update",
         "heading": "Official source update",
         "text": "GENERAL PROVISIONS"
       },
       {
+        "section_id": "html-27-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1"
+      },
+      {
+        "section_id": "html-28-official-source-update",
+        "heading": "Official source update",
+        "text": "Purpose"
+      },
+      {
         "section_id": "html-29-official-source-update",
         "heading": "Official source update",
         "text": "The purpose of this Directive is to contribute to the proper functioning of the internal market and achieve a high level of consumer protection by approximating the laws, regulations and administrative provisions of the Member States on unfair commercial practices harming consumers' economic interests."
+      },
+      {
+        "section_id": "html-30-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2"
+      },
+      {
+        "section_id": "html-31-official-source-update",
+        "heading": "Official source update",
+        "text": "Definitions"
       },
       {
         "section_id": "html-32-official-source-update",
@@ -121,9 +222,19 @@
         "text": "‘trader’ means any natural or legal person who, in commercial practices covered by this Directive, is acting for purposes relating to his trade, business, craft or profession and anyone acting in the name of or on behalf of a trader;"
       },
       {
+        "section_id": "html-35-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-36-official-source-update",
         "heading": "Official source update",
         "text": "‘product’ means any good or service including immovable property, digital service and digital content, as well as rights and obligations;"
+      },
+      {
+        "section_id": "html-37-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-38-official-source-update",
@@ -171,6 +282,11 @@
         "text": "‘regulated profession’ means a professional activity or a group of professional activities, access to which or the pursuit of which, or one of the modes of pursuing which, is conditional, directly or indirectly, upon possession of specific professional qualifications, pursuant to laws, regulations or administrative provisions;"
       },
       {
+        "section_id": "html-47-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-48-official-source-update",
         "heading": "Official source update",
         "text": "‘ranking’ means the relative prominence given to products, as presented, organised or communicated by the trader, irrespective of the technological means used for such presentation, organisation or communication;"
@@ -179,6 +295,36 @@
         "section_id": "html-49-official-source-update",
         "heading": "Official source update",
         "text": "‘online marketplace’ means a service using software, including a website, part of a website or an application, operated by or on behalf of a trader which allows consumers to conclude distance contracts with other traders or consumers."
+      },
+      {
+        "section_id": "html-50-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-51-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3"
+      },
+      {
+        "section_id": "html-52-official-source-update",
+        "heading": "Official source update",
+        "text": "Scope"
+      },
+      {
+        "section_id": "html-53-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-54-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-55-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 4"
       },
       {
         "section_id": "html-56-official-source-update",
@@ -191,9 +337,19 @@
         "text": "Member States shall neither restrict the freedom to provide services nor restrict the free movement of goods for reasons falling within the field approximated by this Directive."
       },
       {
+        "section_id": "html-58-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER 2"
+      },
+      {
         "section_id": "html-59-official-source-update",
         "heading": "Official source update",
         "text": "UNFAIR COMMERCIAL PRACTICES"
+      },
+      {
+        "section_id": "html-60-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 5"
       },
       {
         "section_id": "html-61-official-source-update",
@@ -211,6 +367,11 @@
         "text": "it is contrary to the requirements of professional diligence,"
       },
       {
+        "section_id": "html-64-official-source-update",
+        "heading": "Official source update",
+        "text": "and"
+      },
+      {
         "section_id": "html-65-official-source-update",
         "heading": "Official source update",
         "text": "it materially distorts or is likely to materially distort the economic behaviour with regard to the product of the average consumer whom it reaches or to whom it is addressed, or of the average member of the group when a commercial practice is directed to a particular group of consumers."
@@ -226,14 +387,29 @@
         "text": "are misleading as set out in Articles 6 and 7,"
       },
       {
+        "section_id": "html-68-official-source-update",
+        "heading": "Official source update",
+        "text": "or"
+      },
+      {
         "section_id": "html-69-official-source-update",
         "heading": "Official source update",
         "text": "are aggressive as set out in Articles 8 and 9."
       },
       {
+        "section_id": "html-70-official-source-update",
+        "heading": "Official source update",
+        "text": "Section 1"
+      },
+      {
         "section_id": "html-71-official-source-update",
         "heading": "Official source update",
         "text": "Misleading commercial practices"
+      },
+      {
+        "section_id": "html-72-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 6"
       },
       {
         "section_id": "html-73-official-source-update",
@@ -301,14 +477,34 @@
         "text": "the commitment is not aspirational but is firm and is capable of being verified,"
       },
       {
+        "section_id": "html-86-official-source-update",
+        "heading": "Official source update",
+        "text": "and"
+      },
+      {
         "section_id": "html-87-official-source-update",
         "heading": "Official source update",
         "text": "the trader indicates in a commercial practice that he is bound by the code;"
       },
       {
+        "section_id": "html-88-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-89-official-source-update",
         "heading": "Official source update",
         "text": "any marketing of a good, in one Member State, as being identical to a good marketed in other Member States, while that good has significantly different composition or characteristics, unless justified by legitimate and objective factors."
+      },
+      {
+        "section_id": "html-90-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-91-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 7"
       },
       {
         "section_id": "html-92-official-source-update",
@@ -336,9 +532,19 @@
         "text": "the price inclusive of taxes, or where the nature of the product means that the price cannot reasonably be calculated in advance, the manner in which the price is calculated, as well as, where appropriate, all additional freight, delivery or postal charges or, where these charges cannot reasonably be calculated in advance, the fact that such additional charges may be payable;"
       },
       {
+        "section_id": "html-97-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-98-official-source-update",
         "heading": "Official source update",
         "text": "the arrangements for payment, delivery and performance, if they depart from the requirements of professional diligence;"
+      },
+      {
+        "section_id": "html-99-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-100-official-source-update",
@@ -346,9 +552,24 @@
         "text": "for products and transactions involving a right of withdrawal or cancellation, the existence of such a right;"
       },
       {
+        "section_id": "html-101-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-102-official-source-update",
         "heading": "Official source update",
         "text": "for products offered on online marketplaces, whether the third party offering the products is a trader or not, on the basis of the declaration of that third party to the provider of the online marketplace."
+      },
+      {
+        "section_id": "html-103-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-104-official-source-update",
+        "heading": "Official source update",
+        "text": "Section 2"
       },
       {
         "section_id": "html-105-official-source-update",
@@ -356,9 +577,19 @@
         "text": "Aggressive commercial practices"
       },
       {
+        "section_id": "html-106-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 8"
+      },
+      {
         "section_id": "html-107-official-source-update",
         "heading": "Official source update",
         "text": "A commercial practice shall be regarded as aggressive if, in its factual context, taking account of all its features and circumstances, by harassment, coercion, including the use of physical force, or undue influence, it significantly impairs or is likely to significantly impair the average consumer's freedom of choice or conduct with regard to the product and thereby causes him or is likely to cause him to take a transactional decision that he would not have taken otherwise."
+      },
+      {
+        "section_id": "html-108-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 9"
       },
       {
         "section_id": "html-109-official-source-update",
@@ -396,9 +627,24 @@
         "text": "any threat to take any action that cannot legally be taken."
       },
       {
+        "section_id": "html-116-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER 3"
+      },
+      {
         "section_id": "html-117-official-source-update",
         "heading": "Official source update",
         "text": "CODES OF CONDUCT"
+      },
+      {
+        "section_id": "html-118-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 10"
+      },
+      {
+        "section_id": "html-119-official-source-update",
+        "heading": "Official source update",
+        "text": "Codes of conduct"
       },
       {
         "section_id": "html-120-official-source-update",
@@ -411,9 +657,24 @@
         "text": "Recourse to such control bodies shall never be deemed the equivalent of foregoing a means of judicial or administrative recourse as provided for in Article 11."
       },
       {
+        "section_id": "html-122-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER 4"
+      },
+      {
         "section_id": "html-123-official-source-update",
         "heading": "Official source update",
         "text": "FINAL PROVISIONS"
+      },
+      {
+        "section_id": "html-124-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11"
+      },
+      {
+        "section_id": "html-125-official-source-update",
+        "heading": "Official source update",
+        "text": "Enforcement"
       },
       {
         "section_id": "html-126-official-source-update",
@@ -429,6 +690,11 @@
         "section_id": "html-128-official-source-update",
         "heading": "Official source update",
         "text": "take legal action against such unfair commercial practices;"
+      },
+      {
+        "section_id": "html-129-official-source-update",
+        "heading": "Official source update",
+        "text": "and/or"
       },
       {
         "section_id": "html-130-official-source-update",
@@ -451,6 +717,11 @@
         "text": "whether these legal facilities may be directed separately or jointly against a number of traders from the same economic sector;"
       },
       {
+        "section_id": "html-134-official-source-update",
+        "heading": "Official source update",
+        "text": "and"
+      },
+      {
         "section_id": "html-135-official-source-update",
         "heading": "Official source update",
         "text": "whether these legal facilities may be directed against a code owner where the relevant code promotes non-compliance with legal requirements."
@@ -464,6 +735,11 @@
         "section_id": "html-137-official-source-update",
         "heading": "Official source update",
         "text": "to order the cessation of, or to institute appropriate legal proceedings for an order for the cessation of, unfair commercial practices;"
+      },
+      {
+        "section_id": "html-138-official-source-update",
+        "heading": "Official source update",
+        "text": "or"
       },
       {
         "section_id": "html-139-official-source-update",
@@ -526,6 +802,31 @@
         "text": "Where the powers referred to in paragraph 2 are exercised exclusively by an administrative authority, reasons for its decisions shall always be given. Furthermore, in this case, provision must be made for procedures whereby improper or unreasonable exercise of its powers by the administrative authority or improper or unreasonable failure to exercise the said powers can be the subject of judicial review."
       },
       {
+        "section_id": "html-151-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-152-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11a"
+      },
+      {
+        "section_id": "html-153-official-source-update",
+        "heading": "Official source update",
+        "text": "Redress"
+      },
+      {
+        "section_id": "html-154-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-155-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 12"
+      },
+      {
         "section_id": "html-156-official-source-update",
         "heading": "Official source update",
         "text": "Courts and administrative authorities: substantiation of claims"
@@ -541,9 +842,29 @@
         "text": "to require the trader to furnish evidence as to the accuracy of factual claims in relation to a commercial practice if, taking into account the legitimate interest of the trader and any other party to the proceedings, such a requirement appears appropriate on the basis of the circumstances of the particular case;"
       },
       {
+        "section_id": "html-159-official-source-update",
+        "heading": "Official source update",
+        "text": "and"
+      },
+      {
         "section_id": "html-160-official-source-update",
         "heading": "Official source update",
         "text": "to consider factual claims as inaccurate if the evidence demanded in accordance with (a) is not furnished or is deemed insufficient by the court or administrative authority."
+      },
+      {
+        "section_id": "html-161-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-162-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 13"
+      },
+      {
+        "section_id": "html-163-official-source-update",
+        "heading": "Official source update",
+        "text": "Penalties"
       },
       {
         "section_id": "html-164-official-source-update",
@@ -596,6 +917,16 @@
         "text": "a trader’s continued use of a commercial practice that has been found to be unfair by the competent national authority or court, when that commercial practice is not an infringement referred to in point (a)."
       },
       {
+        "section_id": "html-174-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-175-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 14"
+      },
+      {
         "section_id": "html-176-official-source-update",
         "heading": "Official source update",
         "text": "Amendments to Directive 84/450/EEC"
@@ -609,6 +940,11 @@
         "section_id": "html-178-official-source-update",
         "heading": "Official source update",
         "text": "Article 1 shall be replaced by the following:"
+      },
+      {
+        "section_id": "html-179-official-source-update",
+        "heading": "Official source update",
+        "text": "‘Article 1"
       },
       {
         "section_id": "html-180-official-source-update",
@@ -634,6 +970,11 @@
         "section_id": "html-184-official-source-update",
         "heading": "Official source update",
         "text": "Article 3a shall be replaced by the following:"
+      },
+      {
+        "section_id": "html-185-official-source-update",
+        "heading": "Official source update",
+        "text": "‘Article 3a"
       },
       {
         "section_id": "html-186-official-source-update",
@@ -696,6 +1037,11 @@
         "text": "take legal action against such advertising;"
       },
       {
+        "section_id": "html-198-official-source-update",
+        "heading": "Official source update",
+        "text": "or"
+      },
+      {
         "section_id": "html-199-official-source-update",
         "heading": "Official source update",
         "text": "bring such advertising before an administrative authority competent either to decide on complaints or to initiate appropriate legal proceedings."
@@ -704,6 +1050,21 @@
         "section_id": "html-200-official-source-update",
         "heading": "Official source update",
         "text": "It shall be for each Member State to decide which of these facilities shall be available and whether to enable the courts or administrative authorities to require prior recourse to other established means of dealing with complaints, including those referred to in Article 5."
+      },
+      {
+        "section_id": "html-201-official-source-update",
+        "heading": "Official source update",
+        "text": "It shall be for each Member State to decide:"
+      },
+      {
+        "section_id": "html-202-official-source-update",
+        "heading": "Official source update",
+        "text": "whether these legal facilities may be directed separately or jointly against a number of traders from the same economic sector;"
+      },
+      {
+        "section_id": "html-203-official-source-update",
+        "heading": "Official source update",
+        "text": "and"
       },
       {
         "section_id": "html-204-official-source-update",
@@ -721,6 +1082,11 @@
         "text": "This Directive shall not preclude Member States from retaining or adopting provisions with a view to ensuring more extensive protection, with regard to misleading advertising, for traders and competitors.’"
       },
       {
+        "section_id": "html-207-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 15"
+      },
+      {
         "section_id": "html-208-official-source-update",
         "heading": "Official source update",
         "text": "Amendments to Directives 97/7/EC and 2002/65/EC"
@@ -729,6 +1095,11 @@
         "section_id": "html-209-official-source-update",
         "heading": "Official source update",
         "text": "Article 9 of Directive 97/7/EC shall be replaced by the following:"
+      },
+      {
+        "section_id": "html-210-official-source-update",
+        "heading": "Official source update",
+        "text": "‘Article 9"
       },
       {
         "section_id": "html-211-official-source-update",
@@ -746,9 +1117,19 @@
         "text": "Article 9 of Directive 2002/65/EC shall be replaced by the following:"
       },
       {
+        "section_id": "html-214-official-source-update",
+        "heading": "Official source update",
+        "text": "‘Article 9"
+      },
+      {
         "section_id": "html-215-official-source-update",
         "heading": "Official source update",
         "text": "Given the prohibition of inertia selling practices laid down in Directive 2005/29/EC of 11 May 2005 of the European Parliament and of the Council concerning unfair business-to-consumer commercial practices in the internal market ( *3 ) and without prejudice to the provisions of Member States' legislation on the tacit renewal of distance contracts, when such rules permit tacit renewal, Member States shall take measures to exempt the consumer from any obligation in the event of unsolicited supplies, the absence of a reply not constituting consent."
+      },
+      {
+        "section_id": "html-216-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 16"
       },
       {
         "section_id": "html-217-official-source-update",
@@ -771,9 +1152,34 @@
         "text": "In the Annex to Regulation (EC) No 2006/2004 of the European Parliament and of the Council of 27 October 2004 on cooperation between national authorities responsible for the enforcement of the consumer protection law (the Regulation on consumer protection cooperation) ( 4 ) the following point shall be added:"
       },
       {
+        "section_id": "html-221-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 17"
+      },
+      {
+        "section_id": "html-222-official-source-update",
+        "heading": "Official source update",
+        "text": "Information"
+      },
+      {
         "section_id": "html-223-official-source-update",
         "heading": "Official source update",
         "text": "Member States shall take appropriate measures to inform consumers of the national law transposing this Directive and shall, where appropriate, encourage traders and code owners to inform consumers of their codes of conduct."
+      },
+      {
+        "section_id": "html-224-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 18"
+      },
+      {
+        "section_id": "html-225-official-source-update",
+        "heading": "Official source update",
+        "text": "Review"
+      },
+      {
+        "section_id": "html-226-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 19"
       },
       {
         "section_id": "html-227-official-source-update",
@@ -791,6 +1197,11 @@
         "text": "They shall apply those measures by 12 December 2007. When Member States adopt those measures, they shall contain a reference to this Directive or be accompanied by such a reference on the occasion of their official publication. Member States shall determine how such reference is to be made."
       },
       {
+        "section_id": "html-230-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 20"
+      },
+      {
         "section_id": "html-231-official-source-update",
         "heading": "Official source update",
         "text": "Entry into force"
@@ -801,14 +1212,34 @@
         "text": "This Directive shall enter into force on the day following its publication in the Official Journal of the European Union ."
       },
       {
+        "section_id": "html-233-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 21"
+      },
+      {
+        "section_id": "html-234-official-source-update",
+        "heading": "Official source update",
+        "text": "Addressees"
+      },
+      {
         "section_id": "html-235-official-source-update",
         "heading": "Official source update",
         "text": "This Directive is addressed to the Member States."
       },
       {
+        "section_id": "html-236-official-source-update",
+        "heading": "Official source update",
+        "text": "ANNEX I"
+      },
+      {
         "section_id": "html-237-official-source-update",
         "heading": "Official source update",
         "text": "COMMERCIAL PRACTICES WHICH ARE IN ALL CIRCUMSTANCES CONSIDERED UNFAIR"
+      },
+      {
+        "section_id": "html-238-official-source-update",
+        "heading": "Official source update",
+        "text": "Misleading commercial practices"
       },
       {
         "section_id": "html-239-official-source-update",
@@ -844,6 +1275,11 @@
         "section_id": "html-245-official-source-update",
         "heading": "Official source update",
         "text": "refusing to show the advertised item to consumers;"
+      },
+      {
+        "section_id": "html-246-official-source-update",
+        "heading": "Official source update",
+        "text": "or"
       },
       {
         "section_id": "html-247-official-source-update",
@@ -886,9 +1322,19 @@
         "text": "Using editorial content in the media to promote a product where a trader has paid for the promotion without making that clear in the content or by images or sounds clearly identifiable by the consumer (advertorial). This is without prejudice to Council Directive 89/552/EEC ( 5 )."
       },
       {
+        "section_id": "html-255-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-256-official-source-update",
         "heading": "Official source update",
         "text": "Providing search results in response to a consumer’s online search query without clearly disclosing any paid advertisement or payment specifically for achieving higher ranking of products within the search results."
+      },
+      {
+        "section_id": "html-257-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-258-official-source-update",
@@ -951,6 +1397,11 @@
         "text": "Creating the false impression that after-sales service in relation to a product is available in a Member State other than the one in which the product is sold."
       },
       {
+        "section_id": "html-270-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-271-official-source-update",
         "heading": "Official source update",
         "text": "Reselling events tickets to consumers if the trader acquired them by using automated means to circumvent any limit imposed on the number of tickets that a person can buy or any other rules applicable to the purchase of tickets."
@@ -964,6 +1415,16 @@
         "section_id": "html-273-official-source-update",
         "heading": "Official source update",
         "text": "Submitting or commissioning another legal or natural person to submit false consumer reviews or endorsements, or misrepresenting consumer reviews or social endorsements, in order to promote products."
+      },
+      {
+        "section_id": "html-274-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-275-official-source-update",
+        "heading": "Official source update",
+        "text": "Aggressive commercial practices"
       },
       {
         "section_id": "html-276-official-source-update",
@@ -1004,6 +1465,11 @@
         "section_id": "html-283-official-source-update",
         "heading": "Official source update",
         "text": "Creating the false impression that the consumer has already won, will win, or will on doing a particular act win, a prize or other equivalent benefit, when in fact either:"
+      },
+      {
+        "section_id": "html-284-official-source-update",
+        "heading": "Official source update",
+        "text": "ANNEX II"
       },
       {
         "section_id": "html-285-official-source-update",

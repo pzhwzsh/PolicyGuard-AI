@@ -15,13 +15,19 @@
   },
   "capture": {
     "content_hash": "ecbdbd34c47feab067d62a871798afd7677f3d59aea14be90afbcadbc5f5d136",
-    "created_at": "2026-07-21T12:57:50.048502+00:00",
-    "retrieved_at": "2026-07-21",
-    "section_count": 286,
-    "structural_review_status": "passed",
+    "created_at": "2026-07-22T05:04:36.560312+00:00",
+    "retrieved_at": "2026-07-22",
+    "section_count": 481,
+    "quality_schema_version": "legacy",
+    "structural_review_status": "blocked",
     "legal_review_status": "pending",
-    "eligible_for_activation": true,
-    "short_section_rate": 0.2028,
+    "eligible_for_activation": false,
+    "temporal_review_status": "missing",
+    "generic_heading_rate": null,
+    "blocking_reasons": [
+      "quality_gate_version_outdated"
+    ],
+    "short_section_rate": null,
     "replacement_character_count": 0,
     "validation_errors": []
   },
@@ -31,7 +37,7 @@
     "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02010L0013-20181218",
     "version": "snapshot-ecbdbd34c47f",
     "published_at": "undated",
-    "retrieved_at": "2026-07-21",
+    "retrieved_at": "2026-07-22",
     "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
     "scopes": [
       {
@@ -54,6 +60,11 @@
         "section_id": "html-2-official-source-update",
         "heading": "Official source update",
         "text": "This text is meant purely as a documentation tool and has no legal effect. The Union's institutions do not assume any liability for its contents. The authentic versions of the relevant acts, including their preambles, are those published in the Official Journal of the European Union and available in EUR-Lex. Those official texts are directly accessible through the links embedded in this document"
+      },
+      {
+        "section_id": "html-3-official-source-update",
+        "heading": "Official source update",
+        "text": "►B"
       },
       {
         "section_id": "html-4-official-source-update",
@@ -86,9 +97,34 @@
         "text": "(OJ L 095 15.4.2010, p. 1)"
       },
       {
+        "section_id": "html-10-official-source-update",
+        "heading": "Official source update",
+        "text": "Amended by:"
+      },
+      {
         "section_id": "html-11-official-source-update",
         "heading": "Official source update",
         "text": "Official Journal"
+      },
+      {
+        "section_id": "html-12-official-source-update",
+        "heading": "Official source update",
+        "text": "No"
+      },
+      {
+        "section_id": "html-13-official-source-update",
+        "heading": "Official source update",
+        "text": "page"
+      },
+      {
+        "section_id": "html-14-official-source-update",
+        "heading": "Official source update",
+        "text": "date"
+      },
+      {
+        "section_id": "html-15-official-source-update",
+        "heading": "Official source update",
+        "text": "►M1"
       },
       {
         "section_id": "html-16-official-source-update",
@@ -96,9 +132,29 @@
         "text": "DIRECTIVE (EU) 2018/1808 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 November 2018"
       },
       {
+        "section_id": "html-17-official-source-update",
+        "heading": "Official source update",
+        "text": "L 303"
+      },
+      {
+        "section_id": "html-18-official-source-update",
+        "heading": "Official source update",
+        "text": "69"
+      },
+      {
+        "section_id": "html-19-official-source-update",
+        "heading": "Official source update",
+        "text": "28.11.2018"
+      },
+      {
         "section_id": "html-20-official-source-update",
         "heading": "Official source update",
         "text": "Corrected by:"
+      },
+      {
+        "section_id": "html-21-official-source-update",
+        "heading": "Official source update",
+        "text": "►C1"
       },
       {
         "section_id": "html-22-official-source-update",
@@ -106,9 +162,59 @@
         "text": "Corrigendum, OJ L 263, 6.10.2010, p. 15 (2010/13/EU)"
       },
       {
+        "section_id": "html-23-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-24-official-source-update",
+        "heading": "Official source update",
+        "text": "DIRECTIVE 2010/13/EU OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL"
+      },
+      {
+        "section_id": "html-25-official-source-update",
+        "heading": "Official source update",
+        "text": "of 10 March 2010"
+      },
+      {
+        "section_id": "html-26-official-source-update",
+        "heading": "Official source update",
+        "text": "on the coordination of certain provisions laid down by law, regulation or administrative action in Member States concerning the provision of audiovisual media services (Audiovisual Media Services Directive)"
+      },
+      {
+        "section_id": "html-27-official-source-update",
+        "heading": "Official source update",
+        "text": "(codified version)"
+      },
+      {
+        "section_id": "html-28-official-source-update",
+        "heading": "Official source update",
+        "text": "(Text with EEA relevance)"
+      },
+      {
+        "section_id": "html-29-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER I"
+      },
+      {
+        "section_id": "html-30-official-source-update",
+        "heading": "Official source update",
+        "text": "DEFINITIONS"
+      },
+      {
+        "section_id": "html-31-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1"
+      },
+      {
         "section_id": "html-32-official-source-update",
         "heading": "Official source update",
         "text": "For the purposes of this Directive, the following definitions shall apply:"
+      },
+      {
+        "section_id": "html-33-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
       },
       {
         "section_id": "html-34-official-source-update",
@@ -124,6 +230,11 @@
         "section_id": "html-36-official-source-update",
         "heading": "Official source update",
         "text": "audiovisual commercial communication;"
+      },
+      {
+        "section_id": "html-37-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
       },
       {
         "section_id": "html-38-official-source-update",
@@ -146,6 +257,11 @@
         "text": "‘editorial decision’ means a decision which is taken on a regular basis for the purpose of exercising editorial responsibility and linked to the day-to-day operation of the audiovisual media service;"
       },
       {
+        "section_id": "html-42-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
         "section_id": "html-43-official-source-update",
         "heading": "Official source update",
         "text": "‘editorial responsibility’ means the exercise of effective control both over the selection of the programmes and over their organisation either in a chronological schedule, in the case of television broadcasts, or in a catalogue, in the case of on-demand audiovisual media services. Editorial responsibility does not necessarily imply any legal liability under national law for the content or the services provided;"
@@ -156,9 +272,19 @@
         "text": "‘media service provider’ means the natural or legal person who has editorial responsibility for the choice of the audiovisual content of the audiovisual media service and determines the manner in which it is organised;"
       },
       {
+        "section_id": "html-45-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-46-official-source-update",
         "heading": "Official source update",
         "text": "‘video-sharing platform provider’ means the natural or legal person who provides a video-sharing platform service;"
+      },
+      {
+        "section_id": "html-47-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-48-official-source-update",
@@ -176,9 +302,19 @@
         "text": "‘on-demand audiovisual media service’ (i.e. a non-linear audiovisual media service) means an audiovisual media service provided by a media service provider for the viewing of programmes at the moment chosen by the user and at his individual request on the basis of a catalogue of programmes selected by the media service provider;"
       },
       {
+        "section_id": "html-51-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-52-official-source-update",
         "heading": "Official source update",
         "text": "‘audiovisual commercial communication’ means images with or without sound which are designed to promote, directly or indirectly, the goods, services or image of a natural or legal person pursuing an economic activity; such images accompany, or are included in, a programme or user-generated video in return for payment or for similar consideration or for self-promotional purposes. Forms of audiovisual commercial communication include, inter alia, television advertising, sponsorship, teleshopping and product placement;"
+      },
+      {
+        "section_id": "html-53-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-54-official-source-update",
@@ -191,9 +327,19 @@
         "text": "‘surreptitious audiovisual commercial communication’ means the representation in words or pictures of goods, services, the name, the trade mark or the activities of a producer of goods or a provider of services in programmes when such representation is intended by the media service provider to serve as advertising and might mislead the public as to its nature. Such representation shall, in particular, be considered as intentional if it is done in return for payment or for similar consideration;"
       },
       {
+        "section_id": "html-56-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-57-official-source-update",
         "heading": "Official source update",
         "text": "‘sponsorship’ means any contribution made by public or private undertakings or natural persons not engaged in providing audiovisual media services or video-sharing platform services or in producing audiovisual works to the financing of audiovisual media services, video-sharing platform services, user-generated videos or programmes with a view to promoting their name, trade mark, image, activities or products;"
+      },
+      {
+        "section_id": "html-58-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-59-official-source-update",
@@ -201,9 +347,19 @@
         "text": "‘teleshopping’ means direct offers broadcast to the public with a view to the supply of goods or services, including immovable property, rights and obligations, in return for payment;"
       },
       {
+        "section_id": "html-60-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-61-official-source-update",
         "heading": "Official source update",
         "text": "‘product placement’ means any form of audiovisual commercial communication consisting of the inclusion of, or reference to, a product, a service or the trade mark thereof so that it is featured within a programme or a user-generated video in return for payment or for similar consideration;"
+      },
+      {
+        "section_id": "html-62-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-63-official-source-update",
@@ -246,9 +402,29 @@
         "text": "the contribution of co-producers of those States to the total co-production costs is preponderant and the co-production is not controlled by one or more producers established outside those States."
       },
       {
+        "section_id": "html-71-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER II"
+      },
+      {
+        "section_id": "html-72-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-73-official-source-update",
         "heading": "Official source update",
         "text": "GENERAL PROVISIONS FOR AUDIOVISUAL MEDIA SERVICES"
+      },
+      {
+        "section_id": "html-74-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-75-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2"
       },
       {
         "section_id": "html-76-official-source-update",
@@ -276,9 +452,19 @@
         "text": "the media service provider has its head office in that Member State and the editorial decisions about the audiovisual media service are taken in that Member State;"
       },
       {
+        "section_id": "html-81-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-82-official-source-update",
         "heading": "Official source update",
         "text": "if a media service provider has its head office in one Member State but editorial decisions on the audiovisual media service are taken in another Member State, the media service provider shall be deemed to be established in the Member State where a significant part of the workforce involved in the pursuit of the programme-related audiovisual media service activity operates. If a significant part of the workforce involved in the pursuit of the programme-related audiovisual media service activity operates in each of those Member States, the media service provider shall be deemed to be established in the Member State where it has its head office. If a significant part of the workforce involved in the pursuit of the programme-related audiovisual media service activity operates in neither of those Member States, the media service provider shall be deemed to be established in the Member State where it first began its activity in accordance with the law of that Member State, provided that it maintains a stable and effective link with the economy of that Member State;"
+      },
+      {
+        "section_id": "html-83-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
       },
       {
         "section_id": "html-84-official-source-update",
@@ -301,6 +487,11 @@
         "text": "although they do not use a satellite up-link situated in that Member State, they use satellite capacity appertaining to that Member State."
       },
       {
+        "section_id": "html-88-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-89-official-source-update",
         "heading": "Official source update",
         "text": "The Commission shall ensure that such lists are made available in a centralised database. In the event of inconsistencies between the lists, the Commission shall contact the Member States concerned in order to find a solution. The Commission shall ensure that the national regulatory authorities or bodies have access to that database. The Commission shall make information in the database publicly available."
@@ -309,6 +500,21 @@
         "section_id": "html-90-official-source-update",
         "heading": "Official source update",
         "text": "When the Commission adopts a decision pursuant to Article 3(2) or (3), or Article 4(5), it shall also decide which Member State has jurisdiction."
+      },
+      {
+        "section_id": "html-91-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-92-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-93-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3"
       },
       {
         "section_id": "html-94-official-source-update",
@@ -341,9 +547,19 @@
         "text": "Within three months of the receipt of the notification of the measures taken by the Member State concerned and after having requested ERGA to provide an opinion in accordance with point (d) of Article 30b(3), the Commission shall take a decision on whether those measures are compatible with Union law. The Commission shall keep the Contact Committee duly informed. Where the Commission decides that those measures are not compatible with Union law, it shall require the Member State concerned to put an end to the measures in question as a matter of urgency."
       },
       {
+        "section_id": "html-100-official-source-update",
+        "heading": "Official source update",
+        "text": "The derogation referred to in the first subparagraph shall be subject to the following conditions:"
+      },
+      {
         "section_id": "html-101-official-source-update",
         "heading": "Official source update",
         "text": "during the previous 12 months the conduct referred to in the first subparagraph occurred at least on one prior occasion;"
+      },
+      {
+        "section_id": "html-102-official-source-update",
+        "heading": "Official source update",
+        "text": "and"
       },
       {
         "section_id": "html-103-official-source-update",
@@ -354,6 +570,16 @@
         "section_id": "html-104-official-source-update",
         "heading": "Official source update",
         "text": "The Member State concerned shall respect the rights of defence of the media service provider concerned and, in particular, give that provider the opportunity to express its views on the alleged infringements."
+      },
+      {
+        "section_id": "html-105-official-source-update",
+        "heading": "Official source update",
+        "text": "Within three months of the receipt of the notification of the measures taken by the Member State concerned and after having requested ERGA to provide an opinion in accordance with point (d) of Article 30b(3), the Commission shall take a decision on whether those measures are compatible with Union law. The Commission shall keep the Contact Committee duly informed. Where the Commission decides that those measures are not compatible with Union law, it shall require the Member State concerned to put an end to the measures in question as a matter of urgency."
+      },
+      {
+        "section_id": "html-106-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 4"
       },
       {
         "section_id": "html-107-official-source-update",
@@ -431,6 +657,16 @@
         "text": "If the Commission lacks information necessary to take the decision pursuant to the first subparagraph, it shall, within one month of the receipt of the notification, request from the Member State concerned all information necessary to reach that decision. The time limit within which the Commission is to take the decision shall be suspended until that Member State has provided such necessary information. In any case, the suspension of the time limit shall not last longer than one month."
       },
       {
+        "section_id": "html-122-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-123-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 4a"
+      },
+      {
         "section_id": "html-124-official-source-update",
         "heading": "Official source update",
         "text": "Member States shall encourage the use of co-regulation and the fostering of self-regulation through codes of conduct adopted at national level in the fields coordinated by this Directive to the extent permitted by their legal systems. Those codes shall:"
@@ -471,14 +707,39 @@
         "text": "The Commission shall make the Union codes of conduct publicly available and may give them appropriate publicity."
       },
       {
+        "section_id": "html-132-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-133-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER III"
+      },
+      {
+        "section_id": "html-134-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-135-official-source-update",
         "heading": "Official source update",
         "text": "PROVISIONS APPLICABLE TO AUDIOVISUAL MEDIA SERVICES"
       },
       {
+        "section_id": "html-136-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 5"
+      },
+      {
         "section_id": "html-137-official-source-update",
         "heading": "Official source update",
         "text": "Each Member State shall ensure that a media service provider under its jurisdiction shall make easily, directly and permanently accessible to the recipients of a service at least the following information:"
+      },
+      {
+        "section_id": "html-138-official-source-update",
+        "heading": "Official source update",
+        "text": "its name;"
       },
       {
         "section_id": "html-139-official-source-update",
@@ -496,6 +757,11 @@
         "text": "the Member State having jurisdiction over it and the competent regulatory authorities or bodies or supervisory bodies."
       },
       {
+        "section_id": "html-142-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 6"
+      },
+      {
         "section_id": "html-143-official-source-update",
         "heading": "Official source update",
         "text": "Without prejudice to the obligation of Member States to respect and protect human dignity, Member States shall ensure by appropriate means that audiovisual media services provided by media service providers under their jurisdiction do not contain any:"
@@ -511,6 +777,16 @@
         "text": "public provocation to commit a terrorist offence as set out in Article 5 of Directive (EU) 2017/541."
       },
       {
+        "section_id": "html-146-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-147-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 6a"
+      },
+      {
         "section_id": "html-148-official-source-update",
         "heading": "Official source update",
         "text": "The most harmful content, such as gratuitous violence and pornography, shall be subject to the strictest measures."
@@ -521,9 +797,29 @@
         "text": "For the implementation of this paragraph, Member States shall encourage the use of co-regulation as provided for in Article 4a(1)."
       },
       {
+        "section_id": "html-150-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-151-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 7"
+      },
+      {
+        "section_id": "html-152-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 7a"
+      },
+      {
         "section_id": "html-153-official-source-update",
         "heading": "Official source update",
         "text": "Member States may take measures to ensure the appropriate prominence of audiovisual media services of general interest."
+      },
+      {
+        "section_id": "html-154-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 7b"
       },
       {
         "section_id": "html-155-official-source-update",
@@ -536,9 +832,29 @@
         "text": "For the purposes of this Article, Member States shall specify the regulatory details, including exceptions, notably in relation to safeguarding the legitimate interests of users while taking into account the legitimate interests of the media service providers that originally provided the audiovisual media services."
       },
       {
+        "section_id": "html-157-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-158-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 8"
+      },
+      {
         "section_id": "html-159-official-source-update",
         "heading": "Official source update",
         "text": "Member States shall ensure that media service providers under their jurisdiction do not transmit cinematographic works outside periods agreed with the rights holders."
+      },
+      {
+        "section_id": "html-160-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-161-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 9"
       },
       {
         "section_id": "html-162-official-source-update",
@@ -606,6 +922,16 @@
         "text": "Those codes shall aim to effectively reduce the exposure of children to audiovisual commercial communications for such foods and beverages. They shall aim to provide that such audiovisual commercial communications do not emphasise the positive quality of the nutritional aspects of such foods and beverages."
       },
       {
+        "section_id": "html-175-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-176-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 10"
+      },
+      {
         "section_id": "html-177-official-source-update",
         "heading": "Official source update",
         "text": "Audiovisual media services or programmes that are sponsored shall meet the following requirements:"
@@ -626,6 +952,21 @@
         "text": "viewers shall be clearly informed of the existence of a sponsorship agreement. Sponsored programmes shall be clearly identified as such by the name, logo and/or any other symbol of the sponsor such as a reference to its product(s) or service(s) or a distinctive sign thereof in an appropriate way for programmes at the beginning, during and/or at the end of the programmes."
       },
       {
+        "section_id": "html-181-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-182-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-183-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11"
+      },
+      {
         "section_id": "html-184-official-source-update",
         "heading": "Official source update",
         "text": "Programmes that contain product placement shall meet the following requirements:"
@@ -634,6 +975,11 @@
         "section_id": "html-185-official-source-update",
         "heading": "Official source update",
         "text": "their content and organisation within a schedule, in the case of television broadcasting, or within a catalogue in the case of on-demand audiovisual media services, shall under no circumstances be influenced in such a way as to affect the responsibility and editorial independence of the media service provider;"
+      },
+      {
+        "section_id": "html-186-official-source-update",
+        "heading": "Official source update",
+        "text": "they shall not directly encourage the purchase or rental of goods or services, in particular by making special promotional references to those goods or services;"
       },
       {
         "section_id": "html-187-official-source-update",
@@ -666,14 +1012,69 @@
         "text": "specific medicinal products or medical treatments available only on prescription in the Member State under whose jurisdiction the media service provider falls."
       },
       {
+        "section_id": "html-193-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-194-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER IV"
+      },
+      {
+        "section_id": "html-195-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1 —————"
+      },
+      {
+        "section_id": "html-196-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-197-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 13"
+      },
+      {
+        "section_id": "html-198-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-199-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER V"
+      },
+      {
         "section_id": "html-200-official-source-update",
         "heading": "Official source update",
         "text": "PROVISIONS CONCERNING EXCLUSIVE RIGHTS AND SHORT NEWS REPORTS IN TELEVISION BROADCASTING"
       },
       {
+        "section_id": "html-201-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 14"
+      },
+      {
+        "section_id": "html-202-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 15"
+      },
+      {
+        "section_id": "html-203-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER VI"
+      },
+      {
         "section_id": "html-204-official-source-update",
         "heading": "Official source update",
         "text": "PROMOTION OF DISTRIBUTION AND PRODUCTION OF TELEVISION PROGRAMMES"
+      },
+      {
+        "section_id": "html-205-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 16"
       },
       {
         "section_id": "html-206-official-source-update",
@@ -691,9 +1092,19 @@
         "text": "The Commission shall inform the other Member States and the European Parliament of the reports, which shall be accompanied, where appropriate, by an opinion. The Commission shall ensure the application of this Article and Article 17 in accordance with the provisions of the Treaty on the Functioning of the European Union. The Commission may take account in its opinion, in particular, of progress achieved in relation to previous years, the share of first broadcast works in the programming, the particular circumstances of new television broadcasters and the specific situation of countries with a low audiovisual production capacity or restricted language area."
       },
       {
+        "section_id": "html-209-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 17"
+      },
+      {
         "section_id": "html-210-official-source-update",
         "heading": "Official source update",
         "text": "Member States shall ensure, where practicable and by appropriate means, that broadcasters reserve at least 10 % of their transmission time, excluding the time allotted to news, sports events, games, advertising, teletext services and teleshopping, or alternately, at the discretion of the Member State, at least 10 % of their programming budget, for European works created by producers who are independent of broadcasters. This proportion, having regard to the broadcaster’s informational, educational, cultural and entertainment responsibilities to its viewing public, should be achieved progressively, on the basis of suitable criteria. It must be achieved by earmarking an adequate proportion for recent works, that is to say works transmitted within 5 years of their production."
+      },
+      {
+        "section_id": "html-211-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 18"
       },
       {
         "section_id": "html-212-official-source-update",
@@ -701,14 +1112,49 @@
         "text": "This Chapter shall not apply to television broadcasts that are intended for local audiences and do not form part of a national network."
       },
       {
+        "section_id": "html-213-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER VII"
+      },
+      {
         "section_id": "html-214-official-source-update",
         "heading": "Official source update",
         "text": "TELEVISION ADVERTISING AND TELESHOPPING"
       },
       {
+        "section_id": "html-215-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 19"
+      },
+      {
+        "section_id": "html-216-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-217-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-218-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 20"
+      },
+      {
+        "section_id": "html-219-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 21"
+      },
+      {
         "section_id": "html-220-official-source-update",
         "heading": "Official source update",
         "text": "Teleshopping for medicinal products which are subject to a marketing authorisation within the meaning of Directive 2001/83/EC, as well as teleshopping for medical treatment, shall be prohibited."
+      },
+      {
+        "section_id": "html-221-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 22"
       },
       {
         "section_id": "html-222-official-source-update",
@@ -746,6 +1192,16 @@
         "text": "it shall not place emphasis on high alcoholic content as being a positive quality of the beverages."
       },
       {
+        "section_id": "html-229-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-230-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 23"
+      },
+      {
         "section_id": "html-231-official-source-update",
         "heading": "Official source update",
         "text": "Paragraph 1 shall not apply to:"
@@ -771,9 +1227,24 @@
         "text": "neutral frames between editorial content and television advertising or teleshopping spots, and between individual spots."
       },
       {
+        "section_id": "html-236-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-237-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 24"
+      },
+      {
         "section_id": "html-238-official-source-update",
         "heading": "Official source update",
         "text": "Teleshopping windows shall be clearly identified as such by optical and acoustic means and shall be of a minimum uninterrupted duration of 15 minutes."
+      },
+      {
+        "section_id": "html-239-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 25"
       },
       {
         "section_id": "html-240-official-source-update",
@@ -786,9 +1257,29 @@
         "text": "However, Chapter VI as well as Articles 20 and 23 shall not apply to these channels."
       },
       {
+        "section_id": "html-242-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 26"
+      },
+      {
         "section_id": "html-243-official-source-update",
         "heading": "Official source update",
         "text": "Without prejudice to Article 4, Member States may, with due regard for Union law, lay down conditions other than those laid down in Article 20(2) and Article 23 in respect of television broadcasts intended solely for the national territory which cannot be received directly or indirectly by the public in one or more other Member States."
+      },
+      {
+        "section_id": "html-244-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1 —————"
+      },
+      {
+        "section_id": "html-245-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-246-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER IX"
       },
       {
         "section_id": "html-247-official-source-update",
@@ -796,9 +1287,29 @@
         "text": "RIGHT OF REPLY IN TELEVISION BROADCASTING"
       },
       {
+        "section_id": "html-248-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 28"
+      },
+      {
+        "section_id": "html-249-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-250-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER IXA"
+      },
+      {
         "section_id": "html-251-official-source-update",
         "heading": "Official source update",
         "text": "PROVISIONS APPLICABLE TO VIDEO-SHARING PLATFORM SERVICES"
+      },
+      {
+        "section_id": "html-252-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 28a"
       },
       {
         "section_id": "html-253-official-source-update",
@@ -839,6 +1350,16 @@
         "section_id": "html-260-official-source-update",
         "heading": "Official source update",
         "text": "Where there are several other undertakings which are part of the group and each of them is established in a different Member State, the video-sharing platform provider shall be deemed to be established in the Member State where one of these undertakings first began its activity, provided that it maintains a stable and effective link with the economy of that Member State."
+      },
+      {
+        "section_id": "html-261-official-source-update",
+        "heading": "Official source update",
+        "text": "The Commission shall ensure that such lists are made available in a centralised database. In the event of inconsistencies between the lists, the Commission shall contact the Member States concerned in order to find a solution. The Commission shall ensure that the national regulatory authorities or bodies have access to that database. The Commission shall make information in the database publicly available."
+      },
+      {
+        "section_id": "html-262-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 28b"
       },
       {
         "section_id": "html-263-official-source-update",
@@ -941,9 +1462,24 @@
         "text": "Personal data of minors collected or otherwise generated by video-sharing platform providers pursuant to points (f) and (h) of the third subparagraph shall not be processed for commercial purposes, such as direct marketing, profiling and behaviourally targeted advertising."
       },
       {
+        "section_id": "html-283-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-284-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER X"
+      },
+      {
         "section_id": "html-285-official-source-update",
         "heading": "Official source update",
         "text": "CONTACT COMMITTEE"
+      },
+      {
+        "section_id": "html-286-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 29"
       },
       {
         "section_id": "html-287-official-source-update",
@@ -981,9 +1517,24 @@
         "text": "to examine any development arising in the sector on which an exchange of views appears useful."
       },
       {
+        "section_id": "html-294-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER XI"
+      },
+      {
+        "section_id": "html-295-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
         "section_id": "html-296-official-source-update",
         "heading": "Official source update",
         "text": "REGULATORY AUTHORITIES AND BODIES OF THE MEMBER STATES"
+      },
+      {
+        "section_id": "html-297-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 30"
       },
       {
         "section_id": "html-298-official-source-update",
@@ -994,6 +1545,21 @@
         "section_id": "html-299-official-source-update",
         "heading": "Official source update",
         "text": "Pending the outcome of the appeal, the decision of the national regulatory authority or body shall stand, unless interim measures are granted in accordance with national law."
+      },
+      {
+        "section_id": "html-300-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-301-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 30a"
+      },
+      {
+        "section_id": "html-302-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 30b"
       },
       {
         "section_id": "html-303-official-source-update",
@@ -1021,9 +1587,24 @@
         "text": "to give opinions, when requested by the Commission, on the technical and factual aspects of the issues pursuant to Article 2(5c), Article 3(2) and (3), point (c) of Article 4(4) and Article 28a(7)."
       },
       {
+        "section_id": "html-308-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-309-official-source-update",
+        "heading": "Official source update",
+        "text": "CHAPTER XII"
+      },
+      {
         "section_id": "html-310-official-source-update",
         "heading": "Official source update",
         "text": "FINAL PROVISIONS"
+      },
+      {
+        "section_id": "html-311-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 31"
       },
       {
         "section_id": "html-312-official-source-update",
@@ -1031,9 +1612,24 @@
         "text": "In fields which this Directive does not coordinate, it shall not affect the rights and obligations of Member States resulting from existing conventions dealing with telecommunications or broadcasting."
       },
       {
+        "section_id": "html-313-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 32"
+      },
+      {
         "section_id": "html-314-official-source-update",
         "heading": "Official source update",
         "text": "Member States shall communicate to the Commission the text of the main provisions of national law which they adopt in the field covered by this Directive."
+      },
+      {
+        "section_id": "html-315-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-316-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 33"
       },
       {
         "section_id": "html-317-official-source-update",
@@ -1061,6 +1657,26 @@
         "text": "The Commission shall ensure that information received from Member States on any measure that they have taken in the fields coordinated by this Directive is communicated to the Contact Committee and ERGA."
       },
       {
+        "section_id": "html-322-official-source-update",
+        "heading": "Official source update",
+        "text": "▼M1"
+      },
+      {
+        "section_id": "html-323-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 33a"
+      },
+      {
+        "section_id": "html-324-official-source-update",
+        "heading": "Official source update",
+        "text": "▼B"
+      },
+      {
+        "section_id": "html-325-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 34"
+      },
+      {
         "section_id": "html-326-official-source-update",
         "heading": "Official source update",
         "text": "Directive 89/552/EEC, as amended by the Directives listed in Annex I, Part A, is repealed, without prejudice to the obligations of the Member States relating to the time limits for transposition into national law of the Directives set out in Annex I, Part B."
@@ -1071,14 +1687,34 @@
         "text": "References to the repealed Directive shall be construed as references to this Directive and shall be read in accordance with the correlation table in Annex II."
       },
       {
+        "section_id": "html-328-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 35"
+      },
+      {
         "section_id": "html-329-official-source-update",
         "heading": "Official source update",
         "text": "This Directive shall enter into force on the 20th day following its publication in the Official Journal of the European Union ."
       },
       {
+        "section_id": "html-330-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 36"
+      },
+      {
         "section_id": "html-331-official-source-update",
         "heading": "Official source update",
         "text": "This Directive is addressed to the Member States."
+      },
+      {
+        "section_id": "html-332-official-source-update",
+        "heading": "Official source update",
+        "text": "ANNEX I"
+      },
+      {
+        "section_id": "html-333-official-source-update",
+        "heading": "Official source update",
+        "text": "PART A"
       },
       {
         "section_id": "html-334-official-source-update",
@@ -1126,9 +1762,24 @@
         "text": "only Article 1"
       },
       {
+        "section_id": "html-343-official-source-update",
+        "heading": "Official source update",
+        "text": "PART B"
+      },
+      {
         "section_id": "html-344-official-source-update",
         "heading": "Official source update",
         "text": "List of time limits for transposition into national law"
+      },
+      {
+        "section_id": "html-345-official-source-update",
+        "heading": "Official source update",
+        "text": "(referred to in Article 34)"
+      },
+      {
+        "section_id": "html-346-official-source-update",
+        "heading": "Official source update",
+        "text": "Directive"
       },
       {
         "section_id": "html-347-official-source-update",
@@ -1136,9 +1787,19 @@
         "text": "Time limit for transposition"
       },
       {
+        "section_id": "html-348-official-source-update",
+        "heading": "Official source update",
+        "text": "89/552/EEC"
+      },
+      {
         "section_id": "html-349-official-source-update",
         "heading": "Official source update",
         "text": "3 October 1991"
+      },
+      {
+        "section_id": "html-350-official-source-update",
+        "heading": "Official source update",
+        "text": "97/36/EC"
       },
       {
         "section_id": "html-351-official-source-update",
@@ -1146,9 +1807,19 @@
         "text": "31 December 1998"
       },
       {
+        "section_id": "html-352-official-source-update",
+        "heading": "Official source update",
+        "text": "2007/65/EC"
+      },
+      {
         "section_id": "html-353-official-source-update",
         "heading": "Official source update",
         "text": "19 December 2009"
+      },
+      {
+        "section_id": "html-354-official-source-update",
+        "heading": "Official source update",
+        "text": "ANNEX II"
       },
       {
         "section_id": "html-355-official-source-update",
@@ -1316,6 +1987,11 @@
         "text": "Article 1(4)"
       },
       {
+        "section_id": "html-388-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2"
+      },
+      {
         "section_id": "html-389-official-source-update",
         "heading": "Official source update",
         "text": "Article 2a(1), (2) and (3)"
@@ -1384,6 +2060,76 @@
         "section_id": "html-402-official-source-update",
         "heading": "Official source update",
         "text": "Article 3(5) and (6)"
+      },
+      {
+        "section_id": "html-403-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3"
+      },
+      {
+        "section_id": "html-404-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 4"
+      },
+      {
+        "section_id": "html-405-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3a"
+      },
+      {
+        "section_id": "html-406-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 5"
+      },
+      {
+        "section_id": "html-407-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3b"
+      },
+      {
+        "section_id": "html-408-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 6"
+      },
+      {
+        "section_id": "html-409-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3c"
+      },
+      {
+        "section_id": "html-410-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 7"
+      },
+      {
+        "section_id": "html-411-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3d"
+      },
+      {
+        "section_id": "html-412-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 8"
+      },
+      {
+        "section_id": "html-413-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3e"
+      },
+      {
+        "section_id": "html-414-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 9"
+      },
+      {
+        "section_id": "html-415-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3f"
+      },
+      {
+        "section_id": "html-416-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 10"
       },
       {
         "section_id": "html-417-official-source-update",
@@ -1456,6 +2202,46 @@
         "text": "Article 11(1)"
       },
       {
+        "section_id": "html-431-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3h"
+      },
+      {
+        "section_id": "html-432-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 12"
+      },
+      {
+        "section_id": "html-433-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3i"
+      },
+      {
+        "section_id": "html-434-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 13"
+      },
+      {
+        "section_id": "html-435-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3j"
+      },
+      {
+        "section_id": "html-436-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 14"
+      },
+      {
+        "section_id": "html-437-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3k"
+      },
+      {
+        "section_id": "html-438-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 15"
+      },
+      {
         "section_id": "html-439-official-source-update",
         "heading": "Official source update",
         "text": "Article 4(1), (2) and (3)"
@@ -1469,6 +2255,201 @@
         "section_id": "html-441-official-source-update",
         "heading": "Official source update",
         "text": "Article 4(4)"
+      },
+      {
+        "section_id": "html-442-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 5"
+      },
+      {
+        "section_id": "html-443-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 17"
+      },
+      {
+        "section_id": "html-444-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 9"
+      },
+      {
+        "section_id": "html-445-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 18"
+      },
+      {
+        "section_id": "html-446-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 10"
+      },
+      {
+        "section_id": "html-447-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 19"
+      },
+      {
+        "section_id": "html-448-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 11"
+      },
+      {
+        "section_id": "html-449-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 20"
+      },
+      {
+        "section_id": "html-450-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 14"
+      },
+      {
+        "section_id": "html-451-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 21"
+      },
+      {
+        "section_id": "html-452-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 15"
+      },
+      {
+        "section_id": "html-453-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 22"
+      },
+      {
+        "section_id": "html-454-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 18"
+      },
+      {
+        "section_id": "html-455-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 23"
+      },
+      {
+        "section_id": "html-456-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 18a"
+      },
+      {
+        "section_id": "html-457-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 24"
+      },
+      {
+        "section_id": "html-458-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 19"
+      },
+      {
+        "section_id": "html-459-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 25"
+      },
+      {
+        "section_id": "html-460-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 20"
+      },
+      {
+        "section_id": "html-461-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 26"
+      },
+      {
+        "section_id": "html-462-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 22"
+      },
+      {
+        "section_id": "html-463-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 27"
+      },
+      {
+        "section_id": "html-464-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 23"
+      },
+      {
+        "section_id": "html-465-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 28"
+      },
+      {
+        "section_id": "html-466-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 23a"
+      },
+      {
+        "section_id": "html-467-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 29"
+      },
+      {
+        "section_id": "html-468-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 23b"
+      },
+      {
+        "section_id": "html-469-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 30"
+      },
+      {
+        "section_id": "html-470-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 24"
+      },
+      {
+        "section_id": "html-471-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 31"
+      },
+      {
+        "section_id": "html-472-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 32"
+      },
+      {
+        "section_id": "html-473-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 26"
+      },
+      {
+        "section_id": "html-474-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 33"
+      },
+      {
+        "section_id": "html-475-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 34"
+      },
+      {
+        "section_id": "html-476-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 35"
+      },
+      {
+        "section_id": "html-477-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 27"
+      },
+      {
+        "section_id": "html-478-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 36"
+      },
+      {
+        "section_id": "html-479-official-source-update",
+        "heading": "Official source update",
+        "text": "Annex I"
+      },
+      {
+        "section_id": "html-480-official-source-update",
+        "heading": "Official source update",
+        "text": "Annex II"
       },
       {
         "section_id": "html-481-official-source-update",

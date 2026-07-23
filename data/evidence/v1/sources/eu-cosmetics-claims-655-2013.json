@@ -15,13 +15,19 @@
   },
   "capture": {
     "content_hash": "731b08f2ec65381f0f77be5c1cfa1b583c613e00f3f8ea3fc530240588a62c30",
-    "created_at": "2026-07-21T12:54:10.397890+00:00",
-    "retrieved_at": "2026-07-21",
-    "section_count": 37,
-    "structural_review_status": "passed",
+    "created_at": "2026-07-22T05:04:36.012023+00:00",
+    "retrieved_at": "2026-07-22",
+    "section_count": 75,
+    "quality_schema_version": "legacy",
+    "structural_review_status": "blocked",
     "legal_review_status": "pending",
-    "eligible_for_activation": true,
-    "short_section_rate": 0.3243,
+    "eligible_for_activation": false,
+    "temporal_review_status": "missing",
+    "generic_heading_rate": null,
+    "blocking_reasons": [
+      "quality_gate_version_outdated"
+    ],
+    "short_section_rate": null,
     "replacement_character_count": 0,
     "validation_errors": []
   },
@@ -31,7 +37,7 @@
     "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32013R0655",
     "version": "snapshot-731b08f2ec65",
     "published_at": "undated",
-    "retrieved_at": "2026-07-21",
+    "retrieved_at": "2026-07-22",
     "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
     "scopes": [
       {
@@ -46,9 +52,24 @@
     ],
     "sections": [
       {
+        "section_id": "html-1-official-source-update",
+        "heading": "Official source update",
+        "text": "11.7.2013"
+      },
+      {
+        "section_id": "html-2-official-source-update",
+        "heading": "Official source update",
+        "text": "EN"
+      },
+      {
         "section_id": "html-3-official-source-update",
         "heading": "Official source update",
         "text": "Official Journal of the European Union"
+      },
+      {
+        "section_id": "html-4-official-source-update",
+        "heading": "Official source update",
+        "text": "L 190/31"
       },
       {
         "section_id": "html-5-official-source-update",
@@ -86,9 +107,24 @@
         "text": "Having regard to Regulation (EC) No 1223/2009 of the European Parliament and of the Council of 30 November 2009 on cosmetic products ( 1 ) , and in particular the second subparagraph of Article 20(2) thereof,"
       },
       {
+        "section_id": "html-12-official-source-update",
+        "heading": "Official source update",
+        "text": "Whereas:"
+      },
+      {
+        "section_id": "html-13-official-source-update",
+        "heading": "Official source update",
+        "text": "(1)"
+      },
+      {
         "section_id": "html-14-official-source-update",
         "heading": "Official source update",
         "text": "End users as defined in Article 2(1)(f) of Regulation (EC) No 1223/2009 are faced with a wide diversity of claims relating to the function, content and effects of a cosmetic product. As cosmetic products play such a big part in end users’ lives, it is important to ensure that the information conveyed to them through such claims is useful, understandable and reliable, and that it enables them to take informed decisions and to choose the products that best suit their needs and expectations."
+      },
+      {
+        "section_id": "html-15-official-source-update",
+        "heading": "Official source update",
+        "text": "(2)"
       },
       {
         "section_id": "html-16-official-source-update",
@@ -96,9 +132,19 @@
         "text": "Product claims of cosmetic products serve mainly to inform end users about the characteristics and qualities of the products. Those claims are essential ways of differentiating between products. They also contribute to stimulating innovation and fostering competition."
       },
       {
+        "section_id": "html-17-official-source-update",
+        "heading": "Official source update",
+        "text": "(3)"
+      },
+      {
         "section_id": "html-18-official-source-update",
         "heading": "Official source update",
         "text": "Common criteria should be laid down at Union level in order to justify the use of a claim made in relation to cosmetic products. The main objective of laying down common criteria is to guarantee a high level of protection for end users, in particular from misleading claims in relation to cosmetic products. A common approach at Union level should also ensure better convergence of actions taken by the Member States’ competent authorities, and prevent distortions in the internal market. Such an approach should also enhance cooperation between national authorities responsible for the enforcement of consumer protection as laid down in Regulation (EC) No 2006/2004 of the European Parliament and of the Council of 27 October 2004 on cooperation between national authorities responsible for the enforcement of consumer protection laws (the Regulation on consumer protection cooperation) ( 2 ) ."
+      },
+      {
+        "section_id": "html-19-official-source-update",
+        "heading": "Official source update",
+        "text": "(4)"
       },
       {
         "section_id": "html-20-official-source-update",
@@ -106,9 +152,19 @@
         "text": "Article 20 of Regulation (EC) No 1223/2009 applies to products that fall under the definition of a cosmetic product in Article 2 of this Regulation. The common criteria only apply when it has been assessed that the product in question is indeed a cosmetic product. It is for the national competent authorities and national courts to decide on a case-by-case basis which regulatory framework applies."
       },
       {
+        "section_id": "html-21-official-source-update",
+        "heading": "Official source update",
+        "text": "(5)"
+      },
+      {
         "section_id": "html-22-official-source-update",
         "heading": "Official source update",
         "text": "The common criteria should apply without prejudice to Directive 2005/29/EC of the European Parliament and of the Council of 11 May 2005 concerning unfair business-to-consumer commercial practices in the internal market and amending Council Directive 84/450/EEC, Directives 97/7/EC, 98/27/EC and 2002/65/EC of the European Parliament and of the Council and Regulation (EC) No 2006/2004 of the European Parliament and of the Council (‘Unfair Commercial Practices Directive’) ( 3 ) , to Directive 2006/114/EC of the European Parliament and of the Council of 12 December 2006 concerning misleading and comparative advertising ( 4 ) , and to other applicable Union legislation."
+      },
+      {
+        "section_id": "html-23-official-source-update",
+        "heading": "Official source update",
+        "text": "(6)"
       },
       {
         "section_id": "html-24-official-source-update",
@@ -116,14 +172,29 @@
         "text": "A flexible approach should be taken towards communicating the messages to end users so as to take into account the social, linguistic and cultural diversity of the Union and to preserve the innovation and the competitiveness of European industry. Such an approach is consistent with the principles enunciated by the Court of Justice, which has pointed out on several occasions that, in order to determine whether a claim is capable of misleading the consumer, it is necessary to consider the latter’s expectations, taking account of the specific context and circumstances in which the claim is made, including social, cultural and linguistic factors ( 5 ) ."
       },
       {
+        "section_id": "html-25-official-source-update",
+        "heading": "Official source update",
+        "text": "(7)"
+      },
+      {
         "section_id": "html-26-official-source-update",
         "heading": "Official source update",
         "text": "Whilst ensuring that the same principles are respected throughout the Union, the common criteria should not aim at defining and specifying the wording that can be used for cosmetic product claims."
       },
       {
+        "section_id": "html-27-official-source-update",
+        "heading": "Official source update",
+        "text": "(8)"
+      },
+      {
         "section_id": "html-28-official-source-update",
         "heading": "Official source update",
         "text": "In order to ensure that the common criteria for cosmetic claims apply from the same date as Regulation (EC) No 1223/2009, this Regulation should apply from 11 July 2013."
+      },
+      {
+        "section_id": "html-29-official-source-update",
+        "heading": "Official source update",
+        "text": "(9)"
       },
       {
         "section_id": "html-30-official-source-update",
@@ -136,14 +207,29 @@
         "text": "HAS ADOPTED THIS REGULATION:"
       },
       {
+        "section_id": "html-32-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 1"
+      },
+      {
         "section_id": "html-33-official-source-update",
         "heading": "Official source update",
         "text": "This Regulation shall apply to claims in the form of texts, names, trademarks, pictures and figurative or other signs that convey explicitly or implicitly product characteristics or functions in the labelling, the making available on the market and advertising of cosmetic products. It shall apply to any claim, irrespective of the medium or type of marketing tool used, the product functions claimed, and the target audience."
       },
       {
+        "section_id": "html-34-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 2"
+      },
+      {
         "section_id": "html-35-official-source-update",
         "heading": "Official source update",
         "text": "The responsible person referred to in Article 4 of Regulation (EC) No 1223/2009 shall ensure that the wording of the claim in relation to cosmetic products is in compliance with the common criteria set out in the Annex and is consistent with the documentation proving the effect claimed for the cosmetic product in the product information file referred to in Article 11 of Regulation (EC) No 1223/2009."
+      },
+      {
+        "section_id": "html-36-official-source-update",
+        "heading": "Official source update",
+        "text": "Article 3"
       },
       {
         "section_id": "html-37-official-source-update",
@@ -206,6 +292,11 @@
         "text": "( 5 ) See e.g. Case C-220/98, Estée Lauder Cosmetics vs. Lancaster [2000] ECR I-00117, paragraph 29."
       },
       {
+        "section_id": "html-49-official-source-update",
+        "heading": "Official source update",
+        "text": "ANNEX"
+      },
+      {
         "section_id": "html-50-official-source-update",
         "heading": "Official source update",
         "text": "COMMON CRITERIA"
@@ -216,9 +307,39 @@
         "text": "1. Legal compliance"
       },
       {
+        "section_id": "html-52-official-source-update",
+        "heading": "Official source update",
+        "text": "(1)"
+      },
+      {
+        "section_id": "html-53-official-source-update",
+        "heading": "Official source update",
+        "text": "(2)"
+      },
+      {
+        "section_id": "html-54-official-source-update",
+        "heading": "Official source update",
+        "text": "(3)"
+      },
+      {
         "section_id": "html-55-official-source-update",
         "heading": "Official source update",
         "text": "2. Truthfulness"
+      },
+      {
+        "section_id": "html-56-official-source-update",
+        "heading": "Official source update",
+        "text": "(1)"
+      },
+      {
+        "section_id": "html-57-official-source-update",
+        "heading": "Official source update",
+        "text": "(2)"
+      },
+      {
+        "section_id": "html-58-official-source-update",
+        "heading": "Official source update",
+        "text": "(3)"
       },
       {
         "section_id": "html-59-official-source-update",
@@ -226,9 +347,84 @@
         "text": "3. Evidential support"
       },
       {
+        "section_id": "html-60-official-source-update",
+        "heading": "Official source update",
+        "text": "(1)"
+      },
+      {
+        "section_id": "html-61-official-source-update",
+        "heading": "Official source update",
+        "text": "(2)"
+      },
+      {
+        "section_id": "html-62-official-source-update",
+        "heading": "Official source update",
+        "text": "(3)"
+      },
+      {
+        "section_id": "html-63-official-source-update",
+        "heading": "Official source update",
+        "text": "(4)"
+      },
+      {
+        "section_id": "html-64-official-source-update",
+        "heading": "Official source update",
+        "text": "(5)"
+      },
+      {
+        "section_id": "html-65-official-source-update",
+        "heading": "Official source update",
+        "text": "(6)"
+      },
+      {
+        "section_id": "html-66-official-source-update",
+        "heading": "Official source update",
+        "text": "(7)"
+      },
+      {
+        "section_id": "html-67-official-source-update",
+        "heading": "Official source update",
+        "text": "4. Honesty"
+      },
+      {
+        "section_id": "html-68-official-source-update",
+        "heading": "Official source update",
+        "text": "(1)"
+      },
+      {
+        "section_id": "html-69-official-source-update",
+        "heading": "Official source update",
+        "text": "(2)"
+      },
+      {
+        "section_id": "html-70-official-source-update",
+        "heading": "Official source update",
+        "text": "(3)"
+      },
+      {
+        "section_id": "html-71-official-source-update",
+        "heading": "Official source update",
+        "text": "5. Fairness"
+      },
+      {
+        "section_id": "html-72-official-source-update",
+        "heading": "Official source update",
+        "text": "(1)"
+      },
+      {
+        "section_id": "html-73-official-source-update",
+        "heading": "Official source update",
+        "text": "(2)"
+      },
+      {
         "section_id": "html-74-official-source-update",
         "heading": "Official source update",
         "text": "6. Informed decision-making"
+      },
+      {
+        "section_id": "html-75-official-source-update",
+        "heading": "Official source update",
+        "text": "(3)"
       }
     ]
   }

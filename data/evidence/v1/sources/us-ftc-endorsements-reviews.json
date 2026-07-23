@@ -14,14 +14,20 @@
     "reuse_review_status": "official_publication_terms_not_reviewed"
   },
   "capture": {
-    "content_hash": "12ccec092cc54477b7cb978d7b1217e1127d80c056153836bedb4719c4922887",
-    "created_at": "2026-07-21T11:35:10.112295+00:00",
-    "retrieved_at": "2026-07-21",
+    "content_hash": "9c1ebd0f32943df4ff93348b47487dcad5c2a099047a50c78e225a83408b629c",
+    "created_at": "2026-07-22T05:04:35.472709+00:00",
+    "retrieved_at": "2026-07-22",
     "section_count": 17,
+    "quality_schema_version": "legacy",
     "structural_review_status": "blocked",
     "legal_review_status": "pending",
     "eligible_for_activation": false,
-    "short_section_rate": 0.2941,
+    "temporal_review_status": "missing",
+    "generic_heading_rate": null,
+    "blocking_reasons": [
+      "quality_gate_version_outdated"
+    ],
+    "short_section_rate": null,
     "replacement_character_count": 0,
     "validation_errors": []
   },
@@ -29,9 +35,9 @@
     "title": "Endorsements, Influencers, and Reviews",
     "publisher": "U.S. Federal Trade Commission",
     "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/endorsements-influencers-reviews",
-    "version": "snapshot-12ccec092cc5",
+    "version": "snapshot-9c1ebd0f3294",
     "published_at": "undated",
-    "retrieved_at": "2026-07-21",
+    "retrieved_at": "2026-07-22",
     "scope_note": "Automatically parsed official HTML; requires structural and legal review.",
     "scopes": [
       {

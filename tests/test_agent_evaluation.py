@@ -33,3 +33,16 @@ def test_agent_and_pipeline_use_the_same_success_contract() -> None:
     assert pipeline["metrics"]["success_rate"] == 1.0
     assert agent["metrics"]["success_rate"] == 1.0
     assert agent["metrics"]["total_tokens"] == 8
+
+
+def test_retrieved_legal_basis_is_not_mislabeled_as_human_reviewed() -> None:
+    result = SuggestConservativeRewriteTool().execute({
+        "product": {"title": "100%安全", "description": ""},
+        "evidence": [{"market": "CN", "candidate_evidence": [{
+            "section_id": "article-4", "heading": "Article 4", "text": "Source text",
+            "source_url": "https://example.test/article-4",
+        }]}],
+    })
+    basis = result.output["operations"][0]["legal_basis"][0]
+    assert basis["evidence_status"] == "retrieval_candidate_unverified"
+    assert basis["requires_human_review"] is True

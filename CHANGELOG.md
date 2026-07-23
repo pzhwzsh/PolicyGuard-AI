@@ -7,6 +7,15 @@ and versions follow Semantic Versioning.
 
 ### Changed
 
+- Block legacy staged sources until they pass quality-schema-v2 heading and temporal checks; source
+  snapshots remain publishable as provenance evidence but are not activation candidates.
+- Treat template-expanded RAG data as a synthetic stress suite rather than legal holdout evidence,
+  and map generic `100%安全` remediation samples to Article 4 truthfulness instead of Article 9.
+- Separate incomplete provider runs from model-quality failures in evidence-support benchmarks;
+  recall and specificity are invalid when decision coverage is incomplete.
+- Mark retrieved citations as unverified candidates and require authenticated reviewer identity for
+  workflow decisions and draft approvals when admin authentication is enabled.
+
 - Split the customer review page from the management console. The public workflow no longer exposes
   policy ingestion, source activation, evaluation queues, model status, job controls, or execution
   traces; those controls remain under `/admin`.

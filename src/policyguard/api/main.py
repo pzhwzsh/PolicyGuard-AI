@@ -222,6 +222,16 @@ def create_app(database_url: str | None = None) -> FastAPI:
         ):
             raise HTTPException(status_code=401, detail="admin_key_required")
 
+    def require_admin_reviewer(
+        x_admin_key: str = Header(default=""),
+        x_reviewer: str = Header(default=""),
+    ) -> str:
+        require_admin(x_admin_key)
+        reviewer = x_reviewer.strip()
+        if settings.admin_api_key and not reviewer:
+            raise HTTPException(status_code=401, detail="reviewer_identity_required")
+        return reviewer or "local-reviewer"
+
     @application.get("/health", response_model=HealthResponse, tags=["system"])
     def health() -> HealthResponse:
         return HealthResponse(
@@ -1129,7 +1139,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run_id: str,
         payload: WorkflowReviewRequest,
         session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
     ) -> ComplianceWorkflowResponse:
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         service = ComplianceWorkflowService(
             SqlAlchemyKnowledgeRepository(session),
             SqlAlchemyWorkflowRepository(session),
@@ -1204,7 +1217,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run_id: str,
         payload: DraftCreationRequest,
         session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
     ) -> ComplianceWorkflowResponse:
+        if settings.admin_api_key and payload.approved_by != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
         service = RemediationService(
             SqlAlchemyWorkflowRepository(session),
             ToolRegistry([SuggestConservativeRewriteTool()]),

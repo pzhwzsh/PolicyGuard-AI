@@ -66,6 +66,21 @@ def build_source_release(root: Path) -> tuple[dict, dict[str, dict]]:
             errors.append("duplicate_section_id")
         if any(not item.get("text", "").strip() for item in sections):
             errors.append("empty_section_text")
+        quality_current = manifest.get("quality_schema_version") == "2.0"
+        blocking_reasons = list(manifest.get("blocking_reasons", []))
+        if not quality_current and "quality_gate_version_outdated" not in blocking_reasons:
+            blocking_reasons.append("quality_gate_version_outdated")
+        structural_status = (
+            manifest.get("structural_review_status", "unknown")
+            if quality_current
+            else "blocked"
+        )
+        eligible_for_activation = bool(
+            quality_current
+            and structural_status == "passed"
+            and manifest.get("temporal_review_status") == "complete"
+            and manifest.get("eligible_for_activation", False)
+        )
 
         release = {
             "schema_version": "policyguard-source-evidence-v1",
@@ -83,9 +98,13 @@ def build_source_release(root: Path) -> tuple[dict, dict[str, dict]]:
                 "created_at": manifest["created_at"],
                 "retrieved_at": policy.get("retrieved_at"),
                 "section_count": len(sections),
-                "structural_review_status": manifest.get("structural_review_status", "unknown"),
+                "quality_schema_version": manifest.get("quality_schema_version", "legacy"),
+                "structural_review_status": structural_status,
                 "legal_review_status": manifest.get("legal_review_status", "pending"),
-                "eligible_for_activation": manifest.get("eligible_for_activation", False),
+                "eligible_for_activation": eligible_for_activation,
+                "temporal_review_status": manifest.get("temporal_review_status", "missing"),
+                "generic_heading_rate": manifest.get("generic_heading_rate"),
+                "blocking_reasons": blocking_reasons,
                 "short_section_rate": manifest.get("short_section_rate"),
                 "replacement_character_count": sum(
                     item.get("text", "").count("\ufffd") for item in sections
@@ -105,9 +124,13 @@ def build_source_release(root: Path) -> tuple[dict, dict[str, dict]]:
             "content_hash": manifest["content_hash"],
             "retrieved_at": policy.get("retrieved_at"),
             "section_count": len(sections),
-            "structural_review_status": manifest.get("structural_review_status", "unknown"),
+            "quality_schema_version": manifest.get("quality_schema_version", "legacy"),
+            "structural_review_status": structural_status,
             "legal_review_status": manifest.get("legal_review_status", "pending"),
-            "eligible_for_activation": manifest.get("eligible_for_activation", False),
+            "eligible_for_activation": eligible_for_activation,
+            "temporal_review_status": manifest.get("temporal_review_status", "missing"),
+            "generic_heading_rate": manifest.get("generic_heading_rate"),
+            "blocking_reasons": blocking_reasons,
             "reuse_review_status": "official_publication_terms_not_reviewed",
             "validation_errors": errors,
             "release_path": f"sources/{source_id}.json",

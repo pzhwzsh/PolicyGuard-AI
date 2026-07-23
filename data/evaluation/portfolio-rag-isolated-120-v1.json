@@ -1,8 +1,11 @@
 {
   "name": "portfolio-rag-isolated-120-v1",
   "label_status": "synthetic_pending_human_review",
-  "split": "locked_test_not_used_for_threshold_selection",
+  "split": "synthetic_stress_set_not_a_legal_holdout",
   "generation": "deterministic templates grounded in active section identifiers",
+  "intended_use": "retrieval plumbing and load regression only",
+  "legal_quality_metric_eligible": false,
+  "limitations": "Template-expanded wording is not independent legal annotation and must not be used to claim legal retrieval quality.",
   "samples": [
     {
       "id": "holdout-pos-001",

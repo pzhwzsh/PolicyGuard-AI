@@ -46,15 +46,35 @@ def clean_source_sections(source: dict, sections) -> list:
 
 def source_structure_quality(source: dict, sections: list) -> dict:
     texts = [section.text for section in sections]
+    headings = [section.heading.strip() for section in sections]
     suspicious = sum(text.count("�") for text in texts)
     short = sum(len(text) < 30 for text in texts)
     eligible = source.get("ingestion_mode") == "legal_document"
-    passed = eligible and len(sections) >= 3 and suspicious == 0
+    generic = sum(heading.casefold() == "official source update" for heading in headings)
+    generic_rate = generic / max(len(headings), 1)
+    temporal_complete = bool(source.get("published_at") and source.get("effective_from"))
+    blocking_reasons = []
+    if not eligible:
+        blocking_reasons.append("not_a_legal_document")
+    if len(sections) < 3:
+        blocking_reasons.append("insufficient_sections")
+    if suspicious:
+        blocking_reasons.append("replacement_characters_present")
+    if generic_rate >= 0.8:
+        blocking_reasons.append("generic_heading_dominance")
+    if not temporal_complete:
+        blocking_reasons.append("temporal_metadata_missing")
+    passed = not blocking_reasons
     return {
+        "quality_schema_version": "2.0",
         "eligible_for_activation": eligible,
         "section_count": len(sections),
         "short_section_rate": round(short / max(len(sections), 1), 4),
+        "unique_heading_count": len(set(headings)),
+        "generic_heading_rate": round(generic_rate, 4),
         "replacement_character_count": suspicious,
+        "temporal_review_status": "complete" if temporal_complete else "missing",
+        "blocking_reasons": blocking_reasons,
         "structural_review_status": "passed" if passed else "blocked",
         "legal_review_status": "pending",
     }
@@ -143,8 +163,12 @@ def approve_source_update(
     if not manifest_path.is_file():
         raise LookupError("source_update_not_found")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("quality_schema_version") != "2.0":
+        raise RuntimeError("source_update_quality_gate_outdated")
     if manifest.get("structural_review_status") != "passed":
         raise RuntimeError("source_update_structure_not_approved")
+    if manifest.get("temporal_review_status") != "complete":
+        raise RuntimeError("source_update_temporal_review_required")
     if not legal_review_confirmed:
         raise RuntimeError("source_update_legal_review_required")
     document = load_policy_document(Path(manifest["policy_path"]))

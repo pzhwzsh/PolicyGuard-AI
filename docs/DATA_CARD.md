@@ -1,6 +1,6 @@
 # PolicyGuard AI data card
 
-Snapshot date: 2026-07-22
+Snapshot date: 2026-07-23
 
 ## Intended use
 
@@ -11,10 +11,10 @@ advertising law and is not a substitute for legal advice.
 ## Published official-source evidence
 
 - 11 registered official sources: CN 1, US 4, EU 6.
-- 16 captured versions containing 3,995 parsed sections in total.
-- 11 latest source copies containing 3,439 sections.
-- 9 legal or guidance documents passed structural checks; 2 FTC catalog pages are structurally
-  blocked from activation.
+- 20 captured versions containing 6,331 parsed sections in total.
+- 11 latest source copies containing 5,468 sections.
+- 11 latest source copies are blocked from activation. Their manifests predate quality schema v2;
+  six EU copies also have generic headings, and temporal metadata requires explicit re-review.
 - 0 staged source versions have legal-review confirmation.
 - Automatic activation is disabled.
 - Active local retrieval remains 3 documents and 13 chunks.
@@ -43,9 +43,10 @@ rejects fewer than 50 samples, development-query overlap, duplicate queries, pen
 unfrozen split. The template is not a completed dataset and no holdout metric may be reported until
 an independent reviewer supplies and freezes the labels.
 
-The scale suite adds 120 unique isolated RAG queries, 100 campaign workflows, and 100 unique
+The scale suite adds 120 unique synthetic RAG queries, 100 campaign workflows, and 100 unique
 remediation inputs. All are deterministic synthetic samples marked `synthetic_pending_human_review`.
-They measure repeatability and failure behavior, not production distribution or legal accuracy.
+The RAG set is explicitly ineligible for legal-quality metrics because templated substitutions can
+produce semantically weak questions. It measures plumbing, repeatability, and load behavior only.
 
 ## Measured results
 
@@ -85,10 +86,9 @@ configured; the benchmark now refuses to infer it from unrelated public pricing.
 
 ## Operational evidence
 
-The published runtime snapshot truthfully reports zero stored compliance checks, findings, workflow
-runs, Agent memories, evaluation reviews, and audit logs. It proves that production traffic is not
-being claimed. The next data milestone is a consented or public, source-attributed campaign corpus
-with independent review decisions.
+The published runtime snapshot is explicitly marked `local_development`; its mutable local rows are
+not production-traffic evidence and are not used for quality metrics. The next data milestone is a
+consented or public, source-attributed campaign corpus with independent review decisions.
 
 ## Reproduction and validation
 
@@ -103,7 +103,8 @@ states, dataset truthfulness, and the absence of secret-like fields.
 
 ## Known gaps
 
-- No lawyer-verified labels or active staged legal versions.
+- No qualified-human-lawyer-verified labels or active staged legal versions.
+- All staged source manifests require a quality-schema-v2 structural and temporal re-review.
 - No production or consented customer traffic.
 - No independent cost figure because provider pricing is not configured.
 - BGE-M3 remains unmeasured in this environment.

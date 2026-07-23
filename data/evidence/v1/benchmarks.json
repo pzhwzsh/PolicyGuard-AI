@@ -16,9 +16,9 @@
     "cross-language-abstention-v1.json": "c34c6cbbd29076334ec2f91fc7f02aa1bb704a31fabfcc739371220c269d8992",
     "abstention-jina-hard-v1.json": "ce230ad1274cb246245dc13084006927b669feaf8debdc1791d14b0e23f8bf80",
     "remediation-quality-v1.json": "37502fc491b376197262692c858cf84c72eca3af53f3978c7814b1c54d709ca2",
-    "pdf-quality.json": "735b55a78671416e314cd38e1a0b873127f408167099cd244df8c80e3d69e6be",
+    "pdf-quality.json": "9482834ad60b639dbfc320940fca921c3426fa8ec0c0e36b3d621be3b50ba03b",
     "external-smoke.json": "552766429ab7df45dc50d8e46a9775eb374df88713e26606907b12c3ffdaf9e6",
-    "portfolio-scale-v1.json": "58f1dc99a03fa79ff1a740e0343912caeacd10451e2f0e8fc9b2cd219eb82348",
+    "portfolio-scale-v1.json": "46b23621492d7717a4ac799a68db735ea9b2307e15e5897744f48d3b22aa3d5d",
     "synthetic-pdf-scale-v1.json": "aa747d29a3090daa1559e76188fac9ee8b8466259870bc3a87f134e09c68369f"
   },
   "embedding": {
@@ -265,7 +265,7 @@
       "text_accuracy": 0.9714,
       "heading_f1": 1.0,
       "reading_order_accuracy": 1.0,
-      "page_latency_ms": 143.69,
+      "page_latency_ms": 116.65,
       "manual_correction_rate": 0.0
     },
     "samples": [
@@ -275,7 +275,7 @@
         "heading_f1": 1.0,
         "table_cell_accuracy": null,
         "reading_order_accuracy": 1.0,
-        "page_latency_ms": 143.69,
+        "page_latency_ms": 116.65,
         "manual_correction_rate": 0.0
       }
     ]
@@ -284,13 +284,15 @@
     "rag": {
       "dataset": "portfolio-rag-isolated-120-v1",
       "label_status": "synthetic_pending_human_review",
+      "legal_quality_metric_eligible": false,
+      "metric_status": "synthetic_stress_only_not_legal_quality_evidence",
       "sample_count": 120,
       "positive_count": 60,
       "negative_count": 60,
       "positive_hit_at_5": 1.0,
       "negative_candidate_presence_rate": 0.8,
-      "mean_latency_ms": 1.986,
-      "p95_latency_ms": 3.356,
+      "mean_latency_ms": 1.933,
+      "p95_latency_ms": 3.153,
       "answerability_threshold_applied": false,
       "predictions": [
         {
@@ -1606,10 +1608,10 @@
       },
       "evidence_coverage": 0.51,
       "event_count": 550,
-      "mean_latency_ms": 4.719,
-      "p50_latency_ms": 4.189,
-      "p95_latency_ms": 7.534,
-      "throughput_cases_per_second": 211.89,
+      "mean_latency_ms": 5.55,
+      "p50_latency_ms": 4.994,
+      "p95_latency_ms": 9.731,
+      "throughput_cases_per_second": 180.2,
       "model_tokens": 0,
       "cost_usd": 0.0,
       "cost_scope": "deterministic local baseline only",
@@ -1624,7 +1626,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 9.618
+          "latency_ms": 10.76
         },
         {
           "case_id": "campaign-002",
@@ -1634,7 +1636,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.81
+          "latency_ms": 3.88
         },
         {
           "case_id": "campaign-003",
@@ -1644,7 +1646,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.114
+          "latency_ms": 5.253
         },
         {
           "case_id": "campaign-004",
@@ -1658,7 +1660,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.89
+          "latency_ms": 10.289
         },
         {
           "case_id": "campaign-005",
@@ -1670,7 +1672,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.712
+          "latency_ms": 9.533
         },
         {
           "case_id": "campaign-006",
@@ -1680,7 +1682,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.529
+          "latency_ms": 3.752
         },
         {
           "case_id": "campaign-007",
@@ -1692,7 +1694,7 @@
           "evidence_markets": [
             "EU"
           ],
-          "latency_ms": 3.192
+          "latency_ms": 5.113
         },
         {
           "case_id": "campaign-008",
@@ -1706,7 +1708,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.238
+          "latency_ms": 11.728
         },
         {
           "case_id": "campaign-009",
@@ -1718,7 +1720,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 5.417
+          "latency_ms": 7.21
         },
         {
           "case_id": "campaign-010",
@@ -1728,7 +1730,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.415
+          "latency_ms": 6.06
         },
         {
           "case_id": "campaign-011",
@@ -1738,7 +1740,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.688
+          "latency_ms": 3.047
         },
         {
           "case_id": "campaign-012",
@@ -1752,7 +1754,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.863
+          "latency_ms": 7.922
         },
         {
           "case_id": "campaign-013",
@@ -1764,7 +1766,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.682
+          "latency_ms": 5.907
         },
         {
           "case_id": "campaign-014",
@@ -1774,7 +1776,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.951
+          "latency_ms": 3.291
         },
         {
           "case_id": "campaign-015",
@@ -1784,7 +1786,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.414
+          "latency_ms": 2.847
         },
         {
           "case_id": "campaign-016",
@@ -1798,7 +1800,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.718
+          "latency_ms": 8.654
         },
         {
           "case_id": "campaign-017",
@@ -1810,7 +1812,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 5.249
+          "latency_ms": 3.799
         },
         {
           "case_id": "campaign-018",
@@ -1820,7 +1822,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.343
+          "latency_ms": 2.502
         },
         {
           "case_id": "campaign-019",
@@ -1830,7 +1832,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.759
+          "latency_ms": 3.428
         },
         {
           "case_id": "campaign-020",
@@ -1844,7 +1846,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.993
+          "latency_ms": 8.024
         },
         {
           "case_id": "campaign-021",
@@ -1856,7 +1858,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 5.07
+          "latency_ms": 5.411
         },
         {
           "case_id": "campaign-022",
@@ -1866,7 +1868,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.222
+          "latency_ms": 2.99
         },
         {
           "case_id": "campaign-023",
@@ -1876,7 +1878,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.602
+          "latency_ms": 2.788
         },
         {
           "case_id": "campaign-024",
@@ -1890,7 +1892,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.987
+          "latency_ms": 6.936
         },
         {
           "case_id": "campaign-025",
@@ -1902,7 +1904,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.652
+          "latency_ms": 4.843
         },
         {
           "case_id": "campaign-026",
@@ -1912,7 +1914,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.68
+          "latency_ms": 3.799
         },
         {
           "case_id": "campaign-027",
@@ -1922,7 +1924,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.075
+          "latency_ms": 4.764
         },
         {
           "case_id": "campaign-028",
@@ -1936,7 +1938,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.312
+          "latency_ms": 6.591
         },
         {
           "case_id": "campaign-029",
@@ -1948,7 +1950,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.783
+          "latency_ms": 5.076
         },
         {
           "case_id": "campaign-030",
@@ -1958,7 +1960,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.326
+          "latency_ms": 3.856
         },
         {
           "case_id": "campaign-031",
@@ -1968,7 +1970,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.106
+          "latency_ms": 3.317
         },
         {
           "case_id": "campaign-032",
@@ -1982,7 +1984,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.294
+          "latency_ms": 8.369
         },
         {
           "case_id": "campaign-033",
@@ -1994,7 +1996,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.552
+          "latency_ms": 3.585
         },
         {
           "case_id": "campaign-034",
@@ -2004,7 +2006,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.381
+          "latency_ms": 3.843
         },
         {
           "case_id": "campaign-035",
@@ -2014,7 +2016,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.875
+          "latency_ms": 5.116
         },
         {
           "case_id": "campaign-036",
@@ -2028,7 +2030,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.246
+          "latency_ms": 8.73
         },
         {
           "case_id": "campaign-037",
@@ -2040,7 +2042,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.452
+          "latency_ms": 5.048
         },
         {
           "case_id": "campaign-038",
@@ -2050,7 +2052,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.641
+          "latency_ms": 4.656
         },
         {
           "case_id": "campaign-039",
@@ -2060,7 +2062,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.089
+          "latency_ms": 3.101
         },
         {
           "case_id": "campaign-040",
@@ -2074,7 +2076,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.318
+          "latency_ms": 7.659
         },
         {
           "case_id": "campaign-041",
@@ -2086,7 +2088,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 5.142
+          "latency_ms": 6.136
         },
         {
           "case_id": "campaign-042",
@@ -2096,7 +2098,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 4.189
+          "latency_ms": 3.824
         },
         {
           "case_id": "campaign-043",
@@ -2106,7 +2108,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.907
+          "latency_ms": 3.389
         },
         {
           "case_id": "campaign-044",
@@ -2120,7 +2122,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.839
+          "latency_ms": 10.074
         },
         {
           "case_id": "campaign-045",
@@ -2132,7 +2134,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.633
+          "latency_ms": 4.731
         },
         {
           "case_id": "campaign-046",
@@ -2142,7 +2144,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.21
+          "latency_ms": 3.298
         },
         {
           "case_id": "campaign-047",
@@ -2152,7 +2154,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.582
+          "latency_ms": 6.109
         },
         {
           "case_id": "campaign-048",
@@ -2166,7 +2168,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.624
+          "latency_ms": 6.559
         },
         {
           "case_id": "campaign-049",
@@ -2178,7 +2180,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.208
+          "latency_ms": 5.59
         },
         {
           "case_id": "campaign-050",
@@ -2188,7 +2190,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.184
+          "latency_ms": 5.574
         },
         {
           "case_id": "campaign-051",
@@ -2198,7 +2200,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.216
+          "latency_ms": 3.463
         },
         {
           "case_id": "campaign-052",
@@ -2212,7 +2214,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.378
+          "latency_ms": 8.167
         },
         {
           "case_id": "campaign-053",
@@ -2224,7 +2226,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 3.911
+          "latency_ms": 7.208
         },
         {
           "case_id": "campaign-054",
@@ -2234,7 +2236,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.078
+          "latency_ms": 3.236
         },
         {
           "case_id": "campaign-055",
@@ -2244,7 +2246,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.524
+          "latency_ms": 4.994
         },
         {
           "case_id": "campaign-056",
@@ -2258,7 +2260,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.966
+          "latency_ms": 9.731
         },
         {
           "case_id": "campaign-057",
@@ -2270,7 +2272,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.298
+          "latency_ms": 5.245
         },
         {
           "case_id": "campaign-058",
@@ -2280,7 +2282,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.251
+          "latency_ms": 4.948
         },
         {
           "case_id": "campaign-059",
@@ -2290,7 +2292,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 2.946
+          "latency_ms": 3.894
         },
         {
           "case_id": "campaign-060",
@@ -2304,7 +2306,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.728
+          "latency_ms": 10.325
         },
         {
           "case_id": "campaign-061",
@@ -2316,7 +2318,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.229
+          "latency_ms": 6.055
         },
         {
           "case_id": "campaign-062",
@@ -2326,7 +2328,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.067
+          "latency_ms": 3.389
         },
         {
           "case_id": "campaign-063",
@@ -2336,7 +2338,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 2.851
+          "latency_ms": 3.738
         },
         {
           "case_id": "campaign-064",
@@ -2350,7 +2352,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.448
+          "latency_ms": 8.631
         },
         {
           "case_id": "campaign-065",
@@ -2362,7 +2364,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.108
+          "latency_ms": 5.65
         },
         {
           "case_id": "campaign-066",
@@ -2372,7 +2374,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.069
+          "latency_ms": 3.432
         },
         {
           "case_id": "campaign-067",
@@ -2382,7 +2384,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 2.854
+          "latency_ms": 4.404
         },
         {
           "case_id": "campaign-068",
@@ -2396,7 +2398,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.601
+          "latency_ms": 8.195
         },
         {
           "case_id": "campaign-069",
@@ -2408,7 +2410,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.649
+          "latency_ms": 7.886
         },
         {
           "case_id": "campaign-070",
@@ -2418,7 +2420,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.193
+          "latency_ms": 6.596
         },
         {
           "case_id": "campaign-071",
@@ -2428,7 +2430,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 2.831
+          "latency_ms": 3.485
         },
         {
           "case_id": "campaign-072",
@@ -2442,7 +2444,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.719
+          "latency_ms": 9.216
         },
         {
           "case_id": "campaign-073",
@@ -2454,7 +2456,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.204
+          "latency_ms": 4.899
         },
         {
           "case_id": "campaign-074",
@@ -2464,7 +2466,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.147
+          "latency_ms": 2.937
         },
         {
           "case_id": "campaign-075",
@@ -2474,7 +2476,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 2.824
+          "latency_ms": 3.791
         },
         {
           "case_id": "campaign-076",
@@ -2488,7 +2490,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.149
+          "latency_ms": 8.475
         },
         {
           "case_id": "campaign-077",
@@ -2500,7 +2502,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.377
+          "latency_ms": 4.865
         },
         {
           "case_id": "campaign-078",
@@ -2510,7 +2512,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.05
+          "latency_ms": 3.854
         },
         {
           "case_id": "campaign-079",
@@ -2520,7 +2522,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.143
+          "latency_ms": 4.487
         },
         {
           "case_id": "campaign-080",
@@ -2534,7 +2536,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 6.966
+          "latency_ms": 6.545
         },
         {
           "case_id": "campaign-081",
@@ -2546,7 +2548,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.401
+          "latency_ms": 4.271
         },
         {
           "case_id": "campaign-082",
@@ -2556,7 +2558,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.003
+          "latency_ms": 5.232
         },
         {
           "case_id": "campaign-083",
@@ -2566,7 +2568,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.004
+          "latency_ms": 3.351
         },
         {
           "case_id": "campaign-084",
@@ -2580,7 +2582,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.05
+          "latency_ms": 8.353
         },
         {
           "case_id": "campaign-085",
@@ -2592,7 +2594,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.47
+          "latency_ms": 3.982
         },
         {
           "case_id": "campaign-086",
@@ -2602,7 +2604,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 2.991
+          "latency_ms": 3.56
         },
         {
           "case_id": "campaign-087",
@@ -2612,7 +2614,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.073
+          "latency_ms": 4.487
         },
         {
           "case_id": "campaign-088",
@@ -2626,7 +2628,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.534
+          "latency_ms": 7.815
         },
         {
           "case_id": "campaign-089",
@@ -2638,7 +2640,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.943
+          "latency_ms": 5.753
         },
         {
           "case_id": "campaign-090",
@@ -2648,7 +2650,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.918
+          "latency_ms": 3.229
         },
         {
           "case_id": "campaign-091",
@@ -2658,7 +2660,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.535
+          "latency_ms": 4.19
         },
         {
           "case_id": "campaign-092",
@@ -2672,7 +2674,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.037
+          "latency_ms": 7.726
         },
         {
           "case_id": "campaign-093",
@@ -2684,7 +2686,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 5.068
+          "latency_ms": 5.24
         },
         {
           "case_id": "campaign-094",
@@ -2694,7 +2696,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.982
+          "latency_ms": 3.615
         },
         {
           "case_id": "campaign-095",
@@ -2704,7 +2706,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.09
+          "latency_ms": 4.296
         },
         {
           "case_id": "campaign-096",
@@ -2718,7 +2720,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 7.007
+          "latency_ms": 7.573
         },
         {
           "case_id": "campaign-097",
@@ -2730,7 +2732,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 4.966
+          "latency_ms": 5.543
         },
         {
           "case_id": "campaign-098",
@@ -2740,7 +2742,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.184
+          "latency_ms": 3.675
         },
         {
           "case_id": "campaign-099",
@@ -2750,7 +2752,7 @@
           "status": "needs_more_evidence",
           "event_count": 5,
           "evidence_markets": [],
-          "latency_ms": 3.419
+          "latency_ms": 3.23
         },
         {
           "case_id": "campaign-100",
@@ -2764,7 +2766,7 @@
           "evidence_markets": [
             "CN"
           ],
-          "latency_ms": 8.721
+          "latency_ms": 9.327
         }
       ]
     },
@@ -2772,15 +2774,16 @@
       "case_count": 100,
       "workers": 8,
       "success_rate": 1.0,
-      "wall_time_seconds": 2.255,
-      "throughput_cases_per_second": 44.36,
-      "mean_latency_ms": 174.068,
-      "p50_latency_ms": 22.822,
-      "p95_latency_ms": 1142.924,
-      "p99_latency_ms": 1776.562,
+      "wall_time_seconds": 1.97,
+      "throughput_cases_per_second": 50.75,
+      "mean_latency_ms": 148.507,
+      "p50_latency_ms": 82.98,
+      "p95_latency_ms": 438.183,
+      "p99_latency_ms": 1192.271,
       "model_tokens": 0,
       "cost_usd": 0.0,
-      "scope": "local SQLite deterministic workflow; excludes network and model latency"
+      "backend": "sqlite",
+      "scope": "local sqlite deterministic workflow; excludes network and model latency"
     }
   },
   "synthetic_pdf_scale": {

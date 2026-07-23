@@ -21,6 +21,14 @@
       "human_verified_samples": 0
     },
     {
+      "name": "policyguard-independent-holdout-v1",
+      "path": "data/evaluation/holdout-v1.template.json",
+      "sha256": "c9103cdd5e8b9c4b7433cd716985f9487dd625c638d44c9bd2feb08ee821d91f",
+      "sample_count": 1,
+      "label_status": "template_pending_independent_human_review",
+      "human_verified_samples": 0
+    },
+    {
       "name": "human-review-packet-v1",
       "path": "data/evaluation/human-review-packet-v1.json",
       "sha256": "55dff75ad79c81b58a2c9e722a0236eabcd8e4cf90995389538d169829f7125e",
@@ -47,7 +55,7 @@
     {
       "name": "portfolio-rag-isolated-120-v1",
       "path": "data/evaluation/portfolio-rag-isolated-120-v1.json",
-      "sha256": "8283b9b68ed495e1f0d30f217494eda529b2c850e367ba52a7c157afe1286701",
+      "sha256": "c92f6c0b6bd3df52d673cbddef17677339ff4f2a7891b7e22b92e7d86e58baf6",
       "sample_count": 120,
       "label_status": "synthetic_pending_human_review",
       "human_verified_samples": 0
@@ -55,7 +63,7 @@
     {
       "name": "portfolio-remediation-100-v1",
       "path": "data/evaluation/portfolio-remediation-100-v1.json",
-      "sha256": "da0680932ad6b607ec42cb6fb719308ef4302425046d3c3e8eb872c0feccdc93",
+      "sha256": "a1b3b18b4325961c47536c13aeb399071b360c0ea9e7e510d0dc44296dd5bbf3",
       "sample_count": 100,
       "label_status": "synthetic_pending_human_review",
       "human_verified_samples": 0
@@ -119,7 +127,7 @@
     {
       "name": "deterministic-remediation-quality-v1",
       "path": "data/evaluation/remediation-quality-v1.json",
-      "sha256": "972e725190c559ba6f0ae1bb9e4057748393ad419f8b1b68c69841c962f0ccd5",
+      "sha256": "3ae0326386aa39be73c61b634d9290763ea830ef46f7dc2f7dd7d19b23559280",
       "sample_count": 6,
       "label_status": "ai_reviewed_pending_human_verification",
       "human_verified_samples": 0

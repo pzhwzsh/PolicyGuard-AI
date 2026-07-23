@@ -22,6 +22,8 @@ def test_portfolio_datasets_have_declared_scale_and_no_exact_overlap() -> None:
         payload = json.loads((ROOT / "data/evaluation" / name).read_text(encoding="utf-8"))
         existing.update(item["query"] for item in payload["samples"])
     assert len(rag["samples"]) == 120
+    assert rag["legal_quality_metric_eligible"] is False
+    assert rag["split"] == "synthetic_stress_set_not_a_legal_holdout"
     assert len({item["query"] for item in rag["samples"]}) == 120
     assert not existing.intersection(item["query"] for item in rag["samples"])
     assert len(remediation["samples"]) == 100
@@ -36,6 +38,7 @@ def test_portfolio_benchmark_runs_end_to_end(tmp_path: Path) -> None:
     shutil.copytree(ROOT / "data/evidence", tmp_path / "data/evidence")
     report = run_portfolio_benchmark(tmp_path)
     assert report["rag"]["sample_count"] == 120
+    assert report["rag"]["metric_status"] == "synthetic_stress_only_not_legal_quality_evidence"
     assert report["remediation"]["sample_count"] == 100
     assert report["workflow"]["case_count"] == 100
     assert report["workflow"]["event_count"] >= 500

@@ -5,12 +5,12 @@
   "automatic_approval": false,
   "counts": {
     "registered_sources": 11,
-    "captured_versions": 16,
-    "captured_version_sections": 3995,
+    "captured_versions": 20,
+    "captured_version_sections": 6331,
     "latest_release_sources": 11,
-    "latest_release_sections": 3439,
-    "structurally_passed": 9,
-    "structurally_blocked": 2,
+    "latest_release_sections": 5468,
+    "structurally_passed": 0,
+    "structurally_blocked": 11,
     "legally_confirmed": 0
   },
   "limitations": [
@@ -26,15 +26,21 @@
       "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_5474cf75173c45d6a0379730fb4e8d97.html",
       "ingestion_mode": "legal_document",
       "content_hash": "27bdda4bf4469a2b8754dbb91f154ab3d7a0f64672014297627da7fa3b029299",
-      "retrieved_at": "2026-07-21",
-      "section_count": 74,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 240,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/cn-samr-advertising-law.json",
-      "release_sha256": "a4b519515c50c1be1b8e9d4fe4764f01f6c65986b7f747e064c6dc3b0a560425"
+      "release_sha256": "21b856d0e3730a9b5bd0bb5a4ad28e082a9de506b0e93289724aff4b52e9c973"
     },
     {
       "source_id": "us-ftc-advertising-basics",
@@ -42,16 +48,22 @@
       "publisher": "U.S. Federal Trade Commission",
       "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics",
       "ingestion_mode": "source_catalog",
-      "content_hash": "bafb3800be69258a479d226556edbc244335af7cbfe237b9e436294a269ad438",
-      "retrieved_at": "2026-07-21",
+      "content_hash": "b386782bba62efeafdac57bb3c38ffb54d5be35e9a74274c942a13e0fb276b00",
+      "retrieved_at": "2026-07-22",
       "section_count": 26,
+      "quality_schema_version": "legacy",
       "structural_review_status": "blocked",
       "legal_review_status": "pending",
       "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-advertising-basics.json",
-      "release_sha256": "8fe50388cf0480e3afc3c9d7e8458b7237493ba43a932f7efce7d61fe8c14dc9"
+      "release_sha256": "e07c235b591546f3b676d57d84a5c0cde7eea1ce018ca4726182154e381d96df"
     },
     {
       "source_id": "eu-ucpd-consolidated",
@@ -60,15 +72,21 @@
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02005L0029-20220528",
       "ingestion_mode": "legal_document",
       "content_hash": "c33bff77a80e20d24c5c011e80aae31b8a26c72b31161957d113d38c8fc77893",
-      "retrieved_at": "2026-07-21",
-      "section_count": 228,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 320,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-ucpd-consolidated.json",
-      "release_sha256": "60b8a6ed7043d1de0192f1d605f5657e1e48fcb2bbb3a162f4a4b3562c257cd4"
+      "release_sha256": "f3d535da60e905527059c182ce80dd347d128d14feaf20eecc35669e5094bb04"
     },
     {
       "source_id": "us-ftc-endorsements-reviews",
@@ -76,16 +94,22 @@
       "publisher": "U.S. Federal Trade Commission",
       "source_url": "https://www.ftc.gov/business-guidance/advertising-marketing/endorsements-influencers-reviews",
       "ingestion_mode": "source_catalog",
-      "content_hash": "12ccec092cc54477b7cb978d7b1217e1127d80c056153836bedb4719c4922887",
-      "retrieved_at": "2026-07-21",
+      "content_hash": "9c1ebd0f32943df4ff93348b47487dcad5c2a099047a50c78e225a83408b629c",
+      "retrieved_at": "2026-07-22",
       "section_count": 17,
+      "quality_schema_version": "legacy",
       "structural_review_status": "blocked",
       "legal_review_status": "pending",
       "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-endorsements-reviews.json",
-      "release_sha256": "cf4a681c8d8cd4a03f7b98bb86ba9cebdeee63273bdf2d9cbadcd33d598184d0"
+      "release_sha256": "edf4fab5b35b8b502f6c37e25646af7270efc971113d2aeef3dccfd3fb4428d8"
     },
     {
       "source_id": "us-ftc-health-products-guidance",
@@ -93,16 +117,22 @@
       "publisher": "U.S. Federal Trade Commission",
       "source_url": "https://www.ftc.gov/business-guidance/resources/health-products-compliance-guidance",
       "ingestion_mode": "legal_document",
-      "content_hash": "01e8b8987000e035652e4447f6a20ee396e36778e44a9daea16c67559f928bc0",
-      "retrieved_at": "2026-07-21",
-      "section_count": 205,
-      "structural_review_status": "passed",
+      "content_hash": "9a32fd92132f56db6b6668b7580f0f2490944e71515339174ab6a97d32db8773",
+      "retrieved_at": "2026-07-22",
+      "section_count": 210,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-health-products-guidance.json",
-      "release_sha256": "9973d31813b016e04e53a3c08abdb7fc9b77abc9a7495b76bf4ba5ac6327aecb"
+      "release_sha256": "fd3d5819bb505fdc60bebf7cd37421e27b47c52493624668e7573b7838fbe15a"
     },
     {
       "source_id": "us-ftc-can-spam",
@@ -110,16 +140,22 @@
       "publisher": "U.S. Federal Trade Commission",
       "source_url": "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business",
       "ingestion_mode": "legal_document",
-      "content_hash": "a3fc61638fb27088cba4b04af41f084fac5d390aa28b7fcf3d45917c7d180ab6",
-      "retrieved_at": "2026-07-21",
-      "section_count": 59,
-      "structural_review_status": "passed",
+      "content_hash": "31ba8f6d091e1006e93c08d8b85ffdb3148c362afb4bca89c0c60e47bde8485d",
+      "retrieved_at": "2026-07-22",
+      "section_count": 63,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/us-ftc-can-spam.json",
-      "release_sha256": "accc4fdb17d6fa7c45073b7e58b0be504e87f62f8761b6eb28b2867b52f12309"
+      "release_sha256": "87e1f3a09cbb8d14b903a57b41de8d5a3011df346308ed9d3d59079688baac8c"
     },
     {
       "source_id": "eu-cosmetics-claims-655-2013",
@@ -128,15 +164,21 @@
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32013R0655",
       "ingestion_mode": "legal_document",
       "content_hash": "731b08f2ec65381f0f77be5c1cfa1b583c613e00f3f8ea3fc530240588a62c30",
-      "retrieved_at": "2026-07-21",
-      "section_count": 37,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 75,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-cosmetics-claims-655-2013.json",
-      "release_sha256": "0d73ed58c55cad937ba82a074015de95d85d1602a01910d321bc72f6eb7d94d8"
+      "release_sha256": "48aa86d67fb9bf149d68b0ff804097988ca7d07dba5615a54a79b0d9d6594dd4"
     },
     {
       "source_id": "eu-health-claims-1924-2006",
@@ -145,15 +187,21 @@
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32006R1924",
       "ingestion_mode": "legal_document",
       "content_hash": "2dc446c9a16c68ee17808bf1e8915ebd1ac75b616acfbf135443b5a453f2425e",
-      "retrieved_at": "2026-07-21",
-      "section_count": 328,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 509,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-health-claims-1924-2006.json",
-      "release_sha256": "a64845a1647bcb984fa8a017e25b3aa10c0bbe8b958304b1a5f28cb7350e2899"
+      "release_sha256": "8dbeecaaf81b692c7f51a78ead0c8d98bfdea006901ce4e1207096e4974af616"
     },
     {
       "source_id": "eu-digital-services-act-2022-2065",
@@ -162,15 +210,21 @@
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32022R2065",
       "ingestion_mode": "legal_document",
       "content_hash": "9e45019e7e32b1769ff94a21fc64a1cb840ff6cd894321ba5df1582c539970ca",
-      "retrieved_at": "2026-07-21",
-      "section_count": 1081,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 1712,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-digital-services-act-2022-2065.json",
-      "release_sha256": "f2b985c541ee5c870916e7b2067b659949611562c2fec6905de4a953758ccf9a"
+      "release_sha256": "aae0e57a0914c7fd9bfaba55d8c97e00525f958a039731769e0b9715d74de685"
     },
     {
       "source_id": "eu-gdpr-2016-679",
@@ -179,15 +233,21 @@
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679",
       "ingestion_mode": "legal_document",
       "content_hash": "35a58482c79837c8f7be73f600eaf6de23d2889d174f0916786d6d8a44f2555c",
-      "retrieved_at": "2026-07-21",
-      "section_count": 1098,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 1815,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-gdpr-2016-679.json",
-      "release_sha256": "1f2d2b7aadc41b8351d29f5fdcc01ec0d74510cc42353b5405a8dd15a7fe8ad5"
+      "release_sha256": "50cf6b47e303cdbf56c074bc9cc6ae7497d46458b9803b6a04e87a8ab716c39e"
     },
     {
       "source_id": "eu-audiovisual-media-services-2010-13",
@@ -196,15 +256,21 @@
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02010L0013-20181218",
       "ingestion_mode": "legal_document",
       "content_hash": "ecbdbd34c47feab067d62a871798afd7677f3d59aea14be90afbcadbc5f5d136",
-      "retrieved_at": "2026-07-21",
-      "section_count": 286,
-      "structural_review_status": "passed",
+      "retrieved_at": "2026-07-22",
+      "section_count": 481,
+      "quality_schema_version": "legacy",
+      "structural_review_status": "blocked",
       "legal_review_status": "pending",
-      "eligible_for_activation": true,
+      "eligible_for_activation": false,
+      "temporal_review_status": "missing",
+      "generic_heading_rate": null,
+      "blocking_reasons": [
+        "quality_gate_version_outdated"
+      ],
       "reuse_review_status": "official_publication_terms_not_reviewed",
       "validation_errors": [],
       "release_path": "sources/eu-audiovisual-media-services-2010-13.json",
-      "release_sha256": "ae6aa03ec7bc38fe9d8cf63c845d52931d63fe3e418ee9d5d3bf5f8c5000bf07"
+      "release_sha256": "afbd54a67d7e27fadd30e0f2f9786606bfc76837cb1c06ca9e4dbabc000f6e0b"
     }
   ]
 }

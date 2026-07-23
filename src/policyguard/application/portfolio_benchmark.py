@@ -20,7 +20,7 @@ RISKY = (
     ("最高级", "article-9"),
     ("最好的", "article-9"),
     ("最佳", "article-9"),
-    ("100%安全的", "article-9"),
+    ("100%安全的", "article-4"),
 )
 PRODUCTS = ("护肤品", "面霜", "食品", "儿童用品", "清洁剂")
 FACTS = ("50ml", "30g", "100ml", "2件", "5mg")
@@ -114,8 +114,14 @@ def build_rag_holdout() -> dict:
     return {
         "name": "portfolio-rag-isolated-120-v1",
         "label_status": "synthetic_pending_human_review",
-        "split": "locked_test_not_used_for_threshold_selection",
+        "split": "synthetic_stress_set_not_a_legal_holdout",
         "generation": "deterministic templates grounded in active section identifiers",
+        "intended_use": "retrieval plumbing and load regression only",
+        "legal_quality_metric_eligible": False,
+        "limitations": (
+            "Template-expanded wording is not independent legal annotation and must not be "
+            "used to claim legal retrieval quality."
+        ),
         "samples": samples,
     }
 
@@ -158,6 +164,8 @@ def evaluate_rag_holdout(root: Path, dataset: dict) -> dict:
     return {
         "dataset": dataset["name"],
         "label_status": dataset["label_status"],
+        "legal_quality_metric_eligible": dataset.get("legal_quality_metric_eligible", False),
+        "metric_status": "synthetic_stress_only_not_legal_quality_evidence",
         "sample_count": len(dataset["samples"]),
         "positive_count": positives,
         "negative_count": negatives,
