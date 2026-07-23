@@ -6,6 +6,7 @@ from pypdf import PdfWriter
 
 from policyguard.api.main import create_app
 from policyguard.application.document_ingestion import DocumentBlock, ParsedDocument
+from policyguard.config import get_settings
 
 
 def blank_pdf() -> bytes:
@@ -190,3 +191,37 @@ def test_pdf_correction_endpoint_resolves_review_warning(tmp_path: Path, monkeyp
     assert corrected.status_code == 200
     assert corrected.json()["document"]["status"] == "parsed"
     assert corrected.json()["correction_rate"] == 1.0
+
+
+def test_staged_document_deletion_requires_admin_reviewer_and_removes_workspace(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("ADMIN_API_KEY", "secret")
+    get_settings.cache_clear()
+    app = create_app(f"sqlite:///{(tmp_path / 'delete.db').as_posix()}")
+    try:
+        with TestClient(app) as client:
+            parsed = client.post(
+                "/api/v1/documents/parse",
+                files={"file": ("delete.pdf", blank_pdf(), "application/pdf")},
+            ).json()
+            path = f"/api/v1/documents/{parsed['document_id']}"
+            body = {
+                "expected_revision": 0,
+                "reviewer": "alice",
+                "reason": "user requested deletion",
+            }
+            denied = client.request("DELETE", path, json=body)
+            deleted = client.request(
+                "DELETE",
+                path,
+                headers={"X-Admin-Key": "secret", "X-Reviewer": "alice"},
+                json=body,
+            )
+        assert denied.status_code == 401
+        assert deleted.status_code == 200
+        assert deleted.json()["deleted_file_count"] >= 4
+        assert not (tmp_path / "data/uploads" / parsed["document_id"]).exists()
+    finally:
+        get_settings.cache_clear()

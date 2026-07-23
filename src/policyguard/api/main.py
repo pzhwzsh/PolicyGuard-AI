@@ -36,6 +36,8 @@ from policyguard.api.schemas import (
     DocumentApprovalRequest,
     DocumentApprovalResponse,
     DocumentCorrectionRequest,
+    DocumentDeletionRequest,
+    DocumentDeletionResponse,
     DocumentParseResponse,
     DocumentWorkspaceResponse,
     DraftCreationRequest,
@@ -748,6 +750,33 @@ def create_app(database_url: str | None = None) -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         return DocumentWorkspaceResponse(**document_workspace_payload(document, manifest))
+
+    @application.delete(
+        "/api/v1/documents/{document_id}",
+        response_model=DocumentDeletionResponse,
+        tags=["documents"],
+    )
+    def delete_staged_document(
+        document_id: str,
+        payload: DocumentDeletionRequest,
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+    ) -> DocumentDeletionResponse:
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        try:
+            event = DocumentWorkspace(Path(settings.upload_dir)).delete_staged(
+                document_id,
+                expected_revision=payload.expected_revision,
+                reviewer=payload.reviewer,
+                reason=payload.reason,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return DocumentDeletionResponse(**event)
 
     @application.get(
         "/api/v1/operations/dashboard",

@@ -68,6 +68,18 @@ PostgreSQL-specific test is skipped locally.
 External service checks belong in the manual or scheduled smoke workflow, not the ordinary test
 suite.
 
+Staged uploads and all derived parsing artifacts can be removed through the authenticated
+`DELETE /api/v1/documents/{document_id}` endpoint. Automated retention cleanup is dry-run-first:
+
+```powershell
+python -m policyguard.scripts.cleanup_uploads --days 30
+python -m policyguard.scripts.cleanup_uploads --days 30 --apply
+```
+
+Activated knowledge documents are never eligible for this cleanup. Each deletion leaves a minimal
+metadata-only event under `UPLOAD_DIR/.deletion-audit/`; source text and parsed content are not
+retained in that event.
+
 ## Evidence hardening
 
 An evaluation result is reportable as held-out evidence only after `audit_holdout` passes. Keep the

@@ -1,4 +1,5 @@
 import json
+from datetime import UTC, datetime, timedelta
 from hashlib import sha256
 from pathlib import Path
 
@@ -56,3 +57,53 @@ def test_human_correction_rejects_stale_revision(tmp_path: Path) -> None:
             corrections=[],
             resolved_warnings=[],
         )
+
+
+def test_staged_document_deletion_removes_all_content_and_keeps_minimal_audit(
+    tmp_path: Path,
+) -> None:
+    document_id = staged_document(tmp_path)
+    directory = tmp_path / document_id
+    (directory / "original.pdf").write_bytes(b"private")
+
+    event = DocumentWorkspace(tmp_path).delete_staged(
+        document_id,
+        expected_revision=0,
+        reviewer="reviewer",
+        reason="user requested deletion",
+    )
+
+    assert not directory.exists()
+    assert event["deleted_file_count"] == 3
+    audit = (tmp_path / ".deletion-audit/documents.jsonl").read_text(encoding="utf-8")
+    assert document_id in audit
+    assert "private" not in audit
+
+
+def test_active_document_cannot_be_deleted(tmp_path: Path) -> None:
+    document_id = staged_document(tmp_path)
+    manifest_path = tmp_path / document_id / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["activation_status"] = "active"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="document_is_active"):
+        DocumentWorkspace(tmp_path).delete_staged(
+            document_id,
+            expected_revision=0,
+            reviewer="reviewer",
+            reason="should fail",
+        )
+
+
+def test_retention_purge_only_deletes_expired_staged_documents(tmp_path: Path) -> None:
+    expired_id = staged_document(tmp_path)
+    manifest_path = tmp_path / expired_id / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["created_at"] = (datetime.now(UTC) - timedelta(days=31)).isoformat()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    deleted = DocumentWorkspace(tmp_path).purge_staged_older_than(30)
+
+    assert [item["document_id"] for item in deleted] == [expired_id]
+    assert not (tmp_path / expired_id).exists()

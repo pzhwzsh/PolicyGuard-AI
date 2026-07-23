@@ -53,7 +53,8 @@ Last updated: 2026-07-23
 ### Product workflow
 
 - Add image and video claim extraction with frame-level evidence.
-- Add retention and deletion controls for uploaded files and derived artifacts.
+- Extend retention/deletion controls from staged PDF workspaces to batch CSV/XLSX inputs and
+  exported review results.
 - Add exportable review packages.
 
 ### Runtime
@@ -84,6 +85,8 @@ python -m pytest
 python -m ruff check .
 python -m policyguard.scripts.publish_data_evidence --validate
 python -m policyguard.scripts.audit_pdf_corpus
+# Preview staged uploads older than 30 days; add --apply only after reviewing the list.
+python -m policyguard.scripts.cleanup_uploads --days 30
 # After creating a private reviewed holdout file:
 # python -m policyguard.scripts.audit_holdout data/evaluation/holdout-v1.json `
 #   --development data/evaluation/rag-baseline.json data/evaluation/rag-hard-v1.json

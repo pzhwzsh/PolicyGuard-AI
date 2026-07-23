@@ -2,8 +2,9 @@
 
 import json
 import re
+import shutil
 from dataclasses import replace
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -115,6 +116,85 @@ class DocumentWorkspace:
                 "resolved_warnings": resolved_warnings,
             }, ensure_ascii=False) + "\n")
         return corrected, manifest
+
+    def delete_staged(
+        self,
+        document_id: str,
+        *,
+        expected_revision: int,
+        reviewer: str,
+        reason: str,
+    ) -> dict[str, Any]:
+        """Delete a staged upload and all derived files while retaining a minimal audit event."""
+        _, manifest = self.load(document_id)
+        if manifest.get("activation_status", "staged") != "staged":
+            raise RuntimeError("document_is_active")
+        revision = int(manifest.get("revision", 0))
+        if revision != expected_revision:
+            raise RuntimeError("document_revision_conflict")
+        cleaned_reason = reason.strip()
+        if not cleaned_reason:
+            raise ValueError("document_deletion_reason_required")
+        directory = self.directory(document_id)
+        files = [path for path in directory.rglob("*") if path.is_file()]
+        deleted_bytes = sum(path.stat().st_size for path in files)
+        event = {
+            "document_id": document_id,
+            "revision": revision,
+            "reviewer": reviewer,
+            "reason": cleaned_reason,
+            "deleted_at": datetime.now(UTC).isoformat(),
+            "deleted_file_count": len(files),
+            "deleted_bytes": deleted_bytes,
+        }
+        shutil.rmtree(directory)
+        audit_root = self.root / ".deletion-audit"
+        audit_root.mkdir(parents=True, exist_ok=True)
+        with (audit_root / "documents.jsonl").open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+        return event
+
+    def expired_staged(self, days: int) -> list[dict[str, Any]]:
+        if days < 1:
+            raise ValueError("retention_days_out_of_range")
+        cutoff = datetime.now(UTC) - timedelta(days=days)
+        expired: list[dict[str, Any]] = []
+        if not self.root.exists():
+            return expired
+        for directory in sorted(self.root.iterdir()):
+            if not directory.is_dir() or not re.fullmatch(r"[a-f0-9]{24}", directory.name):
+                continue
+            manifest_path = directory / "manifest.json"
+            if not manifest_path.is_file():
+                continue
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            if manifest.get("activation_status", "staged") != "staged":
+                continue
+            try:
+                created_at = datetime.fromisoformat(str(manifest["created_at"]))
+            except (KeyError, TypeError, ValueError):
+                continue
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=UTC)
+            if created_at > cutoff:
+                continue
+            expired.append({
+                "document_id": directory.name,
+                "revision": int(manifest.get("revision", 0)),
+                "created_at": created_at.isoformat(),
+            })
+        return expired
+
+    def purge_staged_older_than(self, days: int) -> list[dict[str, Any]]:
+        deleted = []
+        for item in self.expired_staged(days):
+            deleted.append(self.delete_staged(
+                item["document_id"],
+                expected_revision=item["revision"],
+                reviewer="retention-policy",
+                reason=f"staged upload exceeded {days}-day retention period",
+            ))
+        return deleted
 
 
 def document_workspace_payload(document: ParsedDocument, manifest: dict) -> dict:

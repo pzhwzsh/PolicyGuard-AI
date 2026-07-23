@@ -19,6 +19,8 @@ and versions follow Semantic Versioning.
   optimistic-concurrency checks and immutable structural-review history.
 - Expose blocked-source corrections in the management UI so reviewers can submit verified dates
   and section-heading mappings before the separate legal approval step.
+- Add authenticated, revision-checked deletion of staged uploads and derived artifacts, plus a
+  dry-run-first retention cleanup command that never removes activated knowledge documents.
 
 - Split the customer review page from the management console. The public workflow no longer exposes
   policy ingestion, source activation, evaluation queues, model status, job controls, or execution

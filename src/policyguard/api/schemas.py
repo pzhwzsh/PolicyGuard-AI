@@ -297,6 +297,22 @@ class DocumentWorkspaceResponse(BaseModel):
     correction_rate: float
 
 
+class DocumentDeletionRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    reviewer: str = Field(min_length=1, max_length=100)
+    reason: str = Field(min_length=1, max_length=500)
+
+
+class DocumentDeletionResponse(BaseModel):
+    document_id: str
+    revision: int
+    reviewer: str
+    reason: str
+    deleted_at: str
+    deleted_file_count: int
+    deleted_bytes: int
+
+
 class BackgroundJobResponse(BaseModel):
     id: str
     job_type: str
