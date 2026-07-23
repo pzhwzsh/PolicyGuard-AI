@@ -261,6 +261,19 @@ async function loadSourceUpdates() {
       <p>${escapeHtml(item.source_id)}${item.diff_available ? ` · <a href="/api/v1/source-updates/${escapeHtml(item.source_id)}/${escapeHtml(item.content_hash)}/diff" target="_blank">查看版本 Diff</a>` : ""} · 结构 ${escapeHtml(item.structural_review_status)} · 法律审核 ${escapeHtml(item.legal_review_status)}</p>
       ${item.preview.map((section) => `<details><summary>${escapeHtml(section.heading)}</summary><p>${escapeHtml(section.text)}</p></details>`).join("")}
       <div class="impact-result" data-impact-result></div>
+      ${item.status === "staged" && item.structural_review_status !== "passed"
+        && !(item.blocking_reasons || []).includes("not_a_legal_document") ? `
+        <details class="source-correction">
+          <summary>Review source structure</summary>
+          <p>Revision ${escapeHtml(item.revision)} · blockers ${escapeHtml((item.blocking_reasons || []).join(", ") || "unknown")}</p>
+          <label>Published date <input data-published-at type="date"></label>
+          <label>Effective date <input data-effective-from type="date"></label>
+          <label>Section heading map (JSON)
+            <textarea data-heading-overrides rows="4" placeholder='{"section-id":"Article 1"}'></textarea>
+          </label>
+          <button class="correct-source secondary" data-source-id="${escapeHtml(item.source_id)}" data-content-hash="${escapeHtml(item.content_hash)}" data-revision="${escapeHtml(item.revision)}" type="button">Save correction and recheck</button>
+        </details>
+      ` : ""}
       <button class="analyze-impact secondary" data-source-id="${escapeHtml(item.source_id)}" data-content-hash="${escapeHtml(item.content_hash)}" type="button">分析历史影响</button>
       ${item.status === "staged" && item.eligible_for_activation && item.structural_review_status === "passed" ? `
         <label class="legal-confirm"><input type="checkbox"> 我已核对官方原文、适用范围和生效信息</label>
@@ -344,6 +357,43 @@ $("#source-update-list").addEventListener("click", async (event) => {
         <span>复审任务 ${escapeHtml(impact.re_review_job_ids.length)}</span>`;
     } catch (error) { alert(error.message); }
     finally { impactButton.disabled = false; }
+    return;
+  }
+  const correctionButton = event.target.closest(".correct-source");
+  if (correctionButton) {
+    const panel = correctionButton.closest(".source-correction");
+    let headingOverrides = {};
+    try {
+      const raw = panel.querySelector("[data-heading-overrides]").value.trim();
+      headingOverrides = raw ? JSON.parse(raw) : {};
+      if (!headingOverrides || Array.isArray(headingOverrides) || typeof headingOverrides !== "object") {
+        throw new Error("heading_overrides_must_be_an_object");
+      }
+    } catch (error) {
+      alert(`Invalid section heading JSON: ${error.message}`);
+      return;
+    }
+    const publishedAt = panel.querySelector("[data-published-at]").value || null;
+    const effectiveFrom = panel.querySelector("[data-effective-from]").value || null;
+    if (!publishedAt && !effectiveFrom && Object.keys(headingOverrides).length === 0) {
+      alert("Enter at least one verified correction");
+      return;
+    }
+    correctionButton.disabled = true;
+    try {
+      await api(`/api/v1/source-updates/${correctionButton.dataset.sourceId}/${correctionButton.dataset.contentHash}/structure`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          reviewer: "local-reviewer",
+          expected_revision: Number(correctionButton.dataset.revision),
+          published_at: publishedAt,
+          effective_from: effectiveFrom,
+          heading_overrides: headingOverrides
+        })
+      });
+      await loadSourceUpdates();
+    } catch (error) { alert(error.message); }
+    finally { correctionButton.disabled = false; }
     return;
   }
   const button = event.target.closest(".approve-source");

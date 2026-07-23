@@ -17,6 +17,8 @@ and versions follow Semantic Versioning.
   workflow decisions and draft approvals when admin authentication is enabled.
 - Add versioned reviewer corrections for blocked source headings and temporal metadata, with
   optimistic-concurrency checks and immutable structural-review history.
+- Expose blocked-source corrections in the management UI so reviewers can submit verified dates
+  and section-heading mappings before the separate legal approval step.
 
 - Split the customer review page from the management console. The public workflow no longer exposes
   policy ingestion, source activation, evaluation queues, model status, job controls, or execution
