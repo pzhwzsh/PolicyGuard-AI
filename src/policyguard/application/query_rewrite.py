@@ -5,10 +5,14 @@ import re
 from dataclasses import asdict, dataclass
 from hashlib import sha256
 from pathlib import Path
-
-import httpx
+from typing import Protocol
 
 from policyguard.application.hybrid import reciprocal_rank_fusion
+from policyguard.application.provider_http import (
+    ProviderRetryPolicy,
+    post_with_retry,
+    should_try_backup,
+)
 from policyguard.domain.models import KnowledgeFilter, SearchHit
 
 DRIFT_CONSTRAINTS = (
@@ -111,9 +115,10 @@ class OpenAICompatibleQueryRewriter:
     model: str
     reasoning_effort: str = "medium"
     timeout_seconds: float = 120
+    retry_policy: ProviderRetryPolicy = ProviderRetryPolicy()
 
     def rewrite_batch(self, items: list[dict]) -> tuple[list[RewrittenQuery], dict]:
-        response = httpx.post(
+        response = post_with_retry(
             self.base_url.rstrip("/") + "/chat/completions",
             headers={"Authorization": f"Bearer {self.api_key}"},
             json={
@@ -141,8 +146,8 @@ class OpenAICompatibleQueryRewriter:
                 ],
             },
             timeout=self.timeout_seconds,
+            policy=self.retry_policy,
         )
-        response.raise_for_status()
         payload = response.json()
         return self.parse(payload["choices"][0]["message"].get("content", ""), items), payload.get(
             "usage", {}
@@ -187,8 +192,35 @@ class OpenAICompatibleQueryRewriter:
         return rewrites
 
 
+class QueryRewriter(Protocol):
+    model: str
+
+    def rewrite_batch(self, items: list[dict]) -> tuple[list[RewrittenQuery], dict]: ...
+
+
+class FallbackQueryRewriter:
+    def __init__(self, *providers: QueryRewriter) -> None:
+        self.providers = providers
+        self.model = "->".join(provider.model for provider in providers)
+
+    def rewrite_batch(self, items: list[dict]) -> tuple[list[RewrittenQuery], dict]:
+        for index, provider in enumerate(self.providers):
+            try:
+                rewrites, usage = provider.rewrite_batch(items)
+                return rewrites, {
+                    **usage,
+                    "selected_model": provider.model,
+                    "fallback_used": index > 0,
+                }
+            except Exception as exc:
+                if not should_try_backup(exc):
+                    raise
+                continue
+        raise RuntimeError("all_query_rewriters_failed")
+
+
 def cached_rewrite_batch(
-    rewriter: OpenAICompatibleQueryRewriter,
+    rewriter: QueryRewriter,
     cache: JsonQueryRewriteCache,
     items: list[dict],
 ) -> tuple[list[RewrittenQuery], dict]:
@@ -236,15 +268,26 @@ def multi_query_search(
     return reciprocal_rank_fusion(result_sets, top_k=top_k, smoothing=60)
 
 
-def configured_query_rewriter(settings) -> OpenAICompatibleQueryRewriter | None:
+def configured_query_rewriter(settings) -> QueryRewriter | None:
     if getattr(settings, "app_env", "") == "test" or not settings.query_rewrite_enabled:
         return None
     if not (settings.llm_base_url and settings.llm_api_key and settings.llm_model):
         return None
-    return OpenAICompatibleQueryRewriter(
-        base_url=settings.llm_base_url,
-        api_key=settings.llm_api_key,
-        model=settings.llm_model,
-        reasoning_effort=settings.llm_reasoning_effort,
-        timeout_seconds=settings.llm_timeout_seconds,
+    policy = ProviderRetryPolicy(
+        settings.provider_max_attempts, settings.provider_backoff_seconds
     )
+    models = [settings.llm_model]
+    if settings.llm_fallback_model and settings.llm_fallback_model not in models:
+        models.append(settings.llm_fallback_model)
+    providers = tuple(
+        OpenAICompatibleQueryRewriter(
+            base_url=settings.llm_base_url,
+            api_key=settings.llm_api_key,
+            model=model,
+            reasoning_effort=settings.llm_reasoning_effort,
+            timeout_seconds=settings.llm_timeout_seconds,
+            retry_policy=policy,
+        )
+        for model in models
+    )
+    return providers[0] if len(providers) == 1 else FallbackQueryRewriter(*providers)

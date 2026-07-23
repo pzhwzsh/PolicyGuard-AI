@@ -1,6 +1,7 @@
 import json
 
 from policyguard.application.query_rewrite import (
+    FallbackQueryRewriter,
     OpenAICompatibleQueryRewriter,
     RewrittenQuery,
     is_cross_language_query,
@@ -67,3 +68,25 @@ def test_rewrite_cache_save_is_atomic(tmp_path) -> None:
     cache.save({"one": {"canonical_query": "truthful advertising"}})
     assert cache.load()["one"]["canonical_query"] == "truthful advertising"
     assert not (tmp_path / "rewrites.json.tmp").exists()
+
+
+def test_query_rewriter_uses_backup_model() -> None:
+    class Rewriter:
+        def __init__(self, model: str, fail: bool) -> None:
+            self.model = model
+            self.fail = fail
+
+        def rewrite_batch(self, items):
+            if self.fail:
+                raise RuntimeError("offline")
+            return [], {"total_tokens": 2}
+
+    chain = FallbackQueryRewriter(Rewriter("primary", True), Rewriter("backup", False))
+
+    rewrites, usage = chain.rewrite_batch([])
+    assert rewrites == []
+    assert usage == {
+        "total_tokens": 2,
+        "selected_model": "backup",
+        "fallback_used": True,
+    }

@@ -31,6 +31,19 @@ def test_job_queue_retries_then_moves_to_failed(tmp_path: Path) -> None:
         assert failed.error == "parser failed"
 
 
+def test_job_queue_does_not_retry_deterministic_failure(tmp_path: Path) -> None:
+    database = Database(f"sqlite:///{(tmp_path / 'deterministic.db').as_posix()}")
+    database.initialize()
+    with database.session_factory() as session:
+        queue = PersistentJobQueue(session)
+        job = queue.enqueue("parse_document", {}, idempotency_key="invalid", max_attempts=5)
+        queue.claim()
+        failed = queue.fail(job.id, "invalid input", retryable=False)
+
+        assert failed.status == "failed"
+        assert failed.attempts == 1
+
+
 def test_job_queue_recovers_stale_running_job(tmp_path: Path) -> None:
     database = Database(f"sqlite:///{(tmp_path / 'stale.db').as_posix()}")
     database.initialize()

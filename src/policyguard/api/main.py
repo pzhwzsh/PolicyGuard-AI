@@ -78,11 +78,14 @@ from policyguard.application.document_workspace import (
     DocumentWorkspace,
     document_workspace_payload,
 )
-from policyguard.application.embeddings import DenseRetriever, configured_embedding_provider
+from policyguard.application.embeddings import (
+    DenseRetriever,
+    configured_embedding_chain,
+)
 from policyguard.application.evaluation_review import EvaluationReviewService
 from policyguard.application.evidence_support import configured_evidence_verifier
 from policyguard.application.execution_policy import choose_remediation_mode
-from policyguard.application.hybrid import HybridRetriever
+from policyguard.application.hybrid import FallbackRetriever, HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
 from policyguard.application.llm import configured_claim_extractor
@@ -1099,7 +1102,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
         scope = KnowledgeFilter(
             jurisdiction=market.upper(), category=category, channel=channel, as_of=as_of
         )
-        provider = configured_embedding_provider(settings)
+        embedding_providers, _ = configured_embedding_chain(settings)
+        provider = embedding_providers[0] if embedding_providers else None
         if mode in {"dense", "hybrid", "hybrid_rerank"}:
             if provider is None:
                 raise HTTPException(status_code=503, detail="embedding_not_configured")
@@ -1158,11 +1162,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
         session: Session = Depends(get_session),
     ) -> KnowledgeStatsResponse:
         repository = SqlAlchemyKnowledgeRepository(session)
+        embedding_providers, _ = configured_embedding_chain(settings)
         return KnowledgeStatsResponse(
             documents=repository.document_count(),
             chunks=len(repository.list_chunks()),
             retriever="lexical_bm25_cjk_v1",
-            embedding_configured=configured_embedding_provider(settings) is not None,
+            embedding_configured=bool(embedding_providers),
         )
 
     @application.get(
@@ -1171,7 +1176,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tags=["knowledge"],
     )
     def retriever_status() -> RetrieverStatusResponse:
-        provider = configured_embedding_provider(settings)
+        embedding_providers, initialization_failures = configured_embedding_chain(settings)
+        provider = embedding_providers[0] if embedding_providers else None
+        fallback_provider = (
+            embedding_providers[1] if len(embedding_providers) > 1 else None
+        )
         reranker = configured_reranker(settings)
         query_rewriter = configured_query_rewriter(settings)
         return RetrieverStatusResponse(
@@ -1179,11 +1188,17 @@ def create_app(database_url: str | None = None) -> FastAPI:
             dense_available=provider is not None,
             dense_provider=provider.provider_name if provider else None,
             dense_model=provider.model_name if provider else None,
+            dense_fallback_model=(
+                fallback_provider.model_name if fallback_provider else None
+            ),
             rerank_available=reranker is not None,
             rerank_provider=reranker.provider_name if reranker else None,
             rerank_model=reranker.model_name if reranker else None,
             query_rewrite_available=query_rewriter is not None,
             query_rewrite_model=query_rewriter.model if query_rewriter else None,
+            llm_fallback_model=settings.llm_fallback_model or None,
+            provider_max_attempts=settings.provider_max_attempts,
+            embedding_initialization_failures=initialization_failures,
         )
 
     @application.post(
@@ -1247,15 +1262,22 @@ def create_app(database_url: str | None = None) -> FastAPI:
     ) -> ComplianceWorkflowResponse:
         knowledge_repository = SqlAlchemyKnowledgeRepository(session)
         workflow_repository = SqlAlchemyWorkflowRepository(session)
-        embedding_provider = configured_embedding_provider(settings)
-        workflow_retriever = (
+        embedding_providers, embedding_failures = configured_embedding_chain(settings)
+        retrieval_candidates = [
             HybridRetriever(
                 knowledge_repository,
-                DenseRetriever(knowledge_repository, embedding_provider),
+                DenseRetriever(knowledge_repository, provider),
             )
-            if embedding_provider
-            else BM25Retriever(knowledge_repository)
-        )
+            for provider in embedding_providers
+        ]
+        retrieval_candidates.append(BM25Retriever(knowledge_repository))
+        if embedding_providers or embedding_failures:
+            workflow_retriever = FallbackRetriever(
+                *retrieval_candidates,
+                initial_failures=embedding_failures,
+            )
+        else:
+            workflow_retriever = retrieval_candidates[0]
         run = ComplianceWorkflowService(
             knowledge_repository,
             workflow_repository,

@@ -4,8 +4,11 @@ from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
-from policyguard.application.embeddings import DenseRetriever, configured_embedding_provider
-from policyguard.application.hybrid import HybridRetriever
+from policyguard.application.embeddings import (
+    DenseRetriever,
+    configured_embedding_chain,
+)
+from policyguard.application.hybrid import FallbackRetriever, HybridRetriever
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
 from policyguard.application.remediation import RemediationService
 from policyguard.application.rerank import RerankedHybridRetriever, configured_reranker
@@ -17,7 +20,6 @@ from policyguard.infrastructure.repositories import (
     SqlAlchemyKnowledgeRepository,
     SqlAlchemyWorkflowRepository,
 )
-
 
 mcp = FastMCP("PolicyGuard AI")
 
@@ -63,21 +65,45 @@ def search_policy(
     with _session() as (settings, session):
         repository = SqlAlchemyKnowledgeRepository(session)
         scope = KnowledgeFilter(market.upper(), category, channel)
-        provider = configured_embedding_provider(settings)
-        if provider is None:
+        providers, initialization_failures = configured_embedding_chain(settings)
+        if not providers and not initialization_failures:
             hits = BM25Retriever(repository).search(query, top_k=top_k, scope=scope)
             retriever = "lexical_bm25_cjk_v1"
         else:
-            dense = DenseRetriever(repository, provider)
             reranker = configured_reranker(settings)
-            if reranker is not None:
-                hits = RerankedHybridRetriever(
-                    repository, HybridRetriever(repository, dense), reranker
-                ).search(query, top_k=top_k, scope=scope)
+            if reranker is not None and providers:
+                primary = RerankedHybridRetriever(
+                    repository,
+                    HybridRetriever(repository, DenseRetriever(repository, providers[0])),
+                    reranker,
+                )
                 retriever = "hybrid_rrf_rerank"
-            else:
-                hits = HybridRetriever(repository, dense).search(query, top_k=top_k, scope=scope)
+                remaining = providers[1:]
+            elif providers:
+                primary = HybridRetriever(
+                    repository, DenseRetriever(repository, providers[0])
+                )
                 retriever = "hybrid_rrf"
+                remaining = providers[1:]
+            else:
+                primary = BM25Retriever(repository)
+                retriever = "lexical_bm25_cjk_v1"
+                remaining = []
+            candidates = [
+                primary,
+                *(
+                    HybridRetriever(repository, DenseRetriever(repository, provider))
+                    for provider in remaining
+                ),
+            ]
+            candidates.append(BM25Retriever(repository))
+            fallback = FallbackRetriever(
+                *candidates,
+                initial_failures=initialization_failures,
+            )
+            hits = fallback.search(query, top_k=top_k, scope=scope)
+            if fallback.last_failures:
+                retriever += "_fallback"
         return {
             "query": query,
             "market": scope.jurisdiction,

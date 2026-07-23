@@ -80,6 +80,37 @@ Activated knowledge documents are never eligible for this cleanup. Each deletion
 metadata-only event under `UPLOAD_DIR/.deletion-audit/`; source text and parsed content are not
 retained in that event.
 
+Local SQLite backups include the database, uploads, source-update state, and a SHA-256 manifest.
+Creation verifies the completed backup before returning. `--keep` only rotates directories with the
+backup timestamp naming convention.
+
+```powershell
+python -m policyguard.scripts.backup_local --keep 7
+python -m policyguard.scripts.restore_local data/backups/<timestamp>
+# Review the dry-run target list, then apply. Existing targets move to data/restore-safety first.
+python -m policyguard.scripts.restore_local data/backups/<timestamp> --apply
+```
+
+Use database-native backup and restore tooling for PostgreSQL; the local scripts intentionally
+refuse non-SQLite URLs.
+
+## Provider retries and runtime fallback
+
+Model HTTP calls retry only transient transport failures and HTTP 408/425/429/500/502/503/504.
+`PROVIDER_MAX_ATTEMPTS` is capped at 5; delays use bounded exponential backoff with jitter and honor
+numeric `Retry-After`. Authentication failures are neither retried nor sent to a backup model.
+
+When configured, the runtime order is:
+
+1. claim extraction, query rewrite, and evidence verification: `LLM_MODEL`, then
+   `LLM_FALLBACK_MODEL`, then the existing deterministic/original-query/human-review fallback;
+2. retrieval: primary embedding Hybrid, `EMBEDDING_FALLBACK_MODEL` Hybrid, then BM25;
+3. reranking: `RERANK_MODEL`, then `RERANK_FALLBACK_MODEL`, then unreranked Hybrid candidates.
+
+Fallbacks are recorded in workflow events or retriever status instead of silently changing the
+result path. Configure local BGE small as the latency-first embedding backup; it is not used unless
+the primary retrieval strategy raises an error.
+
 ## PDF chunking
 
 PDF ingestion preserves parser-produced blocks before applying token windows. `rag_chunks` does not

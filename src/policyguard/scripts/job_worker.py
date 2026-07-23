@@ -12,10 +12,11 @@ from policyguard.application.document_ingestion import (
     stage_parsed_document,
 )
 from policyguard.application.embeddings import (
-    configured_embedding_provider,
+    configured_embedding_chain,
     index_missing_embeddings,
 )
 from policyguard.application.jobs import PersistentJobQueue
+from policyguard.application.provider_http import is_transient_provider_error
 from policyguard.application.source_monitor import OfficialSourceMonitor
 from policyguard.application.source_registry import load_source_registry
 from policyguard.application.source_updates import stage_source_snapshot
@@ -111,14 +112,16 @@ def handle_source_monitor(settings) -> dict:
 
 
 def handle_reindex_embeddings(settings, session) -> dict:
-    provider = configured_embedding_provider(settings)
-    if provider is None:
+    providers, failures = configured_embedding_chain(settings)
+    if not providers:
         raise RuntimeError("embedding_not_configured")
+    provider = providers[0]
     count = index_missing_embeddings(SqlAlchemyKnowledgeRepository(session), provider)
     return {
         "indexed_chunks": count,
         "provider": provider.provider_name,
         "model": provider.model_name,
+        "initialization_failures": failures,
     }
 
 
@@ -126,7 +129,14 @@ def handle_batch_review(settings, session, payload: dict) -> dict:
     upload_root = Path(settings.upload_dir).resolve()
     input_path = Path(payload["path"]).resolve()
     batch_root = (upload_root / "batches").resolve()
-    if batch_root not in input_path.parents or not input_path.is_file():
+    table_root = (upload_root / "tables").resolve()
+    regular_batch = batch_root in input_path.parents
+    cleaned_table = (
+        payload.get("cleaning_revision") is not None
+        and input_path.parent == (table_root / str(payload["batch_id"])).resolve()
+        and input_path.name == "cleaned-input.csv"
+    )
+    if not (regular_batch or cleaned_table) or not input_path.is_file():
         raise ValueError("batch_path_invalid")
     output_dir = batch_root / payload["batch_id"]
     return process_batch_review(session, input_path, output_dir)
@@ -161,7 +171,14 @@ def main() -> None:
                     result = handle_reindex_embeddings(settings, session)
                 queue.complete(job.id, result)
             except Exception as exc:
-                queue.fail(job.id, f"{type(exc).__name__}: {exc}")
+                retryable = not isinstance(exc, ValueError)
+                if isinstance(exc, httpx.HTTPStatusError):
+                    retryable = is_transient_provider_error(exc)
+                queue.fail(
+                    job.id,
+                    f"{type(exc).__name__}: {exc}",
+                    retryable=retryable,
+                )
         handled += 1
 
 

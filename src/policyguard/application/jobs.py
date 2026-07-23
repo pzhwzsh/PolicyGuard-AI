@@ -126,14 +126,14 @@ class PersistentJobQueue:
         self.session.commit()
         return _domain(record)
 
-    def fail(self, job_id: str, error: str) -> BackgroundJob:
+    def fail(self, job_id: str, error: str, *, retryable: bool = True) -> BackgroundJob:
         record = self._required(job_id)
         if record.status != "running":
             raise RuntimeError("job_not_running")
         now = datetime.now(UTC)
         record.error = error[:2000]
         record.updated_at = now
-        if record.attempts >= record.max_attempts:
+        if not retryable or record.attempts >= record.max_attempts:
             record.status = "failed"
         else:
             record.status = "retry"

@@ -18,17 +18,22 @@ class Settings:
     embedding_base_url: str
     embedding_api_key: str
     embedding_model: str
+    embedding_fallback_model: str
     embedding_provider: str
     embedding_timeout_seconds: float
     rerank_base_url: str
     rerank_api_key: str
     rerank_model: str
+    rerank_fallback_model: str
     rerank_timeout_seconds: float
     llm_base_url: str
     llm_api_key: str
     llm_model: str
     llm_reasoning_effort: str
     llm_timeout_seconds: float
+    llm_fallback_model: str
+    provider_max_attempts: int
+    provider_backoff_seconds: float
     query_rewrite_enabled: bool
     query_rewrite_cache: str
     upload_dir: str
@@ -58,17 +63,22 @@ def get_settings() -> Settings:
         embedding_base_url=getenv("EMBEDDING_BASE_URL", ""),
         embedding_api_key=getenv("EMBEDDING_API_KEY", ""),
         embedding_model=getenv("EMBEDDING_MODEL", ""),
+        embedding_fallback_model=getenv("EMBEDDING_FALLBACK_MODEL", ""),
         embedding_provider=getenv("EMBEDDING_PROVIDER", "openai_compatible"),
         embedding_timeout_seconds=float(getenv("EMBEDDING_TIMEOUT_SECONDS", "30")),
         rerank_base_url=getenv("RERANK_BASE_URL", ""),
         rerank_api_key=getenv("RERANK_API_KEY", ""),
         rerank_model=getenv("RERANK_MODEL", ""),
+        rerank_fallback_model=getenv("RERANK_FALLBACK_MODEL", ""),
         rerank_timeout_seconds=float(getenv("RERANK_TIMEOUT_SECONDS", "30")),
         llm_base_url=getenv("LLM_BASE_URL", ""),
         llm_api_key=getenv("LLM_API_KEY", ""),
         llm_model=getenv("LLM_MODEL", ""),
         llm_reasoning_effort=getenv("LLM_REASONING_EFFORT", "medium"),
         llm_timeout_seconds=float(getenv("LLM_TIMEOUT_SECONDS", "45")),
+        llm_fallback_model=getenv("LLM_FALLBACK_MODEL", ""),
+        provider_max_attempts=int(getenv("PROVIDER_MAX_ATTEMPTS", "3")),
+        provider_backoff_seconds=float(getenv("PROVIDER_BACKOFF_SECONDS", "0.5")),
         query_rewrite_enabled=getenv("QUERY_REWRITE_ENABLED", "true").casefold() == "true",
         query_rewrite_cache=getenv(
             "QUERY_REWRITE_CACHE", "./data/query-cache/rewrites.json"

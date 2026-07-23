@@ -78,7 +78,8 @@ class ComplianceWorkflowService:
                     "completed",
                     {
                         "provider": extractor.provider_name,
-                        "model": extractor.model_name,
+                        "model": getattr(extractor, "last_model", None)
+                        or extractor.model_name,
                         "claim_count": len(extracted_claims),
                     },
                 )
@@ -109,6 +110,18 @@ class ComplianceWorkflowService:
                     as_of=as_of,
                 )
                 hits = self.retriever.search(claims, top_k=5, scope=scope)
+                retrieval_failures = getattr(self.retriever, "last_failures", [])
+                if retrieval_failures:
+                    self._event(
+                        run,
+                        "retrieval_fallback",
+                        "degraded",
+                        {
+                            "market": scope.jurisdiction,
+                            "failures": retrieval_failures,
+                            "selected": "next_available_retriever",
+                        },
+                    )
                 scopes[scope.jurisdiction] = scope
                 market_hits[scope.jurisdiction] = hits
             rewrite_items = []
@@ -162,7 +175,10 @@ class ComplianceWorkflowService:
                         "completed",
                         {
                             "rewritten_market_count": len(rewrites),
-                            "model": self.query_rewriter.model,
+                            "model": rewrite_usage.get(
+                                "selected_model", self.query_rewriter.model
+                            ),
+                            "fallback_used": rewrite_usage.get("fallback_used", False),
                             "total_tokens": rewrite_usage.get("total_tokens", 0),
                             "cache_hits": rewrite_usage.get("cache_hits", 0),
                             "cache_misses": rewrite_usage.get("cache_misses", 0),
@@ -249,6 +265,8 @@ class ComplianceWorkflowService:
                                 for item in market_results
                             ),
                             "total_tokens": evidence_usage.get("total_tokens"),
+                            "model": evidence_usage.get("selected_model"),
+                            "fallback_used": evidence_usage.get("fallback_used", False),
                         },
                     )
                 except Exception as exc:

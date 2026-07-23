@@ -44,3 +44,34 @@ class HybridRetriever:
             top_k=top_k,
         )
 
+
+class FallbackRetriever:
+    """Try retrieval strategies in order and retain runtime degradation evidence."""
+
+    def __init__(
+        self,
+        *retrievers,
+        initial_failures: list[dict[str, str]] | None = None,
+    ) -> None:
+        if not retrievers:
+            raise ValueError("fallback_retriever_requires_candidate")
+        self.retrievers = retrievers
+        self.initial_failures = list(initial_failures or [])
+        self.last_failures: list[dict[str, str]] = []
+
+    def search(
+        self,
+        query: str,
+        top_k: int = 5,
+        scope: KnowledgeFilter | None = None,
+    ) -> list[SearchHit]:
+        self.last_failures = list(self.initial_failures)
+        for retriever in self.retrievers:
+            try:
+                return retriever.search(query, top_k=top_k, scope=scope)
+            except Exception as exc:
+                self.last_failures.append({
+                    "retriever": type(retriever).__name__,
+                    "error": type(exc).__name__,
+                })
+        raise RuntimeError("all_retrievers_failed")

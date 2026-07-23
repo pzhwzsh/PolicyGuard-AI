@@ -3,7 +3,11 @@ import re
 from dataclasses import dataclass
 from typing import Protocol
 
-import httpx
+from policyguard.application.provider_http import (
+    ProviderRetryPolicy,
+    post_with_retry,
+    should_try_backup,
+)
 
 
 class ClaimExtractor(Protocol):
@@ -35,6 +39,7 @@ class OpenAICompatibleClaimExtractor:
     model: str
     reasoning_effort: str = "medium"
     timeout_seconds: float = 45
+    retry_policy: ProviderRetryPolicy = ProviderRetryPolicy()
 
     @property
     def provider_name(self) -> str:
@@ -45,7 +50,7 @@ class OpenAICompatibleClaimExtractor:
         return self.model
 
     def extract(self, *, title: str, description: str) -> list[dict[str, object]]:
-        response = httpx.post(
+        response = post_with_retry(
             self.base_url.rstrip("/") + "/chat/completions",
             headers={"Authorization": f"Bearer {self.api_key}"},
             json={
@@ -67,8 +72,8 @@ class OpenAICompatibleClaimExtractor:
                 ],
             },
             timeout=self.timeout_seconds,
+            policy=self.retry_policy,
         )
-        response.raise_for_status()
         payload = response.json()
         content = payload["choices"][0]["message"]["content"]
         return self._parse_claims(content)
@@ -100,15 +105,47 @@ class OpenAICompatibleClaimExtractor:
         return [item for item in normalized if item["text"]]
 
 
-def configured_claim_extractor(settings) -> OpenAICompatibleClaimExtractor | None:
+class FallbackClaimExtractor:
+    provider_name = "fallback_chain"
+
+    def __init__(self, *providers: ClaimExtractor) -> None:
+        self.providers = providers
+        self.model_name = "->".join(provider.model_name for provider in providers)
+        self.last_model: str | None = None
+
+    def extract(self, *, title: str, description: str) -> list[dict[str, object]]:
+        for provider in self.providers:
+            try:
+                claims = provider.extract(title=title, description=description)
+                self.last_model = provider.model_name
+                return claims
+            except Exception as exc:
+                if not should_try_backup(exc):
+                    raise
+                continue
+        raise RuntimeError("all_claim_extractors_failed")
+
+
+def configured_claim_extractor(settings) -> ClaimExtractor | None:
     if getattr(settings, "app_env", "") == "test":
         return None
     if not (settings.llm_base_url and settings.llm_api_key and settings.llm_model):
         return None
-    return OpenAICompatibleClaimExtractor(
-        base_url=settings.llm_base_url,
-        api_key=settings.llm_api_key,
-        model=settings.llm_model,
-        reasoning_effort=settings.llm_reasoning_effort,
-        timeout_seconds=settings.llm_timeout_seconds,
+    policy = ProviderRetryPolicy(
+        settings.provider_max_attempts, settings.provider_backoff_seconds
     )
+    models = [settings.llm_model]
+    if settings.llm_fallback_model and settings.llm_fallback_model not in models:
+        models.append(settings.llm_fallback_model)
+    providers = tuple(
+        OpenAICompatibleClaimExtractor(
+            base_url=settings.llm_base_url,
+            api_key=settings.llm_api_key,
+            model=model,
+            reasoning_effort=settings.llm_reasoning_effort,
+            timeout_seconds=settings.llm_timeout_seconds,
+            retry_policy=policy,
+        )
+        for model in models
+    )
+    return providers[0] if len(providers) == 1 else FallbackClaimExtractor(*providers)

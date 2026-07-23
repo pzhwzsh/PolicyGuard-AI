@@ -37,6 +37,11 @@ Last updated: 2026-07-23
   100-token overlap) while retaining page, block type, section path, and source offsets.
 - A fresh 30-query difficult-set run keeps local Jina as the default: Hit@5 1.000/MRR 0.911 at
   41.51 ms mean latency, versus BGE small 0.867/0.673 at 12.41 ms and MiniLM 0.933/0.797 at 45.18 ms.
+- Transient model-provider failures now receive bounded retry with backoff. Runtime routes through
+  configured backup LLM/embedding/rerank models, then deterministic, BM25, Hybrid, or human-review
+  fallbacks as appropriate; authentication failures fail immediately.
+- Local backup creation verifies its manifest, and restore is dry-run-first with a pre-restore
+  safety copy. Optional retention only removes timestamp-named backup directories.
 
 ## Open work
 

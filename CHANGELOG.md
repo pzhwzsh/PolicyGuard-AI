@@ -7,6 +7,12 @@ and versions follow Semantic Versioning.
 
 ### Changed
 
+- Add bounded transient provider retries, primary-to-backup model routing, runtime retrieval
+  degradation to BM25, and reranker degradation to the original hybrid candidate ranking.
+- Accept confirmed spreadsheet-cleaning inputs in the batch worker instead of repeatedly rejecting
+  the `uploads/tables` path, while retaining workspace path-containment checks.
+- Verify every local backup after creation and add dry-run-first restore with pre-restore safety
+  copies and optional timestamp-directory retention.
 - Route CSV/XLSX uploads through a staged cleaning preview and explicit human confirmation before
   batch review; deterministic normalization makes zero model calls and preserves source provenance.
 - Keep Jina embeddings as the default after a fresh difficult-set comparison against BGE small and

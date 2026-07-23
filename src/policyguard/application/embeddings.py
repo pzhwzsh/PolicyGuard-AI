@@ -2,10 +2,10 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Protocol
 
-import httpx
 import numpy as np
 
 from policyguard.application.ports import KnowledgeRepository
+from policyguard.application.provider_http import ProviderRetryPolicy, post_with_retry
 from policyguard.domain.models import KnowledgeFilter, SearchHit
 
 
@@ -25,6 +25,7 @@ class OpenAICompatibleEmbeddingProvider:
     api_key: str
     model: str
     timeout_seconds: float = 30
+    retry_policy: ProviderRetryPolicy = ProviderRetryPolicy()
 
     @property
     def provider_name(self) -> str:
@@ -38,13 +39,13 @@ class OpenAICompatibleEmbeddingProvider:
         if not texts:
             return []
         url = self.base_url.rstrip("/") + "/embeddings"
-        response = httpx.post(
+        response = post_with_retry(
             url,
             headers={"Authorization": f"Bearer {self.api_key}"},
             json={"model": self.model, "input": texts},
             timeout=self.timeout_seconds,
+            policy=self.retry_policy,
         )
-        response.raise_for_status()
         payload = response.json()
         data = sorted(payload["data"], key=lambda item: item["index"])
         return [item["embedding"] for item in data]
@@ -137,4 +138,55 @@ def configured_embedding_provider(settings) -> EmbeddingProvider | None:
         api_key=settings.embedding_api_key,
         model=settings.embedding_model,
         timeout_seconds=settings.embedding_timeout_seconds,
+        retry_policy=ProviderRetryPolicy(
+            settings.provider_max_attempts, settings.provider_backoff_seconds
+        ),
     )
+
+
+@lru_cache(maxsize=4)
+def configured_embedding_fallback_provider(settings) -> EmbeddingProvider | None:
+    model = settings.embedding_fallback_model.strip()
+    if (
+        not model
+        or model == settings.embedding_model
+        or getattr(settings, "app_env", "") == "test"
+    ):
+        return None
+    if settings.embedding_provider == "fastembed":
+        from policyguard.application.onnx_embeddings import FastEmbedProvider
+
+        return FastEmbedProvider(model)
+    if settings.embedding_provider != "openai_compatible":
+        return None
+    if not (settings.embedding_base_url and settings.embedding_api_key):
+        return None
+    return OpenAICompatibleEmbeddingProvider(
+        base_url=settings.embedding_base_url,
+        api_key=settings.embedding_api_key,
+        model=model,
+        timeout_seconds=settings.embedding_timeout_seconds,
+        retry_policy=ProviderRetryPolicy(
+            settings.provider_max_attempts, settings.provider_backoff_seconds
+        ),
+    )
+
+
+def configured_embedding_chain(settings) -> tuple[list[EmbeddingProvider], list[dict[str, str]]]:
+    providers = []
+    failures = []
+    factories = (
+        ("primary", configured_embedding_provider),
+        ("fallback", configured_embedding_fallback_provider),
+    )
+    for role, factory in factories:
+        try:
+            provider = factory(settings)
+            if provider is not None:
+                providers.append(provider)
+        except Exception as exc:
+            failures.append({
+                "retriever": f"{role}_embedding",
+                "error": type(exc).__name__,
+            })
+    return providers, failures

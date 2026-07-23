@@ -99,11 +99,15 @@ class RetrieverStatusResponse(BaseModel):
     dense_available: bool
     dense_provider: str | None
     dense_model: str | None
+    dense_fallback_model: str | None
     rerank_available: bool
     rerank_provider: str | None
     rerank_model: str | None
     query_rewrite_available: bool
     query_rewrite_model: str | None
+    llm_fallback_model: str | None
+    provider_max_attempts: int
+    embedding_initialization_failures: list[dict[str, str]]
 
 
 class MarketCompareRequest(BaseModel):

@@ -4,7 +4,11 @@ import json
 import re
 from dataclasses import dataclass
 
-import httpx
+from policyguard.application.provider_http import (
+    ProviderRetryPolicy,
+    post_with_retry,
+    should_try_backup,
+)
 
 
 class EvidenceVerifier:
@@ -27,9 +31,10 @@ class OpenAICompatibleEvidenceVerifier:
     model: str
     reasoning_effort: str = "medium"
     timeout_seconds: float = 120
+    retry_policy: ProviderRetryPolicy = ProviderRetryPolicy()
 
     def verify_batch(self, cases: list[dict]) -> tuple[list[EvidenceDecision], dict]:
-        response = httpx.post(
+        response = post_with_retry(
             self.base_url.rstrip("/") + "/chat/completions",
             headers={"Authorization": f"Bearer {self.api_key}"},
             json={
@@ -53,8 +58,8 @@ class OpenAICompatibleEvidenceVerifier:
                 ],
             },
             timeout=self.timeout_seconds,
+            policy=self.retry_policy,
         )
-        response.raise_for_status()
         payload = response.json()
         decisions = self.parse(payload["choices"][0]["message"].get("content", ""), cases)
         return decisions, payload.get("usage", {})
@@ -92,15 +97,46 @@ class OpenAICompatibleEvidenceVerifier:
         return decisions
 
 
-def configured_evidence_verifier(settings) -> OpenAICompatibleEvidenceVerifier | None:
+class FallbackEvidenceVerifier:
+    def __init__(self, *providers: EvidenceVerifier) -> None:
+        self.providers = providers
+
+    def verify_batch(self, cases: list[dict]) -> tuple[list[EvidenceDecision], dict]:
+        for index, provider in enumerate(self.providers):
+            try:
+                decisions, usage = provider.verify_batch(cases)
+                return decisions, {
+                    **usage,
+                    "selected_model": getattr(provider, "model", "unknown"),
+                    "fallback_used": index > 0,
+                }
+            except Exception as exc:
+                if not should_try_backup(exc):
+                    raise
+                continue
+        raise RuntimeError("all_evidence_verifiers_failed")
+
+
+def configured_evidence_verifier(settings) -> EvidenceVerifier | None:
     if getattr(settings, "app_env", "") == "test":
         return None
     if not (settings.llm_base_url and settings.llm_api_key and settings.llm_model):
         return None
-    return OpenAICompatibleEvidenceVerifier(
-        base_url=settings.llm_base_url,
-        api_key=settings.llm_api_key,
-        model=settings.llm_model,
-        reasoning_effort=settings.llm_reasoning_effort,
-        timeout_seconds=settings.llm_timeout_seconds,
+    policy = ProviderRetryPolicy(
+        settings.provider_max_attempts, settings.provider_backoff_seconds
     )
+    models = [settings.llm_model]
+    if settings.llm_fallback_model and settings.llm_fallback_model not in models:
+        models.append(settings.llm_fallback_model)
+    providers = tuple(
+        OpenAICompatibleEvidenceVerifier(
+            base_url=settings.llm_base_url,
+            api_key=settings.llm_api_key,
+            model=model,
+            reasoning_effort=settings.llm_reasoning_effort,
+            timeout_seconds=settings.llm_timeout_seconds,
+            retry_policy=policy,
+        )
+        for model in models
+    )
+    return providers[0] if len(providers) == 1 else FallbackEvidenceVerifier(*providers)
