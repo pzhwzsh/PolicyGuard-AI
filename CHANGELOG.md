@@ -7,6 +7,10 @@ and versions follow Semantic Versioning.
 
 ### Changed
 
+- Route CSV/XLSX uploads through a staged cleaning preview and explicit human confirmation before
+  batch review; deterministic normalization makes zero model calls and preserves source provenance.
+- Keep Jina embeddings as the default after a fresh difficult-set comparison against BGE small and
+  multilingual MiniLM; BGE is faster but loses material retrieval accuracy on the governed set.
 - Block legacy staged sources until they pass quality-schema-v2 heading and temporal checks; source
   snapshots remain publishable as provenance evidence but are not activation candidates.
 - Treat template-expanded RAG data as a synthetic stress suite rather than legal holdout evidence,
@@ -40,6 +44,8 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Multi-Sheet spreadsheet header detection, editable canonical field mappings, row-level validation,
+  formula-safe exports, partial-valid-row submission, and downloadable cleaning reports.
 - Independent holdout auditing with minimum-size, freeze-state, duplicate, review-completion, and
   development-leakage gates plus deterministic retrieval failure classification.
 - Real-PDF provenance and layout coverage audits, an official PDF candidate registry, and a strict

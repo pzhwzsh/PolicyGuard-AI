@@ -57,6 +57,9 @@ from policyguard.api.schemas import (
     SourceUpdateApprovalRequest,
     SourceUpdateCorrectionRequest,
     SourceUpdateResponse,
+    TableCleaningConfirmationRequest,
+    TableCleaningConfirmationResponse,
+    TableCleaningPreviewResponse,
     WorkflowReviewRequest,
 )
 from policyguard.application.agent import AgentBudget, ControlledAgent, configured_agent_planner
@@ -96,6 +99,7 @@ from policyguard.application.source_updates import (
     list_staged_source_updates,
     revise_staged_source_update,
 )
+from policyguard.application.table_cleaning import TableCleaningWorkspace
 from policyguard.application.tools import SuggestConservativeRewriteTool, ToolRegistry
 from policyguard.application.workflow import ComplianceWorkflowService
 from policyguard.config import get_settings
@@ -435,6 +439,123 @@ def create_app(database_url: str | None = None) -> FastAPI:
             result=job.result, attempts=job.attempts,
             max_attempts=job.max_attempts, error=job.error,
         )
+
+    @application.post(
+        "/api/v1/batches/clean-preview",
+        response_model=TableCleaningPreviewResponse,
+        status_code=status.HTTP_201_CREATED,
+        tags=["batch-review"],
+    )
+    async def preview_batch_cleaning(
+        file: UploadFile = File(...),
+    ) -> TableCleaningPreviewResponse:
+        suffix = Path(file.filename or "").suffix.lower()
+        if suffix not in {".csv", ".xlsx"}:
+            raise HTTPException(status_code=415, detail="batch_file_type_not_supported")
+        content = await file.read(5 * 1024 * 1024 + 1)
+        if len(content) > 5 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="batch_file_too_large")
+        try:
+            staged = TableCleaningWorkspace(
+                Path(settings.upload_dir) / "tables"
+            ).stage(content, file.filename or f"upload{suffix}")
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        analysis = staged["analysis"]
+        manifest = staged["manifest"]
+        return TableCleaningPreviewResponse(
+            table_id=staged["table_id"],
+            revision=manifest["revision"],
+            status=manifest["status"],
+            summary=analysis["summary"],
+            sheets=analysis["sheets"],
+            skipped_sheets=analysis["skipped_sheets"],
+            rows=analysis["rows"][:50],
+            issues=analysis["issues"][:100],
+        )
+
+    @application.post(
+        "/api/v1/batches/cleaning/{table_id}/confirm",
+        response_model=TableCleaningConfirmationResponse,
+        status_code=status.HTTP_202_ACCEPTED,
+        tags=["batch-review"],
+    )
+    def confirm_batch_cleaning(
+        table_id: str,
+        payload: TableCleaningConfirmationRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+    ) -> TableCleaningConfirmationResponse:
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        try:
+            confirmed = TableCleaningWorkspace(
+                Path(settings.upload_dir) / "tables"
+            ).confirm(
+                table_id,
+                expected_revision=payload.expected_revision,
+                reviewer=payload.reviewer,
+                field_mappings=payload.field_mappings,
+                allow_partial=payload.allow_partial,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        manifest = confirmed["manifest"]
+        job = PersistentJobQueue(session).enqueue(
+            "batch_compliance_review",
+            {
+                "batch_id": table_id,
+                "path": manifest["cleaned_path"],
+                "filename": manifest["filename"],
+                "cleaning_revision": manifest["revision"],
+            },
+            idempotency_key=f"batch-cleaning:{table_id}:{manifest['revision']}",
+            max_attempts=5,
+        )
+        job_response = BackgroundJobResponse(
+            id=job.id,
+            job_type=job.job_type,
+            status=job.status,
+            result=job.result,
+            attempts=job.attempts,
+            max_attempts=job.max_attempts,
+            error=job.error,
+        )
+        return TableCleaningConfirmationResponse(
+            table_id=table_id,
+            revision=manifest["revision"],
+            status=manifest["status"],
+            summary=confirmed["analysis"]["summary"],
+            report_url=f"/api/v1/batches/cleaning/{table_id}/report",
+            job=job_response,
+        )
+
+    @application.get(
+        "/api/v1/batches/cleaning/{table_id}/report",
+        tags=["batch-review"],
+    )
+    def download_table_cleaning_report(table_id: str) -> FileResponse:
+        try:
+            manifest, _ = TableCleaningWorkspace(
+                Path(settings.upload_dir) / "tables"
+            ).load(table_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        path = Path(manifest.get("report_path", ""))
+        table_directory = (
+            Path(settings.upload_dir) / "tables" / table_id
+        ).resolve()
+        if (
+            path.resolve().parent != table_directory
+            or path.name != "cleaning-report.csv"
+            or not path.is_file()
+        ):
+            raise HTTPException(status_code=409, detail="table_cleaning_not_confirmed")
+        return FileResponse(path, media_type="text/csv", filename="cleaning-report.csv")
 
     @application.get("/api/v1/batches/{job_id}/result", tags=["batch-review"])
     def download_batch_result(

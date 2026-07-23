@@ -323,6 +323,33 @@ class BackgroundJobResponse(BaseModel):
     error: str | None
 
 
+class TableCleaningPreviewResponse(BaseModel):
+    table_id: str
+    revision: int
+    status: str
+    summary: dict[str, int]
+    sheets: list[dict[str, Any]]
+    skipped_sheets: list[dict[str, Any]] = Field(default_factory=list)
+    rows: list[dict[str, Any]]
+    issues: list[dict[str, Any]]
+
+
+class TableCleaningConfirmationRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    reviewer: str = Field(min_length=1, max_length=100)
+    field_mappings: dict[str, dict[str, str]] = Field(default_factory=dict)
+    allow_partial: bool = False
+
+
+class TableCleaningConfirmationResponse(BaseModel):
+    table_id: str
+    revision: int
+    status: str
+    summary: dict[str, int]
+    report_url: str
+    job: BackgroundJobResponse
+
+
 class OperationsDashboardResponse(BaseModel):
     knowledge: dict[str, Any]
     sources: dict[str, Any]

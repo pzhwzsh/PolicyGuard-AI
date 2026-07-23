@@ -10,6 +10,9 @@ Last updated: 2026-07-23
   reviewed Agent memories; re-review jobs are idempotent and do not auto-activate legal content.
 - CSV/XLSX product files can be reviewed through resumable background jobs with bounded retries,
   row-level workflow IDs, and formula-safe CSV exports.
+- CSV/XLSX uploads now pass through a Multi-Sheet cleaning preview with editable field mappings,
+  source-row provenance, row-level exceptions, and revision-checked human confirmation. Cleaning
+  makes zero model calls; reviewers may submit only valid rows and download the full exception report.
 - SQLite is the default local database. PostgreSQL migration coverage runs in CI.
 - RapidOCR is the supported local OCR sidecar. Other parser sidecars are optional.
 - Downloaded policy versions remain staged until explicitly reviewed and activated.
@@ -32,6 +35,8 @@ Last updated: 2026-07-23
   section headings and verified publication/effective dates; corrections never auto-activate content.
 - Parsed PDF blocks now use deterministic structure-aware token windows (800-token budget,
   100-token overlap) while retaining page, block type, section path, and source offsets.
+- A fresh 30-query difficult-set run keeps local Jina as the default: Hit@5 1.000/MRR 0.911 at
+  41.51 ms mean latency, versus BGE small 0.867/0.673 at 12.41 ms and MiniLM 0.933/0.797 at 45.18 ms.
 
 ## Open work
 

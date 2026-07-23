@@ -1,5 +1,24 @@
 const $ = (selector) => document.querySelector(selector);
 let currentRunId = null;
+let currentTablePreview = null;
+let currentCleaningReportUrl = null;
+
+const canonicalFieldLabels = {
+  ignore: "忽略此列",
+  external_id: "商品标识 / SKU",
+  category: "商品类目",
+  title: "商品标题",
+  description: "商品描述",
+  markets: "目标市场"
+};
+
+const cleaningErrorLabels = {
+  table_cleaning_mapping_invalid: "字段映射存在冲突，请确保每个目标字段只对应一列",
+  table_cleaning_has_blocking_errors: "仍有异常行；修正数据或勾选“仅提交有效行”",
+  table_cleaning_has_no_valid_rows: "没有可提交的有效数据行",
+  table_cleaning_revision_conflict: "预览已更新，请重新上传后确认",
+  table_cleaning_already_confirmed: "这份清洗结果已经确认，请勿重复提交"
+};
 
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
@@ -138,7 +157,7 @@ fetch("/health")
 async function pollBatch(jobId, attempts = 0) {
   const job = await api(`/api/v1/jobs/${jobId}`);
   $("#batch-status").hidden = false;
-  $("#batch-status").innerHTML = `<strong>批量任务</strong><span>${escapeHtml(job.status)} · 已尝试 ${escapeHtml(job.attempts)}/${escapeHtml(job.max_attempts)}</span>`;
+  $("#batch-status").innerHTML = `<strong>批量任务</strong><span>${escapeHtml(job.status)} · 已尝试 ${escapeHtml(job.attempts)}/${escapeHtml(job.max_attempts)}</span>${currentCleaningReportUrl ? `<a class="button-link secondary" href="${escapeHtml(currentCleaningReportUrl)}">下载清洗报告</a>` : ""}`;
   if (job.status === "completed") {
     $("#batch-status").innerHTML += `<a class="button-link" href="/api/v1/batches/${jobId}/result">下载检查结果</a>`;
     return;
@@ -147,6 +166,84 @@ async function pollBatch(jobId, attempts = 0) {
   window.setTimeout(() => pollBatch(jobId, attempts + 1).catch(() => {}), 1000);
 }
 
+function mappingOptions(selected) {
+  return Object.entries(canonicalFieldLabels).map(([value, label]) =>
+    `<option value="${value}"${value === (selected || "ignore") ? " selected" : ""}>${label}</option>`
+  ).join("");
+}
+
+function validateMappingSelections() {
+  const badge = $("#cleaning-quality-badge");
+  const button = $("#confirm-cleaning-button");
+  if (!badge || !button || !currentTablePreview) return;
+  let mappingProblems = 0;
+  document.querySelectorAll(".mapping-sheet").forEach((sheet) => {
+    const selected = [...sheet.querySelectorAll("select[data-column]")]
+      .map((select) => select.value)
+      .filter((value) => value !== "ignore");
+    mappingProblems += selected.length - new Set(selected).size;
+    mappingProblems += ["title", "markets"].filter((field) => !selected.includes(field)).length;
+  });
+  button.disabled = mappingProblems > 0;
+  badge.className = `quality-badge ${mappingProblems || currentTablePreview.summary.invalid_row_count ? "warning" : "ready"}`;
+  badge.textContent = mappingProblems
+    ? `${mappingProblems} 个映射问题`
+    : (currentTablePreview.summary.invalid_row_count
+      ? `${currentTablePreview.summary.invalid_row_count} 行待处理`
+      : "可以提交");
+}
+
+function renderCleaningPreview(preview) {
+  currentTablePreview = preview;
+  const container = $("#batch-cleaning-preview");
+  const summary = preview.summary;
+  const hasBlockingIssues = summary.invalid_row_count || summary.mapping_error_count;
+  container.hidden = false;
+  container.innerHTML = `
+    <div class="cleaning-hero">
+      <div><p>清洗预览</p><h3>确认字段映射后再启动 AI 审核</h3></div>
+      <span id="cleaning-quality-badge" class="quality-badge ${hasBlockingIssues ? "warning" : "ready"}">
+        ${summary.mapping_error_count ? `${summary.mapping_error_count} 个映射冲突` : (summary.invalid_row_count ? `${summary.invalid_row_count} 行待处理` : "可以提交")}
+      </span>
+    </div>
+    <div class="cleaning-metrics">
+      <article><span>有效 Sheet</span><strong>${escapeHtml(summary.sheet_count)}</strong></article>
+      <article><span>总数据行</span><strong>${escapeHtml(summary.row_count)}</strong></article>
+      <article><span>有效行</span><strong>${escapeHtml(summary.valid_row_count)}</strong></article>
+      <article><span>异常行</span><strong>${escapeHtml(summary.invalid_row_count)}</strong></article>
+      <article><span>模型调用</span><strong>${escapeHtml(summary.model_call_count)}</strong><small>规则清洗，零模型费用</small></article>
+    </div>
+    ${preview.skipped_sheets.length ? `<p class="cleaning-note">已跳过无商品表头的 Sheet：${preview.skipped_sheets.map((item) => escapeHtml(item.name)).join("、")}</p>` : ""}
+    <div class="mapping-grid">
+      ${preview.sheets.map((sheet) => `
+        <article class="mapping-sheet" data-sheet="${escapeHtml(sheet.name)}">
+          <div class="mapping-title"><strong>${escapeHtml(sheet.name)}</strong><span>表头第 ${escapeHtml(sheet.header_row)} 行 · ${escapeHtml(sheet.row_count)} 条</span></div>
+          ${sheet.columns.map((column) => `
+            <label>${escapeHtml(column)}
+              <select data-column="${escapeHtml(column)}">${mappingOptions(sheet.mapping[column])}</select>
+            </label>`).join("")}
+        </article>`).join("")}
+    </div>
+    <div class="cleaning-table-wrap">
+      <table class="cleaning-table">
+        <thead><tr><th>来源</th><th>行号</th><th>SKU</th><th>清洗后标题</th><th>市场</th><th>状态</th></tr></thead>
+        <tbody>${preview.rows.slice(0, 12).map((item) => `
+          <tr class="${item.valid ? "" : "invalid"}">
+            <td>${escapeHtml(item.source_sheet)}</td><td>${escapeHtml(item.source_row)}</td>
+            <td>${escapeHtml(item.cleaned.external_id)}</td><td>${escapeHtml(item.cleaned.title)}</td>
+            <td>${escapeHtml(item.cleaned.markets)}</td>
+            <td>${item.valid ? "有效" : escapeHtml(item.issues.map((issue) => issue.code).join(", "))}</td>
+          </tr>`).join("")}</tbody>
+      </table>
+    </div>
+    <div class="cleaning-actions">
+      <label><input id="allow-partial-cleaning" type="checkbox"> 仅提交有效行，异常行保留在清洗报告</label>
+      <button id="confirm-cleaning-button" type="button">确认清洗并启动审核</button>
+    </div>`;
+  validateMappingSelections();
+}
+
+$("#batch-upload-button").textContent = "清洗并预览";
 $("#batch-upload-button").addEventListener("click", async () => {
   const file = $("#batch-file").files[0];
   if (!file) { alert("请先选择 CSV 或 XLSX 文件"); return; }
@@ -154,12 +251,50 @@ $("#batch-upload-button").addEventListener("click", async () => {
   const form = new FormData();
   form.append("file", file);
   button.disabled = true;
-  button.textContent = "正在提交";
+  button.textContent = "正在清洗";
+  currentCleaningReportUrl = null;
+  currentTablePreview = null;
+  $("#batch-cleaning-preview").hidden = true;
   try {
-    const response = await fetch("/api/v1/batches/review", {method: "POST", body: form});
-    const job = await response.json();
-    if (!response.ok) throw new Error(job.detail || `HTTP ${response.status}`);
-    await pollBatch(job.id);
+    const response = await fetch("/api/v1/batches/clean-preview", {method: "POST", body: form});
+    const preview = await response.json();
+    if (!response.ok) throw new Error(preview.detail || `HTTP ${response.status}`);
+    renderCleaningPreview(preview);
   } catch (error) { alert(error.message); }
-  finally { button.disabled = false; button.textContent = "提交批量任务"; }
+  finally { button.disabled = false; button.textContent = "清洗并预览"; }
+});
+
+$("#batch-cleaning-preview").addEventListener("click", async (event) => {
+  const button = event.target.closest("#confirm-cleaning-button");
+  if (!button || !currentTablePreview) return;
+  const fieldMappings = {};
+  document.querySelectorAll(".mapping-sheet").forEach((sheet) => {
+    const mapping = {};
+    sheet.querySelectorAll("select[data-column]").forEach((select) => {
+      mapping[select.dataset.column] = select.value;
+    });
+    fieldMappings[sheet.dataset.sheet] = mapping;
+  });
+  button.disabled = true;
+  button.textContent = "正在确认";
+  try {
+    const confirmed = await api(`/api/v1/batches/cleaning/${currentTablePreview.table_id}/confirm`, {
+      method: "POST",
+      body: JSON.stringify({
+        expected_revision: currentTablePreview.revision,
+        reviewer: "content-owner",
+        field_mappings: fieldMappings,
+        allow_partial: $("#allow-partial-cleaning").checked
+      })
+    });
+    currentCleaningReportUrl = confirmed.report_url;
+    $("#batch-status").hidden = false;
+    $("#batch-status").innerHTML = `<strong>清洗已确认</strong><span>${escapeHtml(confirmed.summary.valid_row_count)} 行已进入审核队列</span><a class="button-link secondary" href="${escapeHtml(confirmed.report_url)}">下载清洗报告</a>`;
+    await pollBatch(confirmed.job.id);
+  } catch (error) { alert(cleaningErrorLabels[error.message] || error.message); }
+  finally { button.disabled = false; button.textContent = "确认清洗并启动审核"; }
+});
+
+$("#batch-cleaning-preview").addEventListener("change", (event) => {
+  if (event.target.matches("select[data-column]")) validateMappingSelections();
 });

@@ -91,6 +91,37 @@ deterministic governance metadata, not a claim that every embedding provider use
 Each derived chunk records its strategy, token and character offsets, page, block type, section
 path, source hash, and parser. Embedding input continues to prepend the stored section heading.
 
+## Spreadsheet cleaning
+
+CSV/XLSX batch uploads use a two-stage workflow. `POST /api/v1/batches/clean-preview` detects the
+header in the first 20 rows of each Sheet, proposes mappings for SKU, category, title, description,
+and markets, and returns a row-level preview without enqueueing a review job. The reviewer can edit
+the mapping and then call `POST /api/v1/batches/cleaning/{table_id}/confirm` with the preview
+revision. Confirmation is one-time and revision checked.
+
+Cleaning is deterministic and makes zero model calls. It preserves identifiers such as `001` as
+text, does not evaluate workbook formulas, records Sheet and source-row provenance, normalizes
+supported markets, detects duplicate IDs, and produces formula-safe `cleaned-input.csv` and
+`cleaning-report.csv` files. Invalid rows block confirmation unless `allow_partial` is set; even in
+partial mode, at least one valid row is required. Inputs are capped at 5 MB, 1,000 data rows, and
+100 columns.
+
+## Local embedding choice
+
+The 30-query difficult retrieval set was rerun on 2026-07-23 with the cached local ONNX models:
+
+| Model | Hit@5 | MRR | Mean latency |
+| --- | ---: | ---: | ---: |
+| `BAAI/bge-small-zh-v1.5` | 0.867 | 0.673 | 12.41 ms |
+| `jinaai/jina-embeddings-v2-base-zh` | 1.000 | 0.911 | 41.51 ms |
+| `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` | 0.933 | 0.797 | 45.18 ms |
+
+Jina remains the default because the legal/compliance retrieval accuracy gain outweighs BGE's
+roughly 3.3x lower mean latency. All three run locally, so ordinary embedding requests do not incur
+per-token provider fees. The spreadsheet path does not invoke any of them. Reconsider BGE only for
+a latency-first deployment after measuring the target corpus and accepting the accuracy tradeoff.
+The machine-readable output is `data/benchmarks/local-embedding-hard-v1.json`.
+
 ## Evidence hardening
 
 An evaluation result is reportable as held-out evidence only after `audit_holdout` passes. Keep the
