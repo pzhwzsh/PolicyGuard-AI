@@ -23,6 +23,16 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Independent holdout auditing with minimum-size, freeze-state, duplicate, review-completion, and
+  development-leakage gates plus deterministic retrieval failure classification.
+- Real-PDF provenance and layout coverage audits, an official PDF candidate registry, and a strict
+  downloader that rejects WAF/HTML responses rather than counting them as documents.
+- PostgreSQL benchmark matrices for 1/4/8 workers and explicit queue idempotency, unique-claim, and
+  stale-worker recovery evidence.
+- LLM quality/latency/token/cost reports with P50/P95/P99 and relay-specific price requirements.
+- Machine-readable legal-evidence readiness boundaries and explicit experimental opt-in for the
+  lower-performing remediation Agent path.
+
 - Resumable CSV/XLSX product review jobs with a downloadable template, row-level workflow IDs,
   JSONL checkpoints, bounded retries, and formula-safe CSV export.
 - Section-level policy change impact analysis that finds affected workflow evidence and reviewed

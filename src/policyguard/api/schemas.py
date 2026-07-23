@@ -188,6 +188,7 @@ class WorkflowReviewRequest(BaseModel):
 class RemediationPlanRequest(BaseModel):
     plan_id: str = Field(min_length=1, max_length=100)
     mode: str = Field(default="pipeline", pattern="^(pipeline|agent)$")
+    experimental_agent_opt_in: bool = False
 
 
 class DraftCreationRequest(BaseModel):

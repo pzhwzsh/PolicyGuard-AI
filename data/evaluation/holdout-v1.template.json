@@ -1,0 +1,22 @@
+{
+  "name": "policyguard-independent-holdout-v1",
+  "split": "holdout",
+  "frozen_at": null,
+  "minimum_sample_count": 50,
+  "label_status": "template_pending_independent_human_review",
+  "independent_reviewer_attestation": false,
+  "instructions": "Copy this file to an ignored working file. A reviewer who did not tune the system must verify every expected section against the official source before frozen_at is set.",
+  "samples": [
+    {
+      "id": "replace-me",
+      "query": "replace with a previously unused question",
+      "jurisdiction": "CN|US|EU",
+      "answerable": true,
+      "expected_section_id": "replace with verified section id or null",
+      "review_status": "pending",
+      "reviewer_alias": null,
+      "reviewed_at": null,
+      "comment": ""
+    }
+  ]
+}

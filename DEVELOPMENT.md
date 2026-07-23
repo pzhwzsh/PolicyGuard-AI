@@ -68,6 +68,31 @@ PostgreSQL-specific test is skipped locally.
 External service checks belong in the manual or scheduled smoke workflow, not the ordinary test
 suite.
 
+## Evidence hardening
+
+An evaluation result is reportable as held-out evidence only after `audit_holdout` passes. Keep the
+working reviewed dataset private when its source requires it; never copy development questions into
+the holdout merely to reach the minimum count.
+
+```powershell
+python -m policyguard.scripts.audit_holdout data/evaluation/holdout-v1.json `
+  --development data/evaluation/rag-baseline.json data/evaluation/rag-hard-v1.json
+python -m policyguard.scripts.audit_pdf_corpus
+python -m policyguard.scripts.audit_evidence_readiness
+python -m policyguard.scripts.fetch_pdf_corpus
+```
+
+`fetch_pdf_corpus` accepts only HTTP 200 responses beginning with a PDF signature. Downloaded real
+documents remain unlabeled until the expected blocks are independently checked. A PDF download is
+never an extraction-accuracy label.
+
+For database evidence, point `POSTGRES_BENCHMARK_URL` only at a disposable database whose name
+contains `benchmark`. The benchmark runs 1/4/8-worker workflow tests plus idempotent enqueue,
+concurrent claim, completion, and stale-worker recovery checks.
+
+LLM benchmark pricing belongs in the candidate's `pricing_usd_per_million_tokens` object using the
+actual relay input/output prices. Leave it null when unknown; the report then emits no cost.
+
 ## Project structure
 
 ```text

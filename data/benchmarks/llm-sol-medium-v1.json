@@ -1,0 +1,26 @@
+[
+  {
+    "model": "gpt-5.6-sol",
+    "sample_count": 5,
+    "requests_ok": 5,
+    "json_valid": 5,
+    "both_fields_covered": 5,
+    "faithful_samples": 5,
+    "success_rate": 1.0,
+    "json_valid_rate": 1.0,
+    "field_coverage_rate": 1.0,
+    "faithfulness_rate": 1.0,
+    "mean_latency_ms": 5360.3,
+    "p50_latency_ms": 5463.9,
+    "p95_latency_ms": 6563.3,
+    "p99_latency_ms": 6563.3,
+    "input_tokens": 742,
+    "output_tokens": 461,
+    "total_tokens": 1203,
+    "mean_tokens": 240.6,
+    "cost_usd": null,
+    "pricing_usd_per_million_tokens": null,
+    "cost_status": "not_reported_missing_pricing",
+    "errors": []
+  }
+]

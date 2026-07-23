@@ -11,8 +11,9 @@
     {"id": "jina-reranker-v2-base-multilingual", "provider": "cohere_compatible", "model": "jinaai/jina-reranker-v2-base-multilingual"}
   ],
   "llm": [
-    {"id": "qwen", "provider": "openai_compatible", "model": "qwen-plus"},
-    {"id": "deepseek", "provider": "openai_compatible", "model": "deepseek-chat"},
-    {"id": "gpt-mini", "provider": "openai_compatible", "model": "gpt-4o-mini"}
+    {"id": "sol-medium", "provider": "openai_compatible", "model": "gpt-5.6-sol", "reasoning_effort": "medium", "pricing_usd_per_million_tokens": null},
+    {"id": "qwen", "provider": "openai_compatible", "model": "qwen-plus", "pricing_usd_per_million_tokens": null},
+    {"id": "deepseek", "provider": "openai_compatible", "model": "deepseek-chat", "pricing_usd_per_million_tokens": null},
+    {"id": "gpt-mini", "provider": "openai_compatible", "model": "gpt-4o-mini", "pricing_usd_per_million_tokens": null}
   ]
 }

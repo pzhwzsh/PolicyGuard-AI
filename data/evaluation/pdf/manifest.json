@@ -5,6 +5,10 @@
     {
       "sample_id": "ftc-health-guidance-pages-2-3",
       "pdf": "pdfs/ftc-health-guidance.pdf",
+      "provenance": "official_publication",
+      "source_url": "https://www.ftc.gov/business-guidance/resources/health-products-compliance-guidance",
+      "page_count": 25,
+      "layout_features": ["native_text", "headings", "multi_column", "embedded_images"],
       "expected_json": "expected/ftc-health-guidance-pages-2-3.json",
       "actual_json": "runs/pdfplumber-layout-v1/ftc-health-guidance.json",
       "pages": [2, 3],
