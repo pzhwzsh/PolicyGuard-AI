@@ -49,6 +49,10 @@ class Settings:
     admin_api_key: str
     reviewer_api_key: str
     tenant_keys_json: str
+    image_generation_base_url: str
+    image_generation_api_key: str
+    image_generation_model: str
+    image_generation_timeout_seconds: float
     rate_limit_per_minute: int
 
 
@@ -104,5 +108,11 @@ def get_settings() -> Settings:
         admin_api_key=getenv("ADMIN_API_KEY", ""),
         reviewer_api_key=getenv("REVIEWER_API_KEY", ""),
         tenant_keys_json=getenv("TENANT_KEYS_JSON", ""),
+        image_generation_base_url=getenv("IMAGE_GENERATION_BASE_URL", ""),
+        image_generation_api_key=getenv("IMAGE_GENERATION_API_KEY", ""),
+        image_generation_model=getenv("IMAGE_GENERATION_MODEL", ""),
+        image_generation_timeout_seconds=float(
+            getenv("IMAGE_GENERATION_TIMEOUT_SECONDS", "180")
+        ),
         rate_limit_per_minute=int(getenv("RATE_LIMIT_PER_MINUTE", "120")),
     )

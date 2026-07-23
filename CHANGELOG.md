@@ -60,6 +60,10 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Add a governed creative studio for verified-fact ad-copy candidates, platform-sized main and SKU
+  assets, optional identity-preserving scene-image jobs, mandatory human review, and audit ZIPs.
+- Add a provider-neutral `/product-scene-edit` sidecar contract with bounded retries, output image
+  validation, revision protection, and a clear 503 when no image provider is configured.
 - Multi-Sheet spreadsheet header detection, editable canonical field mappings, row-level validation,
   formula-safe exports, partial-valid-row submission, and downloadable cleaning reports.
 - Independent holdout auditing with minimum-size, freeze-state, duplicate, review-completion, and

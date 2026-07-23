@@ -35,6 +35,9 @@ from policyguard.api.schemas import (
     CheckResponse,
     ComplianceWorkflowRequest,
     ComplianceWorkflowResponse,
+    CreativeProjectRequest,
+    CreativeProjectResponse,
+    CreativeReviewRequest,
     DocumentApprovalRequest,
     DocumentApprovalResponse,
     DocumentCorrectionRequest,
@@ -79,6 +82,7 @@ from policyguard.application.compliance_report import (
     report_pdf,
 )
 from policyguard.application.cost_control import WorkflowModelBudget
+from policyguard.application.creative_studio import CreativeStudioWorkspace
 from policyguard.application.document_ingestion import (
     configured_document_router,
     stage_parsed_document,
@@ -572,6 +576,217 @@ def create_app(database_url: str | None = None) -> FastAPI:
             result=job.result, attempts=job.attempts,
             max_attempts=job.max_attempts, error=job.error,
         )
+
+    @application.post(
+        "/api/v1/creatives",
+        response_model=CreativeProjectResponse,
+        status_code=status.HTTP_201_CREATED,
+        tags=["creative-studio"],
+    )
+    def create_creative_project(
+        payload: CreativeProjectRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> CreativeProjectResponse:
+        project_payload = payload.model_dump()
+        query = " ".join(
+            [payload.product_name, payload.category, "advertising claims"]
+            + [fact.value for fact in payload.verified_facts]
+        )
+        hits = BM25Retriever(SqlAlchemyKnowledgeRepository(session)).search(
+            query,
+            top_k=3,
+            scope=KnowledgeFilter(
+                jurisdiction=payload.market,
+                category=payload.category,
+                channel="all",
+            ),
+        )
+        project_payload["policy_evidence"] = [
+            {
+                "section_id": hit.chunk.section_id,
+                "heading": hit.chunk.heading,
+                "quote": hit.chunk.text[:800],
+                "source_url": hit.chunk.source_url,
+                "status": "retrieval_candidate_requires_human_review",
+            }
+            for hit in hits
+        ]
+        try:
+            project = CreativeStudioWorkspace(Path(settings.upload_dir)).create(
+                project_payload
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        bind_resource(session, "creative", project["project_id"], tenant)
+        return CreativeProjectResponse(**project)
+
+    @application.get(
+        "/api/v1/creatives/{project_id}",
+        response_model=CreativeProjectResponse,
+        tags=["creative-studio"],
+    )
+    def get_creative_project(
+        project_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> CreativeProjectResponse:
+        require_resource(session, "creative", project_id, tenant)
+        try:
+            project = CreativeStudioWorkspace(Path(settings.upload_dir)).load(project_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        return CreativeProjectResponse(**project)
+
+    @application.post(
+        "/api/v1/creatives/{project_id}/source-image",
+        response_model=CreativeProjectResponse,
+        tags=["creative-studio"],
+    )
+    async def upload_creative_source_image(
+        project_id: str,
+        file: UploadFile = File(...),
+        expected_revision: int = Query(ge=0),
+        reviewer: str = Query(min_length=1, max_length=100),
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> CreativeProjectResponse:
+        require_resource(session, "creative", project_id, tenant)
+        if settings.admin_api_key and reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        suffix = Path(file.filename or "").suffix.lower()
+        content = await file.read(15 * 1024 * 1024 + 1)
+        if len(content) > 15 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="creative_source_image_too_large")
+        try:
+            project = CreativeStudioWorkspace(Path(settings.upload_dir)).add_source_image(
+                project_id,
+                content=content,
+                suffix=suffix,
+                expected_revision=expected_revision,
+                reviewer=reviewer,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return CreativeProjectResponse(**project)
+
+    @application.post(
+        "/api/v1/creatives/{project_id}/review",
+        response_model=CreativeProjectResponse,
+        tags=["creative-studio"],
+    )
+    def review_creative_project(
+        project_id: str,
+        payload: CreativeReviewRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> CreativeProjectResponse:
+        require_resource(session, "creative", project_id, tenant)
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        try:
+            project = CreativeStudioWorkspace(Path(settings.upload_dir)).review(
+                project_id,
+                expected_revision=payload.expected_revision,
+                reviewer=payload.reviewer,
+                decision=payload.decision,
+                approved_copy_indexes=payload.approved_copy_indexes,
+                comment=payload.comment,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return CreativeProjectResponse(**project)
+
+    @application.post(
+        "/api/v1/creatives/{project_id}/scene",
+        response_model=BackgroundJobResponse,
+        status_code=status.HTTP_202_ACCEPTED,
+        tags=["creative-studio"],
+    )
+    def enqueue_creative_scene(
+        project_id: str,
+        expected_revision: int = Query(ge=0),
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> BackgroundJobResponse:
+        require_resource(session, "creative", project_id, tenant)
+        if not (
+            settings.image_generation_base_url and settings.image_generation_model
+        ):
+            raise HTTPException(status_code=503, detail="image_generation_provider_not_configured")
+        try:
+            project = CreativeStudioWorkspace(Path(settings.upload_dir)).load(project_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        if project["revision"] != expected_revision:
+            raise HTTPException(status_code=409, detail="creative_project_revision_conflict")
+        if project["status"] != "review_required" or not project.get("source_image"):
+            raise HTTPException(status_code=409, detail="creative_source_image_required")
+        job = PersistentJobQueue(session).enqueue(
+            "creative_scene_generation",
+            {"project_id": project_id, "expected_revision": expected_revision},
+            idempotency_key=(
+                f"creative-scene:{tenant}:{project_id}:{expected_revision}:"
+                f"{settings.image_generation_model}"
+            ),
+            max_attempts=3,
+        )
+        bind_resource(session, "job", job.id, tenant)
+        return BackgroundJobResponse(
+            id=job.id, job_type=job.job_type, status=job.status,
+            result=job.result, attempts=job.attempts,
+            max_attempts=job.max_attempts, error=job.error,
+        )
+
+    @application.get(
+        "/api/v1/creatives/{project_id}/assets/{filename}",
+        tags=["creative-studio"],
+    )
+    def get_creative_asset(
+        project_id: str,
+        filename: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> FileResponse:
+        require_resource(session, "creative", project_id, tenant)
+        workspace = CreativeStudioWorkspace(Path(settings.upload_dir))
+        project = workspace.load(project_id)
+        allowed = {item["filename"] for item in project["assets"]}
+        if filename not in allowed or Path(filename).name != filename:
+            raise HTTPException(status_code=404, detail="creative_asset_not_found")
+        path = workspace.directory(project_id) / filename
+        if not path.is_file():
+            raise HTTPException(status_code=404, detail="creative_asset_not_found")
+        media_type = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
+        return FileResponse(path, media_type=media_type, filename=filename)
+
+    @application.get(
+        "/api/v1/creatives/{project_id}/package",
+        tags=["creative-studio"],
+    )
+    def download_creative_package(
+        project_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> FileResponse:
+        require_resource(session, "creative", project_id, tenant)
+        try:
+            package = CreativeStudioWorkspace(Path(settings.upload_dir)).package(project_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return FileResponse(package, media_type="application/zip", filename="approved-assets.zip")
 
     @application.post(
         "/api/v1/batches/clean-preview",

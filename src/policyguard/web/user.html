@@ -56,6 +56,27 @@
       <p class="metric-footnote">视频每 2 秒采样一帧，最多 30 帧；结果保留时间戳并进入人工复核，不自动发布。</p>
     </section>
 
+    <section class="batch-review creative-studio">
+      <div class="section-heading">
+        <div><p>合规创意</p><h2>广告语、商品主图与 SKU 图</h2></div>
+        <button id="create-creative-button" type="button">创建创意项目</button>
+      </div>
+      <div class="form-grid" id="creative-form">
+        <label>商品编号<input id="creative-external-id" value="SKU-DEMO-001"></label>
+        <label>商品名称<input id="creative-product-name" value="轻盈保温杯"></label>
+        <label>品类<input id="creative-category" value="all"></label>
+        <label>品牌<input id="creative-brand" value="Demo Brand"></label>
+        <label>平台<select id="creative-platform"><option value="amazon">Amazon</option><option value="tiktok_shop">TikTok Shop</option><option value="shopee">Shopee</option><option value="temu">Temu</option><option value="taobao">淘宝</option><option value="generic">通用</option></select></label>
+        <label>市场<select id="creative-market"><option value="CN">中国</option><option value="US">美国</option><option value="EU">欧盟</option></select></label>
+        <label>已验证事实名称<input id="creative-fact-name" value="容量"></label>
+        <label>已验证事实内容<input id="creative-fact-value" value="500ml"></label>
+        <label class="wide">事实证据编号或文件引用<input id="creative-fact-evidence" value="SPEC-2026-001"></label>
+        <label>SKU 编号<input id="creative-sku-id" value="WHITE-500"></label>
+        <label>SKU 名称<input id="creative-sku-label" value="白色 500ml"></label>
+      </div>
+      <div id="creative-project" class="cleaning-preview" hidden></div>
+    </section>
+
     <section id="result-section" class="results" hidden>
       <div class="section-heading">
         <div><p>检查结果</p><h2 id="result-title">-</h2></div>

@@ -50,6 +50,8 @@ def test_user_ui_hides_management_and_runtime_controls(tmp_path: Path) -> None:
     assert 'id="batch-cleaning-preview"' in html
     assert 'id="media-upload-button"' in html
     assert "/api/v1/media/claims" in script
+    assert 'id="create-creative-button"' in html
+    assert "/api/v1/creatives" in script
 
     with TestClient(create_app(f"sqlite:///{tmp_path / 'ui.db'}")) as client:
         user_page = client.get("/")

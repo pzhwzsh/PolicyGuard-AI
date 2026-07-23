@@ -156,6 +156,14 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .reliability-grid strong { display: block; margin: 7px 0 4px; font-size: 20px; }
 .evaluation-workbench { margin: 28px 0; padding: 22px; border: 1px solid #d9dfda; background: #fff; }
 .evaluation-results { margin-top: 18px; }
+.creative-copy-list { display: grid; gap: 10px; margin: 18px 0; }
+.creative-copy { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 13px; border: 1px solid #d9dfda; background: #fff; }
+.creative-copy input { width: auto; margin: 2px 0 0; }
+.creative-copy p { margin: 0 0 5px; }
+.creative-assets { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 18px 0; }
+.creative-assets article { padding: 9px; border: 1px solid #d9dfda; background: #fff; }
+.creative-assets img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; background: #fff; }
+.creative-assets small { display: block; margin-top: 7px; color: #68756d; overflow-wrap: anywhere; }
 .metric-card, .job-row { padding: 12px; background: white; border: 1px solid #d9dfda; margin-bottom: 8px; }
 .metric-card p, .job-row small { color: #68756d; font-size: 12px; }
 .job-row { display: flex; align-items: center; gap: 12px; }

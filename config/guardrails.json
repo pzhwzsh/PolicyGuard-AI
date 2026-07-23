@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "supported_jurisdictions": ["CN", "US", "EU"],
-  "allowed_agent_tools": ["suggest_conservative_rewrite"],
+  "allowed_agent_tools": ["suggest_conservative_rewrite", "generate_grounded_ad_copy"],
   "allowed_remediation_fields": ["title", "description"],
   "require_legal_basis_for_rewrite": true,
   "require_human_review_for_rewrite": true,

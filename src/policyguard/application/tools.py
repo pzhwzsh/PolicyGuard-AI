@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from difflib import unified_diff
 from typing import Any, Protocol
 
+from policyguard.application.creative_studio import generate_grounded_ad_copy
+
 
 @dataclass(frozen=True, slots=True)
 class ToolResult:
@@ -67,7 +69,10 @@ class SuggestConservativeRewriteTool:
                         "before": before,
                         "after": after,
                         "removed_phrases": removed,
-                        "reason": "Conservative baseline removes risky claims; human review required.",
+                        "reason": (
+                            "Conservative baseline removes risky claims; "
+                            "human review required."
+                        ),
                         "claim_spans": [
                             {
                                 "text": phrase,
@@ -109,3 +114,24 @@ class SuggestConservativeRewriteTool:
                     "requires_human_review": True,
                 })
         return basis
+
+
+class GenerateGroundedAdCopyTool:
+    name = "generate_grounded_ad_copy"
+    description = (
+        "Generate advertising-copy candidates using verified product facts only; never publish."
+    )
+
+    def execute(self, arguments: dict[str, Any]) -> ToolResult:
+        payload = arguments["creative_payload"]
+        count = min(max(int(arguments.get("count", 3)), 1), 5)
+        candidates = generate_grounded_ad_copy(payload, count)
+        return ToolResult(
+            tool_name=self.name,
+            success=any(item["status"] == "passed" for item in candidates),
+            output={
+                "candidates": candidates,
+                "external_side_effect": False,
+                "requires_human_review": True,
+            },
+        )

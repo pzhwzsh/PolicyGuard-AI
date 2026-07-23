@@ -379,6 +379,65 @@ class ModelPromotionRequest(BaseModel):
     comment: str = Field(default="", max_length=1000)
 
 
+class VerifiedProductFact(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1, max_length=100)
+    value: str = Field(min_length=1, max_length=500)
+    evidence_reference: str | None = Field(default=None, max_length=1000)
+
+
+class CreativeSkuInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    sku_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
+    label: str = Field(min_length=1, max_length=120)
+    attributes: dict[str, str] = Field(default_factory=dict)
+
+
+class CreativeProjectRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    external_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
+    product_name: str = Field(min_length=1, max_length=300)
+    category: str = Field(min_length=1, max_length=100)
+    brand: str = Field(default="", max_length=100)
+    platform: str = Field(
+        default="generic",
+        pattern=r"^(amazon|tiktok_shop|shopee|temu|taobao|generic)$",
+    )
+    market: str = Field(default="CN", pattern=r"^(CN|US|EU)$")
+    tone: str = Field(default="clear", max_length=100)
+    brand_primary_color: str = Field(default="#173e2c", pattern=r"^#[0-9A-Fa-f]{6}$")
+    verified_facts: list[VerifiedProductFact] = Field(default_factory=list, max_length=30)
+    skus: list[CreativeSkuInput] = Field(min_length=1, max_length=50)
+    copy_count: int = Field(default=3, ge=1, le=5)
+
+
+class CreativeProjectResponse(BaseModel):
+    project_id: str
+    revision: int
+    status: str
+    created_at: str
+    payload: dict[str, Any]
+    platform_spec: dict[str, Any]
+    copy_candidates: list[dict[str, Any]]
+    scene_request: dict[str, Any]
+    assets: list[dict[str, Any]]
+    review: dict[str, Any] | None
+    source_image: str | None = None
+    source_image_sha256: str | None = None
+    source_uploaded_by: str | None = None
+
+
+class CreativeReviewRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    reviewer: str = Field(min_length=1, max_length=100)
+    decision: str = Field(pattern=r"^(approve|reject)$")
+    approved_copy_indexes: list[int] = Field(default_factory=list, max_length=5)
+    comment: str = Field(default="", max_length=1000)
+
+
 class SourceUpdateResponse(BaseModel):
     source_id: str
     content_hash: str

@@ -42,6 +42,11 @@ Last updated: 2026-07-23
   fallbacks as appropriate; authentication failures fail immediately.
 - Local backup creation verifies its manifest, and restore is dry-run-first with a pre-restore
   safety copy. Optional retention only removes timestamp-named backup directories.
+- The user UI now includes a governed creative studio. It generates grounded ad-copy candidates and
+  deterministic platform-sized main/SKU assets from a real source image, then requires revisioned
+  human approval before an audit ZIP can be downloaded.
+- Optional product scene generation uses an identity-preserving image-edit sidecar and remains a
+  pending human identity-review candidate. Missing provider configuration returns an explicit 503.
 
 ## Open work
 
@@ -67,6 +72,8 @@ Last updated: 2026-07-23
 - Connect reviewed image/video OCR frames to the same claim-to-policy evidence workflow; the media
   sidecar and frame provenance are present, but multimodal semantic claim matching still needs a
   reviewed evaluation set.
+- Evaluate scene-image identity preservation on a reviewed product/SKU set before treating any
+  external image model as production-ready.
 
 ### Runtime
 

@@ -330,3 +330,134 @@ $("#media-upload-button").addEventListener("click", async () => {
   } catch (error) { alert(error.message); }
   finally { button.disabled = false; }
 });
+
+let currentCreativeProject = null;
+
+async function pollCreativeScene(jobId, attempts = 0) {
+  const job = await api(`/api/v1/jobs/${jobId}`);
+  const status = $("#creative-scene-status");
+  if (status) status.textContent = `场景图任务：${job.status} · 尝试 ${job.attempts}/${job.max_attempts}`;
+  if (job.status === "completed") {
+    const project = await api(`/api/v1/creatives/${currentCreativeProject.project_id}`);
+    renderCreativeProject(project);
+    return;
+  }
+  if (job.status === "failed" || attempts >= 180) {
+    if (status) status.textContent += ` · ${job.error || "处理超时"}`;
+    return;
+  }
+  window.setTimeout(() => pollCreativeScene(jobId, attempts + 1).catch(() => {}), 1000);
+}
+
+function renderCreativeProject(project) {
+  currentCreativeProject = project;
+  const target = $("#creative-project");
+  target.hidden = false;
+  const copies = (project.copy_candidates || []).map((item, index) => `
+    <label class="creative-copy">
+      <input type="checkbox" data-copy-index="${index}" ${item.status === "passed" ? "checked" : "disabled"}>
+      <span><p>${escapeHtml(item.text)}</p><small>${escapeHtml(item.status)} · ${escapeHtml(item.generation)}${item.issues?.length ? ` · ${escapeHtml(item.issues.join("、"))}` : ""}</small></span>
+    </label>`).join("");
+  const assets = (project.assets || []).map((asset) => `
+    <article><img src="/api/v1/creatives/${escapeHtml(project.project_id)}/assets/${escapeHtml(asset.filename)}" alt="${escapeHtml(asset.type)}"><small>${escapeHtml(asset.filename)} · ${asset.width}×${asset.height}</small></article>`).join("");
+  const evidenceCount = project.payload?.policy_evidence?.length || 0;
+  const hasSceneCandidate = (project.assets || []).some(
+    (asset) => asset.type === "scene_candidate"
+  );
+  target.innerHTML = `
+    <div class="cleaning-hero"><div><p>创意项目 ${escapeHtml(project.project_id)}</p><h3>${escapeHtml(project.payload.product_name)}</h3></div><span class="quality-badge ${project.status === "approved" ? "ready" : "warning"}">${escapeHtml(project.status)}</span></div>
+    <p class="cleaning-note">平台 ${escapeHtml(project.payload.platform)} · ${project.platform_spec.width}×${project.platform_spec.height} · 法规候选证据 ${evidenceCount} 条。所有文案和图片仍需人工确认。</p>
+    <div class="creative-copy-list">${copies}</div>
+    ${project.assets?.length ? `<div class="creative-assets">${assets}</div>` : ""}
+    ${project.status === "awaiting_source_image" ? `<div class="batch-upload-row"><label>上传真实商品原图<input id="creative-source-image" type="file" accept=".png,.jpg,.jpeg"></label><button id="upload-creative-source" type="button">生成主图和 SKU 图</button></div>` : ""}
+    ${project.status === "review_required" ? `<div class="cleaning-actions"><span>请核对商品身份、包装文字、SKU 属性和广告语。</span>${hasSceneCandidate ? "" : `<button id="generate-creative-scene" type="button">生成场景图（可选）</button>`}<button id="approve-creative-project" type="button">批准素材</button></div><p id="creative-scene-status" class="cleaning-note">${hasSceneCandidate ? "场景图待人工核对商品一致性，不会自动发布。" : "场景图需要配置兼容的图片编辑模型；未配置时会明确提示。"}</p>` : ""}
+    ${project.status === "approved" ? `<div class="cleaning-actions"><span>已通过人工审批，可导出带审计清单的素材包。</span><a class="button-link" href="/api/v1/creatives/${escapeHtml(project.project_id)}/package">下载素材包</a></div>` : ""}`;
+}
+
+$("#create-creative-button").addEventListener("click", async () => {
+  const button = $("#create-creative-button");
+  button.disabled = true;
+  try {
+    const project = await api("/api/v1/creatives", {
+      method: "POST",
+      body: JSON.stringify({
+        external_id: $("#creative-external-id").value.trim(),
+        product_name: $("#creative-product-name").value.trim(),
+        category: $("#creative-category").value.trim(),
+        brand: $("#creative-brand").value.trim(),
+        platform: $("#creative-platform").value,
+        market: $("#creative-market").value,
+        verified_facts: [{
+          name: $("#creative-fact-name").value.trim(),
+          value: $("#creative-fact-value").value.trim(),
+          evidence_reference: $("#creative-fact-evidence").value.trim() || null
+        }],
+        skus: [{
+          sku_id: $("#creative-sku-id").value.trim(),
+          label: $("#creative-sku-label").value.trim(),
+          attributes: {specification: $("#creative-fact-value").value.trim()}
+        }],
+        copy_count: 3
+      })
+    });
+    renderCreativeProject(project);
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});
+
+$("#creative-project").addEventListener("click", async (event) => {
+  const upload = event.target.closest("#upload-creative-source");
+  if (upload && currentCreativeProject) {
+    const file = $("#creative-source-image").files[0];
+    if (!file) { alert("请先选择真实商品原图"); return; }
+    const form = new FormData();
+    form.append("file", file);
+    upload.disabled = true;
+    try {
+      const url = `/api/v1/creatives/${currentCreativeProject.project_id}/source-image?expected_revision=${currentCreativeProject.revision}&reviewer=content-owner`;
+      const response = await fetch(url, {method: "POST", body: form});
+      const project = await response.json();
+      if (!response.ok) throw new Error(project.detail || `HTTP ${response.status}`);
+      renderCreativeProject(project);
+    } catch (error) { alert(error.message); }
+    finally { upload.disabled = false; }
+    return;
+  }
+  const generateScene = event.target.closest("#generate-creative-scene");
+  if (generateScene && currentCreativeProject) {
+    generateScene.disabled = true;
+    try {
+      const job = await api(
+        `/api/v1/creatives/${currentCreativeProject.project_id}/scene?expected_revision=${currentCreativeProject.revision}`,
+        {method: "POST"}
+      );
+      await pollCreativeScene(job.id);
+    } catch (error) {
+      alert(error.message === "image_generation_provider_not_configured"
+        ? "尚未配置图片编辑模型，主图和 SKU 图仍可正常使用。"
+        : error.message);
+      generateScene.disabled = false;
+    }
+    return;
+  }
+  const approve = event.target.closest("#approve-creative-project");
+  if (!approve || !currentCreativeProject) return;
+  const approvedIndexes = Array.from(
+    $("#creative-project").querySelectorAll("input[data-copy-index]:checked")
+  ).map((item) => Number(item.dataset.copyIndex));
+  approve.disabled = true;
+  try {
+    const project = await api(`/api/v1/creatives/${currentCreativeProject.project_id}/review`, {
+      method: "POST",
+      body: JSON.stringify({
+        expected_revision: currentCreativeProject.revision,
+        reviewer: "content-owner",
+        decision: "approve",
+        approved_copy_indexes: approvedIndexes,
+        comment: "商品身份、SKU 属性、图片和广告语已人工核对"
+      })
+    });
+    renderCreativeProject(project);
+  } catch (error) { alert(error.message); }
+  finally { approve.disabled = false; }
+});

@@ -7,6 +7,8 @@ import httpx
 
 from policyguard.application.batch_review import process_batch_review
 from policyguard.application.cellar import CellarClient
+from policyguard.application.creative_image_provider import ProductSceneEditProvider
+from policyguard.application.creative_studio import CreativeStudioWorkspace
 from policyguard.application.document_ingestion import (
     configured_document_router,
     stage_parsed_document,
@@ -169,6 +171,42 @@ def handle_media_claim_extraction(settings, payload: dict) -> dict:
     return stage_media_result(upload_root, path, result)
 
 
+def handle_creative_scene_generation(settings, payload: dict) -> dict:
+    workspace = CreativeStudioWorkspace(Path(settings.upload_dir))
+    manifest = workspace.load(payload["project_id"])
+    if manifest["revision"] != payload["expected_revision"]:
+        raise ValueError("creative_project_revision_conflict")
+    source_name = manifest.get("source_image")
+    if not source_name:
+        raise ValueError("creative_source_image_required")
+    source_path = workspace.directory(payload["project_id"]) / source_name
+    if (
+        not source_path.is_file()
+        or source_path.parent != workspace.directory(payload["project_id"])
+    ):
+        raise ValueError("creative_source_image_invalid")
+    request = manifest["scene_request"]
+    spec = manifest["platform_spec"]
+    content, metadata = ProductSceneEditProvider(
+        base_url=settings.image_generation_base_url,
+        api_key=settings.image_generation_api_key,
+        model=settings.image_generation_model,
+        timeout_seconds=settings.image_generation_timeout_seconds,
+    ).edit(
+        source=source_path.read_bytes(),
+        prompt=request["prompt"],
+        negative_prompt=request["negative_prompt"],
+        width=spec["width"],
+        height=spec["height"],
+    )
+    return workspace.add_scene_candidate(
+        payload["project_id"],
+        content=content,
+        expected_revision=payload["expected_revision"],
+        provider_metadata=metadata,
+    )
+
+
 def main() -> None:
     args = parse_args()
     settings = get_settings()
@@ -183,6 +221,7 @@ def main() -> None:
                 "parse_document", "source_monitor", "reindex_embeddings",
                 "batch_compliance_review", "model_evaluation",
                 "media_claim_extraction",
+                "creative_scene_generation",
             })
             if job is None:
                 if args.max_jobs:
@@ -218,6 +257,8 @@ def main() -> None:
                             tenant_id=tenant_id,
                         ))
                         session.commit()
+                elif job.job_type == "creative_scene_generation":
+                    result = handle_creative_scene_generation(settings, job.payload)
                 else:
                     result = handle_reindex_embeddings(settings, session)
                 queue.complete(job.id, result)
