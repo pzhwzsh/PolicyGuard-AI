@@ -14,6 +14,14 @@ Last updated: 2026-07-23
 - RapidOCR is the supported local OCR sidecar. Other parser sidecars are optional.
 - Downloaded policy versions remain staged until explicitly reviewed and activated.
 - Detailed dataset and evaluation status is maintained in `docs/DATA_CARD.md`.
+- Evaluation governance now blocks reportable holdout metrics when labels are pending, the split is
+  not frozen, or a query overlaps development data.
+- PDF provenance/coverage is audited separately from extraction accuracy; unlabeled downloads do
+  not become accuracy evidence.
+- Remediation continues to use the deterministic pipeline by default. Agent execution requires an
+  explicit experimental opt-in and remains subject to the existing tool and step budgets.
+- Model smoke reports now include input/output tokens and P50/P95/P99. Cost is emitted only when
+  the exact relay price is configured.
 
 ## Open work
 
@@ -22,6 +30,8 @@ Last updated: 2026-07-23
 - Complete human review of retrieval, citation, PDF, and remediation evaluation samples.
 - Add a representative set of real complex-layout PDFs.
 - Re-run retrieval, abstention, citation, and remediation evaluation on a held-out reviewed set.
+- Have an independent reviewer complete and freeze at least 50 holdout labels; the repository only
+  contains the validation contract and template.
 
 ### Knowledge lifecycle
 
@@ -45,6 +55,8 @@ Last updated: 2026-07-23
 - Some official-source endpoints may return access controls or asynchronous responses.
 - Heavyweight PDF parser sidecars are not part of the default local environment.
 - External LLM, embedding, rerank, and OCR availability depends on local `.env` configuration.
+- EUR-Lex direct PDF endpoints returned an AWS WAF HTTP 202 challenge on 2026-07-23; use a permitted
+  official download path or manually source the declared documents before annotation.
 - Human review queues contain pending items; an empty decision must not be treated as approval.
 
 ## Local handoff
@@ -59,6 +71,10 @@ $env:PYTHON_DOTENV_DISABLED='1'
 python -m pytest
 python -m ruff check .
 python -m policyguard.scripts.publish_data_evidence --validate
+python -m policyguard.scripts.audit_pdf_corpus
+# After creating a private reviewed holdout file:
+# python -m policyguard.scripts.audit_holdout data/evaluation/holdout-v1.json `
+#   --development data/evaluation/rag-baseline.json data/evaluation/rag-hard-v1.json
 python -m uvicorn policyguard.api.main:app --port 8002
 ```
 

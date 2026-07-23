@@ -38,6 +38,11 @@ independent labels.
 No sample has independent human legal verification. Cross-language and remediation labels are
 explicitly marked `ai_reviewed_pending_human_verification`. Metrics are development evidence only.
 
+`data/evaluation/holdout-v1.template.json` now defines the independent holdout contract. The audit
+rejects fewer than 50 samples, development-query overlap, duplicate queries, pending reviews, or an
+unfrozen split. The template is not a completed dataset and no holdout metric may be reported until
+an independent reviewer supplies and freezes the labels.
+
 The scale suite adds 120 unique isolated RAG queries, 100 campaign workflows, and 100 unique
 remediation inputs. All are deterministic synthetic samples marked `synthetic_pending_human_review`.
 They measure repeatability and failure behavior, not production distribution or legal accuracy.
@@ -62,10 +67,21 @@ tables, embedded images, and page markers. Marker recall was 1.0 and repeated lo
 approximately 27 ms/page; exact timings are machine-load dependent and retained in the raw report.
 It is explicitly not a real-regulation accuracy set.
 
+The real-PDF corpus manifest now records provenance and layout features separately from labels.
+The current auditable state remains one real document and one real labeled sample. Ten additional
+EUR-Lex PDF candidates are declared in `config/pdf_corpus_sources.json`; the 2026-07-23 collection
+attempt was blocked by an AWS WAF HTTP 202 challenge. They are not counted as downloaded samples.
+
 The 100-case deterministic workflow generated 550 events with 0.51 evidence coverage. Serial P95
 was 7.534 ms. At eight workers on local SQLite, all cases completed but throughput fell to 44.36
 cases/s and P95 rose to 1,142.924 ms, identifying SQLite write contention as the current bottleneck.
 Model calls were disabled, so tokens and model cost were both zero for this measurement.
+
+On 2026-07-23, the configured `gpt-5.6-sol` medium endpoint completed the five-case structured-claim
+smoke benchmark with 5/5 valid JSON, field coverage, and verbatim faithfulness. It consumed 742
+input and 461 output tokens. P50 was 5,463.9 ms and P95/P99 were 6,563.3 ms. This is a small smoke
+set, not a model-selection conclusion. Cost remains unreported because the relay price was not
+configured; the benchmark now refuses to infer it from unrelated public pricing.
 
 ## Operational evidence
 
@@ -92,5 +108,7 @@ states, dataset truthfulness, and the absence of secret-like fields.
 - No independent cost figure because provider pricing is not configured.
 - BGE-M3 remains unmeasured in this environment.
 - PDF tables, scans, images, and multi-column layouts lack a reportable evaluation sample.
+- The independent 50-100 item human-reviewed holdout has tooling but no completed labels.
+- The declared official PDF candidate endpoint is currently blocked by an AWS WAF challenge.
 - The 20-document complex PDF set is synthetic and cannot close the real-document accuracy gap.
 - Coverage is bounded to selected CN/US/EU advertising-related sources.

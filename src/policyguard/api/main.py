@@ -75,6 +75,7 @@ from policyguard.application.document_workspace import (
 from policyguard.application.embeddings import DenseRetriever, configured_embedding_provider
 from policyguard.application.evaluation_review import EvaluationReviewService
 from policyguard.application.evidence_support import configured_evidence_verifier
+from policyguard.application.execution_policy import choose_remediation_mode
 from policyguard.application.hybrid import HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
@@ -1166,7 +1167,14 @@ def create_app(database_url: str | None = None) -> FastAPI:
             memory_repository=SqlAlchemyAgentMemoryRepository(session),
         )
         try:
-            if payload.mode == "agent":
+            try:
+                execution = choose_remediation_mode(
+                    payload.mode,
+                    experimental_opt_in=payload.experimental_agent_opt_in,
+                )
+            except ValueError as exc:
+                raise HTTPException(status_code=422, detail=str(exc)) from exc
+            if execution.mode == "agent":
                 planner = configured_agent_planner(settings)
                 if planner is None:
                     raise HTTPException(status_code=503, detail="agent_planner_not_configured")

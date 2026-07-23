@@ -22,10 +22,16 @@ DEFAULT_MODELS = ["gpt-5.6", "gpt-5.6-terra", "gpt-5.6-sol"]
 
 
 def evaluate_model(
-    client: httpx.Client, base_url: str, key: str, model: str, samples: list[dict]
+    client: httpx.Client,
+    base_url: str,
+    key: str,
+    model: str,
+    samples: list[dict],
+    pricing: dict | None = None,
 ) -> dict:
     latencies: list[float] = []
-    usages: list[int] = []
+    input_usages: list[int] = []
+    output_usages: list[int] = []
     success = valid = covered = faithful = 0
     errors: list[str] = []
     for sample in samples:
@@ -43,7 +49,10 @@ def evaluate_model(
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {
                             "role": "user",
-                            "content": f"title: {sample['title']}\ndescription: {sample['description']}",
+                            "content": (
+                                f"title: {sample['title']}\n"
+                                f"description: {sample['description']}"
+                            ),
                         },
                     ],
                 },
@@ -54,9 +63,16 @@ def evaluate_model(
                 continue
             success += 1
             payload = response.json()
-            usage = payload.get("usage", {}).get("total_tokens")
-            if isinstance(usage, int):
-                usages.append(usage)
+            usage = payload.get("usage", {})
+            input_tokens = usage.get("prompt_tokens") or usage.get("input_tokens")
+            output_tokens = usage.get("completion_tokens") or usage.get("output_tokens")
+            if input_tokens is None and output_tokens is None:
+                input_tokens = usage.get("total_tokens")
+                output_tokens = 0
+            if isinstance(input_tokens, int):
+                input_usages.append(input_tokens)
+            if isinstance(output_tokens, int):
+                output_usages.append(output_tokens)
             try:
                 claims = json.loads(payload["choices"][0]["message"].get("content", "")).get(
                     "claims", []
@@ -82,6 +98,25 @@ def evaluate_model(
                 errors.append("invalid_json")
         except Exception as exc:  # network/provider failures are benchmark data
             errors.append(type(exc).__name__)
+    total_input = sum(input_usages)
+    total_output = sum(output_usages)
+    price = pricing or {}
+    observed_cost = None
+    if price.get("input") is not None and price.get("output") is not None:
+        observed_cost = round(
+            (total_input * float(price["input"]) + total_output * float(price["output"]))
+            / 1_000_000,
+            8,
+        )
+    ordered = sorted(latencies)
+
+    def percentile(value: float) -> float | None:
+        if not ordered:
+            return None
+        index = min(len(ordered) - 1, round((len(ordered) - 1) * value))
+        return round(ordered[index], 1)
+
+    sample_count = len(samples)
     return {
         "model": model,
         "sample_count": len(samples),
@@ -89,15 +124,25 @@ def evaluate_model(
         "json_valid": valid,
         "both_fields_covered": covered,
         "faithful_samples": faithful,
-        "success_rate": success / len(samples) if samples else 0,
+        "success_rate": success / sample_count if sample_count else 0,
+        "json_valid_rate": valid / sample_count if sample_count else 0,
+        "field_coverage_rate": covered / sample_count if sample_count else 0,
+        "faithfulness_rate": faithful / sample_count if sample_count else 0,
         "mean_latency_ms": round(mean(latencies), 1) if latencies else None,
-        "p95_latency_ms": round(
-            sorted(latencies)[min(len(latencies) - 1, int(len(latencies) * 0.95))], 1
-        )
-        if latencies
+        "p50_latency_ms": percentile(0.50),
+        "p95_latency_ms": percentile(0.95),
+        "p99_latency_ms": percentile(0.99),
+        "input_tokens": total_input,
+        "output_tokens": total_output,
+        "total_tokens": total_input + total_output,
+        "mean_tokens": round((total_input + total_output) / sample_count, 1)
+        if sample_count
         else None,
-        "total_tokens": sum(usages),
-        "mean_tokens": round(mean(usages), 1) if usages else None,
+        "cost_usd": observed_cost,
+        "pricing_usd_per_million_tokens": price or None,
+        "cost_status": "measured_from_provider_usage"
+        if observed_cost is not None
+        else "not_reported_missing_pricing",
         "errors": errors,
     }
 
@@ -107,6 +152,7 @@ def main() -> None:
     parser.add_argument("--models", nargs="+", default=DEFAULT_MODELS)
     parser.add_argument("--dataset", default="data/evaluation/llm-claims.json")
     parser.add_argument("--output", default="data/benchmarks/llm-results.json")
+    parser.add_argument("--matrix", default="config/model_matrix.json")
     args = parser.parse_args()
     load_dotenv()
     base_url, key = os.getenv("LLM_BASE_URL", ""), os.getenv("LLM_API_KEY", "")
@@ -115,9 +161,13 @@ def main() -> None:
         return
     root = Path(__file__).parents[3]
     dataset = json.loads((root / args.dataset).read_text(encoding="utf-8"))
+    matrix = json.loads((root / args.matrix).read_text(encoding="utf-8"))
+    pricing = {
+        item["model"]: item.get("pricing_usd_per_million_tokens") for item in matrix.get("llm", [])
+    }
     with httpx.Client(timeout=120) as client:
         results = [
-            evaluate_model(client, base_url, key, model, dataset["samples"])
+            evaluate_model(client, base_url, key, model, dataset["samples"], pricing.get(model))
             for model in args.models
         ]
     output = root / args.output
@@ -125,7 +175,8 @@ def main() -> None:
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     for result in results:
         print(
-            f"{result['model']}: {result['success_rate']:.2f} success, {result['mean_latency_ms']} ms, {result['mean_tokens']} tokens"
+            f"{result['model']}: {result['success_rate']:.2f} success, "
+            f"{result['mean_latency_ms']} ms, {result['mean_tokens']} tokens"
         )
     print(f"Wrote {output}")
 

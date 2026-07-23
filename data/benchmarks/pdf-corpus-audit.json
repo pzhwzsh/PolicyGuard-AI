@@ -1,0 +1,17 @@
+{
+  "document_count": 1,
+  "real_document_count": 1,
+  "labeled_document_count": 1,
+  "real_labeled_document_count": 1,
+  "declared_page_count": 25,
+  "layout_feature_counts": {
+    "embedded_images": 1,
+    "headings": 1,
+    "multi_column": 1,
+    "native_text": 1
+  },
+  "missing_file_sample_ids": [],
+  "hash_mismatch_sample_ids": [],
+  "ready_for_general_complex_pdf_claim": false,
+  "note": "Unlabeled real PDFs measure parser coverage and latency only; they cannot be used to report extraction accuracy."
+}

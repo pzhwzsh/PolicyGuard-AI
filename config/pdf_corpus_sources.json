@@ -1,0 +1,15 @@
+{
+  "purpose": "candidate official PDFs for real-layout evaluation; download is not a label",
+  "sources": [
+    {"id": "eu-ucpd", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32005L0029"},
+    {"id": "eu-cosmetics-claims", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32013R0655"},
+    {"id": "eu-health-claims", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32006R1924"},
+    {"id": "eu-dsa", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32022R2065"},
+    {"id": "eu-gdpr", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679"},
+    {"id": "eu-avms", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32010L0013"},
+    {"id": "eu-misleading-advertising", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32006L0114"},
+    {"id": "eu-ecommerce", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32000L0031"},
+    {"id": "eu-consumer-modernisation", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32019L2161"},
+    {"id": "eu-ai-act", "jurisdiction": "EU", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32024R1689"}
+  ]
+}
