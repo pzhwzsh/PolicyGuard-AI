@@ -21,6 +21,8 @@ and versions follow Semantic Versioning.
   and section-heading mappings before the separate legal approval step.
 - Add authenticated, revision-checked deletion of staged uploads and derived artifacts, plus a
   dry-run-first retention cleanup command that never removes activated knowledge documents.
+- Replace fixed 3,000-character PDF splitting with structure-preserving, CJK-aware token windows
+  capped at 800 approximate tokens with 100-token overlap and explicit chunk provenance metadata.
 
 - Split the customer review page from the management console. The public workflow no longer exposes
   policy ingestion, source activation, evaluation queues, model status, job controls, or execution

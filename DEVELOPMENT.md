@@ -80,6 +80,17 @@ Activated knowledge documents are never eligible for this cleanup. Each deletion
 metadata-only event under `UPLOAD_DIR/.deletion-audit/`; source text and parsed content are not
 retained in that event.
 
+## PDF chunking
+
+PDF ingestion preserves parser-produced blocks before applying token windows. `rag_chunks` does not
+merge content across headings, paragraphs, tables, pages, or section paths. Blocks longer than the
+default 800-token budget are split with 100 approximate tokens of overlap. The dependency-free
+estimator treats each CJK character as one token and keeps Latin identifiers/terms together; it is
+deterministic governance metadata, not a claim that every embedding provider uses the same tokenizer.
+
+Each derived chunk records its strategy, token and character offsets, page, block type, section
+path, source hash, and parser. Embedding input continues to prepend the stored section heading.
+
 ## Evidence hardening
 
 An evaluation result is reportable as held-out evidence only after `audit_holdout` passes. Keep the

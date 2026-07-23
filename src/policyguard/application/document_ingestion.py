@@ -389,26 +389,55 @@ class PdfPlumberLayoutParser:
         ]
 
 
-def rag_chunks(document: ParsedDocument, max_chars: int = 3000) -> list[dict[str, Any]]:
+TOKEN_SPAN_PATTERN = re.compile(
+    r"[\u4e00-\u9fff]|[A-Za-z0-9]+(?:[._/-][A-Za-z0-9]+)*|[^\s]"
+)
+
+
+def approximate_token_spans(text: str) -> list[tuple[int, int]]:
+    """Return deterministic CJK-aware token spans without binding to one embedding vendor."""
+    return [(match.start(), match.end()) for match in TOKEN_SPAN_PATTERN.finditer(text)]
+
+
+def rag_chunks(
+    document: ParsedDocument,
+    max_tokens: int = 800,
+    overlap_tokens: int = 100,
+) -> list[dict[str, Any]]:
+    if max_tokens < 1 or overlap_tokens < 0 or overlap_tokens >= max_tokens:
+        raise ValueError("invalid_chunk_token_budget")
     chunks = []
     for block in document.blocks:
         if not block.text and block.block_type == "image":
             continue
-        for offset in range(0, max(len(block.text), 1), max_chars):
-            text = block.text[offset : offset + max_chars]
+        spans = approximate_token_spans(block.text)
+        token_start = 0
+        while token_start < len(spans):
+            token_end = min(token_start + max_tokens, len(spans))
+            char_start = 0 if token_start == 0 else spans[token_start][0]
+            char_end = len(block.text) if token_end == len(spans) else spans[token_end - 1][1]
+            text = block.text[char_start:char_end].strip()
             if text:
-                chunks.append(
-                    {
-                        "chunk_id": f"{document.content_hash[:12]}-{block.block_id}-{offset}",
-                        "text": text,
-                        "markdown": block.markdown,
-                        "page": block.page,
-                        "block_type": block.block_type,
-                        "section_path": list(block.section_path),
-                        "source_hash": document.content_hash,
-                        "parser": document.parser,
-                    }
-                )
+                chunks.append({
+                    "chunk_id": f"{document.content_hash[:12]}-{block.block_id}-{char_start}",
+                    "text": text,
+                    "markdown": block.markdown if len(spans) <= max_tokens else text,
+                    "page": block.page,
+                    "block_type": block.block_type,
+                    "section_path": list(block.section_path),
+                    "source_hash": document.content_hash,
+                    "parser": document.parser,
+                    "chunking_strategy": "structure_token_window_v1",
+                    "token_start": token_start,
+                    "token_end": token_end,
+                    "token_count": token_end - token_start,
+                    "overlap_tokens": 0 if token_start == 0 else overlap_tokens,
+                    "char_start": char_start,
+                    "char_end": char_end,
+                })
+            if token_end == len(spans):
+                break
+            token_start = token_end - overlap_tokens
     return chunks
 
 

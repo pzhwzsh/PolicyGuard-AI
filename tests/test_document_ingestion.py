@@ -3,7 +3,10 @@ import io
 from pypdf import PdfWriter
 
 from policyguard.application.document_ingestion import (
+    DocumentBlock,
     PdfPlumberLayoutParser,
+    ParsedDocument,
+    approximate_token_spans,
     rag_chunks,
     validate_pdf_safety,
 )
@@ -83,3 +86,45 @@ def test_pdf_safety_rejects_active_javascript() -> None:
         assert "pdf_active_content_rejected" in str(exc)
     else:
         raise AssertionError("active PDF must be rejected")
+
+
+def test_rag_chunks_use_token_budget_overlap_and_preserve_structure() -> None:
+    text = "".join(chr(0x4E00 + index % 100) for index in range(180))
+    document = ParsedDocument(
+        "long.pdf",
+        "a" * 64,
+        "test",
+        1,
+        "parsed",
+        (),
+        (DocumentBlock(
+            "p1-body", 1, "paragraph", text, text, None,
+            ("Chapter 1", "Article 2"),
+        ),),
+    )
+
+    chunks = rag_chunks(document, max_tokens=80, overlap_tokens=20)
+
+    assert [item["token_count"] for item in chunks] == [80, 80, 60]
+    assert chunks[1]["token_start"] == 60
+    assert chunks[0]["text"][-20:] == chunks[1]["text"][:20]
+    assert all(item["section_path"] == ["Chapter 1", "Article 2"] for item in chunks)
+    assert all(item["chunking_strategy"] == "structure_token_window_v1" for item in chunks)
+
+
+def test_approximate_tokens_keep_latin_terms_and_split_cjk_characters() -> None:
+    text = "RAG policy-review 政策"
+    spans = approximate_token_spans(text)
+    tokens = [text[start:end] for start, end in spans]
+
+    assert tokens == ["RAG", "policy-review", "政", "策"]
+
+
+def test_rag_chunks_reject_invalid_overlap() -> None:
+    parsed = ParsedDocument("x.pdf", "b" * 64, "test", 1, "parsed", (), ())
+    try:
+        rag_chunks(parsed, max_tokens=100, overlap_tokens=100)
+    except ValueError as exc:
+        assert str(exc) == "invalid_chunk_token_budget"
+    else:
+        raise AssertionError("invalid overlap must be rejected")

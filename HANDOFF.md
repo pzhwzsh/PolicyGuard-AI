@@ -30,6 +30,8 @@ Last updated: 2026-07-23
   `ADMIN_API_KEY` is configured.
 - Blocked staged sources now expose a versioned structural-correction endpoint for reviewer-supplied
   section headings and verified publication/effective dates; corrections never auto-activate content.
+- Parsed PDF blocks now use deterministic structure-aware token windows (800-token budget,
+  100-token overlap) while retaining page, block type, section path, and source offsets.
 
 ## Open work
 
