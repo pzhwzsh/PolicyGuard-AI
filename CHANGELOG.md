@@ -23,6 +23,8 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Resumable CSV/XLSX product review jobs with a downloadable template, row-level workflow IDs,
+  JSONL checkpoints, bounded retries, and formula-safe CSV export.
 - Section-level policy change impact analysis that finds affected workflow evidence and reviewed
   Agent memories, then creates idempotent re-review jobs without activating the staged source.
 - Batched runtime telemetry with 1-hour, 24-hour, and 7-day P50/P95/P99, success-rate,

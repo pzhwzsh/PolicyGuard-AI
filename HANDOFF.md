@@ -1,11 +1,15 @@
 # Handoff
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Current state
 
 - `main` contains the working API, management UI, RAG workflow, document ingestion, review flow,
   remediation flow, Agent memory, MCP server, migrations, and CI.
+- Policy changes can be compared at section level and mapped to affected workflow evidence and
+  reviewed Agent memories; re-review jobs are idempotent and do not auto-activate legal content.
+- CSV/XLSX product files can be reviewed through resumable background jobs with bounded retries,
+  row-level workflow IDs, and formula-safe CSV exports.
 - SQLite is the default local database. PostgreSQL migration coverage runs in CI.
 - RapidOCR is the supported local OCR sidecar. Other parser sidecars are optional.
 - Downloaded policy versions remain staged until explicitly reviewed and activated.
@@ -22,12 +26,10 @@ Last updated: 2026-07-22
 ### Knowledge lifecycle
 
 - Review staged policy versions before activation.
-- Add change-impact analysis for affected reports, caches, and Agent memories.
 - Expand jurisdiction, category, channel, and platform-specific policy coverage.
 
 ### Product workflow
 
-- Add resumable CSV/XLSX batch review.
 - Add image and video claim extraction with frame-level evidence.
 - Add retention and deletion controls for uploaded files and derived artifacts.
 - Add exportable review packages.
@@ -53,6 +55,7 @@ python -m pip install -e ".[dev,pdf,mcp]"
 Copy-Item .env.example .env
 alembic upgrade head
 $env:APP_ENV='test'
+$env:PYTHON_DOTENV_DISABLED='1'
 python -m pytest
 python -m ruff check .
 python -m policyguard.scripts.publish_data_evidence --validate

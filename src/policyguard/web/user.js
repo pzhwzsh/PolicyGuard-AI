@@ -134,3 +134,32 @@ fetch("/health")
     $("#service-status").textContent = response.ok ? "服务可用" : "服务异常";
   })
   .catch(() => { $("#service-status").textContent = "服务异常"; });
+
+async function pollBatch(jobId, attempts = 0) {
+  const job = await api(`/api/v1/jobs/${jobId}`);
+  $("#batch-status").hidden = false;
+  $("#batch-status").innerHTML = `<strong>批量任务</strong><span>${escapeHtml(job.status)} · 已尝试 ${escapeHtml(job.attempts)}/${escapeHtml(job.max_attempts)}</span>`;
+  if (job.status === "completed") {
+    $("#batch-status").innerHTML += `<a class="button-link" href="/api/v1/batches/${jobId}/result">下载检查结果</a>`;
+    return;
+  }
+  if (job.status === "failed" || attempts >= 120) return;
+  window.setTimeout(() => pollBatch(jobId, attempts + 1).catch(() => {}), 1000);
+}
+
+$("#batch-upload-button").addEventListener("click", async () => {
+  const file = $("#batch-file").files[0];
+  if (!file) { alert("请先选择 CSV 或 XLSX 文件"); return; }
+  const button = $("#batch-upload-button");
+  const form = new FormData();
+  form.append("file", file);
+  button.disabled = true;
+  button.textContent = "正在提交";
+  try {
+    const response = await fetch("/api/v1/batches/review", {method: "POST", body: form});
+    const job = await response.json();
+    if (!response.ok) throw new Error(job.detail || `HTTP ${response.status}`);
+    await pollBatch(job.id);
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; button.textContent = "提交批量任务"; }
+});

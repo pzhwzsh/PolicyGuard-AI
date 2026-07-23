@@ -52,11 +52,15 @@ Unit and integration tests must not call paid or unstable external services.
 
 ```powershell
 $env:APP_ENV='test'
+$env:PYTHON_DOTENV_DISABLED='1'
 python -m pytest
 python -m ruff check .
 python -m compileall -q src
 python -m policyguard.scripts.publish_data_evidence --validate
 ```
+
+`PYTHON_DOTENV_DISABLED=1` prevents tests from loading real model credentials from the local
+`.env`. Real provider checks belong in a separate controlled smoke test.
 
 CI runs the PostgreSQL migration test with `POSTGRES_TEST_URL`. Without that variable, the single
 PostgreSQL-specific test is skipped locally.
