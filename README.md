@@ -24,6 +24,17 @@
 - 平台发布前红黄绿总检、场景图身份复核提示和可追溯素材清单
 - HTTP API、MCP Server 与本地管理界面
 
+## Agent Harness
+
+独立 Harness 层为长任务提供事件溯源、检查点、暂停/恢复/取消、权限审批和预算终止，
+不会绕过现有 PolicyGuard 业务流程。上下文按优先级压缩并区分工作、情景和长期记忆；
+长期记忆必须经过人工审核。扩展能力包括声明式 Skill、受限 Docker Sandbox、
+Streamable HTTP MCP 客户端、最多四个节点的有界多 Agent DAG，以及可复现评测集。
+
+默认配置不会伪装外部能力：Sandbox 默认关闭，MCP 服务列表默认为空。控制台会明确显示
+未配置状态，并展示 Token、成本、缓存、工具调用和恢复指标。详细边界和接口见
+`docs/AGENT_HARNESS.md`。
+
 ## 系统流程
 
 ```text

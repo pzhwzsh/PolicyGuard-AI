@@ -57,6 +57,9 @@ class Settings:
     max_upload_bytes: int
     max_active_jobs_per_tenant: int
     oidc_issuer_url: str
+    harness_sandbox_enabled: bool
+    harness_sandbox_image: str
+    mcp_servers_json: str
 
 
 @lru_cache(maxsize=1)
@@ -121,4 +124,9 @@ def get_settings() -> Settings:
         max_upload_bytes=int(getenv("MAX_UPLOAD_BYTES", str(25 * 1024 * 1024))),
         max_active_jobs_per_tenant=int(getenv("MAX_ACTIVE_JOBS_PER_TENANT", "10")),
         oidc_issuer_url=getenv("OIDC_ISSUER_URL", ""),
+        harness_sandbox_enabled=getenv(
+            "HARNESS_SANDBOX_ENABLED", "false"
+        ).casefold() == "true",
+        harness_sandbox_image=getenv("HARNESS_SANDBOX_IMAGE", "python:3.12-alpine"),
+        mcp_servers_json=getenv("MCP_SERVERS_JSON", "[]"),
     )

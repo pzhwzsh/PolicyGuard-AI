@@ -60,6 +60,12 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Add an event-sourced Agent Harness with revision-safe checkpoints, pause/resume/cancel,
+  permission gates, bounded retries, and step/tool/token/cost budgets.
+- Add prioritized context compression, reviewed long-term memory, prefix-cache telemetry,
+  declarative skills, an opt-in restricted Docker sandbox, and a validated MCP HTTP client.
+- Add bounded four-node multi-agent DAG orchestration, structured inter-agent messages, shared
+  budgets, reproducible harness evaluation metrics, and a responsive operator console with SSE.
 - Add a redesigned responsive user workspace with guided onboarding, product records, automatic
   local draft recovery, unified job controls, readiness diagnostics, and human-readable failures.
 - Add publish preflight checks for grounded claims, platform copy/image limits, identity review,

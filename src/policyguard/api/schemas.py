@@ -473,6 +473,63 @@ class TextSafetyRequest(BaseModel):
     content: str = Field(min_length=1, max_length=100_000)
 
 
+class HarnessStepRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    type: str = Field(pattern=r"^(tool|finish)$")
+    tool: str | None = Field(default=None, max_length=100)
+    arguments: dict[str, Any] = Field(default_factory=dict)
+    permission: str | None = Field(default=None, max_length=100)
+    result: dict[str, Any] = Field(default_factory=dict)
+
+
+class HarnessRunRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    objective: str = Field(min_length=1, max_length=2000)
+    context: dict[str, Any] = Field(default_factory=dict)
+    plan: list[HarnessStepRequest] = Field(default_factory=list, max_length=24)
+    skill: str | None = Field(default=None, max_length=64)
+    max_steps: int = Field(default=8, ge=1, le=24)
+    max_tool_calls: int = Field(default=6, ge=1, le=20)
+    max_tokens: int = Field(default=12_000, ge=256, le=128_000)
+    max_cost_microusd: int = Field(default=100_000, ge=0, le=10_000_000)
+
+
+class HarnessRevisionRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    reason: str = Field(default="user_requested", max_length=500)
+
+
+class HarnessPermissionRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    permission: str = Field(min_length=1, max_length=100)
+    reviewer: str = Field(min_length=1, max_length=100)
+
+
+class HarnessMemoryRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    tier: str = Field(pattern=r"^(working|episodic|long_term)$")
+    key: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
+    value: Any
+    reviewed: bool = False
+
+
+class MultiAgentNodeRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    agent_id: str = Field(pattern=r"^[a-z][a-z0-9_-]{0,31}$")
+    role: str = Field(min_length=1, max_length=100)
+    task: str = Field(min_length=1, max_length=1000)
+    depends_on: list[str] = Field(default_factory=list, max_length=4)
+
+
+class MultiAgentRunRequest(BaseModel):
+    nodes: list[MultiAgentNodeRequest] = Field(min_length=1, max_length=4)
+    max_messages: int = Field(default=24, ge=1, le=100)
+    max_tokens: int = Field(default=24_000, ge=256, le=128_000)
+
+
 class SourceUpdateResponse(BaseModel):
     source_id: str
     content_hash: str

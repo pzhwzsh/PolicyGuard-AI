@@ -59,6 +59,10 @@ def test_user_ui_hides_management_and_runtime_controls(tmp_path: Path) -> None:
     assert "/api/v1/readiness" in script
     assert "/api/v1/publish-preflight" in script
     assert "policyguard-workspace-draft-v2" in script
+    assert 'id="agent-harness"' in html
+    assert 'id="harness-context-bars"' in html
+    assert "/api/v1/harness/runs" in script
+    assert "EventSource" in script
 
     with TestClient(create_app(f"sqlite:///{tmp_path / 'ui.db'}")) as client:
         user_page = client.get("/")

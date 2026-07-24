@@ -1,6 +1,8 @@
 import hmac
 import json
 import re
+import tempfile
+from asyncio import sleep
 from collections import defaultdict, deque
 from collections.abc import Iterator
 from contextlib import asynccontextmanager
@@ -22,7 +24,13 @@ from fastapi import (
     UploadFile,
     status,
 )
-from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Response
+from fastapi.responses import (
+    FileResponse,
+    JSONResponse,
+    PlainTextResponse,
+    Response,
+    StreamingResponse,
+)
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -48,6 +56,10 @@ from policyguard.api.schemas import (
     DraftCreationRequest,
     EvaluationReviewRequest,
     EvaluationReviewResponse,
+    HarnessMemoryRequest,
+    HarnessPermissionRequest,
+    HarnessRevisionRequest,
+    HarnessRunRequest,
     HealthResponse,
     KnowledgeStatsResponse,
     MarketCompareRequest,
@@ -55,6 +67,7 @@ from policyguard.api.schemas import (
     MarketEvidenceResponse,
     ModelEvaluationRequest,
     ModelPromotionRequest,
+    MultiAgentRunRequest,
     OperationsDashboardResponse,
     ProductCheckRequest,
     ProductWorkspaceRequest,
@@ -103,6 +116,13 @@ from policyguard.application.evaluation_review import EvaluationReviewService
 from policyguard.application.evaluation_workbench import validate_evaluation_path
 from policyguard.application.evidence_support import configured_evidence_verifier
 from policyguard.application.execution_policy import choose_remediation_mode
+from policyguard.application.harness_context import estimate_tokens
+from policyguard.application.harness_evaluation import evaluate_harness
+from policyguard.application.harness_mcp import MCPClientRegistry, MCPServerConfig
+from policyguard.application.harness_multi_agent import AgentNode, MultiAgentCoordinator
+from policyguard.application.harness_runtime import HarnessRuntime
+from policyguard.application.harness_sandbox import DockerSandboxExecutor, SandboxPolicy
+from policyguard.application.harness_skills import SkillRegistry
 from policyguard.application.hybrid import FallbackRetriever, HybridRetriever
 from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
@@ -311,6 +331,67 @@ def create_app(database_url: str | None = None) -> FastAPI:
         )
         if (active or 0) >= settings.max_active_jobs_per_tenant:
             raise HTTPException(status_code=429, detail="tenant_active_job_limit_reached")
+
+    def mcp_registry() -> MCPClientRegistry:
+        try:
+            payload = json.loads(settings.mcp_servers_json)
+            if not isinstance(payload, list):
+                raise ValueError("mcp_servers_json_invalid")
+            servers = [
+                MCPServerConfig(
+                    name=item["name"],
+                    url=item["url"],
+                    api_key=item.get("api_key", ""),
+                    timeout_seconds=float(item.get("timeout_seconds", 20)),
+                    max_result_bytes=int(item.get("max_result_bytes", 256_000)),
+                    allowed_hosts=tuple(item.get("allowed_hosts", [])),
+                )
+                for item in payload
+            ]
+        except (json.JSONDecodeError, KeyError, TypeError) as exc:
+            raise RuntimeError("mcp_servers_json_invalid") from exc
+        return MCPClientRegistry(servers)
+
+    def harness_runtime(tenant: str) -> tuple[HarnessRuntime, SkillRegistry, DockerSandboxExecutor]:
+        sandbox = DockerSandboxExecutor(
+            Path(settings.upload_dir) / "harness-sandbox",
+            SandboxPolicy(image=settings.harness_sandbox_image),
+            enabled=settings.harness_sandbox_enabled,
+        )
+
+        def inspect_context(arguments: dict, runtime_context: dict) -> dict:
+            return {
+                "objective": runtime_context["run"]["objective"],
+                "metrics": runtime_context["context"]["metrics"],
+                "requested_fields": arguments.get("fields", []),
+                "external_side_effect": False,
+            }
+
+        def policy_preflight_tool(arguments: dict, runtime_context: dict) -> dict:
+            payload = arguments.get("payload") or runtime_context["run"]["context"].get(
+                "creative_payload"
+            )
+            if not payload:
+                raise ValueError("harness_creative_payload_required")
+            return publish_preflight(payload)
+
+        def sandbox_python(arguments: dict, _: dict) -> dict:
+            return sandbox.execute_python(arguments.get("code", ""))
+
+        def mcp_call(arguments: dict, _: dict) -> dict:
+            return mcp_registry().call_tool(
+                arguments["server"], arguments["tool"], arguments.get("arguments", {})
+            )
+
+        tools = {
+            "inspect_context": inspect_context,
+            "policy_preflight": policy_preflight_tool,
+            "sandbox_python": sandbox_python,
+            "mcp_call": mcp_call,
+        }
+        runtime = HarnessRuntime(Path(settings.upload_dir), tenant, tools)
+        skills = SkillRegistry(Path(__file__).parents[3] / "config" / "skills", set(tools))
+        return runtime, skills, sandbox
 
     def require_admin(x_admin_key: str = Header(default="")) -> None:
         if settings.admin_api_key and not hmac.compare_digest(
@@ -782,6 +863,317 @@ def create_app(database_url: str | None = None) -> FastAPI:
             return publish_preflight(payload.model_dump(by_alias=True))
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    @application.get("/api/v1/harness/skills", tags=["agent-harness"])
+    def list_harness_skills(
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        _, registry, _ = harness_runtime(tenant)
+        skills, failures = registry.discover()
+        return {
+            "skills": [
+                {
+                    "name": skill.name,
+                    "version": skill.version,
+                    "description": skill.description,
+                    "permissions": list(skill.permissions),
+                    "step_count": len(skill.plan),
+                }
+                for skill in skills
+            ],
+            "failures": failures,
+        }
+
+    @application.get("/api/v1/harness/sandbox/readiness", tags=["agent-harness"])
+    def harness_sandbox_readiness(
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        _, _, sandbox = harness_runtime(tenant)
+        return sandbox.readiness()
+
+    @application.get("/api/v1/harness/mcp/servers", tags=["agent-harness"])
+    def list_harness_mcp_servers(_: str = Depends(tenant_identity)) -> list[dict]:
+        registry = mcp_registry()
+        return [
+            {
+                "name": server.name,
+                "url": server.url,
+                "configured": True,
+                "max_result_bytes": server.max_result_bytes,
+            }
+            for server in registry.servers.values()
+        ]
+
+    @application.get("/api/v1/harness/runs", tags=["agent-harness"])
+    def list_harness_runs(
+        limit: int = Query(default=30, ge=1, le=100),
+        tenant: str = Depends(tenant_identity),
+    ) -> list[dict]:
+        runtime, _, _ = harness_runtime(tenant)
+        return runtime.list(limit)
+
+    @application.post(
+        "/api/v1/harness/runs",
+        status_code=status.HTTP_201_CREATED,
+        tags=["agent-harness"],
+    )
+    def create_harness_run(
+        payload: HarnessRunRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        runtime, registry, _ = harness_runtime(tenant)
+        if payload.skill:
+            try:
+                plan = list(registry.get(payload.skill).plan)
+            except LookupError as exc:
+                raise HTTPException(status_code=404, detail=str(exc)) from exc
+        else:
+            plan = [step.model_dump(exclude_none=True) for step in payload.plan] or [
+                {"type": "tool", "tool": "inspect_context", "arguments": {}},
+                {"type": "finish", "result": {"human_review_required": True}},
+            ]
+        try:
+            run = runtime.create(
+                objective=payload.objective,
+                context=payload.context,
+                plan=plan,
+                budgets={
+                    "max_steps": payload.max_steps,
+                    "max_tool_calls": payload.max_tool_calls,
+                    "max_tokens": payload.max_tokens,
+                    "max_cost_microusd": payload.max_cost_microusd,
+                },
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        bind_resource(session, "harness", run["run_id"], tenant)
+        return run
+
+    @application.get("/api/v1/harness/runs/{run_id}", tags=["agent-harness"])
+    def get_harness_run(
+        run_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        try:
+            return harness_runtime(tenant)[0].load(run_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    def harness_action(
+        action: str,
+        run_id: str,
+        expected_revision: int,
+        tenant: str,
+        reason: str = "user_requested",
+    ) -> dict:
+        runtime = harness_runtime(tenant)[0]
+        try:
+            if action == "advance":
+                return runtime.advance(run_id, expected_revision)
+            if action == "run":
+                return runtime.run_until_boundary(run_id, expected_revision)
+            if action == "pause":
+                return runtime.pause(run_id, expected_revision, reason)
+            if action == "resume":
+                return runtime.resume(run_id, expected_revision)
+            return runtime.cancel(run_id, expected_revision)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @application.post("/api/v1/harness/runs/{run_id}/advance", tags=["agent-harness"])
+    def advance_harness_run(
+        run_id: str,
+        payload: HarnessRevisionRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        return harness_action("advance", run_id, payload.expected_revision, tenant)
+
+    @application.post("/api/v1/harness/runs/{run_id}/run", tags=["agent-harness"])
+    def execute_harness_run(
+        run_id: str,
+        payload: HarnessRevisionRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        return harness_action("run", run_id, payload.expected_revision, tenant)
+
+    @application.post("/api/v1/harness/runs/{run_id}/pause", tags=["agent-harness"])
+    def pause_harness_run(
+        run_id: str,
+        payload: HarnessRevisionRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        return harness_action(
+            "pause", run_id, payload.expected_revision, tenant, payload.reason
+        )
+
+    @application.post("/api/v1/harness/runs/{run_id}/resume", tags=["agent-harness"])
+    def resume_harness_run(
+        run_id: str,
+        payload: HarnessRevisionRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        return harness_action("resume", run_id, payload.expected_revision, tenant)
+
+    @application.post("/api/v1/harness/runs/{run_id}/cancel", tags=["agent-harness"])
+    def cancel_harness_run(
+        run_id: str,
+        payload: HarnessRevisionRequest,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        return harness_action("cancel", run_id, payload.expected_revision, tenant)
+
+    @application.post("/api/v1/harness/runs/{run_id}/permissions", tags=["agent-harness"])
+    def approve_harness_permission(
+        run_id: str,
+        payload: HarnessPermissionRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        try:
+            return harness_runtime(tenant)[0].approve_permission(
+                run_id,
+                payload.expected_revision,
+                payload.permission,
+                payload.reviewer,
+            )
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @application.post("/api/v1/harness/runs/{run_id}/memory", tags=["agent-harness"])
+    def update_harness_memory(
+        run_id: str,
+        payload: HarnessMemoryRequest,
+        session: Session = Depends(get_session),
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        require_resource(session, "harness", run_id, tenant)
+        if payload.tier == "long_term" and settings.admin_api_key and not authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_required")
+        try:
+            return harness_runtime(tenant)[0].put_memory(
+                run_id,
+                payload.expected_revision,
+                payload.tier,
+                payload.key,
+                payload.value,
+                payload.reviewed,
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @application.get("/api/v1/harness/runs/{run_id}/events", tags=["agent-harness"])
+    async def stream_harness_events(
+        request: Request,
+        run_id: str,
+        after: int = Query(default=0, ge=0),
+        follow: bool = Query(default=False),
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> StreamingResponse:
+        require_resource(session, "harness", run_id, tenant)
+        runtime = harness_runtime(tenant)[0]
+
+        async def event_stream():
+            cursor = after
+            polls = 0
+            while True:
+                events = runtime.events(run_id, cursor)
+                for event in events:
+                    cursor = event["sequence"]
+                    yield (
+                        f"id: {cursor}\nevent: {event['type']}\n"
+                        f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+                    )
+                if not follow or await request.is_disconnected() or polls >= 120:
+                    break
+                polls += 1
+                if not events:
+                    yield ": keepalive\n\n"
+                await sleep(0.5)
+
+        return StreamingResponse(
+            event_stream(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
+
+    @application.post("/api/v1/harness/multi-agent", tags=["agent-harness"])
+    def run_multi_agent(
+        payload: MultiAgentRunRequest,
+        _: str = Depends(tenant_identity),
+    ) -> dict:
+        coordinator = MultiAgentCoordinator(
+            max_agents=4,
+            max_messages=payload.max_messages,
+            max_tokens=payload.max_tokens,
+        )
+        nodes = [
+            AgentNode(item.agent_id, item.role, item.task, tuple(item.depends_on))
+            for item in payload.nodes
+        ]
+
+        def deterministic_agent(node: AgentNode, messages: list[dict], remaining: int) -> dict:
+            content = {
+                "role": node.role,
+                "task": node.task,
+                "received": [item["from"] for item in messages],
+                "human_review_required": True,
+            }
+            return {**content, "tokens": min(estimate_tokens(content), remaining)}
+
+        try:
+            return coordinator.execute(nodes, deterministic_agent)
+        except (ValueError, RuntimeError) as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    @application.post("/api/v1/harness/evaluations/run", tags=["agent-harness"])
+    def run_harness_evaluation(
+        _: None = Depends(require_admin),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        dataset = json.loads(
+            (Path(__file__).parents[3] / "data" / "evaluation" / "harness-v1.json")
+            .read_text(encoding="utf-8")
+        )
+        with tempfile.TemporaryDirectory(
+            prefix="harness-eval-", dir=Path(settings.upload_dir).resolve()
+        ) as temporary:
+            def runner(case: dict) -> dict:
+                runtime = harness_runtime(tenant)[0]
+                isolated = HarnessRuntime(Path(temporary), tenant, runtime.tools)
+                run = isolated.create(
+                    objective=case["objective"],
+                    context={"evaluation": True},
+                    plan=case["plan"],
+                    budgets={"max_steps": 8, "max_tool_calls": 6, "max_tokens": 12_000},
+                )
+                return isolated.run_until_boundary(run["run_id"], run["revision"])
+
+            return {"dataset": dataset["version"], **evaluate_harness(dataset["cases"], runner)}
 
     @application.post(
         "/api/v1/creatives",
@@ -1835,7 +2227,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def list_cross_language_reviews(
         session: Session = Depends(get_session),
     ) -> list[EvaluationReviewResponse]:
-        return [EvaluationReviewResponse(**item) for item in evaluation_review_service(session).list_items()]
+        return [
+            EvaluationReviewResponse(**item)
+            for item in evaluation_review_service(session).list_items()
+        ]
 
     @application.post(
         "/api/v1/evaluations/cross-language/reviews/{sample_id}",

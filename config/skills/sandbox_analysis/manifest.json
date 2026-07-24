@@ -1,0 +1,15 @@
+{
+  "name": "sandbox_analysis",
+  "version": "1.0.0",
+  "description": "Run approved Python analysis in an isolated, network-disabled Docker container.",
+  "permissions": ["context:read", "sandbox:execute"],
+  "plan": [
+    {
+      "type": "tool",
+      "tool": "sandbox_python",
+      "permission": "sandbox:execute",
+      "arguments": {"code": "print('sandbox ready')"}
+    },
+    {"type": "finish", "result": {"human_review_required": true}}
+  ]
+}
