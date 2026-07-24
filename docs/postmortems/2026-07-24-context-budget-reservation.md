@@ -1,7 +1,7 @@
 # Postmortem: small Harness runs failed before their first tool
 
-Date: 2026-07-24  
-Status: fixed and covered by regression tests  
+Date: 2026-07-24
+Status: fixed and covered by regression tests
 Impact: development-only; no user or production run used the new Harness
 
 ## Incident
