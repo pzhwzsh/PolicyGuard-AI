@@ -438,6 +438,41 @@ class CreativeReviewRequest(BaseModel):
     comment: str = Field(default="", max_length=1000)
 
 
+class ProductWorkspaceRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    external_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
+    name: str = Field(min_length=1, max_length=300)
+    category: str = Field(min_length=1, max_length=100)
+    brand: str = Field(default="", max_length=100)
+    markets: list[str] = Field(default_factory=lambda: ["CN"], min_length=1, max_length=10)
+    platforms: list[str] = Field(default_factory=lambda: ["generic"], min_length=1, max_length=10)
+    verified_facts: list[VerifiedProductFact] = Field(default_factory=list, max_length=100)
+    skus: list[CreativeSkuInput] = Field(default_factory=list, max_length=200)
+    notes: str = Field(default="", max_length=5000)
+    expected_revision: int | None = Field(default=None, ge=0)
+
+
+class PublishPreflightRequest(BaseModel):
+    model_config = ConfigDict(extra="allow", populate_by_name=True)
+
+    platform: str = Field(
+        default="generic",
+        pattern=r"^(amazon|tiktok_shop|shopee|temu|taobao|generic)$",
+    )
+    ad_copy: str = Field(default="", max_length=5000, alias="copy")
+    product_name: str = Field(min_length=1, max_length=300)
+    brand: str = Field(default="", max_length=100)
+    verified_facts: list[VerifiedProductFact] = Field(default_factory=list, max_length=100)
+    skus: list[CreativeSkuInput] = Field(default_factory=list, max_length=200)
+    policy_evidence: list[dict[str, Any]] = Field(default_factory=list, max_length=100)
+    assets: list[dict[str, Any]] = Field(default_factory=list, max_length=200)
+
+
+class TextSafetyRequest(BaseModel):
+    content: str = Field(min_length=1, max_length=100_000)
+
+
 class SourceUpdateResponse(BaseModel):
     source_id: str
     content_hash: str

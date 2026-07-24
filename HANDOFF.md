@@ -47,6 +47,12 @@ Last updated: 2026-07-23
   human approval before an audit ZIP can be downloaded.
 - Optional product scene generation uses an identity-preserving image-edit sidecar and remains a
   pending human identity-review candidate. Missing provider configuration returns an explicit 503.
+- The user workspace has been rebuilt around a guided six-step flow, reusable revisioned product
+  records, local draft recovery, a unified tenant task list, and live component readiness checks.
+- Intake now blocks executable/archive mismatches and active PDF content, detects PII and prompt
+  injection before model use, limits active tenant jobs, and exposes cancellation/dead-letter flows.
+- Publish preflight returns red/yellow/green checks for claim grounding, prohibited terms, platform
+  length and image dimensions, policy evidence, privacy, and AI scene identity review.
 
 ## Open work
 

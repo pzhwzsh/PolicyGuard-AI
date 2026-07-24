@@ -54,6 +54,9 @@ class Settings:
     image_generation_model: str
     image_generation_timeout_seconds: float
     rate_limit_per_minute: int
+    max_upload_bytes: int
+    max_active_jobs_per_tenant: int
+    oidc_issuer_url: str
 
 
 @lru_cache(maxsize=1)
@@ -115,4 +118,7 @@ def get_settings() -> Settings:
             getenv("IMAGE_GENERATION_TIMEOUT_SECONDS", "180")
         ),
         rate_limit_per_minute=int(getenv("RATE_LIMIT_PER_MINUTE", "120")),
+        max_upload_bytes=int(getenv("MAX_UPLOAD_BYTES", str(25 * 1024 * 1024))),
+        max_active_jobs_per_tenant=int(getenv("MAX_ACTIVE_JOBS_PER_TENANT", "10")),
+        oidc_issuer_url=getenv("OIDC_ISSUER_URL", ""),
     )

@@ -160,7 +160,7 @@ class PersistentJobQueue:
 
     def stats(self) -> dict[str, int]:
         records = self.session.scalars(select(BackgroundJobRecord)).all()
-        statuses = {"queued", "running", "retry", "completed", "failed"}
+        statuses = {"queued", "running", "retry", "completed", "failed", "cancelled"}
         return {status: sum(record.status == status for record in records) for status in statuses}
 
     def list(self, limit: int = 100) -> list[BackgroundJob]:
@@ -179,6 +179,16 @@ class PersistentJobQueue:
         record.attempts = 0
         record.error = None
         record.available_at = datetime.now(UTC)
+        record.updated_at = datetime.now(UTC)
+        self.session.commit()
+        return _domain(record)
+
+    def cancel(self, job_id: str) -> BackgroundJob:
+        record = self._required(job_id)
+        if record.status not in {"queued", "retry"}:
+            raise RuntimeError("job_not_cancellable")
+        record.status = "cancelled"
+        record.error = "cancelled_by_user"
         record.updated_at = datetime.now(UTC)
         self.session.commit()
         return _domain(record)

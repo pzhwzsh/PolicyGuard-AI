@@ -60,6 +60,12 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Add a redesigned responsive user workspace with guided onboarding, product records, automatic
+  local draft recovery, unified job controls, readiness diagnostics, and human-readable failures.
+- Add publish preflight checks for grounded claims, platform copy/image limits, identity review,
+  policy evidence, privacy, and prompt injection; automatic publishing remains prohibited.
+- Add upload structure/signature scanning, PII detection, Chinese/English prompt-injection rules,
+  outbound private-network blocking, tenant job capacity, queued-job cancellation, and dead letters.
 - Add a governed creative studio for verified-fact ad-copy candidates, platform-sized main and SKU
   assets, optional identity-preserving scene-image jobs, mandatory human review, and audit ZIPs.
 - Add a provider-neutral `/product-scene-edit` sidecar contract with bounded retries, output image
