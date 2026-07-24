@@ -1,0 +1,11 @@
+{
+  "name": "compliance_review",
+  "version": "1.0.0",
+  "description": "Inspect context, run governed publish preflight, and finish with no external side effect.",
+  "permissions": ["context:read"],
+  "plan": [
+    {"type": "tool", "tool": "inspect_context", "arguments": {}},
+    {"type": "tool", "tool": "policy_preflight", "arguments": {}},
+    {"type": "finish", "result": {"human_review_required": true, "automatic_publish": false}}
+  ]
+}

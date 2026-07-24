@@ -363,6 +363,44 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .toast-region { position: fixed; right: 24px; bottom: 24px; z-index: 100; display: grid; gap: 8px; }
 .toast { min-width: 260px; max-width: 380px; padding: 13px 15px; border: 1px solid #dedbe1; border-radius: 11px; color: #444852; background: white; box-shadow: 0 15px 40px rgba(30,32,40,.16); font-size: 10px; animation: toast-in .2s ease-out; }
 .toast.error { color: #8a3f3f; border-color: #efd0d0; }
+.harness-overview { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: 14px; }
+.harness-composer, .harness-status-panel, .harness-run-panel { padding: 24px; }
+.harness-composer { display: grid; gap: 14px; }
+.harness-budget-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.harness-meta { display: grid; gap: 9px; }
+.harness-meta-row { padding: 11px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #ebe9e9; border-radius: 9px; background: #fafafb; }
+.harness-meta-row div strong, .harness-meta-row div small { display: block; }
+.harness-meta-row strong { font-size: 9px; }
+.harness-meta-row small { margin-top: 3px; color: #9699a1; font-size: 8px; }
+.harness-run-panel { margin-top: 14px; }
+.harness-run-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.harness-run-head h3 { margin: 9px 0 4px; font-size: 16px; }
+.harness-run-head small { color: #989ba4; font-size: 8px; }
+.harness-metrics { display: grid; grid-template-columns: repeat(5, 1fr); margin: 20px 0; border: 1px solid #e9e7e6; border-radius: 12px; background: #fafafb; }
+.harness-metrics article { padding: 14px; border-right: 1px solid #e9e7e6; }
+.harness-metrics article:last-child { border-right: 0; }
+.harness-metrics span { display: block; color: #92969f; font-size: 8px; }
+.harness-metrics strong { display: block; margin-top: 5px; font-size: 15px; }
+.harness-detail-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: 22px; }
+.harness-events { max-height: 340px; overflow: auto; border-left: 1px solid #ddd9e1; }
+.harness-event { position: relative; padding: 9px 12px 9px 19px; }
+.harness-event::before { content: ""; position: absolute; left: -4px; top: 14px; width: 7px; height: 7px; border-radius: 50%; background: #7969e5; box-shadow: 0 0 0 4px #f0edff; }
+.harness-event strong, .harness-event small { display: block; }
+.harness-event strong { font-size: 9px; }
+.harness-event small { margin-top: 3px; color: #979aa3; font-size: 8px; line-height: 1.5; overflow-wrap: anywhere; }
+.context-bars { display: grid; gap: 12px; padding-top: 7px; }
+.context-bar-row { display: grid; grid-template-columns: 105px 1fr 46px; gap: 9px; align-items: center; font-size: 8px; }
+.context-bar-row > div { height: 7px; overflow: hidden; border-radius: 99px; background: #efedf0; }
+.context-bar-row i { display: block; height: 100%; border-radius: inherit; background: #7766e5; }
+.context-bar-row b { text-align: right; }
+.permission-callout { margin-top: 16px; padding: 13px; border: 1px solid #efd9b8; border-radius: 10px; background: #fff9ef; color: #7f622e; font-size: 9px; line-height: 1.5; }
+.permission-callout button { width: 100%; margin-top: 10px; }
+.harness-lab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.mini-lab { padding: 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 13px; align-items: center; }
+.mini-lab h3 { margin: 1px 0 5px; font-size: 12px; }
+.mini-lab p { margin: 0; color: #8d919a; font-size: 8px; }
+.mini-lab pre { grid-column: 1 / -1; display: none; max-height: 190px; margin: 5px 0 0; padding: 12px; overflow: auto; border-radius: 9px; color: #dedbea; background: #24232e; font-size: 8px; white-space: pre-wrap; }
+.mini-lab pre:not(:empty) { display: block; }
 @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } }
 
 @media (max-width: 1100px) {
@@ -377,6 +415,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
   .summary-grid { grid-template-columns: repeat(2, 1fr); }
   .guide-card { grid-template-columns: 1fr; }
   .split-panel, .creative-layout { grid-template-columns: 1fr; }
+  .harness-overview, .harness-detail-grid { grid-template-columns: 1fr; }
   .readiness-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -395,6 +434,12 @@ fieldset { border: 0; padding: 0; margin: 0; }
   .workspace-header h1 { font-size: 25px; }
   .header-actions { margin-top: 16px; justify-content: space-between; }
   .summary-grid, .tool-grid, .preflight-grid, .readiness-grid { grid-template-columns: 1fr; }
+  .harness-budget-row, .harness-lab-grid { grid-template-columns: 1fr; }
+  .harness-metrics { grid-template-columns: repeat(2, 1fr); }
+  .harness-metrics article { border-bottom: 1px solid #e9e7e6; }
+  .harness-run-head { flex-direction: column; }
+  .mini-lab { grid-template-columns: auto 1fr; }
+  .mini-lab button { grid-column: 1 / -1; }
   .guide-card { padding: 20px; }
   .workflow-steps { grid-template-columns: repeat(3, 1fr); row-gap: 18px; }
   .workflow-steps li::after { display: none; }

@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Current state
 
@@ -53,6 +53,14 @@ Last updated: 2026-07-23
   injection before model use, limits active tenant jobs, and exposes cancellation/dead-letter flows.
 - Publish preflight returns red/yellow/green checks for claim grounding, prohibited terms, platform
   length and image dimensions, policy evidence, privacy, and AI scene identity review.
+- The independent Agent Harness now records append-only run events and checkpoints, enforces
+  revision and execution budgets, supports pause/resume/cancel and explicit permission approval,
+  and exposes replayable SSE events without replacing the governed PolicyGuard workflow.
+- Harness context is priority-aware and bounded; working, episodic, and reviewed long-term memory
+  are separate. Skills are declarative, multi-agent execution is a bounded DAG, and Sandbox/MCP
+  integrations report unconfigured state instead of faking availability.
+- A versioned harness evaluation set reports task success, tool precision/recall, recovery signals,
+  latency, tokens, and estimated cost. The user workspace includes controls and live metrics.
 
 ## Open work
 
@@ -86,6 +94,8 @@ Last updated: 2026-07-23
 - Validate worker recovery and concurrency against PostgreSQL.
 - Replace SQLite for concurrent job execution where write contention is material.
 - Connect the dashboard alert payload to the deployment's external pager/notification channel.
+- Validate the opt-in Docker sandbox against the production container runtime before enabling it.
+- Configure and integration-test approved HTTPS MCP servers before exposing their tools to runs.
 
 ## Known issues
 

@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "purpose": "Development benchmark for Harness control flow; not a legal quality holdout.",
+  "cases": [
+    {
+      "case_id": "context-inspect-finish",
+      "objective": "Inspect bounded context and finish",
+      "plan": [
+        {"type": "tool", "tool": "inspect_context", "arguments": {}},
+        {"type": "finish", "result": {"ok": true}}
+      ],
+      "expected_tools": ["inspect_context"],
+      "expected_status": "completed"
+    },
+    {
+      "case_id": "permission-boundary",
+      "objective": "Request isolated execution",
+      "plan": [
+        {
+          "type": "tool",
+          "tool": "sandbox_python",
+          "permission": "sandbox:execute",
+          "arguments": {"code": "print(1)"}
+        }
+      ],
+      "expected_tools": [],
+      "expected_status": "paused"
+    }
+  ]
+}

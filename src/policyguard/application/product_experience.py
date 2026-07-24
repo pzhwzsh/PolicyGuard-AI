@@ -301,10 +301,28 @@ def system_readiness(settings, session: Session) -> dict[str, Any]:
     )
     add(
         "authentication",
-        "ready" if settings.admin_api_key else "warning",
-        "API 密钥保护已启用" if settings.admin_api_key else "本地演示模式未启用登录保护",
+        "ready" if settings.admin_api_key or settings.oidc_issuer_url else "warning",
+        "OIDC 已配置" if settings.oidc_issuer_url else (
+            "API 密钥保护已启用" if settings.admin_api_key else "本地演示模式未启用登录保护"
+        ),
         "生产环境配置 ADMIN_API_KEY" if not settings.admin_api_key else "",
     )
+    add(
+        "harness_sandbox",
+        "ready" if settings.harness_sandbox_enabled else "optional",
+        "Docker 隔离执行已启用" if settings.harness_sandbox_enabled else "默认关闭，需人工配置启用",
+    )
+    try:
+        mcp_count = len(json.loads(settings.mcp_servers_json))
+        mcp_status = "ready" if mcp_count else "optional"
+        mcp_detail = (
+            f"已注册 {mcp_count} 个远程 MCP Server"
+            if mcp_count
+            else "未配置远程 MCP Client"
+        )
+    except (json.JSONDecodeError, TypeError):
+        mcp_status, mcp_detail = "warning", "MCP_SERVERS_JSON 无效"
+    add("mcp_client", mcp_status, mcp_detail)
     job_counts = dict(
         session.execute(
             select(BackgroundJobRecord.status, func.count()).group_by(BackgroundJobRecord.status)

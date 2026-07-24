@@ -643,7 +643,8 @@ $("#refresh-tasks").addEventListener("click", () => loadTasks().catch((error) =>
 
 const readinessLabels = {
   database: "数据库", storage: "存储空间", llm: "语言模型", image_generation: "图片模型",
-  ocr: "OCR 服务", authentication: "身份验证", worker_queue: "任务队列"
+  ocr: "OCR 服务", authentication: "身份验证", worker_queue: "任务队列",
+  harness_sandbox: "Harness 沙箱", mcp_client: "MCP Client"
 };
 
 async function loadReadiness() {
@@ -730,3 +731,155 @@ document.querySelectorAll(".product-nav a").forEach((link) => link.addEventListe
 restoreDraft();
 Promise.all([loadProducts(), loadTasks(), loadReadiness()]).catch((error) => showToast(error.message, "error"));
 window.setInterval(() => loadTasks().catch(() => {}), 15000);
+
+let currentHarnessRun = null;
+let harnessEventSource = null;
+
+const harnessEventLabels = {
+  "run.created": "运行已创建", "step.started": "步骤开始",
+  "tool.completed": "工具完成", "tool.failed": "工具失败",
+  "checkpoint.saved": "Checkpoint 已保存", "permission.required": "等待权限批准",
+  "permission.approved": "权限已批准", "memory.updated": "记忆已更新",
+  "run.paused": "运行已暂停", "run.resumed": "运行已恢复",
+  "run.cancelled": "运行已取消", "run.completed": "运行已完成", "run.failed": "运行失败"
+};
+
+function renderHarnessRun(run) {
+  currentHarnessRun = run;
+  $("#harness-run-panel").hidden = false;
+  $("#harness-run-title").textContent = run.objective;
+  $("#harness-run-id").textContent = `${run.run_id} · revision ${run.revision}`;
+  $("#harness-run-status").textContent = run.status;
+  $("#harness-run-status").className = `task-status ${run.status}`;
+  $("#harness-steps").textContent = `${run.usage.steps}/${run.budgets.max_steps}`;
+  $("#harness-tools").textContent = `${run.usage.tool_calls}/${run.budgets.max_tool_calls}`;
+  const metrics = run.context_metrics || {};
+  $("#harness-tokens").textContent = `${run.usage.tokens || metrics.used_tokens || 0}/${run.budgets.max_tokens}`;
+  $("#harness-saved").textContent = metrics.saved_tokens || 0;
+  $("#harness-cache").textContent = metrics.prefix_cache_hit === true ? "HIT" : metrics.prefix_cache_hit === false ? "MISS" : "—";
+  $("#harness-events").innerHTML = (run.events || []).map((event) => `
+    <article class="harness-event"><strong>${escapeHtml(harnessEventLabels[event.type] || event.type)}</strong><small>#${event.sequence} · ${escapeHtml(JSON.stringify(event.detail))}</small></article>`).join("");
+  const tokensByKind = metrics.tokens_by_kind || {};
+  const maxTokens = Math.max(...Object.values(tokensByKind), 1);
+  $("#harness-context-bars").innerHTML = Object.entries(tokensByKind).length
+    ? Object.entries(tokensByKind).map(([kind, tokens]) => `<div class="context-bar-row"><span>${escapeHtml(kind)}</span><div><i style="width:${Math.max(5, tokens / maxTokens * 100)}%"></i></div><b>${tokens}</b></div>`).join("")
+    : `<div class="empty-state"><b>◌</b><p>执行第一个工具后显示 Context 构成</p></div>`;
+  const permission = $("#harness-permission");
+  permission.hidden = !run.pending_permission;
+  permission.innerHTML = run.pending_permission
+    ? `<strong>需要人工批准：${escapeHtml(run.pending_permission)}</strong><p>Agent 不能自行授予权限。批准动作会写入不可变事件流。</p><button id="approve-harness-permission" type="button">批准本次权限</button>` : "";
+  $("#harness-pause").disabled = ["paused", "completed", "failed", "cancelled"].includes(run.status);
+  $("#harness-resume").textContent = run.status === "ready" ? "继续运行" : "恢复";
+  $("#harness-resume").disabled = !["ready", "paused"].includes(run.status) || Boolean(run.pending_permission);
+  $("#harness-cancel").disabled = ["completed", "failed", "cancelled"].includes(run.status);
+}
+
+function followHarnessEvents(runId) {
+  if (harnessEventSource) harnessEventSource.close();
+  harnessEventSource = new EventSource(`/api/v1/harness/runs/${runId}/events?follow=true`);
+  harnessEventSource.onmessage = () => {};
+  ["run.created", "step.started", "tool.completed", "tool.failed", "checkpoint.saved",
+    "permission.required", "permission.approved", "run.paused", "run.resumed",
+    "run.cancelled", "run.completed", "run.failed"].forEach((type) => {
+    harnessEventSource.addEventListener(type, async () => {
+      try {
+        const run = await api(`/api/v1/harness/runs/${runId}`);
+        renderHarnessRun(run);
+        if (["completed", "failed", "cancelled"].includes(run.status)) harnessEventSource.close();
+      } catch { harnessEventSource.close(); }
+    });
+  });
+}
+
+async function loadHarnessMeta() {
+  const [skills, sandbox, servers] = await Promise.all([
+    api("/api/v1/harness/skills"),
+    api("/api/v1/harness/sandbox/readiness"),
+    api("/api/v1/harness/mcp/servers")
+  ]);
+  $("#harness-skill").innerHTML = `<option value="">默认 Context 检查</option>` + skills.skills.map((skill) => `<option value="${escapeHtml(skill.name)}">${escapeHtml(skill.name)} · ${escapeHtml(skill.version)}</option>`).join("");
+  $("#harness-meta").innerHTML = `
+    <div class="harness-meta-row"><div><strong>Skills</strong><small>${skills.skills.length} 个已验证 · ${skills.failures.length} 个失败</small></div><i class="signal ${skills.failures.length ? "warning" : "ready"}"></i></div>
+    <div class="harness-meta-row"><div><strong>Docker Sandbox</strong><small>${sandbox.enabled ? "已启用" : "默认关闭"} · 网络 ${escapeHtml(sandbox.network)}</small></div><i class="signal ${sandbox.enabled ? "ready" : "optional"}"></i></div>
+    <div class="harness-meta-row"><div><strong>MCP Client</strong><small>${servers.length} 个远程 Server · 结果大小受限</small></div><i class="signal ${servers.length ? "ready" : "optional"}"></i></div>
+    <div class="harness-meta-row"><div><strong>Event Stream</strong><small>SSE · Checkpoint · Revision Lock</small></div><i class="signal ready"></i></div>`;
+}
+
+$("#create-harness-run").addEventListener("click", async () => {
+  const button = $("#create-harness-run");
+  button.disabled = true;
+  try {
+    const context = JSON.parse($("#harness-context").value || "{}");
+    const run = await api("/api/v1/harness/runs", {
+      method: "POST",
+      body: JSON.stringify({
+        objective: $("#harness-objective").value.trim(),
+        context,
+        skill: $("#harness-skill").value || null,
+        max_steps: Number($("#harness-max-steps").value),
+        max_tool_calls: Number($("#harness-max-tools").value),
+        max_tokens: Number($("#harness-max-tokens").value)
+      })
+    });
+    renderHarnessRun(run);
+    followHarnessEvents(run.run_id);
+    renderHarnessRun(await api(`/api/v1/harness/runs/${run.run_id}/run`, {
+      method: "POST", body: JSON.stringify({expected_revision: run.revision})
+    }));
+    $("#harness-run-panel").scrollIntoView({behavior: "smooth", block: "center"});
+  } catch (error) { showToast(error.message, "error"); }
+  finally { button.disabled = false; }
+});
+
+async function harnessTransition(action) {
+  if (!currentHarnessRun) return;
+  const run = await api(`/api/v1/harness/runs/${currentHarnessRun.run_id}/${action}`, {
+    method: "POST",
+    body: JSON.stringify({expected_revision: currentHarnessRun.revision, reason: "ui_operator"})
+  });
+  renderHarnessRun(run);
+}
+$("#harness-pause").addEventListener("click", () => harnessTransition("pause").catch((error) => showToast(error.message, "error")));
+$("#harness-resume").addEventListener("click", () => harnessTransition(
+  currentHarnessRun?.status === "ready" ? "run" : "resume"
+).catch((error) => showToast(error.message, "error")));
+$("#harness-cancel").addEventListener("click", () => harnessTransition("cancel").catch((error) => showToast(error.message, "error")));
+
+$("#harness-run-panel").addEventListener("click", async (event) => {
+  if (!event.target.closest("#approve-harness-permission") || !currentHarnessRun) return;
+  try {
+    const approved = await api(`/api/v1/harness/runs/${currentHarnessRun.run_id}/permissions`, {
+      method: "POST",
+      body: JSON.stringify({
+        expected_revision: currentHarnessRun.revision,
+        permission: currentHarnessRun.pending_permission,
+        reviewer: "content-owner"
+      })
+    });
+    renderHarnessRun(approved);
+    showToast("权限已记录。运行仍受沙箱配置和资源限制。")
+  } catch (error) { showToast(error.message, "error"); }
+});
+
+$("#run-multi-agent-demo").addEventListener("click", async () => {
+  const target = $("#multi-agent-result");
+  try {
+    const result = await api("/api/v1/harness/multi-agent", {
+      method: "POST", body: JSON.stringify({nodes: [
+        {agent_id: "research", role: "policy researcher", task: "查找候选证据"},
+        {agent_id: "verify", role: "evidence verifier", task: "核验证据", depends_on: ["research"]}
+      ]})
+    });
+    target.textContent = JSON.stringify(result.usage, null, 2);
+  } catch (error) { showToast(error.message, "error"); }
+});
+
+$("#run-harness-evaluation").addEventListener("click", async () => {
+  const target = $("#harness-evaluation-result");
+  try {
+    const report = await api("/api/v1/harness/evaluations/run", {method: "POST"});
+    target.textContent = JSON.stringify(report.metrics, null, 2);
+  } catch (error) { showToast(error.message, "error"); }
+});
+$("#refresh-harness-meta").addEventListener("click", () => loadHarnessMeta().catch((error) => showToast(error.message, "error")));
+loadHarnessMeta().catch((error) => showToast(error.message, "error"));
