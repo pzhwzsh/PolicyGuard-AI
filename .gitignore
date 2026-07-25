@@ -1,5 +1,7 @@
 .env
 .env.production
+deploy/secrets/
+deploy/nginx/certs/
 .venv/
 __pycache__/
 *.py[cod]

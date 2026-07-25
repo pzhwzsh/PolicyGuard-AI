@@ -61,6 +61,12 @@ Last updated: 2026-07-24
   integrations report unconfigured state instead of faking availability.
 - A versioned harness evaluation set reports task success, tool precision/recall, recovery signals,
   latency, tokens, and estimated cost. The user workspace includes controls and live metrics.
+- Production identity now supports signed OIDC tokens discovered through issuer JWKS, tenant claims,
+  and a user/reviewer/admin role hierarchy. Legacy keys remain available for controlled migration.
+- `/metrics` exports protected low-cardinality Prometheus counters and duration sums; request logs
+  are structured in production, W3C trace headers are returned, and OTLP export is opt-in.
+- Production Compose has optional Prometheus/Grafana and TLS Nginx profiles. Security CI audits
+  dependencies, repository secrets, and high/critical filesystem vulnerabilities.
 
 ## Open work
 

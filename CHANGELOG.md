@@ -60,6 +60,12 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Add real OIDC/JWKS token validation with tenant claims and user/reviewer/admin role hierarchy,
+  while retaining explicit API-key authentication for local and transitional deployments.
+- Add protected Prometheus metrics, W3C trace propagation, optional OTLP export, structured request
+  logs, hardened response headers, provisioned Grafana/Prometheus, and an optional TLS edge proxy.
+- Add scheduled dependency, secret, and filesystem vulnerability scans to the GitHub security
+  workflow, with high/critical Trivy findings uploaded as SARIF.
 - Add an event-sourced Agent Harness with revision-safe checkpoints, pause/resume/cancel,
   permission gates, bounded retries, and step/tool/token/cost budgets.
 - Add prioritized context compression, reviewed long-term memory, prefix-cache telemetry,

@@ -87,6 +87,7 @@ from policyguard.api.schemas import (
 )
 from policyguard.application.agent import AgentBudget, ControlledAgent, configured_agent_planner
 from policyguard.application.agent_context import AgentContextBuilder
+from policyguard.application.auth import OIDCAuthenticator, bearer_token
 from policyguard.application.automation_handoff import (
     build_dingtalk_preview,
     build_rpa_handoff,
@@ -165,6 +166,13 @@ from policyguard.infrastructure.database import (
     Database,
     ResourceOwnershipRecord,
 )
+from policyguard.infrastructure.observability import (
+    PrometheusRegistry,
+    configure_logging,
+    configure_otel,
+    log_request,
+    request_span,
+)
 from policyguard.infrastructure.repositories import (
     SqlAlchemyAgentMemoryRepository,
     SqlAlchemyComplianceRepository,
@@ -184,6 +192,19 @@ def create_app(database_url: str | None = None) -> FastAPI:
     provider_settings = replace(settings, app_env="test") if database_url else settings
     database = Database(database_url or settings.database_url)
     telemetry = RuntimeMetricBuffer(database.session_factory)
+    configure_logging(settings.log_level, json_logs=settings.app_env == "production")
+    prometheus = PrometheusRegistry()
+    tracer = configure_otel(settings.otel_exporter_otlp_endpoint, "policyguard-api")
+    oidc = (
+        OIDCAuthenticator(
+            settings.oidc_issuer_url,
+            settings.oidc_audience,
+            roles_claim=settings.oidc_roles_claim,
+            tenant_claim=settings.oidc_tenant_claim,
+        )
+        if settings.oidc_issuer_url
+        else None
+    )
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -210,6 +231,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
     )
     application.state.database = database
     application.state.telemetry = telemetry
+    application.state.prometheus = prometheus
     request_windows: dict[str, deque[float]] = defaultdict(deque)
     try:
         tenant_keys = json.loads(settings.tenant_keys_json) if settings.tenant_keys_json else {}
@@ -233,23 +255,34 @@ def create_app(database_url: str | None = None) -> FastAPI:
 
     @application.middleware("http")
     async def request_trace(request: Request, call_next):
-        trace_id = request.headers.get("x-trace-id") or str(uuid4())
+        trace_id = request.headers.get("x-trace-id") or uuid4().hex
         request.state.trace_id = trace_id
         started = perf_counter()
+        prometheus.begin()
         now = perf_counter()
         client_key = request.client.host if request.client else "local"
         window = request_windows[client_key]
         while window and now - window[0] > 60:
             window.popleft()
         if len(window) >= settings.rate_limit_per_minute:
+            duration = perf_counter() - started
+            prometheus.finish(request.method, "__rate_limited__", 429, duration)
             return JSONResponse(
                 {"detail": "rate_limit_exceeded"}, status_code=429,
-                headers={"X-Trace-ID": trace_id, "Retry-After": "60"},
+                headers={
+                    "X-Trace-ID": trace_id,
+                    "X-Request-ID": trace_id,
+                    "Retry-After": "60",
+                },
             )
         window.append(now)
         try:
-            response = await call_next(request)
+            with request_span(tracer, f"{request.method} {request.url.path}"):
+                response = await call_next(request)
         except Exception:
+            duration = perf_counter() - started
+            route = getattr(request.scope.get("route"), "path", "__unmatched__")
+            prometheus.finish(request.method, route, 500, duration)
             if not request.url.path.startswith("/static"):
                 telemetry.record(RuntimeMetric(
                     trace_id=trace_id,
@@ -259,16 +292,39 @@ def create_app(database_url: str | None = None) -> FastAPI:
                     duration_ms=(perf_counter() - started) * 1000,
                     created_at=datetime.now(UTC),
                 ))
+            log_request(
+                event="http_request",
+                trace_id=trace_id,
+                method=request.method,
+                route=route,
+                status=500,
+                duration_ms=round(duration * 1000, 3),
+            )
             raise
+        duration = perf_counter() - started
+        route = getattr(request.scope.get("route"), "path", "__unmatched__")
+        prometheus.finish(request.method, route, response.status_code, duration)
         response.headers["X-Trace-ID"] = trace_id
-        response.headers["Server-Timing"] = f"app;dur={(perf_counter() - started) * 1000:.1f}"
+        response.headers["X-Request-ID"] = trace_id
+        response.headers["traceparent"] = (
+            f"00-{sha256(trace_id.encode()).hexdigest()[:32]}-{uuid4().hex[:16]}-01"
+        )
+        response.headers["Server-Timing"] = f"app;dur={duration * 1000:.1f}"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "same-origin"
+        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; "
+            "script-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+        )
         if not request.url.path.startswith("/static"):
             telemetry.record(RuntimeMetric(
                 trace_id=trace_id,
                 method=request.method,
                 path=request.url.path,
                 status_code=response.status_code,
-                duration_ms=(perf_counter() - started) * 1000,
+                duration_ms=duration * 1000,
                 created_at=datetime.now(UTC),
             ))
         if request.method in {"POST", "PATCH", "PUT", "DELETE"}:
@@ -284,6 +340,14 @@ def create_app(database_url: str | None = None) -> FastAPI:
                     audit_session.commit()
             except Exception:
                 pass
+        log_request(
+            event="http_request",
+            trace_id=trace_id,
+            method=request.method,
+            route=route,
+            status=response.status_code,
+            duration_ms=round(duration * 1000, 3),
+        )
         return response
 
     def get_session() -> Iterator[Session]:
@@ -292,7 +356,16 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def tenant_identity(
         x_tenant_id: str = Header(default=""),
         x_tenant_key: str = Header(default=""),
+        authorization: str = Header(default=""),
     ) -> str:
+        if oidc is not None:
+            try:
+                principal = oidc.authenticate(bearer_token(authorization))
+            except Exception as exc:
+                raise HTTPException(status_code=401, detail="oidc_token_invalid") from exc
+            if x_tenant_id.strip() and x_tenant_id.strip() != principal.tenant:
+                raise HTTPException(status_code=403, detail="tenant_claim_mismatch")
+            return principal.tenant
         if not tenant_keys:
             return "default"
         tenant_id = x_tenant_id.strip()
@@ -393,7 +466,18 @@ def create_app(database_url: str | None = None) -> FastAPI:
         skills = SkillRegistry(Path(__file__).parents[3] / "config" / "skills", set(tools))
         return runtime, skills, sandbox
 
-    def require_admin(x_admin_key: str = Header(default="")) -> None:
+    def require_admin(
+        x_admin_key: str = Header(default=""),
+        authorization: str = Header(default=""),
+    ) -> None:
+        if oidc is not None:
+            try:
+                principal = oidc.authenticate(bearer_token(authorization))
+            except Exception as exc:
+                raise HTTPException(status_code=401, detail="oidc_token_invalid") from exc
+            if not principal.permits("admin"):
+                raise HTTPException(status_code=403, detail="admin_role_required")
+            return
         if settings.admin_api_key and not hmac.compare_digest(
             x_admin_key, settings.admin_api_key
         ):
@@ -402,7 +486,16 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def require_admin_reviewer(
         x_admin_key: str = Header(default=""),
         x_reviewer: str = Header(default=""),
+        authorization: str = Header(default=""),
     ) -> str:
+        if oidc is not None:
+            try:
+                principal = oidc.authenticate(bearer_token(authorization))
+            except Exception as exc:
+                raise HTTPException(status_code=401, detail="oidc_token_invalid") from exc
+            if not principal.permits("reviewer"):
+                raise HTTPException(status_code=403, detail="reviewer_role_required")
+            return principal.subject
         if settings.admin_api_key:
             admin_match = hmac.compare_digest(x_admin_key, settings.admin_api_key)
             reviewer_match = bool(settings.reviewer_api_key) and hmac.compare_digest(
@@ -414,6 +507,24 @@ def create_app(database_url: str | None = None) -> FastAPI:
         if settings.admin_api_key and not reviewer:
             raise HTTPException(status_code=401, detail="reviewer_identity_required")
         return reviewer or "local-reviewer"
+
+    @application.get("/metrics", response_class=PlainTextResponse, tags=["system"])
+    def metrics(
+        authorization: str = Header(default=""),
+        x_metrics_key: str = Header(default=""),
+    ) -> PlainTextResponse:
+        if settings.metrics_api_key:
+            supplied = x_metrics_key
+            if authorization:
+                try:
+                    supplied = bearer_token(authorization)
+                except ValueError:
+                    supplied = ""
+            if not hmac.compare_digest(supplied, settings.metrics_api_key):
+                raise HTTPException(status_code=401, detail="metrics_key_required")
+        elif settings.app_env == "production":
+            raise HTTPException(status_code=503, detail="metrics_key_not_configured")
+        return PlainTextResponse(prometheus.render(), media_type="text/plain; version=0.0.4")
 
     @application.get("/health", response_model=HealthResponse, tags=["system"])
     def health() -> HealthResponse:

@@ -1,0 +1,31 @@
+{
+  "annotations": {"list": []},
+  "editable": false,
+  "panels": [
+    {
+      "title": "Requests per second",
+      "type": "timeseries",
+      "targets": [{"expr": "sum(rate(policyguard_http_requests_total[5m]))", "refId": "A"}],
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 0}
+    },
+    {
+      "title": "5xx rate",
+      "type": "timeseries",
+      "targets": [{"expr": "sum(rate(policyguard_http_requests_total{status=~\"5..\"}[5m]))", "refId": "A"}],
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 0}
+    },
+    {
+      "title": "Mean request duration",
+      "type": "timeseries",
+      "targets": [{"expr": "sum(rate(policyguard_http_request_duration_seconds_sum[5m])) / clamp_min(sum(rate(policyguard_http_requests_total[5m])), 0.001)", "refId": "A"}],
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 0}
+    }
+  ],
+  "schemaVersion": 41,
+  "tags": ["policyguard", "production"],
+  "templating": {"list": []},
+  "time": {"from": "now-6h", "to": "now"},
+  "title": "PolicyGuard Runtime",
+  "uid": "policyguard-runtime",
+  "version": 1
+}

@@ -49,12 +49,53 @@ services:
       retries: 12
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus:v3.4.1
+    profiles: ["observability"]
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=15d"]
+    volumes:
+      - ./deploy/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    secrets: [metrics_api_key]
+    ports: ["127.0.0.1:9090:9090"]
+    depends_on: [api]
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:12.0.2
+    profiles: ["observability"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./deploy/observability/grafana:/etc/grafana/provisioning:ro
+      - grafana_data:/var/lib/grafana
+    secrets: [grafana_admin_password]
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: [prometheus]
+    restart: unless-stopped
+
+  edge:
+    image: nginx:1.28-alpine
+    profiles: ["edge"]
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./deploy/nginx/policyguard.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./deploy/nginx/certs:/etc/nginx/certs:ro
+    depends_on: [api]
+    restart: unless-stopped
+
 secrets:
   postgres_password:
     file: ./deploy/secrets/postgres_password.txt
+  metrics_api_key:
+    file: ./deploy/secrets/metrics_api_key.txt
+  grafana_admin_password:
+    file: ./deploy/secrets/grafana_admin_password.txt
 
 volumes:
   postgres_data:
   policyguard_data:
   model_cache:
-
+  prometheus_data:
+  grafana_data:

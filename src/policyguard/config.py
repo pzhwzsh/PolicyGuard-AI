@@ -57,6 +57,11 @@ class Settings:
     max_upload_bytes: int
     max_active_jobs_per_tenant: int
     oidc_issuer_url: str
+    oidc_audience: str
+    oidc_roles_claim: str
+    oidc_tenant_claim: str
+    metrics_api_key: str
+    otel_exporter_otlp_endpoint: str
     harness_sandbox_enabled: bool
     harness_sandbox_image: str
     mcp_servers_json: str
@@ -124,6 +129,11 @@ def get_settings() -> Settings:
         max_upload_bytes=int(getenv("MAX_UPLOAD_BYTES", str(25 * 1024 * 1024))),
         max_active_jobs_per_tenant=int(getenv("MAX_ACTIVE_JOBS_PER_TENANT", "10")),
         oidc_issuer_url=getenv("OIDC_ISSUER_URL", ""),
+        oidc_audience=getenv("OIDC_AUDIENCE", ""),
+        oidc_roles_claim=getenv("OIDC_ROLES_CLAIM", "roles"),
+        oidc_tenant_claim=getenv("OIDC_TENANT_CLAIM", "tenant_id"),
+        metrics_api_key=getenv("METRICS_API_KEY", ""),
+        otel_exporter_otlp_endpoint=getenv("OTEL_EXPORTER_OTLP_ENDPOINT", ""),
         harness_sandbox_enabled=getenv(
             "HARNESS_SANDBOX_ENABLED", "false"
         ).casefold() == "true",

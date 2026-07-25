@@ -14,7 +14,7 @@ COPY pyproject.toml README.md alembic.ini ./
 COPY migrations ./migrations
 COPY src ./src
 RUN python -m pip install --upgrade pip \
-    && python -m pip install ".[postgres,pdf,mcp,local-embedding-onnx]"
+    && python -m pip install ".[postgres,pdf,mcp,local-embedding-onnx,observability]"
 
 RUN mkdir -p /app/data /app/data/uploads \
     && chown -R policyguard:policyguard /app

@@ -16,6 +16,7 @@ dependencies = [
   "pydantic>=2.10,<3.0",
   "python-dotenv>=1.0,<2.0",
   "python-multipart>=0.0.20,<1.0",
+  "PyJWT[crypto]>=2.10,<3.0",
   "sqlalchemy>=2.0,<3.0",
   "uvicorn[standard]>=0.34,<1.0",
 ]
@@ -29,6 +30,11 @@ dev = [
   "ruff>=0.11,<1.0",
 ]
 postgres = ["psycopg[binary]>=3.2,<4.0"]
+observability = [
+  "opentelemetry-api>=1.31,<2.0",
+  "opentelemetry-sdk>=1.31,<2.0",
+  "opentelemetry-exporter-otlp-proto-http>=1.31,<2.0",
+]
 mcp = ["mcp>=1.28,<2.0"]
 local-embedding = ["sentence-transformers>=3.0,<6.0"]
 local-embedding-onnx = ["fastembed>=0.7,<1.0"]

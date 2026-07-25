@@ -23,6 +23,7 @@
 - 上传文件结构扫描、隐私识别、Prompt Injection 拦截和 SSRF 地址校验
 - 平台发布前红黄绿总检、场景图身份复核提示和可追溯素材清单
 - HTTP API、MCP Server 与本地管理界面
+- OIDC/JWKS、租户角色权限、Prometheus/Grafana、OTLP Trace 与安全扫描流水线
 
 ## Agent Harness
 
