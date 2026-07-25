@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 from difflib import unified_diff
 from typing import Any, Protocol
@@ -47,6 +48,9 @@ class SuggestConservativeRewriteTool:
     _risky_phrases = (
         "100%安全的", "最好的", "国家级", "最高级", "最佳", "最好", "100%安全"
     )
+    _risky_patterns = (
+        re.compile(r"保证[^，。；;]{0,30}(?:立即)?(?:见效|有效|治愈)"),
+    )
 
     def execute(self, arguments: dict[str, Any]) -> ToolResult:
         product = arguments["product"]
@@ -59,6 +63,12 @@ class SuggestConservativeRewriteTool:
             for phrase in self._risky_phrases:
                 if phrase in after:
                     after = after.replace(phrase, "")
+                    removed.append(phrase)
+            for pattern in self._risky_patterns:
+                matches = list(pattern.finditer(after))
+                for match in reversed(matches):
+                    phrase = match.group(0)
+                    after = after[:match.start()] + after[match.end():]
                     removed.append(phrase)
             after = " ".join(after.split()).strip("，,。 ")
             if after != before:

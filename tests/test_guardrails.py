@@ -29,6 +29,30 @@ def test_guardrails_require_evidence_review_and_preserve_numeric_facts() -> None
         policy.validate_remediation_plan(invalid, product)
 
 
+def test_guardrails_allow_numeric_token_inside_removed_risky_claim() -> None:
+    policy = default_guardrail_policy()
+    product = {"title": "国家级护肤品，100%安全，容量500ml", "description": ""}
+    operation = {
+        "operation": "replace_field",
+        "field": "title",
+        "before": product["title"],
+        "after": "护肤品，容量500ml",
+        "removed_phrases": ["国家级", "100%安全"],
+        "legal_basis": [{"section_id": "article-9"}],
+        "meaning_preservation": {"requires_human_review": True},
+    }
+
+    policy.validate_remediation_plan(
+        {"external_side_effect": False, "operations": [operation]}, product
+    )
+
+    without_verified_spec = {**operation, "after": "护肤品"}
+    with pytest.raises(ValueError, match="remediation_protected_fact_removed:500ml"):
+        policy.validate_remediation_plan(
+            {"external_side_effect": False, "operations": [without_verified_spec]}, product
+        )
+
+
 def test_guardrails_reject_uncited_or_external_rewrite() -> None:
     policy = default_guardrail_policy()
     product = {"title": "国家级产品", "description": ""}

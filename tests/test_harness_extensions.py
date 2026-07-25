@@ -4,7 +4,10 @@ import httpx
 import pytest
 
 from policyguard.application import harness_mcp
-from policyguard.application.harness_evaluation import evaluate_harness
+from policyguard.application.harness_evaluation import (
+    _nearest_rank_percentile,
+    evaluate_harness,
+)
 from policyguard.application.harness_mcp import MCPClientRegistry, MCPServerConfig
 from policyguard.application.harness_multi_agent import AgentNode, MultiAgentCoordinator
 from policyguard.application.harness_sandbox import SandboxPolicy, docker_command
@@ -97,3 +100,7 @@ def test_harness_evaluation_reports_tool_and_recovery_metrics() -> None:
     assert report["metrics"]["task_success_rate"] == 1
     assert report["metrics"]["mean_tool_precision"] == 1
     assert report["metrics"]["recovery_signal_rate"] == 1
+
+
+def test_harness_p95_uses_nearest_rank_for_small_samples() -> None:
+    assert _nearest_rank_percentile([312.49, 503.49], 0.95) == 503.49

@@ -6,10 +6,18 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-
 _PROTECTED_FACT = re.compile(
-    r"(?<!\w)\d+(?:\.\d+)?\s*(?:%|ml|mL|l|L|g|kg|mg|cm|mm|元|美元|欧元)?(?!\w)"
+    r"(?<![A-Za-z0-9_])\d+(?:\.\d+)?\s*(?:%|ml|mL|l|L|g|kg|mg|cm|mm|元|美元|欧元)?(?![A-Za-z0-9_])"
 )
+
+
+def _protected_facts(operation: dict[str, Any]) -> set[str]:
+    """Return numeric facts outside the claim spans intentionally removed."""
+    source = str(operation.get("before", ""))
+    for phrase in operation.get("removed_phrases", []):
+        if isinstance(phrase, str) and phrase:
+            source = source.replace(phrase, "")
+    return set(_PROTECTED_FACT.findall(source))
 
 
 @dataclass(frozen=True, slots=True)
@@ -40,7 +48,9 @@ class GuardrailPolicy:
         )
 
     def validate_jurisdictions(self, jurisdictions: list[str]) -> None:
-        unsupported = sorted({item.upper() for item in jurisdictions} - set(self.supported_jurisdictions))
+        unsupported = sorted(
+            {item.upper() for item in jurisdictions} - set(self.supported_jurisdictions)
+        )
         if unsupported:
             raise ValueError(f"unsupported_jurisdictions:{','.join(unsupported)}")
 
@@ -65,7 +75,9 @@ class GuardrailPolicy:
             after = str(operation.get("after", ""))
             if before != str(product.get(field, "")):
                 raise ValueError("remediation_stale_source_text")
-            missing_facts = sorted(set(_PROTECTED_FACT.findall(before)) - set(_PROTECTED_FACT.findall(after)))
+            missing_facts = sorted(
+                _protected_facts(operation) - set(_PROTECTED_FACT.findall(after))
+            )
             if missing_facts:
                 raise ValueError(f"remediation_protected_fact_removed:{','.join(missing_facts)}")
             if self.require_legal_basis_for_rewrite and not operation.get("legal_basis"):

@@ -3,9 +3,18 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from math import ceil
 from statistics import mean
 from time import perf_counter
 from typing import Any
+
+
+def _nearest_rank_percentile(values: list[float], quantile: float) -> float:
+    if not values:
+        return 0.0
+    ordered = sorted(values)
+    index = min(len(ordered) - 1, max(0, ceil(len(ordered) * quantile) - 1))
+    return ordered[index]
 
 
 def evaluate_harness(
@@ -50,8 +59,7 @@ def evaluate_harness(
             "error": error,
         })
     count = max(len(rows), 1)
-    latencies = sorted(row["latency_ms"] for row in rows)
-    p95_index = min(int(0.95 * max(len(latencies) - 1, 0)), max(len(latencies) - 1, 0))
+    latencies = [row["latency_ms"] for row in rows]
     return {
         "metrics": {
             "case_count": len(rows),
@@ -65,7 +73,7 @@ def evaluate_harness(
             ),
             "mean_latency_ms": round(mean(row["latency_ms"] for row in rows), 2)
             if rows else 0.0,
-            "p95_latency_ms": latencies[p95_index] if latencies else 0.0,
+            "p95_latency_ms": _nearest_rank_percentile(latencies, 0.95),
             "total_tokens": sum(row["tokens"] for row in rows),
             "total_cost_microusd": sum(row["cost_microusd"] for row in rows),
         },
