@@ -379,6 +379,34 @@ class ModelPromotionRequest(BaseModel):
     comment: str = Field(default="", max_length=1000)
 
 
+class RolloutMetrics(BaseModel):
+    success_rate: float = Field(ge=0, le=1)
+    error_rate: float = Field(ge=0, le=1)
+    p95_latency_ms: float = Field(gt=0, le=3_600_000)
+    human_rejection_rate: float = Field(ge=0, le=1)
+
+
+class ModelRolloutStartRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    baseline_model: str = Field(min_length=1, max_length=300)
+    candidate_model: str = Field(min_length=1, max_length=300)
+    baseline_metrics: RolloutMetrics
+    candidate_metrics: RolloutMetrics
+    reviewer: str = Field(min_length=1, max_length=100)
+
+
+class ModelRolloutAdvanceRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    metrics: RolloutMetrics
+    reviewer: str = Field(min_length=1, max_length=100)
+
+
+class ModelRolloutRollbackRequest(BaseModel):
+    expected_revision: int = Field(ge=0)
+    reviewer: str = Field(min_length=1, max_length=100)
+    reason: str = Field(min_length=1, max_length=500)
+
+
 class VerifiedProductFact(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

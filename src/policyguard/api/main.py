@@ -67,6 +67,9 @@ from policyguard.api.schemas import (
     MarketEvidenceResponse,
     ModelEvaluationRequest,
     ModelPromotionRequest,
+    ModelRolloutAdvanceRequest,
+    ModelRolloutRollbackRequest,
+    ModelRolloutStartRequest,
     MultiAgentRunRequest,
     OperationsDashboardResponse,
     ProductCheckRequest,
@@ -129,6 +132,7 @@ from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
 from policyguard.application.llm import configured_claim_extractor
 from policyguard.application.media_ingestion import MEDIA_TYPES, validate_media
+from policyguard.application.model_rollout import ModelRolloutRegistry
 from policyguard.application.policy_impact import analyze_policy_impact
 from policyguard.application.product_experience import (
     ProductWorkspace,
@@ -204,6 +208,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
         )
         if settings.oidc_issuer_url
         else None
+    )
+    model_rollouts = ModelRolloutRegistry(
+        Path(settings.upload_dir) / "governance" / "model-rollout.json"
     )
 
     @asynccontextmanager
@@ -466,6 +473,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
         skills = SkillRegistry(Path(__file__).parents[3] / "config" / "skills", set(tools))
         return runtime, skills, sandbox
 
+    def rollout_provider_settings(tenant: str):
+        selected = model_rollouts.select(tenant, provider_settings.llm_model)
+        return replace(provider_settings, llm_model=selected) if selected else provider_settings
+
     def require_admin(
         x_admin_key: str = Header(default=""),
         authorization: str = Header(default=""),
@@ -507,6 +518,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
         if settings.admin_api_key and not reviewer:
             raise HTTPException(status_code=401, detail="reviewer_identity_required")
         return reviewer or "local-reviewer"
+
+    def ensure_reviewer_identity(reviewer: str, authenticated_reviewer: str) -> None:
+        if (settings.admin_api_key or oidc is not None) and reviewer != authenticated_reviewer:
+            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
 
     @application.get("/metrics", response_class=PlainTextResponse, tags=["system"])
     def metrics(
@@ -1157,8 +1172,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tenant: str = Depends(tenant_identity),
     ) -> dict:
         require_resource(session, "harness", run_id, tenant)
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         try:
             return harness_runtime(tenant)[0].approve_permission(
                 run_id,
@@ -1362,8 +1376,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tenant: str = Depends(tenant_identity),
     ) -> CreativeProjectResponse:
         require_resource(session, "creative", project_id, tenant)
-        if settings.admin_api_key and reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(reviewer, authenticated_reviewer)
         suffix = Path(file.filename or "").suffix.lower()
         content = await file.read(15 * 1024 * 1024 + 1)
         if len(content) > 15 * 1024 * 1024:
@@ -1397,8 +1410,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tenant: str = Depends(tenant_identity),
     ) -> CreativeProjectResponse:
         require_resource(session, "creative", project_id, tenant)
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         try:
             project = CreativeStudioWorkspace(Path(settings.upload_dir)).review(
                 project_id,
@@ -1549,8 +1561,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tenant: str = Depends(tenant_identity),
     ) -> TableCleaningConfirmationResponse:
         require_resource(session, "table", table_id, tenant)
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         try:
             confirmed = TableCleaningWorkspace(
                 Path(settings.upload_dir) / "tables"
@@ -1718,8 +1729,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         authenticated_reviewer: str = Depends(require_admin_reviewer),
         tenant: str = Depends(tenant_identity),
     ) -> dict:
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         job = _completed_batch_job(job_id, session, tenant)
         try:
             return BatchArtifactWorkspace(Path(settings.upload_dir)).stage_deletion(
@@ -1739,8 +1749,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         authenticated_reviewer: str = Depends(require_admin_reviewer),
         tenant: str = Depends(tenant_identity),
     ) -> dict:
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         job = _completed_batch_job(job_id, session, tenant)
         try:
             return BatchArtifactWorkspace(Path(settings.upload_dir)).confirm_deletion(
@@ -1846,8 +1855,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             r"[a-f0-9]{64}", content_hash
         ):
             raise HTTPException(status_code=404, detail="source_update_not_found")
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         try:
             item = approve_source_update(
                 Path("data/update-state/staged"), source_id, content_hash,
@@ -1881,8 +1889,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             r"[a-f0-9]{64}", content_hash
         ):
             raise HTTPException(status_code=404, detail="source_update_not_found")
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         try:
             item = revise_staged_source_update(
                 Path("data/update-state/staged"), source_id, content_hash,
@@ -2079,8 +2086,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tenant: str = Depends(tenant_identity),
     ) -> DocumentDeletionResponse:
         require_resource(session, "document", document_id, tenant)
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         try:
             event = DocumentWorkspace(Path(settings.upload_dir)).delete_staged(
                 document_id,
@@ -2285,8 +2291,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         authenticated_reviewer: str = Depends(require_admin_reviewer),
         tenant: str = Depends(tenant_identity),
     ) -> dict:
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         require_resource(session, "job", job_id, tenant)
         job = PersistentJobQueue(session).get(job_id)
         if job is None or job.job_type != "model_evaluation":
@@ -2321,6 +2326,61 @@ def create_app(database_url: str | None = None) -> FastAPI:
         with target.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(promotion, ensure_ascii=False) + "\n")
         return promotion
+
+    @application.get("/api/v1/model-rollouts/current", tags=["model-rollout"])
+    def get_model_rollout(_: None = Depends(require_admin)) -> dict:
+        return model_rollouts.load()
+
+    @application.post("/api/v1/model-rollouts", tags=["model-rollout"])
+    def start_model_rollout(
+        payload: ModelRolloutStartRequest,
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+    ) -> dict:
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
+        if payload.baseline_model == payload.candidate_model:
+            raise HTTPException(status_code=422, detail="rollout_models_must_differ")
+        try:
+            return model_rollouts.start(
+                expected_revision=payload.expected_revision,
+                baseline_model=payload.baseline_model,
+                candidate_model=payload.candidate_model,
+                baseline_metrics=payload.baseline_metrics.model_dump(),
+                candidate_metrics=payload.candidate_metrics.model_dump(),
+                reviewer=payload.reviewer,
+            )
+        except ValueError as exc:
+            code = 409 if "revision_conflict" in str(exc) else 422
+            raise HTTPException(status_code=code, detail=str(exc)) from exc
+
+    @application.post("/api/v1/model-rollouts/advance", tags=["model-rollout"])
+    def advance_model_rollout(
+        payload: ModelRolloutAdvanceRequest,
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+    ) -> dict:
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
+        try:
+            return model_rollouts.advance(
+                payload.expected_revision,
+                payload.metrics.model_dump(),
+                payload.reviewer,
+            )
+        except ValueError as exc:
+            code = 409 if "revision_conflict" in str(exc) else 422
+            raise HTTPException(status_code=code, detail=str(exc)) from exc
+
+    @application.post("/api/v1/model-rollouts/rollback", tags=["model-rollout"])
+    def rollback_model_rollout(
+        payload: ModelRolloutRollbackRequest,
+        authenticated_reviewer: str = Depends(require_admin_reviewer),
+    ) -> dict:
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
+        try:
+            return model_rollouts.rollback(
+                payload.expected_revision, payload.reviewer, payload.reason
+            )
+        except ValueError as exc:
+            code = 409 if "revision_conflict" in str(exc) else 422
+            raise HTTPException(status_code=code, detail=str(exc)) from exc
 
     def evaluation_review_service(session: Session) -> EvaluationReviewService:
         return EvaluationReviewService(
@@ -2620,10 +2680,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run = ComplianceWorkflowService(
             knowledge_repository,
             workflow_repository,
-            claim_extractor=configured_claim_extractor(provider_settings),
+            claim_extractor=configured_claim_extractor(rollout_provider_settings(tenant)),
             retriever=workflow_retriever,
-            evidence_verifier=configured_evidence_verifier(provider_settings),
-            query_rewriter=configured_query_rewriter(provider_settings),
+            evidence_verifier=configured_evidence_verifier(
+                rollout_provider_settings(tenant)
+            ),
+            query_rewriter=configured_query_rewriter(rollout_provider_settings(tenant)),
             query_rewrite_cache=JsonQueryRewriteCache(Path(settings.query_rewrite_cache)),
             model_budget=WorkflowModelBudget(
                 max_calls=settings.workflow_model_call_budget,
@@ -2729,13 +2791,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
         tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
         require_resource(session, "workflow", run_id, tenant)
-        if settings.admin_api_key and payload.reviewer != authenticated_reviewer:
-            raise HTTPException(status_code=403, detail="reviewer_identity_mismatch")
+        ensure_reviewer_identity(payload.reviewer, authenticated_reviewer)
         service = ComplianceWorkflowService(
             SqlAlchemyKnowledgeRepository(session),
             SqlAlchemyWorkflowRepository(session),
-            claim_extractor=configured_claim_extractor(provider_settings),
-            evidence_verifier=configured_evidence_verifier(provider_settings),
+            claim_extractor=configured_claim_extractor(rollout_provider_settings(tenant)),
+            evidence_verifier=configured_evidence_verifier(rollout_provider_settings(tenant)),
         )
         try:
             run = service.review(
@@ -2778,7 +2839,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             except ValueError as exc:
                 raise HTTPException(status_code=422, detail=str(exc)) from exc
             if execution.mode == "agent":
-                planner = configured_agent_planner(provider_settings)
+                planner = configured_agent_planner(rollout_provider_settings(tenant))
                 if planner is None:
                     raise HTTPException(status_code=503, detail="agent_planner_not_configured")
                 run = service.plan_with_agent(

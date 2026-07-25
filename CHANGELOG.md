@@ -7,6 +7,10 @@ and versions follow Semantic Versioning.
 
 ### Changed
 
+- Reviewer identity matching now applies consistently to API-key and OIDC authenticated review
+  operations.
+- Rollout state updates use an inter-process lock and atomic replacement so concurrent workers
+  cannot both advance the same revision.
 - Add a live reliability and cost view with provider/job retry rates, fallback rate, queue age,
   categorized failures, per-model token totals, price-based estimates, and threshold alerts.
 - Add an asynchronous retrieval-model A/B workbench with allowlisted candidates, dataset hashes,
@@ -60,6 +64,10 @@ and versions follow Semantic Versioning.
 
 ### Added
 
+- Add revision-locked 5/10/25/50/100 model canary rollout APIs with deterministic tenant routing,
+  metric gates, authenticated reviewer actions, and automatic rollback.
+- Add a read-heavy Locust staging profile, deterministic provider/rollback/restore resilience
+  drill, production-validation guide, rollout ADR, and privacy-safe user-trial template.
 - Add real OIDC/JWKS token validation with tenant claims and user/reviewer/admin role hierarchy,
   while retaining explicit API-key authentication for local and transitional deployments.
 - Add protected Prometheus metrics, W3C trace propagation, optional OTLP export, structured request

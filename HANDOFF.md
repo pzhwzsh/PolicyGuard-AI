@@ -1,8 +1,13 @@
 # Handoff
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 ## Current state
+
+- Model changes can be introduced through a revision-locked canary at 5/10/25/50/100 percent;
+  success, error, P95 latency, and human-rejection regressions trigger rollback.
+- `tests/load/locustfile.py` and the resilience drill are executable validation tooling, not proof
+  of production scale. No load result is reportable until the environment and raw outputs exist.
 
 - `main` contains the working API, management UI, RAG workflow, document ingestion, review flow,
   remediation flow, Agent memory, MCP server, migrations, and CI.
@@ -69,6 +74,12 @@ Last updated: 2026-07-24
   dependencies, repository secrets, and high/critical filesystem vulnerabilities.
 
 ## Open work
+
+- Run the declared Locust matrix against an isolated PostgreSQL staging deployment and retain raw
+  CSV plus infrastructure metrics.
+- Execute worker termination, provider interruption, and backup restore against staging; record
+  measured RPO/RTO rather than quoting the deterministic local drill as production evidence.
+- Complete consented user trials with real task outcomes using the privacy-safe template.
 
 ### Data and evaluation
 

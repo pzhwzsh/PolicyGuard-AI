@@ -68,6 +68,10 @@ PostgreSQL-specific test is skipped locally.
 External service checks belong in the manual or scheduled smoke workflow, not the ordinary test
 suite.
 
+Production-readiness evidence follows `docs/PRODUCTION_VALIDATION.md`. Keep load and recovery
+reports tied to an exact commit and declared environment. The local resilience drill verifies
+control flow only; it does not establish production throughput, RPO, or RTO.
+
 Staged uploads and all derived parsing artifacts can be removed through the authenticated
 `DELETE /api/v1/documents/{document_id}` endpoint. Automated retention cleanup is dry-run-first:
 
