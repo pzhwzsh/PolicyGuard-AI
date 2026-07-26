@@ -13,6 +13,7 @@ from policyguard.application.cross_language_evaluation import (
 from policyguard.application.embeddings import DenseRetriever, OpenAICompatibleEmbeddingProvider
 from policyguard.application.hybrid import HybridRetriever
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
+from policyguard.application.local_embeddings import LocalSentenceTransformerProvider
 from policyguard.application.onnx_embeddings import FastEmbedProvider
 from policyguard.application.query_rewrite import (
     JsonQueryRewriteCache,
@@ -97,7 +98,9 @@ def _rewrite_queries(settings, samples: list[dict], cache_path: Path) -> tuple[d
             "wall_time_ms": round((perf_counter() - started) * 1000, 3),
             **usage,
             "estimated_cost_usd": None,
-            "cost_note": "Provider pricing is not configured; token usage is measured, cost is not guessed.",
+            "cost_note": (
+                "Provider pricing is not configured; token usage is measured, cost is not guessed."
+            ),
         },
     )
 
@@ -111,6 +114,9 @@ def main() -> None:
     parser.add_argument("--models", nargs="*")
     parser.add_argument(
         "--local-models", nargs="*", default=["jinaai/jina-embeddings-v2-base-zh"]
+    )
+    parser.add_argument(
+        "--sentence-transformer-models", nargs="*", default=[]
     )
     parser.add_argument("--skip-remote", action="store_true")
     parser.add_argument(
@@ -131,6 +137,7 @@ def main() -> None:
         "limitations": dataset["limitations"],
         "embedding_candidates": models,
         "local_embedding_candidates": args.local_models,
+        "sentence_transformer_candidates": args.sentence_transformer_models,
         "measurements": [],
         "failures": [],
     }
@@ -207,6 +214,38 @@ def main() -> None:
                 report["failures"].append({
                     "model": model, "provider": "fastembed_onnx_local",
                     "status": "failed", "reason": f"{type(exc).__name__}: {exc}",
+                })
+        for model in args.sentence_transformer_models:
+            try:
+                cached_provider = CachedEmbeddingProvider(
+                    LocalSentenceTransformerProvider(model)
+                )
+                prewarm = [item["query"] for item in dataset["samples"]]
+                for rewrite in rewrites.values():
+                    prewarm.extend(rewrite.retrieval_queries())
+                cached_provider.embed(list(dict.fromkeys(prewarm)))
+                dense = DenseRetriever(repository, cached_provider)
+                hybrid = HybridRetriever(repository, dense)
+                report["measurements"].extend([
+                    asdict(measure_retriever(
+                        f"dense_sentence_transformer:{model}", dense, dataset["samples"]
+                    )),
+                    asdict(measure_retriever(
+                        f"hybrid_rrf_sentence_transformer:{model}",
+                        hybrid, dataset["samples"]
+                    )),
+                ])
+                if rewrites:
+                    report["measurements"].append(asdict(measure_retriever(
+                        f"dense_sentence_transformer_plus_rewrite_rrf:{model}",
+                        RewrittenRetriever(dense, rewrites), dataset["samples"],
+                    )))
+            except Exception as exc:
+                report["failures"].append({
+                    "model": model,
+                    "provider": "sentence_transformers_local",
+                    "status": "failed",
+                    "reason": f"{type(exc).__name__}: {exc}",
                 })
     target = root / args.output
     target.parent.mkdir(parents=True, exist_ok=True)

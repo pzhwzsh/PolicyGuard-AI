@@ -4,10 +4,13 @@ import json
 from dataclasses import asdict, dataclass, field
 from typing import Protocol
 
-import httpx
-
-from policyguard.application.security import detect_prompt_injection, redact_sensitive
 from policyguard.application.guardrails import default_guardrail_policy
+from policyguard.application.provider_http import (
+    ProviderRetryPolicy,
+    post_with_retry,
+    should_try_backup,
+)
+from policyguard.application.security import detect_prompt_injection, redact_sensitive
 from policyguard.application.tools import ToolRegistry
 
 
@@ -118,9 +121,14 @@ class OpenAICompatibleAgentPlanner:
     model: str
     reasoning_effort: str = "medium"
     timeout_seconds: float = 60
+    retry_policy: ProviderRetryPolicy = ProviderRetryPolicy()
+
+    @property
+    def model_name(self) -> str:
+        return self.model
 
     def next_action(self, context: dict, tools: list[dict], trace: list[dict]) -> dict:
-        response = httpx.post(
+        response = post_with_retry(
             self.base_url.rstrip("/") + "/chat/completions",
             headers={"Authorization": f"Bearer {self.api_key}"},
             json={
@@ -148,12 +156,46 @@ class OpenAICompatibleAgentPlanner:
                 ],
             },
             timeout=self.timeout_seconds,
+            policy=self.retry_policy,
         )
-        response.raise_for_status()
         payload = response.json()
-        action = json.loads(payload["choices"][0]["message"]["content"])
+        try:
+            content = payload["choices"][0]["message"]["content"]
+            action = json.loads(content)
+        except (KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
+            raise ValueError("agent_response_invalid_json") from exc
+        if not isinstance(action, dict) or action.get("type") not in {"tool_call", "finish"}:
+            raise ValueError("agent_action_schema_invalid")
+        if action["type"] == "tool_call" and not isinstance(action.get("tool"), str):
+            raise ValueError("agent_tool_name_invalid")
+        if action["type"] == "tool_call" and not isinstance(action.get("arguments", {}), dict):
+            raise ValueError("agent_tool_arguments_invalid")
         action["_usage"] = payload.get("usage", {})
+        action["_provider_attempts"] = response.extensions.get("policyguard_attempts", 1)
         return action
+
+
+class FallbackAgentPlanner:
+    """Try planners in order; only fallback after provider/parse failures."""
+
+    def __init__(self, *planners: OpenAICompatibleAgentPlanner) -> None:
+        self.planners = planners
+        self.last_model: str | None = None
+
+    @property
+    def model_name(self) -> str:
+        return "->".join(planner.model_name for planner in self.planners)
+
+    def next_action(self, context: dict, tools: list[dict], trace: list[dict]) -> dict:
+        for planner in self.planners:
+            try:
+                action = planner.next_action(context, tools, trace)
+                self.last_model = planner.model_name
+                return action
+            except Exception as exc:
+                if not should_try_backup(exc):
+                    raise
+        raise RuntimeError("all_agent_planners_failed")
 
 
 def configured_agent_planner(settings) -> OpenAICompatibleAgentPlanner | None:
@@ -161,10 +203,21 @@ def configured_agent_planner(settings) -> OpenAICompatibleAgentPlanner | None:
         return None
     if not (settings.llm_base_url and settings.llm_api_key and settings.llm_model):
         return None
-    return OpenAICompatibleAgentPlanner(
-        base_url=settings.llm_base_url,
-        api_key=settings.llm_api_key,
-        model=settings.llm_model,
-        reasoning_effort=settings.llm_reasoning_effort,
-        timeout_seconds=settings.llm_timeout_seconds,
+    policy = ProviderRetryPolicy(
+        settings.provider_max_attempts, settings.provider_backoff_seconds
     )
+    models = [settings.llm_model]
+    if settings.llm_fallback_model and settings.llm_fallback_model not in models:
+        models.append(settings.llm_fallback_model)
+    planners = tuple(
+        OpenAICompatibleAgentPlanner(
+            base_url=settings.llm_base_url,
+            api_key=settings.llm_api_key,
+            model=model,
+            reasoning_effort=settings.llm_reasoning_effort,
+            timeout_seconds=settings.llm_timeout_seconds,
+            retry_policy=policy,
+        )
+        for model in models
+    )
+    return planners[0] if len(planners) == 1 else FallbackAgentPlanner(*planners)

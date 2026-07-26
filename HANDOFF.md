@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated: 2026-07-25
+Last updated: 2026-07-27
 
 ## Current state
 
@@ -45,6 +45,11 @@ Last updated: 2026-07-25
 - Transient model-provider failures now receive bounded retry with backoff. Runtime routes through
   configured backup LLM/embedding/rerank models, then deterministic, BM25, Hybrid, or human-review
   fallbacks as appropriate; authentication failures fail immediately.
+- Agent Planner now uses the same bounded provider retry policy, validates the returned action schema,
+  records provider attempts, and can fall back to the configured LLM model. Invalid JSON/actions are
+  treated as provider failures; 401/403 are not masked by the backup chain. The remaining production
+  gap is end-to-end idempotency/status reconciliation when an upstream request times out after it
+  may already have executed.
 - Local backup creation verifies its manifest, and restore is dry-run-first with a pre-restore
   safety copy. Optional retention only removes timestamp-named backup directories.
 - The user UI now includes a governed creative studio. It generates grounded ad-copy candidates and
@@ -86,6 +91,11 @@ Last updated: 2026-07-25
 - Complete human review of retrieval, citation, PDF, and remediation evaluation samples.
 - Add a representative set of real complex-layout PDFs.
 - Re-run retrieval, abstention, citation, and remediation evaluation on a held-out reviewed set.
+- A provisional 2026-07-27 BGE-M3 comparison is recorded in
+  `docs/evaluation/cross-language-retrieval-v1.md` and
+  `data/benchmarks/cross-language-jina-vs-bge-m3-v1.json`. On the current 22-query development
+  set, BGE-M3 + cached query rewrite reached Hit@5 1.0/MRR 1.0, but the set is pending final human
+  verification; repeat on a frozen holdout and target hardware before changing the production default.
 - Have an independent reviewer complete and freeze at least 50 holdout labels; the repository only
   contains the validation contract and template.
 

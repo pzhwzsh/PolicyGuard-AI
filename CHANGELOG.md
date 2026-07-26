@@ -7,6 +7,11 @@ and versions follow Semantic Versioning.
 
 ### Changed
 
+- Route the Agent Planner through the shared bounded-retry policy, validate JSON action schemas,
+  preserve immediate 401/403 failures, and use the configured backup LLM for transient or malformed
+  provider responses.
+- Extend the cross-language benchmark with local SentenceTransformers candidates and record a
+  provisional same-dataset BGE-M3 versus Jina comparison without promoting an unverified result.
 - Reviewer identity matching now applies consistently to API-key and OIDC authenticated review
   operations.
 - Rollout state updates use an inter-process lock and atomic replacement so concurrent workers

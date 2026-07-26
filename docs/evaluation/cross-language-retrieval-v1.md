@@ -49,6 +49,20 @@ Keep local Jina as the current cross-language retrieval baseline. Conditional So
 justified by the provisional MRR increase from 0.8889 to 0.9167, but should remain cached and
 selective because Hit@5 did not improve and the first pass consumed 11,500 tokens.
 
+## BGE-M3 follow-up (2026-07-27)
+
+Using the same 22-sample dataset and the local SentenceTransformers provider, `BAAI/bge-m3`
+achieved Hit@5 1.0000 / MRR 0.9722 with 82.029 ms mean latency and 374.640 ms P95. With the
+existing cached Sol query rewrites, it achieved Hit@5 1.0000 / MRR 1.0000 with 12.548 ms mean
+latency and 15.041 ms P95. Jina dense measured 1.0000 / 0.8889 at 3.105 ms mean and 4.109 ms
+P95; Jina plus rewrite measured 1.0000 / 0.9167 at 7.582 ms mean and 9.409 ms P95.
+
+These are provisional development measurements: the dataset remains pending final human
+verification, the corpus is small, and the BGE-M3 dense timing includes local CPU execution and
+has a high cold/first-pass tail. The raw report is `data/benchmarks/cross-language-jina-vs-bge-m3-v1.json`.
+Do not replace the default solely from this run; repeat on a frozen human-verified holdout and
+the intended deployment hardware before making a production promotion decision.
+
 Do not tune an answerability threshold on four negative samples. Expand and human-review the
 negative set first, then measure abstention precision/recall separately from retrieval metrics.
 
