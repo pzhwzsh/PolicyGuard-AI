@@ -9,7 +9,6 @@ from mcp.client.stdio import stdio_client
 
 import policyguard.mcp_server as mcp_server
 
-
 PROJECT_ROOT = Path(__file__).parents[1]
 
 
@@ -29,7 +28,10 @@ def test_mcp_search_is_read_only_evidence() -> None:
 
     assert result["evidence_only"] is True
     assert result["retriever"] in {
-        "lexical_bm25_cjk_v1", "hybrid_rrf", "hybrid_rrf_fallback"
+        "lexical_bm25_cjk_v1",
+        "lexical_bm25_cjk_v1_fallback",
+        "hybrid_rrf",
+        "hybrid_rrf_fallback",
     }
     assert result["results"][0]["section_id"] == "article-9"
 

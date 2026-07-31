@@ -65,6 +65,13 @@ class Settings:
     harness_sandbox_enabled: bool
     harness_sandbox_image: str
     mcp_servers_json: str
+    smtp_host: str
+    smtp_port: int
+    smtp_username: str
+    smtp_authorization_code: str
+    smtp_from_email: str
+    auth_code_pepper: str
+    session_cookie_secure: bool
 
 
 @lru_cache(maxsize=1)
@@ -78,9 +85,7 @@ def get_settings() -> Settings:
         log_level=getenv("LOG_LEVEL", "INFO"),
         database_url=getenv("DATABASE_URL", "sqlite:///./data/policyguard.db"),
         source_dir=getenv("SOURCE_DIR", "./data/sources"),
-        evaluation_dataset=getenv(
-            "EVALUATION_DATASET", "./data/evaluation/rag-baseline.json"
-        ),
+        evaluation_dataset=getenv("EVALUATION_DATASET", "./data/evaluation/rag-baseline.json"),
         embedding_base_url=getenv("EMBEDDING_BASE_URL", ""),
         embedding_api_key=getenv("EMBEDDING_API_KEY", ""),
         embedding_model=getenv("EMBEDDING_MODEL", ""),
@@ -107,9 +112,7 @@ def get_settings() -> Settings:
             getenv("LLM_FALLBACK_INPUT_PRICE_PER_MILLION", "0")
         ),
         query_rewrite_enabled=getenv("QUERY_REWRITE_ENABLED", "true").casefold() == "true",
-        query_rewrite_cache=getenv(
-            "QUERY_REWRITE_CACHE", "./data/query-cache/rewrites.json"
-        ),
+        query_rewrite_cache=getenv("QUERY_REWRITE_CACHE", "./data/query-cache/rewrites.json"),
         upload_dir=getenv("UPLOAD_DIR", "./data/uploads"),
         mineru_base_url=getenv("MINERU_BASE_URL", ""),
         paddleocr_base_url=getenv("PADDLEOCR_BASE_URL", ""),
@@ -122,9 +125,7 @@ def get_settings() -> Settings:
         image_generation_base_url=getenv("IMAGE_GENERATION_BASE_URL", ""),
         image_generation_api_key=getenv("IMAGE_GENERATION_API_KEY", ""),
         image_generation_model=getenv("IMAGE_GENERATION_MODEL", ""),
-        image_generation_timeout_seconds=float(
-            getenv("IMAGE_GENERATION_TIMEOUT_SECONDS", "180")
-        ),
+        image_generation_timeout_seconds=float(getenv("IMAGE_GENERATION_TIMEOUT_SECONDS", "180")),
         rate_limit_per_minute=int(getenv("RATE_LIMIT_PER_MINUTE", "120")),
         max_upload_bytes=int(getenv("MAX_UPLOAD_BYTES", str(25 * 1024 * 1024))),
         max_active_jobs_per_tenant=int(getenv("MAX_ACTIVE_JOBS_PER_TENANT", "10")),
@@ -134,9 +135,14 @@ def get_settings() -> Settings:
         oidc_tenant_claim=getenv("OIDC_TENANT_CLAIM", "tenant_id"),
         metrics_api_key=getenv("METRICS_API_KEY", ""),
         otel_exporter_otlp_endpoint=getenv("OTEL_EXPORTER_OTLP_ENDPOINT", ""),
-        harness_sandbox_enabled=getenv(
-            "HARNESS_SANDBOX_ENABLED", "false"
-        ).casefold() == "true",
+        harness_sandbox_enabled=getenv("HARNESS_SANDBOX_ENABLED", "false").casefold() == "true",
         harness_sandbox_image=getenv("HARNESS_SANDBOX_IMAGE", "python:3.12-alpine"),
         mcp_servers_json=getenv("MCP_SERVERS_JSON", "[]"),
+        smtp_host=getenv("SMTP_HOST", "smtp.qq.com"),
+        smtp_port=int(getenv("SMTP_PORT", "465")),
+        smtp_username=getenv("SMTP_USERNAME", ""),
+        smtp_authorization_code=getenv("SMTP_AUTHORIZATION_CODE", ""),
+        smtp_from_email=getenv("SMTP_FROM_EMAIL", ""),
+        auth_code_pepper=getenv("AUTH_CODE_PEPPER", "development-only-change-me"),
+        session_cookie_secure=getenv("SESSION_COOKIE_SECURE", "false").casefold() == "true",
     )

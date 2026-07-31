@@ -13,6 +13,7 @@ def test_health_and_check_round_trip(tmp_path: Path) -> None:
         dashboard = client.get("/")
         assert dashboard.status_code == 200
         assert "PolicyGuard AI" in dashboard.text
+        assert "Agent Harness" not in dashboard.text
 
         health = client.get("/health")
         assert health.status_code == 200
@@ -112,10 +113,11 @@ def test_health_and_check_round_trip(tmp_path: Path) -> None:
             "collect_evidence",
             "human_review_route",
         ]
+        history = client.get("/api/v1/workflows/compliance")
+        assert history.status_code == 200
+        assert [item["id"] for item in history.json()] == [workflow_result["id"]]
 
-        workflow_get = client.get(
-            f"/api/v1/workflows/compliance/{workflow_result['id']}"
-        )
+        workflow_get = client.get(f"/api/v1/workflows/compliance/{workflow_result['id']}")
         assert workflow_get.status_code == 200
         assert workflow_get.json()["id"] == workflow_result["id"]
 

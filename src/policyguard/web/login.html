@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153b2b">
+  <title>登录 - PolicyGuard</title>
+  <link rel="stylesheet" href="/static/auth.css">
+</head>
+<body>
+  <main class="auth-layout">
+    <section class="product-context" aria-labelledby="product-title">
+      <a class="brand" href="/"><span>PG</span><strong>PolicyGuard</strong></a>
+      <div>
+        <p class="eyebrow">Evidence-first compliance</p>
+        <h1 id="product-title">让每一次合规判断都有来源。</h1>
+        <p class="lead">面向跨境商品文案的法规检索、风险定位和人工复核工作台。</p>
+      </div>
+      <dl class="trust-points">
+        <div><dt>证据</dt><dd>结论关联法规原文与版本</dd></div>
+        <div><dt>边界</dt><dd>证据不足时拒绝自动下结论</dd></div>
+        <div><dt>控制</dt><dd>高风险操作保留人工确认</dd></div>
+      </dl>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="mode-tabs" role="tablist" aria-label="账号操作">
+          <button id="login-tab" class="active" role="tab" aria-selected="true">登录</button>
+          <button id="register-tab" role="tab" aria-selected="false">注册</button>
+        </div>
+
+        <form id="login-form">
+          <header><h2>欢迎回来</h2><p>登录后继续查看审核任务和历史结果。</p></header>
+          <label>邮箱<input name="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
+          <label>密码<input name="password" type="password" autocomplete="current-password" required></label>
+          <p id="login-error" class="form-error" role="alert"></p>
+          <button class="primary" type="submit">登录</button>
+        </form>
+
+        <form id="register-form" hidden>
+          <header><h2>创建账号</h2><p>验证码将从PolicyGuard服务邮箱发送。</p></header>
+          <label>邮箱<input name="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
+          <label>邮箱验证码<span class="code-row"><input name="verification_code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><button id="send-code" type="button">发送验证码</button></span></label>
+          <label>密码<input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required></label>
+          <div class="password-rules">至少10位，同时包含大写字母、小写字母和数字；允许特殊符号，不允许空格。</div>
+          <p id="register-error" class="form-error" role="alert"></p>
+          <button class="primary" type="submit">注册并进入工作台</button>
+        </form>
+      </div>
+      <p class="legal-note">创建账号即表示你同意仅上传有权处理的业务资料。</p>
+    </section>
+  </main>
+  <script src="/static/auth.js" defer></script>
+</body>
+</html>

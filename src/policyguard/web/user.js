@@ -729,8 +729,6 @@ document.querySelectorAll(".product-nav a").forEach((link) => link.addEventListe
 }));
 
 restoreDraft();
-Promise.all([loadProducts(), loadTasks(), loadReadiness()]).catch((error) => showToast(error.message, "error"));
-window.setInterval(() => loadTasks().catch(() => {}), 15000);
 
 let currentHarnessRun = null;
 let harnessEventSource = null;
@@ -882,4 +880,15 @@ $("#run-harness-evaluation").addEventListener("click", async () => {
   } catch (error) { showToast(error.message, "error"); }
 });
 $("#refresh-harness-meta").addEventListener("click", () => loadHarnessMeta().catch((error) => showToast(error.message, "error")));
-loadHarnessMeta().catch((error) => showToast(error.message, "error"));
+
+async function startWorkspace() {
+  const auth = await api("/api/v1/auth/status");
+  if (auth.required && !auth.authenticated) {
+    location.replace("/login");
+    return;
+  }
+  await Promise.all([loadProducts(), loadTasks(), loadReadiness(), loadHarnessMeta()]);
+  window.setInterval(() => loadTasks().catch(() => {}), 15000);
+}
+
+startWorkspace().catch((error) => showToast(error.message, "error"));

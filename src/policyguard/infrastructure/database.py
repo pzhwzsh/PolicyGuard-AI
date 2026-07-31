@@ -101,9 +101,7 @@ class PolicyChunkRecord(Base):
     __tablename__ = "policy_chunks"
 
     id: Mapped[str] = mapped_column(String(64), primary_key=True)
-    document_id: Mapped[str] = mapped_column(
-        ForeignKey("policy_documents.id"), index=True
-    )
+    document_id: Mapped[str] = mapped_column(ForeignKey("policy_documents.id"), index=True)
     ordinal: Mapped[int]
     section_id: Mapped[str] = mapped_column(String(100), index=True)
     heading: Mapped[str] = mapped_column(String(500))
@@ -188,9 +186,7 @@ class AgentMemoryRecord(Base):
 
 class EvaluationReviewRecord(Base):
     __tablename__ = "evaluation_reviews"
-    __table_args__ = (
-        UniqueConstraint("dataset", "sample_id", name="uq_evaluation_review_sample"),
-    )
+    __table_args__ = (UniqueConstraint("dataset", "sample_id", name="uq_evaluation_review_sample"),)
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     dataset: Mapped[str] = mapped_column(String(200), index=True)
@@ -258,6 +254,49 @@ class ResourceOwnershipRecord(Base):
     resource_type: Mapped[str] = mapped_column(String(40), primary_key=True)
     resource_id: Mapped[str] = mapped_column(String(100), primary_key=True)
     tenant_id: Mapped[str] = mapped_column(String(100), primary_key=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
+    )
+
+
+class UserRecord(Base):
+    __tablename__ = "users"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
+    password_hash: Mapped[str] = mapped_column(String(512))
+    role: Mapped[str] = mapped_column(String(30), default="user", index=True)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    failed_login_attempts: Mapped[int] = mapped_column(Integer, default=0)
+    locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
+    )
+
+
+class EmailVerificationRecord(Base):
+    __tablename__ = "email_verifications"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    email: Mapped[str] = mapped_column(String(320), index=True)
+    purpose: Mapped[str] = mapped_column(String(30), index=True)
+    code_hash: Mapped[str] = mapped_column(String(128))
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True
+    )
+
+
+class UserSessionRecord(Base):
+    __tablename__ = "user_sessions"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )

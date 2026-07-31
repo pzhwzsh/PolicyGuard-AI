@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17352b">
+  <title>PolicyGuard AI - 合规工作台</title>
+  <link rel="stylesheet" href="/static/portal.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="PolicyGuard AI 首页">
+      <span class="brand-mark">PG</span>
+      <span><strong>PolicyGuard</strong><small>合规工作台</small></span>
+    </a>
+    <div class="account">
+      <span id="account-email">本地工作区</span>
+      <button id="logout-button" class="text-button" type="button" hidden>退出登录</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav aria-label="工作台导航">
+        <button class="nav-item active" data-view="check" type="button"><span>01</span>合规检查</button>
+        <button class="nav-item" data-view="history" type="button"><span>02</span>历史记录</button>
+      </nav>
+      <div class="boundary-note">
+        <strong>人工确认边界</strong>
+        <p>系统只提供证据和整改草案，最终判断由审核人员完成。</p>
+      </div>
+    </aside>
+
+    <main>
+      <section id="check-view" class="view active">
+        <div class="page-heading">
+          <div><p class="eyebrow">内容合规</p><h1>新建检查</h1></div>
+          <ol class="stepper" aria-label="审核流程">
+            <li class="active">提交内容</li><li>查看证据</li><li>人工确认</li><li>整改建议</li>
+          </ol>
+        </div>
+
+        <form id="check-form" class="editor">
+          <div class="field-row">
+            <label>商品编号<input name="external_id" autocomplete="off" placeholder="例如 SKU-2026-001" required maxlength="200"></label>
+            <label>商品类目<input name="category" autocomplete="off" placeholder="例如 美妆、食品、电子产品" required maxlength="200"></label>
+          </div>
+          <label>商品标题<input name="title" autocomplete="off" placeholder="填写待检查的商品标题或广告标题" required maxlength="1000"></label>
+          <label>商品描述<textarea name="description" rows="7" placeholder="填写商品描述、宣传文案或营销声明" maxlength="20000"></textarea></label>
+          <fieldset>
+            <legend>目标市场</legend>
+            <label class="check-option"><input type="checkbox" name="markets" value="CN" checked><span>中国</span></label>
+            <label class="check-option"><input type="checkbox" name="markets" value="US"><span>美国</span></label>
+            <label class="check-option"><input type="checkbox" name="markets" value="EU"><span>欧盟</span></label>
+          </fieldset>
+          <div class="form-actions">
+            <span>未检索到可靠证据时，系统会明确拒绝给出结论。</span>
+            <button id="submit-button" class="primary" type="submit">开始检查</button>
+          </div>
+        </form>
+
+        <section id="result" class="result" hidden>
+          <header class="result-header">
+            <div><p class="eyebrow">检查结果</p><h2 id="result-title">等待结果</h2></div>
+            <a id="report-link" class="secondary" href="#">下载报告</a>
+          </header>
+          <p id="result-note" class="notice"></p>
+          <div id="evidence-list" class="evidence-list"></div>
+          <div id="review-actions" class="review-actions">
+            <div><strong>请人工核对证据</strong><p>确认只代表允许进入整改阶段，不会自动发布内容。</p></div>
+            <button id="reject-button" class="danger" type="button">标记有误</button>
+            <button id="accept-button" class="primary" type="button">确认依据</button>
+          </div>
+          <section id="remediation" class="remediation" hidden>
+            <header><div><p class="eyebrow">整改建议</p><h3>保守修改草案</h3></div><button id="plan-button" class="primary" type="button">生成建议</button></header>
+            <div id="remediation-list"></div>
+          </section>
+        </section>
+      </section>
+
+      <section id="history-view" class="view" hidden>
+        <div class="page-heading"><div><p class="eyebrow">审计留痕</p><h1>历史记录</h1></div><button id="refresh-history" class="secondary" type="button">刷新</button></div>
+        <div id="history-list" class="history-list"><p class="empty">暂无检查记录</p></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="/static/portal.js" defer></script>
+</body>
+</html>
