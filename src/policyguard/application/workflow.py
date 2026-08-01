@@ -360,6 +360,8 @@ class ComplianceWorkflowService:
             WorkflowStatus.NEEDS_MORE_EVIDENCE,
         }:
             raise RuntimeError("workflow_not_reviewable")
+        if run.status == WorkflowStatus.NEEDS_MORE_EVIDENCE and decision == "accept":
+            raise RuntimeError("workflow_insufficient_evidence")
         target_status = (
             WorkflowStatus.REVIEW_ACCEPTED
             if decision == "accept"

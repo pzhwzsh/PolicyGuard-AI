@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from policyguard.application.evidence_support import EvidenceDecision
 from policyguard.application.knowledge import ingest_source_directory
 from policyguard.application.query_rewrite import JsonQueryRewriteCache, RewrittenQuery
@@ -84,6 +86,45 @@ def test_workflow_routes_unsupported_evidence_to_more_evidence(tmp_path: Path) -
     assert run.result_payload["evidence_supported"] is False
     assert run.result_payload["markets"][0]["evidence_support"]["supported"] is False
     assert any(event.step == "evidence_support_llm" for event in run.events)
+
+
+def test_workflow_cannot_accept_insufficient_evidence(tmp_path: Path) -> None:
+    database = Database(f"sqlite:///{(tmp_path / 'insufficient.db').as_posix()}")
+    database.initialize()
+    with database.session_factory() as session:
+        knowledge = SqlAlchemyKnowledgeRepository(session)
+        ingest_source_directory(knowledge, ROOT / "data/sources")
+        service = ComplianceWorkflowService(
+            knowledge,
+            SqlAlchemyWorkflowRepository(session),
+            evidence_verifier=RejectingVerifier(),
+        )
+        run = service.execute(
+            product={"title": "国家级产品", "description": ""},
+            markets=["CN"],
+            category="all",
+            channel="all",
+            as_of=None,
+        )
+
+        with pytest.raises(RuntimeError, match="workflow_insufficient_evidence"):
+            service.review(
+                run_id=run.id,
+                decision_id="accept-insufficient",
+                decision="accept",
+                reviewer="reviewer@example.com",
+                comment="accept",
+            )
+
+        rejected = service.review(
+            run_id=run.id,
+            decision_id="reject-insufficient",
+            decision="reject",
+            reviewer="reviewer@example.com",
+            comment="insufficient evidence",
+        )
+
+    assert rejected.status == WorkflowStatus.REVIEW_REJECTED
 
 
 def test_workflow_uses_cached_rewrite_and_records_metrics(tmp_path: Path) -> None:
