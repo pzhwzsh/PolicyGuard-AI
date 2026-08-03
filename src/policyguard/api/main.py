@@ -17,6 +17,7 @@ from fastapi import (
     Depends,
     FastAPI,
     File,
+    Form,
     Header,
     HTTPException,
     Query,
@@ -136,6 +137,7 @@ from policyguard.application.jobs import PersistentJobQueue
 from policyguard.application.knowledge import BM25Retriever, ingest_source_directory
 from policyguard.application.llm import configured_claim_extractor
 from policyguard.application.media_ingestion import MEDIA_TYPES, validate_media
+from policyguard.application.media_review import review_image
 from policyguard.application.model_rollout import ModelRolloutRegistry
 from policyguard.application.policy_impact import analyze_policy_impact
 from policyguard.application.product_experience import (
@@ -1072,6 +1074,77 @@ def create_app(database_url: str | None = None) -> FastAPI:
             max_attempts=job.max_attempts,
             error=job.error,
         )
+
+    @application.post("/api/v1/media/review", tags=["media"])
+    async def review_media_image(
+        request: Request,
+        file: UploadFile = File(...),
+        markets: str = Form(default="CN"),
+        category: str = Form(default="all"),
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> dict:
+        del request
+        suffix = Path(file.filename or "").suffix.lower()
+        if suffix not in {".png", ".jpg", ".jpeg"}:
+            raise HTTPException(status_code=415, detail="image_type_not_supported")
+        content = await file.read(10 * 1024 * 1024 + 1)
+        if len(content) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="media_too_large")
+        intake = scan_upload(file.filename or f"upload{suffix}", content, max_bytes=10 * 1024 * 1024)
+        if intake["status"] == "blocked":
+            raise HTTPException(status_code=422, detail=intake)
+        try:
+            validate_media(content, suffix)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        selected_markets = [
+            value.strip().upper() for value in markets.split(",") if value.strip().upper() in {"CN", "US", "EU"}
+        ] or ["CN"]
+        digest = sha256(content).hexdigest()
+        media_id = sha256(f"{tenant}:{digest}".encode()).hexdigest()[:24]
+        directory = Path(settings.upload_dir) / "media" / media_id
+        directory.mkdir(parents=True, exist_ok=True)
+        path = directory / f"original{suffix}"
+        if not path.exists():
+            path.write_bytes(content)
+        try:
+            result = review_image(
+                path,
+                rollout_provider_settings(tenant),
+                markets=selected_markets,
+                category=category.strip() or "all",
+            )
+        except Exception as exc:
+            raise HTTPException(status_code=503, detail=f"image_review_failed:{type(exc).__name__}") from exc
+        manifest = {
+            "media_id": media_id,
+            "filename": file.filename or path.name,
+            "asset_url": f"/api/v1/media/{media_id}/original",
+            "markets": selected_markets,
+            "category": category.strip() or "all",
+            **result,
+        }
+        (directory / "review.json").write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        bind_resource(session, "media", media_id, tenant)
+        return manifest
+
+    @application.get("/api/v1/media/{media_id}/original", tags=["media"])
+    def get_media_original(
+        media_id: str,
+        session: Session = Depends(get_session),
+        tenant: str = Depends(tenant_identity),
+    ) -> FileResponse:
+        require_resource(session, "media", media_id, tenant)
+        directory = Path(settings.upload_dir) / "media" / media_id
+        candidates = [path for path in directory.glob("original.*") if path.is_file()]
+        if len(candidates) != 1:
+            raise HTTPException(status_code=404, detail="media_asset_not_found")
+        path = candidates[0]
+        media_type = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
+        return FileResponse(path, media_type=media_type, filename=path.name)
 
     @application.get("/api/v1/readiness", tags=["experience"])
     def readiness(

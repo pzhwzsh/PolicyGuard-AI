@@ -28,43 +28,47 @@
     <section id="check-view" class="view active">
       <header class="hero">
         <div class="hero-copy">
-          <h1>新建合规审查</h1>
+          <h1>素材合规审查</h1>
         </div>
       </header>
 
       <ol id="workflow-stepper" class="stepper" aria-label="审查流程" hidden>
-        <li class="active" data-step="submit"><span>01</span><div><strong>提交内容</strong><small>定义审查范围</small></div></li>
-        <li data-step="agent"><span>02</span><div><strong>Agent 审查</strong><small>提取声明与选择工具</small></div></li>
-        <li data-step="evidence"><span>03</span><div><strong>核验证据</strong><small>法规来源与适用范围</small></div></li>
-        <li data-step="review"><span>04</span><div><strong>人工确认</strong><small>接受、纠正或驳回</small></div></li>
-        <li data-step="remediation"><span>05</span><div><strong>整改复检</strong><small>生成最小修改方案</small></div></li>
+        <li class="active" data-step="submit"><span>01</span><div><strong>上传素材</strong><small>读取文件</small></div></li>
+        <li data-step="agent"><span>02</span><div><strong>识别内容</strong><small>OCR / 文档解析</small></div></li>
+        <li data-step="evidence"><span>03</span><div><strong>定位风险</strong><small>标注命中位置</small></div></li>
+        <li data-step="review"><span>04</span><div><strong>核验依据</strong><small>过滤无关条款</small></div></li>
+        <li data-step="remediation"><span>05</span><div><strong>修改确认</strong><small>生成修改预览</small></div></li>
       </ol>
 
       <section id="intake-workspace" class="workspace-grid">
         <form id="check-form" class="intake-card">
           <div class="card-heading">
-            <div><div><strong>审查内容</strong><small id="draft-state" class="sr-only">尚未提交</small></div></div>
+            <div><div><strong>上传素材</strong><small id="draft-state" class="sr-only">尚未提交</small></div></div>
           </div>
 
-          <div class="scenario-block">
-            <div class="label-row"><strong>示例</strong></div>
-            <div class="scenario-grid">
-              <button class="scenario-card" data-scenario="beauty" type="button"><span>美妆</span><strong>绝对化功效</strong></button>
-              <button class="scenario-card" data-scenario="health" type="button"><span>保健品</span><strong>疾病预防</strong></button>
-              <button class="scenario-card" data-scenario="education" type="button"><span>教育</span><strong>结果承诺</strong></button>
-            </div>
+          <div class="upload-toolbar">
+            <button class="upload-choice active" data-upload-target="image-files" type="button"><strong>图片</strong><span>可多选</span></button>
+            <button class="upload-choice" data-upload-target="pdf-files" type="button"><strong>PDF</strong><span>可多选</span></button>
+            <button class="upload-choice" data-upload-target="folder-files" type="button"><strong>文件夹</strong><span>保留目录</span></button>
+            <input id="image-files" class="sr-only" type="file" accept=".png,.jpg,.jpeg" multiple>
+            <input id="pdf-files" class="sr-only" type="file" accept=".pdf" multiple>
+            <input id="folder-files" class="sr-only" type="file" accept=".png,.jpg,.jpeg,.pdf" webkitdirectory directory multiple>
           </div>
 
-          <div class="form-section">
-            <label class="field"><span>商品标题</span><input name="title" autocomplete="off" placeholder="例如：7天淡纹，国家级安全认证" required maxlength="1000"></label>
-            <label class="field"><span>营销文案</span><textarea name="description" rows="5" placeholder="粘贴商品详情、广告文案或直播话术……" maxlength="20000"></textarea></label>
+          <button id="upload-dropzone" class="upload-dropzone" type="button">
+            <span class="upload-icon">↑</span>
+            <strong>选择图片</strong>
+            <small>PNG、JPG，单文件不超过 10MB</small>
+          </button>
+
+          <div id="file-queue" class="file-queue">
+            <p class="queue-empty">尚未选择文件</p>
           </div>
 
-          <div class="form-section compact-section">
-            <div class="field-row three-columns">
-              <label class="field"><span>商品类目</span><input name="category" autocomplete="off" placeholder="美妆" required maxlength="200"></label>
+          <div class="form-section compact-section review-scope">
+            <div class="field-row">
+              <label class="field"><span>商品类目</span><input name="category" autocomplete="off" placeholder="例如：美妆、食品" maxlength="200"></label>
               <label class="field"><span>销售渠道</span><select name="channel"><option value="all">通用营销</option><option value="marketplace">电商平台</option><option value="social">社交媒体</option><option value="live">直播</option></select></label>
-              <label class="field"><span>内部编号 <i>选填</i></span><input name="external_id" autocomplete="off" placeholder="自动生成" maxlength="200"></label>
             </div>
           </div>
 
@@ -84,18 +88,27 @@
             <span id="quota-badge" class="quota-badge">-- 次可用</span>
           </div>
           <dl class="task-preview">
+            <div><dt>待审文件</dt><dd id="preview-files">0 个</dd></div>
             <div><dt>目标市场</dt><dd id="preview-markets">中国</dd></div>
             <div><dt>商品类目</dt><dd id="preview-category">未填写</dd></div>
             <div><dt>销售渠道</dt><dd id="preview-channel">通用营销</dd></div>
           </dl>
-          <button id="submit-button" class="primary launch-button" type="submit" form="check-form"><span>开始检查</span><small>预计 10–30 秒</small></button>
+          <button id="submit-button" class="primary launch-button" type="submit" form="check-form" disabled><span>开始检查</span><small>0 个文件</small></button>
         </aside>
       </section>
 
       <section id="progress" class="run-console" role="status" aria-live="polite" hidden>
         <header><div><span class="running-pulse"></span><div><strong id="progress-title">Agent 正在分析营销声明</strong><small id="progress-detail">建立本次任务的法域与证据上下文</small></div></div><span class="run-badge">RUNNING</span></header>
         <div class="run-track"><i id="progress-bar"></i></div>
-        <div class="run-phases"><span class="active">提取声明</span><span>规划路径</span><span>检索证据</span><span>验证充分性</span><span>人工路由</span></div>
+        <div class="run-phases"><span class="active">读取文件</span><span>识别内容</span><span>定位风险</span><span>核验依据</span><span>生成建议</span></div>
+      </section>
+
+      <section id="media-result" class="media-result" hidden>
+        <header class="media-result-header">
+          <div><h2>图片审查结果</h2><p id="media-result-summary">等待处理</p></div>
+          <button id="clear-media-results" class="secondary" type="button">重新上传</button>
+        </header>
+        <div id="media-result-list" class="media-result-list"></div>
       </section>
 
       <section id="result" class="result" hidden>

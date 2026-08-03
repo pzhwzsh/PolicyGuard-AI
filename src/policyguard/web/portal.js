@@ -3,6 +3,9 @@ let currentRun = null;
 let reviewer = "local-reviewer";
 let progressTimer = null;
 let authenticatedAccount = false;
+let selectedFiles = [];
+let activeUploadInput = "image-files";
+const mediaResults = new Map();
 
 const scenarios = {
   beauty: {
@@ -114,6 +117,10 @@ function updateTaskPreview() {
   $("#preview-markets").textContent = markets.join(" / ") || "未选择";
   $("#preview-category").textContent = form.elements.category.value.trim() || "未填写";
   $("#preview-channel").textContent = channelLabels[form.elements.channel.value] || "通用营销";
+  $("#preview-files").textContent = `${selectedFiles.length} 个`;
+  const submit = $("#submit-button");
+  submit.disabled = selectedFiles.length === 0;
+  submit.querySelector("small").textContent = `${selectedFiles.length} 个文件`;
 }
 
 function setProgress(active) {
@@ -125,11 +132,11 @@ function setProgress(active) {
     return;
   }
   const phases = [
-    ["Agent 正在提取营销声明", "识别功效、资质、价格与承诺类表达"],
-    ["Agent 正在规划检索路径", "根据法域、类目和渠道组装检索上下文"],
-    ["正在调用混合检索", "组合关键词、语义召回与候选重排"],
-    ["正在验证证据充分性", "证据不足时将停止生成结论"],
-    ["正在生成下一步路由", "进入人工确认或要求补充证据"]
+    ["正在读取文件", "校验文件格式并建立批次"],
+    ["正在识别内容", "提取图片文字或 PDF 页面结构"],
+    ["正在定位风险", "将风险内容映射回图片或页面位置"],
+    ["正在核验依据", "只保留能够直接支持判断的准确引文"],
+    ["正在生成建议", "输出可人工确认的修改方案"]
   ];
   let phase = 0;
   const render = () => {
@@ -162,18 +169,218 @@ function selectScenario(key) {
 
 function resetCheck({focus = false} = {}) {
   currentRun = null;
+  selectedFiles.forEach((item) => item.previewUrl && URL.revokeObjectURL(item.previewUrl));
+  selectedFiles = [];
+  mediaResults.clear();
   $("#check-form").reset();
-  document.querySelectorAll(".scenario-card").forEach((button) => button.classList.remove("selected"));
+  renderFileQueue();
+  $("#media-result").hidden = true;
+  $("#media-result-list").innerHTML = "";
   $("#result").hidden = true;
-  $("#draft-state").textContent = "选择场景或填写真实商品文案";
+  $("#draft-state").textContent = "尚未提交";
   setProgress(false);
   updateStepper(null);
   updateTaskPreview();
   if (focus) {
-    const input = $('#check-form input[name="title"]');
-    input.focus();
-    input.scrollIntoView({behavior: "smooth", block: "center"});
+    $("#upload-dropzone").focus();
+    $("#upload-dropzone").scrollIntoView({behavior: "smooth", block: "center"});
   }
+}
+
+function fileKey(file) {
+  return `${file.webkitRelativePath || file.name}:${file.size}:${file.lastModified}`;
+}
+
+function addFiles(files) {
+  const accepted = [...files].filter((file) => /\.(png|jpe?g|pdf)$/i.test(file.name));
+  const existing = new Set(selectedFiles.map((item) => item.key));
+  accepted.forEach((file) => {
+    const key = fileKey(file);
+    if (existing.has(key)) return;
+    existing.add(key);
+    selectedFiles.push({
+      key,
+      file,
+      relativePath: file.webkitRelativePath || file.name,
+      previewUrl: file.type.startsWith("image/") ? URL.createObjectURL(file) : null
+    });
+  });
+  renderFileQueue();
+  updateTaskPreview();
+}
+
+function renderFileQueue() {
+  const target = $("#file-queue");
+  if (!selectedFiles.length) {
+    target.innerHTML = '<p class="queue-empty">尚未选择文件</p>';
+    return;
+  }
+  target.innerHTML = selectedFiles.map((item) => `
+    <div class="queue-item" data-file-key="${escapeHtml(item.key)}">
+      <div><strong>${escapeHtml(item.relativePath)}</strong><small>${(item.file.size / 1024 / 1024).toFixed(2)} MB</small></div>
+      <span class="queue-kind">${/\.pdf$/i.test(item.file.name) ? "PDF" : "图片"}</span>
+      <button class="queue-remove" type="button" aria-label="移除 ${escapeHtml(item.file.name)}">×</button>
+    </div>`).join("");
+}
+
+function setUploadMode(inputId) {
+  activeUploadInput = inputId;
+  document.querySelectorAll(".upload-choice").forEach((button) => {
+    button.classList.toggle("active", button.dataset.uploadTarget === inputId);
+  });
+  const copy = {
+    "image-files": ["选择图片", "PNG、JPG，支持批量上传"],
+    "pdf-files": ["选择 PDF", "支持多个 PDF，单文件不超过 20MB"],
+    "folder-files": ["选择文件夹", "自动读取文件夹中的图片和 PDF"]
+  }[inputId];
+  $("#upload-dropzone").querySelector("strong").textContent = copy[0];
+  $("#upload-dropzone").querySelector("small").textContent = copy[1];
+}
+
+function mediaCardId(key) {
+  let hash = 0;
+  for (const char of key) hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
+  return `media-${Math.abs(hash)}`;
+}
+
+function drawReviewCanvas(canvas, image, findings, active = -1) {
+  const maxWidth = 900;
+  const scale = Math.min(1, maxWidth / image.naturalWidth);
+  canvas.width = Math.round(image.naturalWidth * scale);
+  canvas.height = Math.round(image.naturalHeight * scale);
+  const context = canvas.getContext("2d");
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  findings.forEach((finding, index) => {
+    const [x1, y1, x2, y2] = finding.bbox;
+    const x = x1 / 1000 * canvas.width;
+    const y = y1 / 1000 * canvas.height;
+    const width = Math.max(3, (x2 - x1) / 1000 * canvas.width);
+    const height = Math.max(3, (y2 - y1) / 1000 * canvas.height);
+    context.lineWidth = index === active ? 4 : 2;
+    context.strokeStyle = index === active ? "#dc2626" : "#ef4444";
+    context.fillStyle = index === active ? "rgba(220,38,38,.18)" : "rgba(239,68,68,.10)";
+    context.fillRect(x, y, width, height);
+    context.strokeRect(x, y, width, height);
+    context.fillStyle = "#dc2626";
+    context.font = "bold 12px sans-serif";
+    context.fillText(String(index + 1), x + 3, Math.max(12, y - 4));
+  });
+}
+
+function renderCorrectedPreview(container, image, findings, filename) {
+  container.innerHTML = '<canvas></canvas><div class="media-card-actions"><button class="secondary download-corrected" type="button">下载修改预览</button></div>';
+  const canvas = container.querySelector("canvas");
+  const scale = Math.min(1, 900 / image.naturalWidth);
+  canvas.width = Math.round(image.naturalWidth * scale);
+  canvas.height = Math.round(image.naturalHeight * scale);
+  const context = canvas.getContext("2d");
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  findings.forEach((finding) => {
+    const [x1, y1, x2, y2] = finding.bbox;
+    const x = x1 / 1000 * canvas.width;
+    const y = y1 / 1000 * canvas.height;
+    const width = Math.max(20, (x2 - x1) / 1000 * canvas.width);
+    const height = Math.max(16, (y2 - y1) / 1000 * canvas.height);
+    context.fillStyle = "rgba(255,255,255,.94)";
+    context.fillRect(x, y, width, height);
+    context.strokeStyle = "#d4d4d8";
+    context.strokeRect(x, y, width, height);
+    context.fillStyle = "#18181b";
+    context.font = `${Math.max(10, Math.min(20, height * .55))}px sans-serif`;
+    context.textBaseline = "middle";
+    context.fillText(finding.suggested_text, x + 4, y + height / 2, Math.max(10, width - 8));
+  });
+  container.querySelector(".download-corrected").addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.download = `修改预览-${filename.replace(/\.[^.]+$/, "")}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+function renderMediaReview(item, result) {
+  mediaResults.set(item.key, result);
+  const cardId = mediaCardId(item.key);
+  const findings = result.findings || [];
+  const target = $("#media-result-list");
+  let card = $(`#${cardId}`);
+  if (!card) {
+    card = document.createElement("article");
+    card.id = cardId;
+    card.className = "media-review-card";
+    target.appendChild(card);
+  }
+  card.innerHTML = `
+    <div class="media-card-header">
+      <div><strong>${escapeHtml(item.relativePath)}</strong><small>${escapeHtml(result.summary || "审查完成")}</small></div>
+      <span class="media-status ${findings.length ? "risk" : "passed"}">${findings.length ? `${findings.length} 处风险` : "未发现明确风险"}</span>
+    </div>
+    <div class="media-review-layout">
+      <div class="annotated-image"><canvas class="annotated-canvas"></canvas></div>
+      <div class="finding-panel">
+        <div class="finding-list">${findings.map((finding, index) => `
+          <button class="finding-item" type="button" data-finding-index="${index}">
+            <header><strong>${index + 1}. ${escapeHtml(finding.exact_text)}</strong><span class="severity">${escapeHtml(finding.severity)}</span></header>
+            <p>${escapeHtml(finding.reason)}</p>
+            <div class="finding-rewrite"><small>建议替换</small><strong>${escapeHtml(finding.suggested_text)}</strong></div>
+          </button>`).join("") || '<div class="media-empty-result">未发现可以明确定位的违规内容</div>'}</div>
+        ${findings.length ? '<div class="media-card-actions"><button class="primary create-corrected" type="button">生成修改预览</button></div><div class="corrected-preview" hidden></div>' : ""}
+      </div>
+    </div>`;
+  const image = new Image();
+  image.onload = () => {
+    const canvas = card.querySelector(".annotated-canvas");
+    drawReviewCanvas(canvas, image, findings);
+    card.querySelectorAll("[data-finding-index]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = Number(button.dataset.findingIndex);
+        card.querySelectorAll("[data-finding-index]").forEach((node) => node.classList.toggle("active", node === button));
+        drawReviewCanvas(canvas, image, findings, index);
+      });
+    });
+    const create = card.querySelector(".create-corrected");
+    if (create) create.addEventListener("click", () => {
+      const preview = card.querySelector(".corrected-preview");
+      preview.hidden = false;
+      renderCorrectedPreview(preview, image, findings, item.file.name);
+    });
+  };
+  image.src = item.previewUrl || result.asset_url;
+}
+
+async function reviewImageFile(item, data) {
+  const form = new FormData();
+  form.append("file", item.file);
+  form.append("markets", data.getAll("markets").join(","));
+  form.append("category", data.get("category") || "all");
+  const response = await fetch("/api/v1/media/review", {method: "POST", body: form, credentials: "same-origin"});
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.detail || `图片审查失败 (${response.status})`);
+  renderMediaReview(item, result);
+}
+
+async function reviewPdfFile(item, data) {
+  const form = new FormData();
+  form.append("file", item.file);
+  const response = await fetch("/api/v1/documents/parse", {method: "POST", body: form, credentials: "same-origin"});
+  const parsed = await response.json();
+  if (!response.ok) throw new Error(parsed.detail || `PDF 解析失败 (${response.status})`);
+  const run = await api("/api/v1/workflows/compliance", {
+    method: "POST",
+    body: JSON.stringify({
+      product: {
+        external_id: `PDF-${parsed.document_id}`,
+        title: item.file.name,
+        description: parsed.markdown_preview,
+        category: data.get("category") || "all",
+        attributes: {document_id: parsed.document_id, page_count: parsed.page_count}
+      },
+      markets: data.getAll("markets"),
+      category: data.get("category") || "all",
+      channel: data.get("channel") || "all"
+    })
+  });
+  renderRun(run);
 }
 
 function detailText(event) {
@@ -212,10 +419,25 @@ function evidenceMeta(item) {
   ].filter(Boolean).map((value) => `<span>${escapeHtml(value)}</span>`).join("");
 }
 
+function evidenceExcerpt(text, quote) {
+  const source = String(text || "").replace(/\s+/g, " ").trim();
+  const exact = String(quote || "").trim();
+  if (!exact) return source.slice(0, 220);
+  const index = source.indexOf(exact);
+  if (index < 0) return exact.slice(0, 220);
+  const start = Math.max(0, index - 55);
+  const end = Math.min(source.length, index + exact.length + 55);
+  return `${start ? "…" : ""}${source.slice(start, end)}${end < source.length ? "…" : ""}`;
+}
+
 function renderEvidence(markets = []) {
   $("#evidence-list").innerHTML = markets.map((market) => {
-    const evidence = market.candidate_evidence || [];
-    return `<article class="market-row"><div class="market-title"><div><b>${escapeHtml(market.market)}</b><strong>${escapeHtml({CN: "中国", US: "美国", EU: "欧盟"}[market.market] || market.market)}</strong></div><span>${evidence.length ? `${evidence.length} 条候选证据` : "证据不足，已停止结论"}</span></div>${evidence.map((item, index) => `<details class="evidence-item"${index === 0 ? " open" : ""}><summary><span class="evidence-index">${index + 1}</span><span>${escapeHtml(item.heading || item.section_id || "法规条款")}</span></summary><div class="evidence-body"><div class="evidence-meta">${evidenceMeta(item)}</div><p>${escapeHtml(item.text)}</p>${item.source_url ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">查看官方原文 ↗</a>` : ""}</div></details>`).join("") || '<p class="empty-evidence">当前知识库未找到足够证据。Agent 已停止下结论，并将任务交给人工处理。</p>'}</article>`;
+    const support = market.evidence_support || {};
+    const quote = support.quote_valid && support.supported ? support.quote : "";
+    const evidence = quote
+      ? (market.candidate_evidence || []).filter((item) => String(item.text || "").includes(quote)).slice(0, 2)
+      : [];
+    return `<article class="market-row"><div class="market-title"><div><b>${escapeHtml(market.market)}</b><strong>${escapeHtml({CN: "中国", US: "美国", EU: "欧盟"}[market.market] || market.market)}</strong></div><span>${evidence.length ? `${evidence.length} 条已验证依据` : "没有已验证依据"}</span></div>${evidence.map((item, index) => `<details class="evidence-item"${index === 0 ? " open" : ""}><summary><span class="evidence-index">${index + 1}</span><span>${escapeHtml(item.heading || item.section_id || "法规条款")}</span></summary><div class="evidence-body"><div class="evidence-meta">${evidenceMeta(item)}</div><p>${escapeHtml(evidenceExcerpt(item.text, quote))}</p>${item.source_url ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">查看官方原文 ↗</a>` : ""}</div></details>`).join("") || '<p class="empty-evidence">没有找到能够直接支持当前判断的准确引文，本次不展示候选条款。</p>'}</article>`;
   }).join("");
 }
 
@@ -224,7 +446,11 @@ function renderRun(run) {
   const payload = run.result_payload || {};
   const markets = payload.markets || [];
   const claims = payload.claims || [];
-  const evidenceCount = markets.reduce((total, market) => total + (market.candidate_evidence || []).length, 0);
+  const evidenceCount = markets.reduce((total, market) => {
+    const support = market.evidence_support || {};
+    if (!(support.supported && support.quote_valid && support.quote)) return total;
+    return total + (market.candidate_evidence || []).filter((item) => String(item.text || "").includes(support.quote)).slice(0, 2).length;
+  }, 0);
   const copy = statusCopy[run.status] || [statusText(run.status), "请核对任务详情。"];
   $("#result").hidden = false;
   $("#result-title").textContent = copy[0];
@@ -310,44 +536,73 @@ $("#check-form").addEventListener("submit", async (event) => {
   const data = new FormData(event.currentTarget);
   const markets = data.getAll("markets");
   if (!markets.length) return toast("请至少选择一个目标市场");
-  const externalId = data.get("external_id") || `TASK-${Date.now()}`;
+  if (!selectedFiles.length) return toast("请先选择图片、PDF 或文件夹");
   button.disabled = true;
-  button.querySelector("span").textContent = "正在检查";
-  button.querySelector("small").textContent = "正在建立证据上下文";
+  button.querySelector("span").textContent = "正在审查";
+  button.querySelector("small").textContent = `0 / ${selectedFiles.length}`;
   $("#draft-state").textContent = "任务正在执行";
+  $("#media-result").hidden = !selectedFiles.some((item) => item.file.type.startsWith("image/"));
+  $("#media-result-summary").textContent = "正在处理";
   setProgress(true);
+  const failures = [];
   try {
-    const run = await api("/api/v1/workflows/compliance", {
-      method: "POST",
-      body: JSON.stringify({
-        product: {
-          external_id: externalId,
-          title: data.get("title"),
-          description: data.get("description"),
-          category: data.get("category"),
-          attributes: {}
-        },
-        markets,
-        category: data.get("category"),
-        channel: data.get("channel") || "all"
-      })
-    });
-    renderRun(run);
-    $("#draft-state").textContent = "已生成可审计任务记录";
+    for (let index = 0; index < selectedFiles.length; index += 1) {
+      const item = selectedFiles[index];
+      $("#progress-title").textContent = `正在处理 ${item.file.name}`;
+      $("#progress-detail").textContent = /\.pdf$/i.test(item.file.name)
+        ? "解析 PDF 并检查其中的营销声明"
+        : "识别图片文字、定位风险并生成修改建议";
+      button.querySelector("small").textContent = `${index + 1} / ${selectedFiles.length}`;
+      try {
+        if (/\.pdf$/i.test(item.file.name)) await reviewPdfFile(item, data);
+        else await reviewImageFile(item, data);
+      } catch (error) {
+        failures.push(`${item.file.name}: ${error.message}`);
+      }
+    }
+    $("#media-result-summary").textContent = `${selectedFiles.length - failures.length} 个完成${failures.length ? `，${failures.length} 个失败` : ""}`;
+    $("#draft-state").textContent = failures.length ? "部分文件审查失败" : "审查完成";
     await Promise.all([loadHistory(), refreshAccountUsage()]);
-  } catch (error) {
-    $("#draft-state").textContent = "任务失败，可重新提交";
-    updateStepper(null);
-    toast(error.message);
   } finally {
     setProgress(false);
-    button.disabled = false;
+    button.disabled = selectedFiles.length === 0;
     button.querySelector("span").textContent = "开始检查";
-    button.querySelector("small").textContent = "预计 10–30 秒";
+    button.querySelector("small").textContent = `${selectedFiles.length} 个文件`;
+    if (failures.length) toast(failures.slice(0, 2).join("；"));
   }
 });
 
-document.querySelectorAll(".scenario-card").forEach((button) => button.addEventListener("click", () => selectScenario(button.dataset.scenario)));
+document.querySelectorAll(".upload-choice").forEach((button) => button.addEventListener("click", () => {
+  setUploadMode(button.dataset.uploadTarget);
+  $(`#${button.dataset.uploadTarget}`).click();
+}));
+["image-files", "pdf-files", "folder-files"].forEach((id) => {
+  $(`#${id}`).addEventListener("change", (event) => addFiles(event.target.files));
+});
+$("#upload-dropzone").addEventListener("click", () => $(`#${activeUploadInput}`).click());
+$("#upload-dropzone").addEventListener("dragover", (event) => {
+  event.preventDefault();
+  event.currentTarget.classList.add("dragging");
+});
+$("#upload-dropzone").addEventListener("dragleave", (event) => event.currentTarget.classList.remove("dragging"));
+$("#upload-dropzone").addEventListener("drop", (event) => {
+  event.preventDefault();
+  event.currentTarget.classList.remove("dragging");
+  addFiles(event.dataTransfer.files);
+});
+$("#file-queue").addEventListener("click", (event) => {
+  const remove = event.target.closest(".queue-remove");
+  if (!remove) return;
+  const row = remove.closest("[data-file-key]");
+  const index = selectedFiles.findIndex((item) => item.key === row.dataset.fileKey);
+  if (index >= 0) {
+    const [removed] = selectedFiles.splice(index, 1);
+    if (removed.previewUrl) URL.revokeObjectURL(removed.previewUrl);
+    renderFileQueue();
+    updateTaskPreview();
+  }
+});
+$("#clear-media-results").addEventListener("click", () => resetCheck({focus: true}));
 $("#new-check-button").addEventListener("click", () => resetCheck({focus: true}));
 $("#accept-button").addEventListener("click", () => review("accept").catch((error) => toast(error.message)));
 $("#reject-button").addEventListener("click", () => review("reject").catch((error) => toast(error.message)));
@@ -391,6 +646,8 @@ async function start() {
   } else {
     $("#quota-badge").hidden = true;
   }
+  setUploadMode("image-files");
+  renderFileQueue();
   updateTaskPreview();
   await loadHistory();
 }
