@@ -7,6 +7,7 @@ from policyguard.application.guardrails import default_guardrail_policy
 from policyguard.application.knowledge import BM25Retriever
 from policyguard.application.llm import BaselineClaimExtractor, ClaimExtractor
 from policyguard.application.ports import KnowledgeRepository, WorkflowRepository
+from policyguard.application.platform_rules import evaluate_platform_text
 from policyguard.application.query_rewrite import (
     JsonQueryRewriteCache,
     cached_rewrite_batch,
@@ -111,6 +112,14 @@ class ComplianceWorkflowService:
                 "completed",
                 {"claim_length": len(claims), "claim_count": len(extracted_claims)},
             )
+            platform_findings = evaluate_platform_text(product, channel)
+            if channel not in {"all", "generic"}:
+                self._event(
+                    run,
+                    "platform_policy_check",
+                    "completed",
+                    {"platform": channel, "finding_count": len(platform_findings)},
+                )
             scopes = {}
             market_hits = {}
             for market in markets:
@@ -313,15 +322,16 @@ class ComplianceWorkflowService:
             run.result_payload = {
                 "evidence_only": True,
                 "claims": extracted_claims,
+                "platform_findings": platform_findings,
                 "markets": market_results,
                 "evidence_supported": evidence_supported,
                 "evidence_usage": evidence_usage,
                 "note": "Candidate evidence only; no legal conclusion or automatic mutation.",
             }
             run.status = (
-                WorkflowStatus.NEEDS_MORE_EVIDENCE
-                if not has_evidence or evidence_supported is False
-                else WorkflowStatus.REVIEW_REQUIRED
+                WorkflowStatus.REVIEW_REQUIRED
+                if platform_findings or (has_evidence and evidence_supported is not False)
+                else WorkflowStatus.NEEDS_MORE_EVIDENCE
             )
             run.current_step = "human_review_route"
             self._event(

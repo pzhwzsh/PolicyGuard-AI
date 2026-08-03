@@ -209,3 +209,24 @@ def test_workflow_rewrites_chinese_claim_for_english_law_and_keeps_original(tmp_
     assert reason["original_language_preserved"] is True
     assert reason["target_source_language"] == "en"
     assert event.detail["retrieval_strategy"] == "original_plus_rewrites_rrf"
+
+
+def test_workflow_applies_selected_platform_rules_to_plain_text(tmp_path: Path) -> None:
+    database = Database(f"sqlite:///{(tmp_path / 'platform.db').as_posix()}")
+    database.initialize()
+    with database.session_factory() as session:
+        knowledge = SqlAlchemyKnowledgeRepository(session)
+        ingest_source_directory(knowledge, ROOT / "data/sources")
+        run = ComplianceWorkflowService(
+            knowledge, SqlAlchemyWorkflowRepository(session)
+        ).execute(
+            product={"title": "直播文案", "description": "加微信购买，保证收益"},
+            markets=["CN"], category="all", channel="douyin", as_of=None,
+        )
+
+    assert run.status == WorkflowStatus.REVIEW_REQUIRED
+    assert {item["rule_code"] for item in run.result_payload["platform_findings"]} == {
+        "DOUYIN-TRAFFIC", "DOUYIN-INCOME"
+    }
+    event = next(item for item in run.events if item.step == "platform_policy_check")
+    assert event.detail == {"platform": "douyin", "finding_count": 2}

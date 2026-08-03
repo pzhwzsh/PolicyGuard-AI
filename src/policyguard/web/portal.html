@@ -33,18 +33,26 @@
       </header>
 
       <ol id="workflow-stepper" class="stepper" aria-label="审查流程" hidden>
-        <li class="active" data-step="submit"><span>01</span><div><strong>上传素材</strong><small>读取文件</small></div></li>
-        <li data-step="agent"><span>02</span><div><strong>识别内容</strong><small>OCR / 文档解析</small></div></li>
+        <li class="active" data-step="submit"><span>01</span><div><strong>提交内容</strong><small>文案或附件</small></div></li>
+        <li data-step="agent"><span>02</span><div><strong>识别内容</strong><small>文本 / 图片 / PDF</small></div></li>
         <li data-step="evidence"><span>03</span><div><strong>定位风险</strong><small>标注命中位置</small></div></li>
         <li data-step="review"><span>04</span><div><strong>核验依据</strong><small>过滤无关条款</small></div></li>
-        <li data-step="remediation"><span>05</span><div><strong>修改确认</strong><small>生成修改预览</small></div></li>
+        <li data-step="remediation"><span>05</span><div><strong>修改确认</strong><small>按建议修改并复检</small></div></li>
       </ol>
 
       <section id="intake-workspace" class="workspace-grid">
         <form id="check-form" class="intake-card">
           <div class="card-heading">
-            <div><div><strong>上传素材</strong><small id="draft-state" class="sr-only">尚未提交</small></div></div>
+            <div><div><strong>输入待审内容</strong><small id="draft-state" class="sr-only">尚未提交</small></div></div>
           </div>
+
+          <input name="external_id" type="hidden">
+          <div class="copy-inputs">
+            <label class="field"><span>文案标题 <i>选填</i></span><input name="title" autocomplete="off" placeholder="例如：商品标题、直播标题" maxlength="1000"></label>
+            <label class="field"><span>待审文案</span><textarea name="description" placeholder="粘贴想检查的一段话；不上传文件也可以直接审查" maxlength="20000"></textarea></label>
+          </div>
+
+          <div class="attachment-label"><strong>添加附件</strong><span>选填，可上传图片、PDF 或文件夹</span></div>
 
           <div class="upload-toolbar">
             <button class="upload-choice active" data-upload-target="image-files" type="button"><strong>图片</strong><span>可多选</span></button>
@@ -68,7 +76,7 @@
           <div class="form-section compact-section review-scope">
             <div class="field-row">
               <label class="field"><span>商品类目</span><input name="category" autocomplete="off" placeholder="例如：美妆、食品" maxlength="200"></label>
-              <label class="field"><span>销售渠道</span><select name="channel"><option value="all">通用营销</option><option value="marketplace">电商平台</option><option value="social">社交媒体</option><option value="live">直播</option></select></label>
+              <label class="field"><span>发布平台</span><select name="channel"><option value="generic">通用规则</option><option value="taobao">淘宝</option><option value="douyin">抖音</option><option value="tiktok_shop">TikTok Shop</option><option value="amazon">Amazon</option><option value="temu">Temu</option><option value="shopee">Shopee</option></select></label>
             </div>
           </div>
 
@@ -91,16 +99,16 @@
             <div><dt>待审文件</dt><dd id="preview-files">0 个</dd></div>
             <div><dt>目标市场</dt><dd id="preview-markets">中国</dd></div>
             <div><dt>商品类目</dt><dd id="preview-category">未填写</dd></div>
-            <div><dt>销售渠道</dt><dd id="preview-channel">通用营销</dd></div>
+            <div><dt>发布平台</dt><dd id="preview-channel">通用规则</dd></div>
           </dl>
-          <button id="submit-button" class="primary launch-button" type="submit" form="check-form" disabled><span>开始检查</span><small>0 个文件</small></button>
+          <button id="submit-button" class="primary launch-button" type="submit" form="check-form" disabled><span>开始检查</span><small>请输入文案或添加文件</small></button>
         </aside>
       </section>
 
       <section id="progress" class="run-console" role="status" aria-live="polite" hidden>
         <header><div><span class="running-pulse"></span><div><strong id="progress-title">Agent 正在分析营销声明</strong><small id="progress-detail">建立本次任务的法域与证据上下文</small></div></div><span class="run-badge">RUNNING</span></header>
         <div class="run-track"><i id="progress-bar"></i></div>
-        <div class="run-phases"><span class="active">读取文件</span><span>识别内容</span><span>定位风险</span><span>核验依据</span><span>生成建议</span></div>
+        <div class="run-phases"><span class="active">读取内容</span><span>识别内容</span><span>定位风险</span><span>核验依据</span><span>生成建议</span></div>
       </section>
 
       <section id="media-result" class="media-result" hidden>

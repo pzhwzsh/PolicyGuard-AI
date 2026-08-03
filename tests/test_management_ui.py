@@ -72,3 +72,17 @@ def test_user_ui_hides_management_and_runtime_controls(tmp_path: Path) -> None:
     assert "开始检查" in user_page.text
     assert admin_page.status_code == 200
     assert "管理控制台" in admin_page.text
+
+
+def test_portal_accepts_text_without_requiring_upload_and_lists_platforms() -> None:
+    html = (ROOT / "src/policyguard/web/portal.html").read_text(encoding="utf-8")
+    script = (ROOT / "src/policyguard/web/portal.js").read_text(encoding="utf-8")
+
+    assert 'name="description"' in html
+    assert 'name="title"' in html
+    assert 'value="douyin"' in html
+    assert 'value="taobao"' in html
+    assert 'value="amazon"' in html
+    assert 'if (!selectedFiles.length) return toast' not in script
+    assert "inputDescription" in script
+    assert "platform_findings" in script

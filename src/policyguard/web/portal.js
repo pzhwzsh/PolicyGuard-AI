@@ -33,6 +33,7 @@ const eventLabels = {
   claim_extraction: ["提取营销声明", "使用模型识别需要审查的事实与承诺"],
   claim_extraction_fallback: ["声明提取降级", "模型不可用，已切换确定性提取"],
   claim_normalization: ["标准化营销声明", "合并重复表达并建立字段定位"],
+  platform_policy_check: ["检查平台规则", "按所选发布平台匹配对应的内容规范"],
   cost_budget_route: ["检查执行预算", "根据成本与延迟选择处理路径"],
   query_rewrite: ["改写检索问题", "将商品表达转换为法规检索查询"],
   retrieval_fallback: ["检索链路降级", "主检索器不可用，已切换后备路径"],
@@ -61,10 +62,13 @@ const portalErrors = {
 };
 
 const channelLabels = {
-  all: "通用营销",
-  marketplace: "电商平台",
-  social: "社交媒体",
-  live: "直播"
+  generic: "通用规则",
+  taobao: "淘宝",
+  douyin: "抖音",
+  tiktok_shop: "TikTok Shop",
+  amazon: "Amazon",
+  temu: "Temu",
+  shopee: "Shopee"
 };
 
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
@@ -116,11 +120,14 @@ function updateTaskPreview() {
     .map((input) => ({CN: "中国", US: "美国", EU: "欧盟"}[input.value] || input.value));
   $("#preview-markets").textContent = markets.join(" / ") || "未选择";
   $("#preview-category").textContent = form.elements.category.value.trim() || "未填写";
-  $("#preview-channel").textContent = channelLabels[form.elements.channel.value] || "通用营销";
+  $("#preview-channel").textContent = channelLabels[form.elements.channel.value] || "通用规则";
   $("#preview-files").textContent = `${selectedFiles.length} 个`;
   const submit = $("#submit-button");
-  submit.disabled = selectedFiles.length === 0;
-  submit.querySelector("small").textContent = `${selectedFiles.length} 个文件`;
+  const hasText = Boolean(form.elements.title.value.trim() || form.elements.description.value.trim());
+  submit.disabled = !hasText && selectedFiles.length === 0;
+  submit.querySelector("small").textContent = hasText
+    ? (selectedFiles.length ? `文案 + ${selectedFiles.length} 个附件` : "纯文案审查")
+    : (selectedFiles.length ? `${selectedFiles.length} 个附件` : "请输入文案或添加文件");
 }
 
 function setProgress(active) {
@@ -267,37 +274,6 @@ function drawReviewCanvas(canvas, image, findings, active = -1) {
   });
 }
 
-function renderCorrectedPreview(container, image, findings, filename) {
-  container.innerHTML = '<canvas></canvas><div class="media-card-actions"><button class="secondary download-corrected" type="button">下载修改预览</button></div>';
-  const canvas = container.querySelector("canvas");
-  const scale = Math.min(1, 900 / image.naturalWidth);
-  canvas.width = Math.round(image.naturalWidth * scale);
-  canvas.height = Math.round(image.naturalHeight * scale);
-  const context = canvas.getContext("2d");
-  context.drawImage(image, 0, 0, canvas.width, canvas.height);
-  findings.forEach((finding) => {
-    const [x1, y1, x2, y2] = finding.bbox;
-    const x = x1 / 1000 * canvas.width;
-    const y = y1 / 1000 * canvas.height;
-    const width = Math.max(20, (x2 - x1) / 1000 * canvas.width);
-    const height = Math.max(16, (y2 - y1) / 1000 * canvas.height);
-    context.fillStyle = "rgba(255,255,255,.94)";
-    context.fillRect(x, y, width, height);
-    context.strokeStyle = "#d4d4d8";
-    context.strokeRect(x, y, width, height);
-    context.fillStyle = "#18181b";
-    context.font = `${Math.max(10, Math.min(20, height * .55))}px sans-serif`;
-    context.textBaseline = "middle";
-    context.fillText(finding.suggested_text, x + 4, y + height / 2, Math.max(10, width - 8));
-  });
-  container.querySelector(".download-corrected").addEventListener("click", () => {
-    const link = document.createElement("a");
-    link.download = `修改预览-${filename.replace(/\.[^.]+$/, "")}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
-}
-
 function renderMediaReview(item, result) {
   mediaResults.set(item.key, result);
   const cardId = mediaCardId(item.key);
@@ -324,7 +300,7 @@ function renderMediaReview(item, result) {
             <p>${escapeHtml(finding.reason)}</p>
             <div class="finding-rewrite"><small>建议替换</small><strong>${escapeHtml(finding.suggested_text)}</strong></div>
           </button>`).join("") || '<div class="media-empty-result">未发现可以明确定位的违规内容</div>'}</div>
-        ${findings.length ? '<div class="media-card-actions"><button class="primary create-corrected" type="button">生成修改预览</button></div><div class="corrected-preview" hidden></div>' : ""}
+        ${findings.length ? '<p class="media-edit-note">请根据建议文案修改原始素材，修改后可重新上传复检。</p>' : ""}
       </div>
     </div>`;
   const image = new Image();
@@ -337,12 +313,6 @@ function renderMediaReview(item, result) {
         card.querySelectorAll("[data-finding-index]").forEach((node) => node.classList.toggle("active", node === button));
         drawReviewCanvas(canvas, image, findings, index);
       });
-    });
-    const create = card.querySelector(".create-corrected");
-    if (create) create.addEventListener("click", () => {
-      const preview = card.querySelector(".corrected-preview");
-      preview.hidden = false;
-      renderCorrectedPreview(preview, image, findings, item.file.name);
     });
   };
   image.src = item.previewUrl || result.asset_url;
@@ -357,6 +327,7 @@ async function reviewImageFile(item, data) {
   const result = await response.json();
   if (!response.ok) throw new Error(result.detail || `图片审查失败 (${response.status})`);
   renderMediaReview(item, result);
+  return result;
 }
 
 async function reviewPdfFile(item, data) {
@@ -365,22 +336,7 @@ async function reviewPdfFile(item, data) {
   const response = await fetch("/api/v1/documents/parse", {method: "POST", body: form, credentials: "same-origin"});
   const parsed = await response.json();
   if (!response.ok) throw new Error(parsed.detail || `PDF 解析失败 (${response.status})`);
-  const run = await api("/api/v1/workflows/compliance", {
-    method: "POST",
-    body: JSON.stringify({
-      product: {
-        external_id: `PDF-${parsed.document_id}`,
-        title: item.file.name,
-        description: parsed.markdown_preview,
-        category: data.get("category") || "all",
-        attributes: {document_id: parsed.document_id, page_count: parsed.page_count}
-      },
-      markets: data.getAll("markets"),
-      category: data.get("category") || "all",
-      channel: data.get("channel") || "all"
-    })
-  });
-  renderRun(run);
+  return parsed;
 }
 
 function detailText(event) {
@@ -406,8 +362,10 @@ function renderTrace(events = []) {
   }).join("") || '<li><strong>暂无执行事件</strong><small>任务启动后将在此展示 Agent 的真实执行轨迹。</small></li>';
 }
 
-function renderClaims(claims = []) {
-  $("#claim-list").innerHTML = claims.map((claim) => `<article class="claim-item"><p>“${escapeHtml(claim.text)}”</p><span>${escapeHtml(claim.field === "title" ? "商品标题" : "商品描述")}</span></article>`).join("") || '<p class="empty">未提取到需要审查的营销声明。</p>';
+function renderClaims(claims = [], platformFindings = []) {
+  const extracted = claims.map((claim) => `<article class="claim-item"><p>“${escapeHtml(claim.text)}”</p><span>${escapeHtml(claim.field === "title" ? "文案标题" : "文案正文")}</span></article>`);
+  const platform = platformFindings.map((finding) => `<article class="claim-item platform-finding"><p>命中“${escapeHtml(finding.matched_text)}”</p><span>${escapeHtml(channelLabels[finding.platform] || finding.platform)} · ${escapeHtml(finding.reason)}</span><small>建议：${escapeHtml(finding.suggestion)}</small></article>`);
+  $("#claim-list").innerHTML = [...platform, ...extracted].join("") || '<p class="empty">未提取到需要审查的营销声明。</p>';
 }
 
 function evidenceMeta(item) {
@@ -446,6 +404,7 @@ function renderRun(run) {
   const payload = run.result_payload || {};
   const markets = payload.markets || [];
   const claims = payload.claims || [];
+  const platformFindings = payload.platform_findings || [];
   const evidenceCount = markets.reduce((total, market) => {
     const support = market.evidence_support || {};
     if (!(support.supported && support.quote_valid && support.quote)) return total;
@@ -456,7 +415,7 @@ function renderRun(run) {
   $("#result-title").textContent = copy[0];
   $("#result-subtitle").textContent = copy[1];
   $("#summary-status").textContent = statusText(run.status);
-  $("#summary-claims").textContent = `${claims.length} 条`;
+  $("#summary-claims").textContent = `${Math.max(claims.length, platformFindings.length)} 条`;
   $("#summary-evidence").textContent = `${evidenceCount} 条`;
   $("#summary-markets").textContent = markets.map((market) => market.market).join(" / ") || "-";
   $("#result-note").textContent = payload.note === "Candidate evidence only; no legal conclusion or automatic mutation."
@@ -464,7 +423,7 @@ function renderRun(run) {
     : payload.note || "请核对证据来源、适用范围和生效时间。";
   $("#report-link").href = `/api/v1/workflows/compliance/${run.id}/report?format=pdf`;
 
-  renderClaims(claims);
+  renderClaims(claims, platformFindings);
   renderEvidence(markets);
   renderTrace(run.events || []);
 
@@ -536,15 +495,19 @@ $("#check-form").addEventListener("submit", async (event) => {
   const data = new FormData(event.currentTarget);
   const markets = data.getAll("markets");
   if (!markets.length) return toast("请至少选择一个目标市场");
-  if (!selectedFiles.length) return toast("请先选择图片、PDF 或文件夹");
+  const inputTitle = String(data.get("title") || "").trim();
+  const inputDescription = String(data.get("description") || "").trim();
+  if (!inputTitle && !inputDescription && !selectedFiles.length) return toast("请输入待审文案，或添加图片、PDF、文件夹");
   button.disabled = true;
   button.querySelector("span").textContent = "正在审查";
-  button.querySelector("small").textContent = `0 / ${selectedFiles.length}`;
+  button.querySelector("small").textContent = selectedFiles.length ? `0 / ${selectedFiles.length}` : "正在分析文案";
   $("#draft-state").textContent = "任务正在执行";
   $("#media-result").hidden = !selectedFiles.some((item) => item.file.type.startsWith("image/"));
   $("#media-result-summary").textContent = "正在处理";
   setProgress(true);
   const failures = [];
+  const attachmentTexts = [];
+  const attachmentMeta = [];
   try {
     for (let index = 0; index < selectedFiles.length; index += 1) {
       const item = selectedFiles[index];
@@ -554,20 +517,45 @@ $("#check-form").addEventListener("submit", async (event) => {
         : "识别图片文字、定位风险并生成修改建议";
       button.querySelector("small").textContent = `${index + 1} / ${selectedFiles.length}`;
       try {
-        if (/\.pdf$/i.test(item.file.name)) await reviewPdfFile(item, data);
-        else await reviewImageFile(item, data);
+        if (/\.pdf$/i.test(item.file.name)) {
+          const parsed = await reviewPdfFile(item, data);
+          attachmentTexts.push(`[PDF: ${item.relativePath}]\n${parsed.markdown_preview || ""}`);
+          attachmentMeta.push({name: item.relativePath, type: "pdf", document_id: parsed.document_id, page_count: parsed.page_count});
+        } else {
+          const reviewed = await reviewImageFile(item, data);
+          const findings = reviewed.findings || [];
+          if (findings.length) attachmentTexts.push(`[图片: ${item.relativePath}]\n${findings.map((finding) => `${finding.exact_text}：${finding.reason}`).join("\n")}`);
+          attachmentMeta.push({name: item.relativePath, type: "image", finding_count: findings.length});
+        }
       } catch (error) {
         failures.push(`${item.file.name}: ${error.message}`);
       }
     }
+    const combinedDescription = [inputDescription, ...attachmentTexts].filter(Boolean).join("\n\n");
+    if (!inputTitle && !combinedDescription) throw new Error("没有提取到可审查的内容，请输入文案或检查附件");
+    const run = await api("/api/v1/workflows/compliance", {
+      method: "POST",
+      body: JSON.stringify({
+        product: {
+          external_id: data.get("external_id") || `CHECK-${crypto.randomUUID()}`,
+          title: inputTitle || (selectedFiles.length ? "附件内容审查" : "文案内容审查"),
+          description: combinedDescription,
+          category: data.get("category") || "all",
+          attributes: {attachments: attachmentMeta}
+        },
+        markets,
+        category: data.get("category") || "all",
+        channel: data.get("channel") || "generic"
+      })
+    });
+    renderRun(run);
     $("#media-result-summary").textContent = `${selectedFiles.length - failures.length} 个完成${failures.length ? `，${failures.length} 个失败` : ""}`;
     $("#draft-state").textContent = failures.length ? "部分文件审查失败" : "审查完成";
     await Promise.all([loadHistory(), refreshAccountUsage()]);
   } finally {
     setProgress(false);
-    button.disabled = selectedFiles.length === 0;
     button.querySelector("span").textContent = "开始检查";
-    button.querySelector("small").textContent = `${selectedFiles.length} 个文件`;
+    updateTaskPreview();
     if (failures.length) toast(failures.slice(0, 2).join("；"));
   }
 });
