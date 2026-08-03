@@ -34,6 +34,7 @@ const eventLabels = {
   claim_extraction_fallback: ["声明提取降级", "模型不可用，已切换确定性提取"],
   claim_normalization: ["标准化营销声明", "合并重复表达并建立字段定位"],
   platform_policy_check: ["检查平台规则", "按所选发布平台匹配对应的内容规范"],
+  market_opportunity_retrieval: ["检索市场机会", "从独立情报库检索法规差异和产品机会"],
   cost_budget_route: ["检查执行预算", "根据成本与延迟选择处理路径"],
   query_rewrite: ["改写检索问题", "将商品表达转换为法规检索查询"],
   retrieval_fallback: ["检索链路降级", "主检索器不可用，已切换后备路径"],
@@ -399,12 +400,25 @@ function renderEvidence(markets = []) {
   }).join("");
 }
 
+function renderMarketOpportunities(items = []) {
+  const panel = $("#market-opportunity-panel");
+  panel.hidden = items.length === 0;
+  $("#market-opportunity-list").innerHTML = items.map((item) => `<article class="opportunity-card">
+    <header><span>${escapeHtml(item.jurisdiction)}</span><strong>${escapeHtml(item.title)}</strong></header>
+    <div><small>监管事实</small><p>${escapeHtml(item.regulatory_fact)}</p></div>
+    <div class="opportunity-value"><small>产品 / 市场机会</small><p>${escapeHtml(item.opportunity)}</p></div>
+    <div class="opportunity-caveat"><small>适用边界</small><p>${escapeHtml(item.caveat)}</p></div>
+    <footer><span>可信度 ${escapeHtml(item.confidence)}</span><a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">官方来源 ↗</a></footer>
+  </article>`).join("");
+}
+
 function renderRun(run) {
   currentRun = run;
   const payload = run.result_payload || {};
   const markets = payload.markets || [];
   const claims = payload.claims || [];
   const platformFindings = payload.platform_findings || [];
+  const marketOpportunities = payload.market_opportunities || [];
   const evidenceCount = markets.reduce((total, market) => {
     const support = market.evidence_support || {};
     if (!(support.supported && support.quote_valid && support.quote)) return total;
@@ -424,6 +438,7 @@ function renderRun(run) {
   $("#report-link").href = `/api/v1/workflows/compliance/${run.id}/report?format=pdf`;
 
   renderClaims(claims, platformFindings);
+  renderMarketOpportunities(marketOpportunities);
   renderEvidence(markets);
   renderTrace(run.events || []);
 
@@ -545,7 +560,8 @@ $("#check-form").addEventListener("submit", async (event) => {
         },
         markets,
         category: data.get("category") || "all",
-        channel: data.get("channel") || "generic"
+        channel: data.get("channel") || "generic",
+        mode: data.get("mode") === "deep" ? "deep" : "fast"
       })
     });
     renderRun(run);

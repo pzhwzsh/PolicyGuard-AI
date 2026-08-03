@@ -139,6 +139,7 @@ from policyguard.application.knowledge import BM25Retriever, ingest_source_direc
 from policyguard.application.llm import configured_claim_extractor
 from policyguard.application.media_ingestion import MEDIA_TYPES, validate_media
 from policyguard.application.media_review import review_image
+from policyguard.application.market_intelligence import MarketIntelligenceRetriever
 from policyguard.application.model_rollout import ModelRolloutRegistry
 from policyguard.application.policy_impact import analyze_policy_impact
 from policyguard.application.product_experience import (
@@ -3104,7 +3105,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
         consume_workflow_quota(request, session)
         knowledge_repository = SqlAlchemyKnowledgeRepository(session)
         workflow_repository = SqlAlchemyWorkflowRepository(session)
-        embedding_providers, embedding_failures = configured_embedding_chain(provider_settings)
+        deep_mode = payload.mode == "deep"
+        embedding_providers, embedding_failures = (
+            configured_embedding_chain(provider_settings) if deep_mode else ([], [])
+        )
         retrieval_candidates = [
             HybridRetriever(
                 knowledge_repository,
@@ -3123,14 +3127,26 @@ def create_app(database_url: str | None = None) -> FastAPI:
         run = ComplianceWorkflowService(
             knowledge_repository,
             workflow_repository,
-            claim_extractor=configured_claim_extractor(rollout_provider_settings(tenant)),
+            claim_extractor=(
+                configured_claim_extractor(rollout_provider_settings(tenant))
+                if deep_mode else None
+            ),
             retriever=workflow_retriever,
-            evidence_verifier=configured_evidence_verifier(rollout_provider_settings(tenant)),
-            query_rewriter=configured_query_rewriter(rollout_provider_settings(tenant)),
+            evidence_verifier=(
+                configured_evidence_verifier(rollout_provider_settings(tenant))
+                if deep_mode else None
+            ),
+            query_rewriter=(
+                configured_query_rewriter(rollout_provider_settings(tenant))
+                if deep_mode else None
+            ),
             query_rewrite_cache=JsonQueryRewriteCache(Path(settings.query_rewrite_cache)),
             model_budget=WorkflowModelBudget(
-                max_calls=settings.workflow_model_call_budget,
+                max_calls=settings.workflow_model_call_budget if deep_mode else 0,
                 max_estimated_input_tokens=settings.workflow_input_token_budget,
+            ),
+            market_intelligence=MarketIntelligenceRetriever.from_path(
+                Path(__file__).parents[3] / "data/market-intelligence/eu-us-hvac.json"
             ),
         ).execute(
             product=payload.product.model_dump(),
@@ -3138,6 +3154,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             category=payload.category,
             channel=payload.channel,
             as_of=payload.as_of,
+            execution_mode=payload.mode,
         )
         bind_resource(session, "workflow", run.id, tenant)
         return ComplianceWorkflowResponse.from_domain(run)

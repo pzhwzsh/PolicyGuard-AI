@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from time import perf_counter
 from uuid import uuid4
 
 from policyguard.application.cost_control import WorkflowModelBudget
@@ -6,6 +7,7 @@ from policyguard.application.evidence_support import EvidenceVerifier
 from policyguard.application.guardrails import default_guardrail_policy
 from policyguard.application.knowledge import BM25Retriever
 from policyguard.application.llm import BaselineClaimExtractor, ClaimExtractor
+from policyguard.application.market_intelligence import MarketIntelligenceRetriever
 from policyguard.application.ports import KnowledgeRepository, WorkflowRepository
 from policyguard.application.platform_rules import evaluate_platform_text
 from policyguard.application.query_rewrite import (
@@ -32,6 +34,7 @@ class ComplianceWorkflowService:
         query_rewriter=None,
         query_rewrite_cache: JsonQueryRewriteCache | None = None,
         model_budget: WorkflowModelBudget | None = None,
+        market_intelligence: MarketIntelligenceRetriever | None = None,
     ) -> None:
         self.retriever = retriever or BM25Retriever(knowledge_repository)
         self.workflow_repository = workflow_repository
@@ -40,6 +43,7 @@ class ComplianceWorkflowService:
         self.query_rewriter = query_rewriter
         self.query_rewrite_cache = query_rewrite_cache
         self.model_budget = model_budget or WorkflowModelBudget()
+        self.market_intelligence = market_intelligence
 
     def execute(
         self,
@@ -49,7 +53,9 @@ class ComplianceWorkflowService:
         category: str,
         channel: str,
         as_of: str | None,
+        execution_mode: str = "fast",
     ) -> WorkflowRun:
+        started_at = perf_counter()
         run = WorkflowRun(
             id=str(uuid4()),
             status=WorkflowStatus.RUNNING,
@@ -59,6 +65,7 @@ class ComplianceWorkflowService:
                 "markets": markets,
                 "category": category,
                 "channel": channel,
+                "mode": execution_mode,
                 "as_of": as_of,
             },
         )
@@ -119,6 +126,25 @@ class ComplianceWorkflowService:
                     "platform_policy_check",
                     "completed",
                     {"platform": channel, "finding_count": len(platform_findings)},
+                )
+            market_opportunities = (
+                self.market_intelligence.search(
+                    " ".join([
+                        str(product.get("title", "")),
+                        str(product.get("description", "")),
+                        str(category),
+                    ]),
+                    markets,
+                    category=str(category).casefold(),
+                )
+                if self.market_intelligence else []
+            )
+            if market_opportunities:
+                self._event(
+                    run,
+                    "market_opportunity_retrieval",
+                    "completed",
+                    {"result_count": len(market_opportunities), "markets": sorted({item["jurisdiction"] for item in market_opportunities})},
                 )
             scopes = {}
             market_hits = {}
@@ -323,6 +349,7 @@ class ComplianceWorkflowService:
                 "evidence_only": True,
                 "claims": extracted_claims,
                 "platform_findings": platform_findings,
+                "market_opportunities": market_opportunities,
                 "markets": market_results,
                 "evidence_supported": evidence_supported,
                 "evidence_usage": evidence_usage,
@@ -345,6 +372,14 @@ class ComplianceWorkflowService:
             run.current_step = "failed"
             run.result_payload = {"error": type(exc).__name__, "message": str(exc)}
             self._event(run, "failed", "failed", {"error": type(exc).__name__})
+        run.result_payload.setdefault("execution_metrics", {}).update(
+            {
+                "mode": execution_mode,
+                "duration_ms": round((perf_counter() - started_at) * 1000, 3),
+                "model_calls_reserved": self.model_budget.calls,
+                "estimated_input_tokens": self.model_budget.estimated_input_tokens,
+            }
+        )
         return self.workflow_repository.save(run)
 
     def review(

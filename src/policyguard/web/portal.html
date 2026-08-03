@@ -78,6 +78,7 @@
               <label class="field"><span>商品类目</span><input name="category" autocomplete="off" placeholder="例如：美妆、食品" maxlength="200"></label>
               <label class="field"><span>发布平台</span><select name="channel"><option value="generic">通用规则</option><option value="taobao">淘宝</option><option value="douyin">抖音</option><option value="tiktok_shop">TikTok Shop</option><option value="amazon">Amazon</option><option value="temu">Temu</option><option value="shopee">Shopee</option></select></label>
             </div>
+            <label class="mode-toggle"><input name="mode" type="checkbox" value="deep"><span><strong>深度证据核验</strong><small>可选：调用模型复核，耗时和成本更高</small></span></label>
           </div>
 
           <fieldset class="market-section">
@@ -135,6 +136,7 @@
         <div class="result-grid">
           <div class="evidence-column">
             <section class="claims-panel"><div class="panel-heading"><div><span class="section-index">02</span><strong>识别到的营销声明</strong></div><small>Agent 实际审查的文本片段</small></div><div id="claim-list" class="claim-list"></div></section>
+            <section id="market-opportunity-panel" class="opportunity-panel" hidden><div class="panel-heading"><div><span class="section-index">OP</span><strong>市场差异与机会</strong></div><small>基于官方来源生成的商业推断，不等同于法律结论</small></div><div id="market-opportunity-list" class="opportunity-list"></div></section>
             <section><div class="panel-heading"><div><span class="section-index">03</span><strong>法规证据</strong></div><small>按目标市场组织，可追溯至官方来源</small></div><div id="evidence-list" class="evidence-list"></div></section>
           </div>
           <aside class="trace-column">

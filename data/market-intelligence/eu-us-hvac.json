@@ -1,0 +1,71 @@
+{
+  "schema_version": "policyguard-market-intelligence-v1",
+  "topic": "HVAC and heat-pump market access",
+  "records": [
+    {
+      "id": "eu-hvac-fgas-2024",
+      "jurisdiction": "EU",
+      "category": "hvac",
+      "evidence_type": "regulatory_change",
+      "title": "EU F-gas rules increase pressure on high-GWP cooling equipment",
+      "regulatory_fact": "Regulation (EU) 2024/573 strengthens the phase-down and product restrictions for fluorinated greenhouse gases, with requirements varying by equipment type, refrigerant GWP and application date.",
+      "opportunity": "Prioritize low-GWP or natural-refrigerant HVAC designs and make refrigerant architecture a market-entry feature instead of only a back-end engineering choice.",
+      "caveat": "This does not mean the EU universally bans outdoor air-conditioner units. Product type, refrigerant, capacity, installation and transition dates must be checked against the regulation and local rules.",
+      "keywords": ["空调", "热泵", "制冷剂", "外机", "低GWP", "HVAC", "heat pump", "refrigerant", "F-gas"],
+      "publisher": "European Union / EUR-Lex",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/573/oj",
+      "effective_from": "2024-03-11",
+      "confidence": "high",
+      "verification_status": "official_source_verified"
+    },
+    {
+      "id": "eu-hvac-ecodesign-label",
+      "jurisdiction": "EU",
+      "category": "hvac",
+      "evidence_type": "market_access_signal",
+      "title": "EU ecodesign and energy labels make efficiency visible at purchase",
+      "regulatory_fact": "The European Commission maintains ecodesign and energy-labelling requirements for air conditioners and comfort fans, covering product information and efficiency-related requirements.",
+      "opportunity": "Treat seasonal efficiency, noise and energy-label readiness as product and listing capabilities; compliant high-efficiency models can be differentiated before price competition begins.",
+      "caveat": "Exact thresholds and declarations depend on product scope and the applicable implementing regulations. Validate the model configuration before making efficiency claims.",
+      "keywords": ["空调", "风扇", "能效", "噪音", "能源标签", "air conditioner", "energy label", "ecodesign", "efficiency"],
+      "publisher": "European Commission",
+      "source_url": "https://energy-efficient-products.ec.europa.eu/ecodesign-and-energy-label/product-list/air-conditioners-and-comfort-fans_en",
+      "effective_from": "2026-08-04",
+      "confidence": "high",
+      "verification_status": "official_source_verified"
+    },
+    {
+      "id": "us-heat-pump-tax-credit",
+      "jurisdiction": "US",
+      "category": "hvac",
+      "evidence_type": "demand_incentive",
+      "title": "US federal tax incentives can shift demand toward qualifying heat pumps",
+      "regulatory_fact": "The IRS Energy Efficient Home Improvement Credit and ENERGY STAR guidance describe federal tax-credit eligibility for qualifying air-source heat pumps, subject to current efficiency and product requirements.",
+      "opportunity": "Build a verified eligibility data pack for qualifying models and expose it in product selection and dealer materials; incentive readiness can reduce the buyer's effective cost without using unsupported savings claims.",
+      "caveat": "Eligibility, credit limits and qualifying criteria can change. Never promise that every buyer or model will receive a credit; link to current IRS and ENERGY STAR requirements.",
+      "keywords": ["热泵", "空调", "节能", "补贴", "税收抵免", "heat pump", "tax credit", "ENERGY STAR", "efficiency"],
+      "publisher": "Internal Revenue Service / ENERGY STAR",
+      "source_url": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit",
+      "secondary_source_url": "https://www.energystar.gov/about/federal-tax-credits/air-source-heat-pumps",
+      "effective_from": "2023-01-01",
+      "confidence": "high",
+      "verification_status": "official_source_verified"
+    },
+    {
+      "id": "us-green-claims",
+      "jurisdiction": "US",
+      "category": "all",
+      "evidence_type": "claim_risk_and_positioning",
+      "title": "US environmental positioning needs specific and substantiated claims",
+      "regulatory_fact": "The FTC Green Guides explain how environmental marketing claims may be deceptive and emphasize clear qualification and substantiation for claims such as recyclable, degradable, carbon-related or general environmental benefits.",
+      "opportunity": "Convert vague claims such as 'eco-friendly' into measurable attributes such as refrigerant GWP, tested efficiency or documented material recovery, creating both safer copy and stronger product differentiation.",
+      "caveat": "The Green Guides are guidance and do not replace product-specific federal or state requirements. Evidence must match the exact claim and consumer interpretation.",
+      "keywords": ["环保", "绿色", "低碳", "节能", "可回收", "eco-friendly", "green", "carbon", "recyclable", "environmental claim"],
+      "publisher": "Federal Trade Commission",
+      "source_url": "https://www.ftc.gov/news-events/topics/truth-advertising/green-guides",
+      "effective_from": "2012-10-11",
+      "confidence": "high",
+      "verification_status": "official_source_verified"
+    }
+  ]
+}

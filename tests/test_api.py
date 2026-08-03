@@ -103,6 +103,8 @@ def test_health_and_check_round_trip(tmp_path: Path) -> None:
         assert workflow.status_code == 201
         workflow_result = workflow.json()
         assert workflow_result["status"] == "review_required"
+        assert workflow_result["input_payload"]["mode"] == "fast"
+        assert workflow_result["result_payload"]["execution_metrics"]["model_calls_reserved"] == 0
         assert workflow_result["current_step"] == "human_review_route"
         assert [event["step"] for event in workflow_result["events"]] == [
             "validate_input",

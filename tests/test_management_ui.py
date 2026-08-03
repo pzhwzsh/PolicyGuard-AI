@@ -86,3 +86,7 @@ def test_portal_accepts_text_without_requiring_upload_and_lists_platforms() -> N
     assert 'if (!selectedFiles.length) return toast' not in script
     assert "inputDescription" in script
     assert "platform_findings" in script
+    assert 'id="market-opportunity-panel"' in html
+    assert "market_opportunities" in script
+    assert 'name="mode"' in html
+    assert 'data.get("mode") === "deep"' in script

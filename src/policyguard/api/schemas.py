@@ -173,6 +173,7 @@ class ComplianceWorkflowRequest(BaseModel):
     markets: list[str] = Field(min_length=1, max_length=5)
     category: str = Field(default="all", max_length=100)
     channel: str = Field(default="all", max_length=100)
+    mode: str = Field(default="fast", pattern="^(fast|deep)$")
     as_of: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
 
 
