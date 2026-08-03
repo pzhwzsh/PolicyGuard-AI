@@ -2,6 +2,67 @@ const $ = (selector) => document.querySelector(selector);
 let currentRun = null;
 let reviewer = "local-reviewer";
 let progressTimer = null;
+let authenticatedAccount = false;
+
+const scenarios = {
+  beauty: {
+    category: "美妆",
+    title: "国家级护肤科技，7天淡纹，100%安全",
+    description: "采用专业配方，效果行业第一。经测试可永久消除皱纹，所有肤质使用都绝对安全。",
+    markets: ["CN"]
+  },
+  health: {
+    category: "保健食品",
+    title: "每日一粒，预防三高并增强免疫力",
+    description: "天然配方能够预防心血管疾病、替代日常药物，并保证快速改善身体状态。",
+    markets: ["CN", "US"]
+  },
+  education: {
+    category: "教育培训",
+    title: "名师押题，保证通过资格考试",
+    description: "由考试命题专家亲自授课，未通过可全额退款，承诺每位学员都能取得资格证书。",
+    markets: ["CN"]
+  }
+};
+
+const eventLabels = {
+  validate_input: ["校验任务输入", "确认目标市场、类目与渠道"],
+  claim_extraction: ["提取营销声明", "使用模型识别需要审查的事实与承诺"],
+  claim_extraction_fallback: ["声明提取降级", "模型不可用，已切换确定性提取"],
+  claim_normalization: ["标准化营销声明", "合并重复表达并建立字段定位"],
+  cost_budget_route: ["检查执行预算", "根据成本与延迟选择处理路径"],
+  query_rewrite: ["改写检索问题", "将商品表达转换为法规检索查询"],
+  retrieval_fallback: ["检索链路降级", "主检索器不可用，已切换后备路径"],
+  collect_evidence: ["收集法规证据", "按法域检索并筛选候选条款"],
+  evidence_verification: ["验证证据充分性", "检查证据是否支持当前风险判断"],
+  human_review_route: ["路由至人工审核", "Agent 已到达权限边界，等待人工决定"],
+  review_completed: ["人工审核完成", "审核决定已写入任务事件"],
+  agent_remediation: ["Agent 生成整改方案", "依据已确认的证据生成最小修改"],
+  agent_guardrail: ["Agent 安全边界触发", "当前动作被转交人工处理"],
+  reviewed_case_memory_written: ["写入审核记忆", "仅保存已审核且可追溯的经验"],
+  failed: ["任务执行失败", "请查看事件详情并重新运行"]
+};
+
+const statusCopy = {
+  review_required: ["发现风险，等待人工确认", "Agent 已找到候选法规证据，需要你确认适用范围。"],
+  needs_more_evidence: ["证据不足，Agent 已停止下结论", "当前知识库无法充分支持判断，系统没有强行生成合规结论。"],
+  review_accepted: ["证据已确认，可生成整改建议", "人工确认结果已写入审计记录。"],
+  review_rejected: ["本次结果已驳回", "该结果不会进入整改或发布环节。"],
+  remediation_planned: ["整改建议已生成", "请核对修改是否保留商品事实。"],
+  draft_ready: ["整改草案已生成", "草案仍需人工决定是否采用。"]
+};
+
+const portalErrors = {
+  workflow_quota_exhausted: "该账号的10次免费审查额度已经用完。",
+  authentication_required: "请先登录后再使用审查功能。"
+};
+
+const channelLabels = {
+  all: "通用营销",
+  marketplace: "电商平台",
+  social: "社交媒体",
+  live: "直播"
+};
 
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
@@ -14,7 +75,7 @@ async function api(path, options = {}) {
     ...options
   });
   const body = response.status === 204 ? null : await response.json();
-  if (!response.ok) throw new Error(body?.detail || `请求失败 (${response.status})`);
+  if (!response.ok) throw new Error(portalErrors[body?.detail] || body?.detail || `请求失败 (${response.status})`);
   return body;
 }
 
@@ -27,17 +88,18 @@ function toast(message) {
 }
 
 function statusText(status) {
-  return ({
-    review_required: "待人工确认", needs_more_evidence: "证据不足",
-    review_accepted: "依据已确认", review_rejected: "结果已驳回",
-    remediation_planned: "整改建议已生成", draft_ready: "整改草案已生成"
-  })[status] || status;
+  return statusCopy[status]?.[0] || status;
 }
 
-function updateStepper(status) {
-  const order = ["submit", "evidence", "review", "remediation"];
-  const active = status == null ? 0 : ["review_required", "needs_more_evidence"].includes(status) ? 2
-    : status === "review_rejected" ? 2 : 3;
+function updateStepper(status, running = false) {
+  const stepper = $("#workflow-stepper");
+  stepper.hidden = !running && !status;
+  const order = ["submit", "agent", "evidence", "review", "remediation"];
+  let active = 0;
+  if (running) active = 1;
+  else if (status === "needs_more_evidence") active = 2;
+  else if (status === "review_required" || status === "review_rejected") active = 3;
+  else if (["review_accepted", "remediation_planned", "draft_ready"].includes(status)) active = 4;
   document.querySelectorAll(".stepper li").forEach((item) => {
     const index = order.indexOf(item.dataset.step);
     item.classList.toggle("active", index === active);
@@ -45,85 +107,165 @@ function updateStepper(status) {
   });
 }
 
+function updateTaskPreview() {
+  const form = $("#check-form");
+  const markets = [...form.querySelectorAll('input[name="markets"]:checked')]
+    .map((input) => ({CN: "中国", US: "美国", EU: "欧盟"}[input.value] || input.value));
+  $("#preview-markets").textContent = markets.join(" / ") || "未选择";
+  $("#preview-category").textContent = form.elements.category.value.trim() || "未填写";
+  $("#preview-channel").textContent = channelLabels[form.elements.channel.value] || "通用营销";
+}
+
 function setProgress(active) {
   const progress = $("#progress");
   window.clearInterval(progressTimer);
   if (!active) {
     progress.hidden = true;
+    document.querySelectorAll(".run-phases span").forEach((item) => item.classList.remove("active"));
     return;
   }
   const phases = [
-    ["正在检索政策证据", "正在匹配市场、类目与宣传表述"],
-    ["正在核对适用范围", "筛选可追溯的候选条款"],
-    ["正在整理审核任务", "结果将进入人工确认，不会自动发布"]
+    ["Agent 正在提取营销声明", "识别功效、资质、价格与承诺类表达"],
+    ["Agent 正在规划检索路径", "根据法域、类目和渠道组装检索上下文"],
+    ["正在调用混合检索", "组合关键词、语义召回与候选重排"],
+    ["正在验证证据充分性", "证据不足时将停止生成结论"],
+    ["正在生成下一步路由", "进入人工确认或要求补充证据"]
   ];
   let phase = 0;
   const render = () => {
     $("#progress-title").textContent = phases[phase][0];
     $("#progress-detail").textContent = phases[phase][1];
-    phase = (phase + 1) % phases.length;
+    $("#progress-bar").style.width = `${18 + phase * 19}%`;
+    document.querySelectorAll(".run-phases span").forEach((item, index) => item.classList.toggle("active", index <= phase));
+    phase = Math.min(phase + 1, phases.length - 1);
   };
   progress.hidden = false;
+  updateStepper(null, true);
   render();
-  progressTimer = window.setInterval(render, 1400);
+  progressTimer = window.setInterval(render, 1700);
+  progress.scrollIntoView({behavior: "smooth", block: "center"});
+}
+
+function selectScenario(key) {
+  const scenario = scenarios[key];
+  const form = $("#check-form");
+  form.elements.external_id.value = `DEMO-${key.toUpperCase()}-${new Date().toISOString().slice(0, 10).replaceAll("-", "")}`;
+  form.elements.category.value = scenario.category;
+  form.elements.title.value = scenario.title;
+  form.elements.description.value = scenario.description;
+  document.querySelectorAll('input[name="markets"]').forEach((input) => { input.checked = scenario.markets.includes(input.value); });
+  document.querySelectorAll(".scenario-card").forEach((button) => button.classList.toggle("selected", button.dataset.scenario === key));
+  $("#draft-state").textContent = `已载入${scenario.category}演示场景`;
+  updateTaskPreview();
+  toast("演示场景已载入，可直接启动 Agent");
 }
 
 function resetCheck({focus = false} = {}) {
   currentRun = null;
   $("#check-form").reset();
+  document.querySelectorAll(".scenario-card").forEach((button) => button.classList.remove("selected"));
   $("#result").hidden = true;
-  $("#draft-state").textContent = "尚未填写";
+  $("#draft-state").textContent = "选择场景或填写真实商品文案";
   setProgress(false);
   updateStepper(null);
+  updateTaskPreview();
   if (focus) {
-    const input = $('#check-form input[name="external_id"]');
+    const input = $('#check-form input[name="title"]');
     input.focus();
     input.scrollIntoView({behavior: "smooth", block: "center"});
   }
 }
 
-function renderRun(run) {
-  currentRun = run;
-  $("#result").hidden = false;
-  $("#result-title").textContent = statusText(run.status);
-  const note = run.result_payload.note;
-  $("#result-note").textContent = note === "Candidate evidence only; no legal conclusion or automatic mutation."
-    ? "以下仅为候选证据，不构成法律结论，也不会自动修改或发布内容。"
-    : note || "请核对证据来源、适用范围和生效时间。";
-  $("#report-link").href = `/api/v1/workflows/compliance/${run.id}/report?format=pdf`;
-  const markets = run.result_payload.markets || [];
-  const evidenceCount = markets.reduce((total, market) => total + (market.candidate_evidence || []).length, 0);
-  $("#summary-status").textContent = statusText(run.status);
-  $("#summary-evidence").textContent = `${evidenceCount} 条`;
-  $("#summary-markets").textContent = markets.map((market) => market.market).join(" / ") || "-";
+function detailText(event) {
+  const detail = event.detail || {};
+  if (event.step === "claim_normalization") return `提取 ${detail.claim_count ?? 0} 条声明，共 ${detail.claim_length ?? 0} 个字符`;
+  if (event.step === "collect_evidence") return `${detail.market || "目标市场"} · 找到 ${detail.hit_count ?? 0} 条候选证据`;
+  if (event.step === "retrieval_fallback") {
+    const failed = (detail.failures || []).map((item) => item.retriever).join("、");
+    return `${detail.market || "目标市场"} · ${failed || "主检索器"}不可用，已自动切换`;
+  }
+  if (event.step === "claim_extraction_fallback") return `模型调用失败，已使用 ${detail.fallback || "确定性基线"}`;
+  if (event.step === "human_review_route") return detail.reason === "evidence_requires_human_interpretation" ? "证据需要人工解释，Agent 已暂停" : "已进入人工审核边界";
+  if (Object.keys(detail).length) return Object.entries(detail).slice(0, 3).map(([key, value]) => `${key}: ${Array.isArray(value) ? value.length : value}`).join(" · ");
+  return eventLabels[event.step]?.[1] || "执行事件已记录";
+}
+
+function renderTrace(events = []) {
+  const degraded = events.filter((event) => event.status === "degraded").length;
+  $("#trace-summary").textContent = `${events.length} 个事件${degraded ? ` · ${degraded} 次自动降级` : ""}`;
+  $("#agent-trace").innerHTML = events.map((event) => {
+    const label = eventLabels[event.step]?.[0] || event.step.replaceAll("_", " ");
+    return `<li class="${escapeHtml(event.status)}"><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detailText(event))}</small></li>`;
+  }).join("") || '<li><strong>暂无执行事件</strong><small>任务启动后将在此展示 Agent 的真实执行轨迹。</small></li>';
+}
+
+function renderClaims(claims = []) {
+  $("#claim-list").innerHTML = claims.map((claim) => `<article class="claim-item"><p>“${escapeHtml(claim.text)}”</p><span>${escapeHtml(claim.field === "title" ? "商品标题" : "商品描述")}</span></article>`).join("") || '<p class="empty">未提取到需要审查的营销声明。</p>';
+}
+
+function evidenceMeta(item) {
+  return [
+    item.publisher,
+    item.version ? `版本 ${item.version}` : null,
+    item.section_id ? `条款 ${item.section_id}` : null,
+    item.effective_from ? `生效 ${item.effective_from}` : null
+  ].filter(Boolean).map((value) => `<span>${escapeHtml(value)}</span>`).join("");
+}
+
+function renderEvidence(markets = []) {
   $("#evidence-list").innerHTML = markets.map((market) => {
     const evidence = market.candidate_evidence || [];
-    return `<article class="market-row"><div class="market-title"><strong>${escapeHtml(market.market)}</strong><span>${evidence.length ? `${evidence.length} 条候选依据` : "未找到足够依据"}</span></div>${evidence.map((item, index) => `<details class="evidence-item"${index === 0 ? " open" : ""}><summary><span class="evidence-index">${index + 1}</span><span>${escapeHtml(item.heading)}</span></summary><div class="evidence-body"><p>${escapeHtml(item.text)}</p><a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">打开官方来源</a></div></details>`).join("") || '<p class="empty-evidence">当前资料不足，系统不据此作出合规结论。</p>'}</article>`;
+    return `<article class="market-row"><div class="market-title"><div><b>${escapeHtml(market.market)}</b><strong>${escapeHtml({CN: "中国", US: "美国", EU: "欧盟"}[market.market] || market.market)}</strong></div><span>${evidence.length ? `${evidence.length} 条候选证据` : "证据不足，已停止结论"}</span></div>${evidence.map((item, index) => `<details class="evidence-item"${index === 0 ? " open" : ""}><summary><span class="evidence-index">${index + 1}</span><span>${escapeHtml(item.heading || item.section_id || "法规条款")}</span></summary><div class="evidence-body"><div class="evidence-meta">${evidenceMeta(item)}</div><p>${escapeHtml(item.text)}</p>${item.source_url ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">查看官方原文 ↗</a>` : ""}</div></details>`).join("") || '<p class="empty-evidence">当前知识库未找到足够证据。Agent 已停止下结论，并将任务交给人工处理。</p>'}</article>`;
   }).join("");
+}
+
+function renderRun(run) {
+  currentRun = run;
+  const payload = run.result_payload || {};
+  const markets = payload.markets || [];
+  const claims = payload.claims || [];
+  const evidenceCount = markets.reduce((total, market) => total + (market.candidate_evidence || []).length, 0);
+  const copy = statusCopy[run.status] || [statusText(run.status), "请核对任务详情。"];
+  $("#result").hidden = false;
+  $("#result-title").textContent = copy[0];
+  $("#result-subtitle").textContent = copy[1];
+  $("#summary-status").textContent = statusText(run.status);
+  $("#summary-claims").textContent = `${claims.length} 条`;
+  $("#summary-evidence").textContent = `${evidenceCount} 条`;
+  $("#summary-markets").textContent = markets.map((market) => market.market).join(" / ") || "-";
+  $("#result-note").textContent = payload.note === "Candidate evidence only; no legal conclusion or automatic mutation."
+    ? "以下内容仅为候选证据，不构成法律结论；Agent 不会自动修改或发布商品内容。"
+    : payload.note || "请核对证据来源、适用范围和生效时间。";
+  $("#report-link").href = `/api/v1/workflows/compliance/${run.id}/report?format=pdf`;
+
+  renderClaims(claims);
+  renderEvidence(markets);
+  renderTrace(run.events || []);
+
   const reviewable = ["review_required", "needs_more_evidence"].includes(run.status);
   const acceptable = run.status === "review_required";
   $("#accept-button").disabled = !acceptable;
   $("#reject-button").disabled = !reviewable;
   if (run.status === "needs_more_evidence") {
-    $("#review-title").textContent = "证据不足，不能确认依据";
-    $("#review-note").textContent = "当前结果只能标记为不可采用，补充可靠证据后需重新检查。";
+    $("#review-title").textContent = "证据不足，不能确认结论";
+    $("#review-note").textContent = "可以驳回本次结果，补充或激活可靠法规后重新检查。";
   } else if (reviewable) {
-    $("#review-title").textContent = "请人工核对证据";
-    $("#review-note").textContent = "确认只代表允许进入整改阶段，不会自动发布内容。";
+    $("#review-title").textContent = "请人工确认法规证据";
+    $("#review-note").textContent = "确认后才允许 Agent 生成整改建议。";
   } else {
-    $("#review-title").textContent = run.status === "review_rejected" ? "本次结果已驳回" : "人工确认已完成";
-    $("#review-note").textContent = run.status === "review_rejected" ? "该结果不会进入整改环节。" : "后续草案仍需人工决定是否采用。";
+    $("#review-title").textContent = run.status === "review_rejected" ? "本次结果已驳回" : "人工审核已经完成";
+    $("#review-note").textContent = run.status === "review_rejected" ? "结果不会进入整改环节。" : "整改草案仍需人工决定是否采用。";
   }
   $("#remediation").hidden = !["review_accepted", "remediation_planned", "draft_ready"].includes(run.status);
   $("#plan-button").hidden = run.status !== "review_accepted";
-  renderRemediation(run.result_payload.remediation_plan);
+  renderRemediation(payload.remediation_plan);
   updateStepper(run.status);
   $("#result").scrollIntoView({behavior: "smooth", block: "start"});
 }
 
 function renderRemediation(plan) {
   const operations = plan?.operations || [];
-  $("#remediation-list").innerHTML = operations.map((item) => `<article class="change"><strong>${escapeHtml(item.field === "title" ? "商品标题" : "商品描述")}</strong><div class="change-grid"><div><small>修改前</small><p>${escapeHtml(item.before)}</p></div><div><small>建议修改</small><p>${escapeHtml(item.after)}</p></div></div></article>`).join("") || '<p class="empty">确认依据后，可生成保守的整改建议。</p>';
+  $("#remediation-list").innerHTML = operations.map((item) => `<article class="change"><strong>${escapeHtml(item.field === "title" ? "商品标题" : "商品描述")}</strong><div class="change-grid"><div><small>修改前</small><p>${escapeHtml(item.before)}</p></div><div><small>建议修改</small><p>${escapeHtml(item.after)}</p></div></div></article>`).join("") || '<p class="empty">确认法规证据后，可让 Agent 生成保守的整改建议。</p>';
 }
 
 async function review(decision) {
@@ -142,9 +284,25 @@ async function loadHistory() {
   const runs = await api("/api/v1/workflows/compliance?limit=50");
   $("#history-list").innerHTML = runs.map((run) => {
     const product = run.input_payload.product || {};
-    return `<button class="history-item" type="button" data-run-id="${escapeHtml(run.id)}"><span><strong>${escapeHtml(product.title || product.external_id || "未命名检查")}</strong><small>${escapeHtml(product.external_id || run.id)}</small></span><span class="status">${escapeHtml(statusText(run.status))}</span><time>${new Date(run.updated_at).toLocaleString("zh-CN")}</time></button>`;
+    const markets = run.input_payload.markets || [];
+    return `<button class="history-item" type="button" data-run-id="${escapeHtml(run.id)}"><span class="history-market">${escapeHtml(markets.join("/"))}</span><span><strong>${escapeHtml(product.title || product.external_id || "未命名审查")}</strong><small>${escapeHtml(product.category || "未填写类目")} · ${escapeHtml(product.external_id || run.id.slice(0, 8))}</small></span><span class="status">${escapeHtml(statusText(run.status))}</span><time>${new Date(run.updated_at).toLocaleString("zh-CN")}</time></button>`;
   }).join("") || '<p class="empty">暂无检查记录</p>';
 }
+
+async function refreshAccountUsage() {
+  if (!authenticatedAccount) return;
+  const user = await api("/api/v1/auth/me");
+  reviewer = user.email;
+  $("#account-email").textContent = `${user.email} · 剩余 ${user.workflow_remaining} 次`;
+  $("#quota-badge").textContent = `${user.workflow_remaining} 次可用`;
+}
+
+$("#check-form").addEventListener("input", () => {
+  if (!currentRun) $("#draft-state").textContent = "草稿已更新，尚未启动 Agent";
+  updateTaskPreview();
+});
+
+$("#check-form").addEventListener("change", updateTaskPreview);
 
 $("#check-form").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -152,56 +310,58 @@ $("#check-form").addEventListener("submit", async (event) => {
   const data = new FormData(event.currentTarget);
   const markets = data.getAll("markets");
   if (!markets.length) return toast("请至少选择一个目标市场");
+  const externalId = data.get("external_id") || `TASK-${Date.now()}`;
   button.disabled = true;
-  button.textContent = "检查中...";
-  $("#draft-state").textContent = "正在处理";
+  button.querySelector("span").textContent = "正在检查";
+  button.querySelector("small").textContent = "正在建立证据上下文";
+  $("#draft-state").textContent = "任务正在执行";
   setProgress(true);
   try {
     const run = await api("/api/v1/workflows/compliance", {
       method: "POST",
       body: JSON.stringify({
         product: {
-          external_id: data.get("external_id"), title: data.get("title"),
-          description: data.get("description"), category: data.get("category"), attributes: {}
+          external_id: externalId,
+          title: data.get("title"),
+          description: data.get("description"),
+          category: data.get("category"),
+          attributes: {}
         },
-        markets, category: data.get("category"), channel: "all"
+        markets,
+        category: data.get("category"),
+        channel: data.get("channel") || "all"
       })
     });
     renderRun(run);
-    $("#draft-state").textContent = "已生成检查记录";
-    await loadHistory();
+    $("#draft-state").textContent = "已生成可审计任务记录";
+    await Promise.all([loadHistory(), refreshAccountUsage()]);
   } catch (error) {
-    $("#draft-state").textContent = "检查失败，可重新提交";
+    $("#draft-state").textContent = "任务失败，可重新提交";
+    updateStepper(null);
     toast(error.message);
+  } finally {
+    setProgress(false);
+    button.disabled = false;
+    button.querySelector("span").textContent = "开始检查";
+    button.querySelector("small").textContent = "预计 10–30 秒";
   }
-  finally { setProgress(false); button.disabled = false; button.textContent = "开始检查"; }
 });
 
-$("#sample-button").addEventListener("click", () => {
-  resetCheck();
-  const form = $("#check-form");
-  form.elements.external_id.value = `DEMO-${new Date().toISOString().slice(0, 10).replaceAll("-", "")}`;
-  form.elements.category.value = "美妆";
-  form.elements.title.value = "国家级护肤品 100%安全";
-  form.elements.description.value = "采用专业配方，宣传为绝对安全、效果最佳。";
-  $("#draft-state").textContent = "演示样例已载入";
-  toast("演示样例已载入，可以开始检查");
-});
+document.querySelectorAll(".scenario-card").forEach((button) => button.addEventListener("click", () => selectScenario(button.dataset.scenario)));
 $("#new-check-button").addEventListener("click", () => resetCheck({focus: true}));
-
 $("#accept-button").addEventListener("click", () => review("accept").catch((error) => toast(error.message)));
 $("#reject-button").addEventListener("click", () => review("reject").catch((error) => toast(error.message)));
 $("#plan-button").addEventListener("click", async () => {
   try {
     renderRun(await api(`/api/v1/workflows/compliance/${currentRun.id}/remediation-plan`, {
-      method: "POST", body: JSON.stringify({plan_id: crypto.randomUUID(), mode: "pipeline"})
+      method: "POST", body: JSON.stringify({plan_id: crypto.randomUUID(), mode: "agent"})
     }));
     await loadHistory();
   } catch (error) { toast(error.message); }
 });
 
-document.querySelectorAll(".nav-item").forEach((button) => button.addEventListener("click", async () => {
-  document.querySelectorAll(".nav-item").forEach((item) => item.classList.toggle("active", item === button));
+document.querySelectorAll(".topnav-item").forEach((button) => button.addEventListener("click", async () => {
+  document.querySelectorAll(".topnav-item").forEach((item) => item.classList.toggle("active", item === button));
   document.querySelectorAll(".view").forEach((view) => { view.hidden = true; view.classList.remove("active"); });
   const view = $(`#${button.dataset.view}-view`);
   view.hidden = false;
@@ -212,8 +372,8 @@ document.querySelectorAll(".nav-item").forEach((button) => button.addEventListen
 $("#history-list").addEventListener("click", async (event) => {
   const item = event.target.closest("[data-run-id]");
   if (!item) return;
-  renderRun(await api(`/api/v1/workflows/compliance/${item.dataset.runId}`));
   document.querySelector('[data-view="check"]').click();
+  renderRun(await api(`/api/v1/workflows/compliance/${item.dataset.runId}`));
 });
 $("#refresh-history").addEventListener("click", () => loadHistory().catch((error) => toast(error.message)));
 $("#logout-button").addEventListener("click", async () => {
@@ -225,11 +385,13 @@ async function start() {
   const status = await api("/api/v1/auth/status");
   if (status.required && !status.authenticated) return location.replace("/login");
   if (status.authenticated) {
-    const user = await api("/api/v1/auth/me");
-    reviewer = user.email;
-    $("#account-email").textContent = user.email;
+    authenticatedAccount = true;
+    await refreshAccountUsage();
     $("#logout-button").hidden = false;
+  } else {
+    $("#quota-badge").hidden = true;
   }
+  updateTaskPreview();
   await loadHistory();
 }
 

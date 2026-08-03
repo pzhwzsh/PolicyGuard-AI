@@ -16,7 +16,6 @@ class UserRegisterRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     email: str = Field(min_length=3, max_length=320)
     password: str = Field(min_length=10, max_length=128)
-    verification_code: str = Field(pattern=r"^\d{6}$")
 
 
 class UserLoginRequest(BaseModel):
@@ -29,6 +28,9 @@ class UserResponse(BaseModel):
     id: str
     email: str
     role: str
+    workflow_uses: int
+    workflow_limit: int
+    workflow_remaining: int
 
 
 class ProductCheckRequest(BaseModel):

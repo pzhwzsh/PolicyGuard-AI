@@ -39,16 +39,15 @@
         </form>
 
         <form id="register-form" hidden>
-          <header><h2>创建账号</h2><p>验证码将从PolicyGuard服务邮箱发送。</p></header>
+          <header><h2>创建账号</h2><p>注册后可免费完成10次合规审查。</p></header>
           <label>邮箱<input name="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
-          <label>邮箱验证码<span class="code-row"><input name="verification_code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><button id="send-code" type="button">发送验证码</button></span></label>
           <label>密码<input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required></label>
           <div class="password-rules">至少10位，同时包含大写字母、小写字母和数字；允许特殊符号，不允许空格。</div>
           <p id="register-error" class="form-error" role="alert"></p>
           <button class="primary" type="submit">注册并进入工作台</button>
         </form>
       </div>
-      <p class="legal-note">创建账号即表示你同意仅上传有权处理的业务资料。</p>
+      <p class="legal-note">每个新账号包含10次审查额度；创建账号即表示你同意仅上传有权处理的业务资料。</p>
     </section>
   </main>
   <script src="/static/auth.js" defer></script>

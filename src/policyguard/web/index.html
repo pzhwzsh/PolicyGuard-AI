@@ -183,8 +183,8 @@
           <button id="run-model-evaluation" type="button">提交后台评测</button>
         </div>
         <div class="form-grid">
-          <label class="wide">候选模型（逗号分隔）<input id="evaluation-models" value="jinaai/jina-embeddings-v2-base-zh,BAAI/bge-small-zh-v1.5,bm25"></label>
-          <label>数据集<input id="evaluation-dataset" value="data/evaluation/rag-hard-v1.json"></label>
+          <label class="wide">候选模型（逗号分隔）<input id="evaluation-models" value="BAAI/bge-m3,jinaai/jina-embeddings-v2-base-zh,BAAI/bge-small-zh-v1.5,bm25"></label>
+          <label>数据集<input id="evaluation-dataset" value="data/evaluation/rag-robustness-v1.json"></label>
           <label>最低 Hit@5<input id="evaluation-min-hit" type="number" min="0" max="1" step="0.01" value="0.80"></label>
           <label>最低 MRR<input id="evaluation-min-mrr" type="number" min="0" max="1" step="0.01" value="0.65"></label>
           <label>最大总延迟(ms)<input id="evaluation-max-latency" type="number" min="1" value="60000"></label>

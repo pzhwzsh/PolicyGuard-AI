@@ -146,32 +146,12 @@ class LocalAuthService:
         )
         self.session.commit()
 
-    def register(self, raw_email: str, password: str, code: str) -> tuple[UserRecord, str]:
+    def register(self, raw_email: str, password: str) -> tuple[UserRecord, str]:
         email = normalize_email(raw_email)
         validate_password(password, email)
         now = datetime.now(UTC)
         if self.session.scalar(select(UserRecord).where(UserRecord.email == email)):
             raise ValueError("email_already_registered")
-        verification = self.session.scalar(
-            select(EmailVerificationRecord)
-            .where(
-                EmailVerificationRecord.email == email,
-                EmailVerificationRecord.purpose == "register",
-                EmailVerificationRecord.consumed_at.is_(None),
-            )
-            .order_by(EmailVerificationRecord.created_at.desc())
-        )
-        if not verification or _aware(verification.expires_at) <= now:
-            raise ValueError("verification_code_expired")
-        if verification.attempts >= 5:
-            raise ValueError("verification_attempts_exceeded")
-        verification.attempts += 1
-        if not hmac.compare_digest(
-            verification.code_hash, _code_hash(email, "register", code.strip(), self.pepper)
-        ):
-            self.session.commit()
-            raise ValueError("verification_code_invalid")
-        verification.consumed_at = now
         user = UserRecord(id=uuid4().hex, email=email, password_hash=hash_password(password))
         self.session.add(user)
         token = self._create_session(user, now)

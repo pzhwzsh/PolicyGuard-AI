@@ -33,15 +33,11 @@ def auth_client(tmp_path, monkeypatch):
 
 
 def register(client: TestClient, messages: list[tuple[str, str]], email: str) -> None:
-    response = client.post("/api/v1/auth/verification-code", json={"email": email})
-    assert response.status_code == 202
-    assert messages[-1][0] == email
     response = client.post(
         "/api/v1/auth/register",
         json={
             "email": email,
             "password": "SafePassword2026",
-            "verification_code": messages[-1][1],
         },
     )
     assert response.status_code == 200
@@ -61,20 +57,13 @@ def test_registration_cookie_logout_and_email_enumeration_resistance(auth_client
     assert "Secure" in cookie_header
     assert client.get("/api/v1/auth/me").status_code == 200
 
-    sent_count = len(messages)
-    repeated = client.post("/api/v1/auth/verification-code", json={"email": "person@example.com"})
-    assert repeated.status_code == 202
-    assert repeated.json() == {"accepted": True}
-    assert len(messages) == sent_count
-
     assert client.post("/api/v1/auth/logout").status_code == 204
     assert client.get("/api/v1/auth/me").status_code == 401
 
 
-def test_bad_code_lockout_and_cross_site_write_rejection(auth_client) -> None:
+def test_registration_rejects_legacy_code_and_cross_site_write_rejection(auth_client) -> None:
     client, messages = auth_client
-    client.post("/api/v1/auth/verification-code", json={"email": "person@example.com"})
-    bad_code = client.post(
+    legacy_payload = client.post(
         "/api/v1/auth/register",
         json={
             "email": "person@example.com",
@@ -82,19 +71,8 @@ def test_bad_code_lockout_and_cross_site_write_rejection(auth_client) -> None:
             "verification_code": "000000",
         },
     )
-    assert bad_code.status_code == 400
-    register_code = messages[-1][1]
-    assert (
-        client.post(
-            "/api/v1/auth/register",
-            json={
-                "email": "person@example.com",
-                "password": "SafePassword2026",
-                "verification_code": register_code,
-            },
-        ).status_code
-        == 200
-    )
+    assert legacy_payload.status_code == 422
+    register(client, messages, "person@example.com")
 
     cross_site = client.put(
         "/api/v1/products/SKU-1",
@@ -144,3 +122,31 @@ def test_production_requires_login_and_isolates_user_products(auth_client) -> No
 
     client.cookies.set("pg_session", first_session)
     assert client.get("/api/v1/products/SKU-1").json()["name"] == "Private"
+
+
+def test_new_user_can_create_only_ten_compliance_workflows(auth_client) -> None:
+    client, messages = auth_client
+    register(client, messages, "quota@example.com")
+    payload = {
+        "product": {
+            "external_id": "SKU-QUOTA",
+            "title": "普通商品标题",
+            "description": "普通商品描述",
+            "category": "beauty",
+            "attributes": {},
+        },
+        "markets": ["CN"],
+        "category": "beauty",
+        "channel": "all",
+    }
+    for index in range(10):
+        payload["product"]["external_id"] = f"SKU-QUOTA-{index}"
+        assert client.post("/api/v1/workflows/compliance", json=payload).status_code == 201
+
+    exhausted = client.post("/api/v1/workflows/compliance", json=payload)
+    assert exhausted.status_code == 429
+    assert exhausted.json()["detail"] == "workflow_quota_exhausted"
+    account = client.get("/api/v1/auth/me").json()
+    assert account["workflow_uses"] == 10
+    assert account["workflow_limit"] == 10
+    assert account["workflow_remaining"] == 0

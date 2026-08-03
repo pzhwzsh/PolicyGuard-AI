@@ -2,11 +2,13 @@ import argparse
 from pathlib import Path
 
 from policyguard.application.benchmark import run_embedding_benchmark, write_results
+from policyguard.application.local_embeddings import LocalSentenceTransformerProvider
 from policyguard.application.onnx_embeddings import FastEmbedProvider
 from policyguard.infrastructure.database import Database
 from policyguard.infrastructure.repositories import SqlAlchemyKnowledgeRepository
 
 MODELS = [
+    "BAAI/bge-m3",
     "BAAI/bge-small-zh-v1.5",
     "jinaai/jina-embeddings-v2-base-zh",
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
@@ -24,7 +26,10 @@ def main() -> None:
     database.initialize()
 
     def factory(candidate):
-        return FastEmbedProvider(candidate["model"])
+        model = candidate["model"]
+        if model == "BAAI/bge-m3":
+            return LocalSentenceTransformerProvider(model)
+        return FastEmbedProvider(model)
 
     matrix = root / "data" / "benchmarks" / "local-embedding-matrix.json"
     matrix.parent.mkdir(parents=True, exist_ok=True)

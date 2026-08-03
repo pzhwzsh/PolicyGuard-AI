@@ -11,6 +11,7 @@ from typing import Any
 
 from policyguard.application.embeddings import DenseRetriever
 from policyguard.application.knowledge import BM25Retriever, evaluate_retriever
+from policyguard.application.local_embeddings import LocalSentenceTransformerProvider
 from policyguard.application.onnx_embeddings import FastEmbedProvider
 from policyguard.infrastructure.repositories import SqlAlchemyKnowledgeRepository
 
@@ -49,8 +50,13 @@ def run_retrieval_evaluation(
                 retriever = BM25Retriever(repository)
                 provider = "local_lexical"
             else:
-                retriever = DenseRetriever(repository, FastEmbedProvider(candidate))
-                provider = "fastembed_onnx_local"
+                embedding_provider = (
+                    LocalSentenceTransformerProvider(candidate)
+                    if candidate == "BAAI/bge-m3"
+                    else FastEmbedProvider(candidate)
+                )
+                retriever = DenseRetriever(repository, embedding_provider)
+                provider = embedding_provider.provider_name
             metrics = evaluate_retriever(retriever, dataset_path, top_k=top_k)
             rows.append({
                 "model": candidate,
@@ -66,7 +72,11 @@ def run_retrieval_evaluation(
         except Exception as exc:
             rows.append({
                 "model": candidate,
-                "provider": "fastembed_onnx_local",
+                "provider": (
+                    "sentence_transformers_local"
+                    if candidate == "BAAI/bge-m3"
+                    else "fastembed_onnx_local"
+                ),
                 "status": "failed",
                 "sample_count": 0,
                 "hit_rate_at_k": 0.0,

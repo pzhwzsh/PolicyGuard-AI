@@ -32,7 +32,7 @@ from fastapi.responses import (
     StreamingResponse,
 )
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
 
 from policyguard import __version__
@@ -406,8 +406,35 @@ def create_app(database_url: str | None = None) -> FastAPI:
         )
         return LocalAuthService(session, settings.auth_code_pepper, sender)
 
+    def user_response(user: UserRecord) -> UserResponse:
+        return UserResponse(
+            id=user.id,
+            email=user.email,
+            role=user.role,
+            workflow_uses=user.workflow_uses,
+            workflow_limit=user.workflow_limit,
+            workflow_remaining=max(user.workflow_limit - user.workflow_uses, 0),
+        )
+
     def authenticated_local_user(request: Request, session: Session) -> UserRecord | None:
         return local_auth_service(session).authenticate(request.cookies.get("pg_session", ""))
+
+    def consume_workflow_quota(request: Request, session: Session) -> None:
+        user = authenticated_local_user(request, session)
+        if user is None:
+            return
+        result = session.execute(
+            update(UserRecord)
+            .where(
+                UserRecord.id == user.id,
+                UserRecord.workflow_uses < UserRecord.workflow_limit,
+            )
+            .values(workflow_uses=UserRecord.workflow_uses + 1)
+        )
+        if result.rowcount != 1:
+            session.rollback()
+            raise HTTPException(status_code=429, detail="workflow_quota_exhausted")
+        session.commit()
 
     def tenant_identity(
         request: Request,
@@ -641,9 +668,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         session: Session = Depends(get_session),
     ) -> UserResponse:
         try:
-            user, token = local_auth_service(session).register(
-                payload.email, payload.password, payload.verification_code
-            )
+            user, token = local_auth_service(session).register(payload.email, payload.password)
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         response.set_cookie(
@@ -655,7 +680,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             samesite="lax",
             path="/",
         )
-        return UserResponse(id=user.id, email=user.email, role=user.role)
+        return user_response(user)
 
     @application.post("/api/v1/auth/login", response_model=UserResponse, tags=["auth"])
     def login_user(
@@ -678,14 +703,14 @@ def create_app(database_url: str | None = None) -> FastAPI:
             samesite="lax",
             path="/",
         )
-        return UserResponse(id=user.id, email=user.email, role=user.role)
+        return user_response(user)
 
     @application.get("/api/v1/auth/me", response_model=UserResponse, tags=["auth"])
     def current_user(request: Request, session: Session = Depends(get_session)) -> UserResponse:
         user = authenticated_local_user(request, session)
         if user is None:
             raise HTTPException(status_code=401, detail="authentication_required")
-        return UserResponse(id=user.id, email=user.email, role=user.role)
+        return user_response(user)
 
     @application.get("/api/v1/auth/status", tags=["auth"])
     def authentication_status(
@@ -2451,6 +2476,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         allowed = {
             "bm25",
+            "BAAI/bge-m3",
             settings.embedding_model,
             settings.embedding_fallback_model,
         } - {""}
@@ -2869,9 +2895,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
     )
     def start_compliance_workflow(
         payload: ComplianceWorkflowRequest,
+        request: Request,
         session: Session = Depends(get_session),
         tenant: str = Depends(tenant_identity),
     ) -> ComplianceWorkflowResponse:
+        consume_workflow_quota(request, session)
         knowledge_repository = SqlAlchemyKnowledgeRepository(session)
         workflow_repository = SqlAlchemyWorkflowRepository(session)
         embedding_providers, embedding_failures = configured_embedding_chain(provider_settings)

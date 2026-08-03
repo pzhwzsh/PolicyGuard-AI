@@ -3,103 +3,145 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17352b">
-  <title>PolicyGuard AI - 合规工作台</title>
-  <link rel="stylesheet" href="/static/portal.css">
+  <meta name="theme-color" content="#ffffff">
+  <title>PolicyGuard AI - 跨境合规 Agent</title>
+  <link rel="stylesheet" href="/static/portal.css?v=20260803-3">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="/" aria-label="PolicyGuard AI 首页">
-      <span class="brand-mark">PG</span>
-      <span><strong>PolicyGuard</strong><small>合规工作台</small></span>
+      <span class="brand-mark">P</span>
+      <span><strong>PolicyGuard</strong></span>
     </a>
+    <nav class="topnav" aria-label="工作台导航">
+      <button class="topnav-item active" data-view="check" type="button">新建审查</button>
+      <button class="topnav-item" data-view="history" type="button">历史任务</button>
+    </nav>
     <div class="account">
+      <span class="live-dot" aria-hidden="true"></span>
       <span id="account-email">本地工作区</span>
-      <button id="logout-button" class="text-button" type="button" hidden>退出登录</button>
+      <button id="logout-button" class="text-button" type="button" hidden>退出</button>
     </div>
   </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <nav aria-label="工作台导航">
-        <button class="nav-item active" data-view="check" type="button"><span>01</span>合规检查</button>
-        <button class="nav-item" data-view="history" type="button"><span>02</span>历史记录</button>
-      </nav>
-      <div class="boundary-note">
-        <strong>人工确认边界</strong>
-        <p>系统只提供证据和整改草案，最终判断由审核人员完成。</p>
-      </div>
-    </aside>
-
-    <main>
-      <section id="check-view" class="view active">
-        <div class="page-heading">
-          <div><p class="eyebrow">内容合规</p><h1>新建检查</h1></div>
-          <ol class="stepper" aria-label="审核流程">
-            <li class="active" data-step="submit">提交内容</li><li data-step="evidence">查看证据</li><li data-step="review">人工确认</li><li data-step="remediation">整改建议</li>
-          </ol>
+  <main class="shell">
+    <section id="check-view" class="view active">
+      <header class="hero">
+        <div class="hero-copy">
+          <h1>新建合规审查</h1>
         </div>
+      </header>
 
-        <form id="check-form" class="editor">
-          <div class="editor-toolbar">
-            <div><strong>待审内容</strong><span id="draft-state">尚未填写</span></div>
-            <button id="sample-button" class="secondary compact" type="button">载入演示样例</button>
+      <ol id="workflow-stepper" class="stepper" aria-label="审查流程" hidden>
+        <li class="active" data-step="submit"><span>01</span><div><strong>提交内容</strong><small>定义审查范围</small></div></li>
+        <li data-step="agent"><span>02</span><div><strong>Agent 审查</strong><small>提取声明与选择工具</small></div></li>
+        <li data-step="evidence"><span>03</span><div><strong>核验证据</strong><small>法规来源与适用范围</small></div></li>
+        <li data-step="review"><span>04</span><div><strong>人工确认</strong><small>接受、纠正或驳回</small></div></li>
+        <li data-step="remediation"><span>05</span><div><strong>整改复检</strong><small>生成最小修改方案</small></div></li>
+      </ol>
+
+      <section id="intake-workspace" class="workspace-grid">
+        <form id="check-form" class="intake-card">
+          <div class="card-heading">
+            <div><div><strong>审查内容</strong><small id="draft-state" class="sr-only">尚未提交</small></div></div>
           </div>
-          <div class="field-row">
-            <label>商品编号<input name="external_id" autocomplete="off" placeholder="例如 SKU-2026-001" required maxlength="200"></label>
-            <label>商品类目<input name="category" autocomplete="off" placeholder="例如 美妆、食品、电子产品" required maxlength="200"></label>
+
+          <div class="scenario-block">
+            <div class="label-row"><strong>示例</strong></div>
+            <div class="scenario-grid">
+              <button class="scenario-card" data-scenario="beauty" type="button"><span>美妆</span><strong>绝对化功效</strong></button>
+              <button class="scenario-card" data-scenario="health" type="button"><span>保健品</span><strong>疾病预防</strong></button>
+              <button class="scenario-card" data-scenario="education" type="button"><span>教育</span><strong>结果承诺</strong></button>
+            </div>
           </div>
-          <label>商品标题<input name="title" autocomplete="off" placeholder="填写待检查的商品标题或广告标题" required maxlength="1000"></label>
-          <label>商品描述<textarea name="description" rows="7" placeholder="填写商品描述、宣传文案或营销声明" maxlength="20000"></textarea></label>
-          <fieldset>
-            <legend>目标市场</legend>
-            <label class="check-option"><input type="checkbox" name="markets" value="CN" checked><span>中国</span></label>
-            <label class="check-option"><input type="checkbox" name="markets" value="US"><span>美国</span></label>
-            <label class="check-option"><input type="checkbox" name="markets" value="EU"><span>欧盟</span></label>
+
+          <div class="form-section">
+            <label class="field"><span>商品标题</span><input name="title" autocomplete="off" placeholder="例如：7天淡纹，国家级安全认证" required maxlength="1000"></label>
+            <label class="field"><span>营销文案</span><textarea name="description" rows="5" placeholder="粘贴商品详情、广告文案或直播话术……" maxlength="20000"></textarea></label>
+          </div>
+
+          <div class="form-section compact-section">
+            <div class="field-row three-columns">
+              <label class="field"><span>商品类目</span><input name="category" autocomplete="off" placeholder="美妆" required maxlength="200"></label>
+              <label class="field"><span>销售渠道</span><select name="channel"><option value="all">通用营销</option><option value="marketplace">电商平台</option><option value="social">社交媒体</option><option value="live">直播</option></select></label>
+              <label class="field"><span>内部编号 <i>选填</i></span><input name="external_id" autocomplete="off" placeholder="自动生成" maxlength="200"></label>
+            </div>
+          </div>
+
+          <fieldset class="market-section">
+            <div class="label-row"><legend>目标市场</legend></div>
+            <div class="market-grid">
+              <label class="market-option"><input type="checkbox" name="markets" value="CN" checked><span><b>CN</b><strong>中国</strong></span></label>
+              <label class="market-option"><input type="checkbox" name="markets" value="US"><span><b>US</b><strong>美国</strong></span></label>
+              <label class="market-option"><input type="checkbox" name="markets" value="EU"><span><b>EU</b><strong>欧盟</strong></span></label>
+            </div>
           </fieldset>
-          <div class="form-actions">
-            <span>未检索到可靠证据时，系统会明确拒绝给出结论。</span>
-            <button id="submit-button" class="primary" type="submit">开始检查</button>
-          </div>
         </form>
 
-        <div id="progress" class="progress" role="status" aria-live="polite" hidden>
-          <span class="progress-mark" aria-hidden="true"></span>
-          <div><strong id="progress-title">正在检索政策证据</strong><small id="progress-detail">正在匹配市场、类目与宣传表述</small></div>
+        <aside class="task-summary">
+          <div class="summary-heading">
+            <div><strong>本次审查</strong></div>
+            <span id="quota-badge" class="quota-badge">-- 次可用</span>
+          </div>
+          <dl class="task-preview">
+            <div><dt>目标市场</dt><dd id="preview-markets">中国</dd></div>
+            <div><dt>商品类目</dt><dd id="preview-category">未填写</dd></div>
+            <div><dt>销售渠道</dt><dd id="preview-channel">通用营销</dd></div>
+          </dl>
+          <button id="submit-button" class="primary launch-button" type="submit" form="check-form"><span>开始检查</span><small>预计 10–30 秒</small></button>
+        </aside>
+      </section>
+
+      <section id="progress" class="run-console" role="status" aria-live="polite" hidden>
+        <header><div><span class="running-pulse"></span><div><strong id="progress-title">Agent 正在分析营销声明</strong><small id="progress-detail">建立本次任务的法域与证据上下文</small></div></div><span class="run-badge">RUNNING</span></header>
+        <div class="run-track"><i id="progress-bar"></i></div>
+        <div class="run-phases"><span class="active">提取声明</span><span>规划路径</span><span>检索证据</span><span>验证充分性</span><span>人工路由</span></div>
+      </section>
+
+      <section id="result" class="result" hidden>
+        <header class="result-header">
+          <div><p class="eyebrow">Agent 审查结果</p><h2 id="result-title">等待结果</h2><p id="result-subtitle">请核对风险声明与法规证据。</p></div>
+          <div class="result-actions"><button id="new-check-button" class="secondary" type="button">新建任务</button><a id="report-link" class="secondary" href="#">导出报告</a></div>
+        </header>
+        <div class="result-summary" aria-label="结果摘要">
+          <div><span>任务状态</span><strong id="summary-status">等待结果</strong></div>
+          <div><span>提取声明</span><strong id="summary-claims">0 条</strong></div>
+          <div><span>法规证据</span><strong id="summary-evidence">0 条</strong></div>
+          <div><span>覆盖市场</span><strong id="summary-markets">-</strong></div>
+        </div>
+        <p id="result-note" class="notice"></p>
+
+        <div class="result-grid">
+          <div class="evidence-column">
+            <section class="claims-panel"><div class="panel-heading"><div><span class="section-index">02</span><strong>识别到的营销声明</strong></div><small>Agent 实际审查的文本片段</small></div><div id="claim-list" class="claim-list"></div></section>
+            <section><div class="panel-heading"><div><span class="section-index">03</span><strong>法规证据</strong></div><small>按目标市场组织，可追溯至官方来源</small></div><div id="evidence-list" class="evidence-list"></div></section>
+          </div>
+          <aside class="trace-column">
+            <div class="panel-heading"><div><span class="section-index">AI</span><strong>Agent 执行轨迹</strong></div><small id="trace-summary">正在读取事件</small></div>
+            <ol id="agent-trace" class="agent-trace"></ol>
+          </aside>
         </div>
 
-        <section id="result" class="result" hidden>
-          <header class="result-header">
-            <div><p class="eyebrow">检查结果</p><h2 id="result-title">等待结果</h2></div>
-            <div class="result-actions"><button id="new-check-button" class="secondary" type="button">新建检查</button><a id="report-link" class="secondary" href="#">下载报告</a></div>
-          </header>
-          <div class="result-summary" aria-label="结果摘要">
-            <div><span>流程状态</span><strong id="summary-status">等待结果</strong></div>
-            <div><span>候选依据</span><strong id="summary-evidence">0 条</strong></div>
-            <div><span>覆盖市场</span><strong id="summary-markets">-</strong></div>
-          </div>
-          <p id="result-note" class="notice"></p>
-          <div id="evidence-list" class="evidence-list"></div>
-          <div id="review-actions" class="review-actions">
-            <div><strong id="review-title">请人工核对证据</strong><p id="review-note">确认只代表允许进入整改阶段，不会自动发布内容。</p></div>
-            <button id="reject-button" class="danger" type="button">标记有误</button>
-            <button id="accept-button" class="primary" type="button">确认依据</button>
-          </div>
-          <section id="remediation" class="remediation" hidden>
-            <header><div><p class="eyebrow">整改建议</p><h3>保守修改草案</h3></div><button id="plan-button" class="primary" type="button">生成建议</button></header>
-            <div id="remediation-list"></div>
-          </section>
+        <div id="review-actions" class="review-actions">
+          <div><span class="section-index">04</span><div><strong id="review-title">请人工核对证据</strong><p id="review-note">确认只代表允许进入整改阶段，不会自动发布内容。</p></div></div>
+          <button id="reject-button" class="danger" type="button">驳回结果</button>
+          <button id="accept-button" class="primary" type="button">确认并进入整改</button>
+        </div>
+
+        <section id="remediation" class="remediation" hidden>
+          <header><div><p class="eyebrow">05 · 整改复检</p><h3>最小化修改方案</h3><small>保留可验证事实，只修改存在风险的表达。</small></div><button id="plan-button" class="primary" type="button">生成整改建议</button></header>
+          <div id="remediation-list"></div>
         </section>
       </section>
+    </section>
 
-      <section id="history-view" class="view" hidden>
-        <div class="page-heading"><div><p class="eyebrow">审计留痕</p><h1>历史记录</h1></div><button id="refresh-history" class="secondary" type="button">刷新</button></div>
-        <div id="history-list" class="history-list"><p class="empty">暂无检查记录</p></div>
-      </section>
-    </main>
-  </div>
+    <section id="history-view" class="view" hidden>
+      <header class="history-heading"><div><p class="eyebrow">审计留痕</p><h1>历史审查任务</h1><p>重新打开任务可查看证据、人工决策和整改状态。</p></div><button id="refresh-history" class="secondary" type="button">刷新记录</button></header>
+      <div id="history-list" class="history-list"><p class="empty">暂无检查记录</p></div>
+    </section>
+  </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-  <script src="/static/portal.js" defer></script>
+  <script src="/static/portal.js?v=20260803-3" defer></script>
 </body>
 </html>

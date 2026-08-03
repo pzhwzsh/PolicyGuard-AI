@@ -1,5 +1,6 @@
 """CPU-first ONNX embedding provider that does not require PyTorch."""
 
+import os
 from dataclasses import dataclass
 
 
@@ -12,7 +13,10 @@ class FastEmbedProvider:
             from fastembed import TextEmbedding
         except ImportError as exc:
             raise RuntimeError("install policyguard-ai[local-embedding-onnx] first") from exc
-        self._encoder = TextEmbedding(model_name=self.model)
+        self._encoder = TextEmbedding(
+            model_name=self.model,
+            cache_dir=os.getenv("FASTEMBED_CACHE_DIR") or None,
+        )
 
     @property
     def provider_name(self) -> str:

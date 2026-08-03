@@ -268,6 +268,8 @@ class UserRecord(Base):
     role: Mapped[str] = mapped_column(String(30), default="user", index=True)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     failed_login_attempts: Mapped[int] = mapped_column(Integer, default=0)
+    workflow_uses: Mapped[int] = mapped_column(Integer, default=0)
+    workflow_limit: Mapped[int] = mapped_column(Integer, default=10)
     locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)

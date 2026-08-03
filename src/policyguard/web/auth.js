@@ -7,10 +7,6 @@ const errorLabels = {
   credentials_invalid: "邮箱或密码错误。",
   account_temporarily_locked: "失败次数过多，账号已临时锁定15分钟。",
   email_already_registered: "该邮箱已经注册，请直接登录。",
-  verification_code_cooldown: "验证码发送过于频繁，请稍后再试。",
-  verification_code_expired: "验证码已过期，请重新获取。",
-  verification_code_invalid: "验证码不正确。",
-  verification_attempts_exceeded: "验证码错误次数过多，请重新获取。",
   password_length_invalid: "密码长度必须为10到128位。",
   password_complexity_insufficient: "密码必须同时包含大写字母、小写字母和数字。",
   password_whitespace_forbidden: "密码不能包含空格。",
@@ -54,25 +50,6 @@ loginForm.addEventListener("submit", async (event) => {
     location.assign("/");
   } catch (cause) { error.textContent = cause.message; }
   finally { button.disabled = false; }
-});
-
-document.querySelector("#send-code").addEventListener("click", async () => {
-  const button = document.querySelector("#send-code");
-  const email = registerForm.elements.email.value.trim();
-  const error = document.querySelector("#register-error");
-  if (!email) { error.textContent = "请先填写邮箱。"; return; }
-  button.disabled = true;
-  error.textContent = "";
-  try {
-    await request("/api/v1/auth/verification-code", {method: "POST", body: JSON.stringify({email})});
-    let remaining = 60;
-    button.textContent = `${remaining}秒后重发`;
-    const timer = setInterval(() => {
-      remaining -= 1;
-      button.textContent = remaining ? `${remaining}秒后重发` : "发送验证码";
-      if (!remaining) { clearInterval(timer); button.disabled = false; }
-    }, 1000);
-  } catch (cause) { error.textContent = cause.message; button.disabled = false; }
 });
 
 registerForm.addEventListener("submit", async (event) => {
