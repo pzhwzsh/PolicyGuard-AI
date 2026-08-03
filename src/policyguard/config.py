@@ -47,6 +47,7 @@ class Settings:
     ppstructure_base_url: str
     document_parser_api_key: str
     admin_api_key: str
+    admin_emails: str
     reviewer_api_key: str
     tenant_keys_json: str
     image_generation_base_url: str
@@ -120,6 +121,7 @@ def get_settings() -> Settings:
         ppstructure_base_url=getenv("PPSTRUCTURE_BASE_URL", ""),
         document_parser_api_key=getenv("DOCUMENT_PARSER_API_KEY", ""),
         admin_api_key=getenv("ADMIN_API_KEY", ""),
+        admin_emails=getenv("ADMIN_EMAILS", ""),
         reviewer_api_key=getenv("REVIEWER_API_KEY", ""),
         tenant_keys_json=getenv("TENANT_KEYS_JSON", ""),
         image_generation_base_url=getenv("IMAGE_GENERATION_BASE_URL", ""),

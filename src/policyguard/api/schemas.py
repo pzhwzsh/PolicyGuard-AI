@@ -33,6 +33,15 @@ class UserResponse(BaseModel):
     workflow_remaining: int
 
 
+class AdminUserUpdateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    role: str | None = Field(default=None, pattern="^(user|reviewer|admin)$")
+    active: bool | None = None
+    workflow_limit: int | None = Field(default=None, ge=0, le=100_000)
+    workflow_uses: int | None = Field(default=None, ge=0, le=100_000)
+
+
 class ProductCheckRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

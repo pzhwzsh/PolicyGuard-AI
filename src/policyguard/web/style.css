@@ -6,6 +6,8 @@ body { margin: 0; background: #f6f7f5; }
 .topbar span, .status { color: #cbd8d0; font-size: 13px; }
 .topbar-actions { display: flex; align-items: center; gap: 18px; }
 .topbar-actions a { color: white; font-size: 13px; text-decoration: none; }
+.topbar-logout { min-height: 30px; padding: 0 10px; border-color: rgba(255,255,255,.35); background: transparent; font-size: 12px; }
+.topbar-logout:hover { border-color: white; background: rgba(255,255,255,.08); }
 main { max-width: 1280px; margin: 0 auto; padding: 28px 32px 64px; }
 .user-main { max-width: 980px; }
 .admin-main { max-width: 1440px; }
@@ -148,6 +150,17 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .operations-summary span, .operations-summary strong { display: block; }
 .operations-summary span { color: #68756d; font-size: 12px; }
 .operations-summary strong { margin-top: 6px; }
+.admin-table-wrap { overflow-x: auto; border: 1px solid #d9dfda; background: white; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.admin-table th { padding: 12px; color: #5f6b63; background: #edf2ee; text-align: left; white-space: nowrap; }
+.admin-table td { padding: 12px; border-top: 1px solid #e3e7e4; vertical-align: middle; }
+.admin-table td:nth-child(1) { min-width: 210px; }
+.admin-table select, .admin-table input[type="number"] { min-height: 34px; margin: 0; padding: 6px 8px; border: 1px solid #b8c1ba; background: white; }
+.admin-table input[type="number"] { width: 90px; }
+.admin-table td small { display: block; margin-top: 5px; color: #68756d; }
+.admin-table button { min-height: 32px; padding: 0 12px; font-size: 11px; }
+.status-toggle { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.status-toggle input { width: auto; margin: 0; }
 .operations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 .reliability-grid { display: grid; grid-template-columns: repeat(5, 1fr); margin: 0 0 28px; border: 1px solid #d9dfda; background: #fff; }
 .reliability-grid article { padding: 16px; border-right: 1px solid #d9dfda; }

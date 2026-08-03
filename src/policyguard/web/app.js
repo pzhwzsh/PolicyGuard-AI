@@ -44,11 +44,77 @@ const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => 
 }[char]));
 
 async function api(path, options = {}) {
-  const response = await fetch(path, { headers: { "Content-Type": "application/json" }, ...options });
+  const response = await fetch(path, { credentials: "same-origin", headers: { "Content-Type": "application/json" }, ...options });
   const body = await response.json();
-  if (!response.ok) throw new Error(body.detail || `HTTP ${response.status}`);
+  if (!response.ok) {
+    throw new Error(body.detail || `HTTP ${response.status}`);
+  }
   return body;
 }
+
+async function ensureAdminSession() {
+  const status = await api("/api/v1/auth/status");
+  try {
+    const user = await api("/api/v1/auth/me");
+    if (user.role !== "admin") {
+      location.assign("/");
+      throw new Error("admin_role_required");
+    }
+    $("#admin-account").textContent = user.email;
+  } catch (error) {
+    if (status.required) {
+      location.assign("/login");
+      throw error;
+    }
+  }
+}
+
+async function loadAdminUsers() {
+  const [users, summary] = await Promise.all([
+    api("/api/v1/admin/users"), api("/api/v1/admin/summary")
+  ]);
+  $("#admin-user-summary").innerHTML = [
+    ["注册用户", summary.users.total],
+    ["正常账号", summary.users.active],
+    ["排队任务", (summary.jobs.queued || 0) + (summary.jobs.retry || 0)],
+    ["失败任务", summary.jobs.failed || 0]
+  ].map(([label, value]) => `<div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+  $("#admin-user-list").innerHTML = users.map((user) => `
+    <tr data-user-id="${escapeHtml(user.id)}">
+      <td><strong>${escapeHtml(user.email)}</strong></td>
+      <td><select data-field="role"><option value="user"${user.role === "user" ? " selected" : ""}>用户</option><option value="reviewer"${user.role === "reviewer" ? " selected" : ""}>审核员</option><option value="admin"${user.role === "admin" ? " selected" : ""}>管理员</option></select></td>
+      <td><input data-field="workflow_limit" type="number" min="0" value="${escapeHtml(user.workflow_limit)}"><small>已用 ${escapeHtml(user.workflow_uses)} 次</small></td>
+      <td><label class="status-toggle"><input data-field="active" type="checkbox"${user.active ? " checked" : ""}>${user.active ? "正常" : "停用"}</label></td>
+      <td>${escapeHtml(new Date(user.created_at).toLocaleDateString("zh-CN"))}</td>
+      <td><button class="save-admin-user" type="button">保存</button></td>
+    </tr>`).join("") || '<tr><td colspan="6">暂无用户</td></tr>';
+}
+
+$("#admin-user-list").addEventListener("click", async (event) => {
+  const button = event.target.closest(".save-admin-user");
+  if (!button) return;
+  const row = button.closest("tr");
+  button.disabled = true;
+  try {
+    await api(`/api/v1/admin/users/${row.dataset.userId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        role: row.querySelector('[data-field="role"]').value,
+        active: row.querySelector('[data-field="active"]').checked,
+        workflow_limit: Number(row.querySelector('[data-field="workflow_limit"]').value)
+      })
+    });
+    button.textContent = "已保存";
+    setTimeout(() => { button.textContent = "保存"; }, 1200);
+  } catch (error) { alert(error.message); }
+  finally { button.disabled = false; }
+});
+
+$("#refresh-admin-users").addEventListener("click", () => loadAdminUsers().catch((error) => alert(error.message)));
+$("#admin-logout").addEventListener("click", async () => {
+  await fetch("/api/v1/auth/logout", {method: "POST", credentials: "same-origin"});
+  location.assign("/login");
+});
 
 async function loadStatus() {
   const [stats, retrievers] = await Promise.all([api("/api/v1/knowledge/stats"), api("/api/v1/knowledge/retrievers")]);
@@ -150,7 +216,6 @@ $("#evaluation-review-list").addEventListener("click", async (event) => {
 });
 
 $("#refresh-review-queue").addEventListener("click", () => loadReviewQueue().catch((error) => alert(error.message)));
-loadReviewQueue().catch(() => {});
 
 async function loadDocumentWorkspace(documentId) {
   const workspace = await api(`/api/v1/documents/${documentId}`);
@@ -285,7 +350,7 @@ async function loadSourceUpdates() {
 
 async function loadOperations() {
   const [dashboard, jobs] = await Promise.all([
-    api("/api/v1/operations/dashboard"), api("/api/v1/jobs?limit=20")
+    api("/api/v1/operations/dashboard"), api("/api/v1/admin/jobs?limit=20")
   ]);
   $("#operations-summary").innerHTML = [
     ["活动文档", dashboard.knowledge.documents],
@@ -390,7 +455,7 @@ $("#job-list").addEventListener("click", async (event) => {
   const button = event.target.closest(".retry-job");
   if (!button) return;
   try {
-    await api(`/api/v1/jobs/${button.dataset.jobId}/retry`, {method: "POST", body: "{}"});
+    await api(`/api/v1/admin/jobs/${button.dataset.jobId}/retry`, {method: "POST", body: "{}"});
     await loadOperations();
   } catch (error) { alert(error.message); }
 });
@@ -494,4 +559,6 @@ $("#approval-form").addEventListener("submit", async (event) => {
   finally { button.disabled = false; button.textContent = "审批并激活"; }
 });
 
-Promise.all([loadStatus(), loadSourceUpdates(), loadOperations()]).catch(() => { $("#system-status").textContent = "系统状态读取失败"; });
+ensureAdminSession()
+  .then(() => Promise.all([loadStatus(), loadSourceUpdates(), loadReviewQueue(), loadOperations(), loadAdminUsers()]))
+  .catch(() => { $("#system-status").textContent = "需要管理员权限"; });

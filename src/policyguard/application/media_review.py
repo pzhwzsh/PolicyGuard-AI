@@ -19,7 +19,9 @@ def review_image(path: Path, settings, *, markets: list[str], category: str) -> 
     regions: list[dict[str, Any]] = []
     warnings: list[str] = []
     width, height = _image_size(path)
-    if settings.rapidocr_base_url:
+    # The interactive path stays vision-only by default. OCR sidecars can add a full
+    # network timeout before the model call and are only useful for explicit offline jobs.
+    if getattr(settings, "media_ocr_enabled", False) and settings.rapidocr_base_url:
         try:
             ocr_payload = parse_media_with_sidecar(
                 path,
@@ -81,10 +83,8 @@ def review_image(path: Path, settings, *, markets: list[str], category: str) -> 
                 },
             ],
         },
-        timeout=max(float(settings.llm_timeout_seconds), 90),
-        policy=ProviderRetryPolicy(
-            settings.provider_max_attempts, settings.provider_backoff_seconds
-        ),
+        timeout=min(max(float(settings.llm_timeout_seconds), 10), 30),
+        policy=ProviderRetryPolicy(1, 0),
     )
     payload = response.json()
     try:
@@ -112,9 +112,9 @@ def _image_data_url(path: Path) -> str:
         from PIL import Image
 
         image = Image.open(io.BytesIO(content)).convert("RGB")
-        image.thumbnail((1600, 1600))
+        image.thumbnail((800, 800))
         output = io.BytesIO()
-        image.save(output, format="JPEG", quality=88, optimize=True)
+        image.save(output, format="JPEG", quality=85, optimize=True)
         content = output.getvalue()
         media_type = "image/jpeg"
     except Exception:

@@ -38,6 +38,7 @@ from sqlalchemy.orm import Session
 
 from policyguard import __version__
 from policyguard.api.schemas import (
+    AdminUserUpdateRequest,
     AgentMemoryResponse,
     AgentMemoryReviewRequest,
     BackgroundJobResponse,
@@ -569,6 +570,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
         return replace(provider_settings, llm_model=selected) if selected else provider_settings
 
     def require_admin(
+        request: Request,
+        session: Session = Depends(get_session),
         x_admin_key: str = Header(default=""),
         authorization: str = Header(default=""),
     ) -> None:
@@ -580,8 +583,17 @@ def create_app(database_url: str | None = None) -> FastAPI:
             if not principal.permits("admin"):
                 raise HTTPException(status_code=403, detail="admin_role_required")
             return
-        if settings.admin_api_key and not hmac.compare_digest(x_admin_key, settings.admin_api_key):
-            raise HTTPException(status_code=401, detail="admin_key_required")
+        local_user = authenticated_local_user(request, session)
+        if local_user is not None:
+            if local_user.role != "admin":
+                raise HTTPException(status_code=403, detail="admin_role_required")
+            return
+        if settings.admin_api_key:
+            if not hmac.compare_digest(x_admin_key, settings.admin_api_key):
+                raise HTTPException(status_code=401, detail="admin_key_required")
+            return
+        if settings.app_env == "production":
+            raise HTTPException(status_code=401, detail="authentication_required")
 
     def require_admin_reviewer(
         request: Request,
@@ -673,6 +685,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
             user, token = local_auth_service(session).register(payload.email, payload.password)
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
+        admin_emails = {
+            item.strip().casefold() for item in settings.admin_emails.split(",") if item.strip()
+        }
+        if user.email in admin_emails:
+            user.role = "admin"
+            session.commit()
         response.set_cookie(
             "pg_session",
             token,
@@ -729,6 +747,117 @@ def create_app(database_url: str | None = None) -> FastAPI:
         response.delete_cookie("pg_session", path="/", secure=settings.session_cookie_secure)
         response.status_code = 204
         return response
+
+    @application.get("/api/v1/admin/users", tags=["admin"])
+    def list_admin_users(
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> list[dict]:
+        users = session.scalars(select(UserRecord).order_by(UserRecord.created_at.desc())).all()
+        return [
+            {
+                **user_response(user).model_dump(),
+                "active": user.active,
+                "created_at": user.created_at,
+            }
+            for user in users
+        ]
+
+    @application.patch("/api/v1/admin/users/{user_id}", tags=["admin"])
+    def update_admin_user(
+        user_id: str,
+        payload: AdminUserUpdateRequest,
+        request: Request,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> dict:
+        target = session.get(UserRecord, user_id)
+        if target is None:
+            raise HTTPException(status_code=404, detail="user_not_found")
+        actor = authenticated_local_user(request, session)
+        if actor and actor.id == target.id and (
+            payload.active is False or (payload.role is not None and payload.role != "admin")
+        ):
+            raise HTTPException(status_code=409, detail="cannot_remove_own_admin_access")
+        if payload.role is not None:
+            target.role = payload.role
+        if payload.active is not None:
+            target.active = payload.active
+        if payload.workflow_limit is not None:
+            target.workflow_limit = payload.workflow_limit
+        if payload.workflow_uses is not None:
+            target.workflow_uses = payload.workflow_uses
+        session.commit()
+        session.refresh(target)
+        return {**user_response(target).model_dump(), "active": target.active}
+
+    @application.get("/api/v1/admin/jobs", tags=["admin"])
+    def list_admin_jobs(
+        limit: int = Query(default=50, ge=1, le=200),
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> list[dict]:
+        jobs = session.scalars(
+            select(BackgroundJobRecord)
+            .order_by(BackgroundJobRecord.created_at.desc())
+            .limit(limit)
+        ).all()
+        return [
+            {
+                "id": job.id,
+                "job_type": job.job_type,
+                "status": job.status,
+                "attempts": job.attempts,
+                "max_attempts": job.max_attempts,
+                "error": job.error,
+                "created_at": job.created_at,
+                "updated_at": job.updated_at,
+            }
+            for job in jobs
+        ]
+
+    @application.post("/api/v1/admin/jobs/{job_id}/retry", tags=["admin"])
+    def retry_admin_job(
+        job_id: str,
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> dict:
+        try:
+            job = PersistentJobQueue(session).retry(job_id)
+        except LookupError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return {
+            "id": job.id,
+            "job_type": job.job_type,
+            "status": job.status,
+            "attempts": job.attempts,
+            "max_attempts": job.max_attempts,
+            "error": job.error,
+        }
+
+    @application.get("/api/v1/admin/summary", tags=["admin"])
+    def admin_summary(
+        session: Session = Depends(get_session),
+        _: None = Depends(require_admin),
+    ) -> dict:
+        user_count = session.scalar(select(func.count()).select_from(UserRecord)) or 0
+        active_users = session.scalar(
+            select(func.count()).select_from(UserRecord).where(UserRecord.active.is_(True))
+        ) or 0
+        job_counts = dict(
+            session.execute(
+                select(BackgroundJobRecord.status, func.count()).group_by(
+                    BackgroundJobRecord.status
+                )
+            ).all()
+        )
+        return {
+            "users": {"total": user_count, "active": active_users},
+            "jobs": job_counts,
+            "services": system_readiness(settings, session),
+        }
 
     @application.post(
         "/api/v1/documents/parse",

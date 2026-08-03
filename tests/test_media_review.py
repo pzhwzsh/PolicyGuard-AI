@@ -64,6 +64,7 @@ def test_review_image_anchors_model_finding_to_ocr_region(tmp_path: Path, monkey
     monkeypatch.setattr(media_review, "post_with_retry", lambda *args, **kwargs: Response())
     settings = SimpleNamespace(
         rapidocr_base_url="http://ocr",
+        media_ocr_enabled=True,
         document_parser_api_key="",
         llm_base_url="http://llm",
         llm_api_key="key",
