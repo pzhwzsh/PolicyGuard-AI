@@ -5,7 +5,11 @@
 __pycache__
 .pytest_cache
 .ruff_cache
-data
+data/*
+!data/sources
+!data/sources/**
+!data/market-intelligence
+!data/market-intelligence/**
 tmp
 *.db
 *.log
